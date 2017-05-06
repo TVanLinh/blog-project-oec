@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+      <changeSet id="3" author="Tran Van Linh">
+              <createTable tableName="author" >
+                  <column  name="id" type="int" autoIncrement="true">
+                      <constraints primaryKey="true" nullable="false" />
+                  </column>
+                  <column name="name" type="varchar(50)">
+                      <constraints nullable="false" />
+                  </column>
+                  <column name="pass_word" type="varchar(50)"/>
+                  <column name="role" type="int" defaultValue="0"/>
+              </createTable>
+      </changeSet>
+
+    <changeSet id="4" author="Tran Van Linh">
+        <createTable tableName="post">
+
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="title" type="varchar(50)">
+                <constraints  nullable="false"/>
+            </column>
+
+            <column name="content" type="varchar(16000)">
+                <constraints  nullable="false"/>
+            </column>
+
+            <column name="number_view" defaultValue="0" type="int"/>
+            <column name="number_like" defaultValue="0" type="int" />
+            <column name="id_author" type="int" >
+                <constraints foreignKeyName="id"/>
+            </column>
+            <column name="status" type="boolean" defaultValue="false"/>
+            <column name="approve" type="boolean" defaultValue="false"/>
+            <column name="approved_time" type="datetime" defaultValue="null"/>
+            <column name="update_time" type="datetime" defaultValue="null"/>
+            <column name="person_updated" type="int" />
+            <column name="time_post" type="datetime" defaultValue="null"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="5" author="Tran Van Linh">
+        <createTable  tableName="configuration">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="web_title" type="varchar(40)" defaultValue="Linh Tran Blog"/>
+            <column name="date_format" type="char(40)" defaultValue="HH:mm:ss dd/MM/yyyy"/>
+            <column name="number_view_post" type="int" defaultValue="3"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
