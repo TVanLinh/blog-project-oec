@@ -1,7 +1,6 @@
 package DAO;
 
-import Entities.Author;
-import Entities.Post;
+import Entities.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Repository
-public class AuthorDAOIML implements AuthorDAO {
+public class UserDAOIML implements UserDAO {
 
     @Autowired
     SessionFactory sessionFactory;
     @Transactional
-    public boolean insert(Author  author) {
+    public boolean insert(User user) {
         Session session=sessionFactory.getCurrentSession();
         try {
-            session.persist(author);
+            session.persist(user);
             System.out.println(" insert success");
             return true;
         }catch (Exception e)
@@ -33,9 +32,9 @@ public class AuthorDAOIML implements AuthorDAO {
     @Transactional
     public boolean delete(int idAuthor) {
         Session session=sessionFactory.getCurrentSession();
-        Author author=session.find(Author.class,idAuthor);
+        User user =session.find(User.class,idAuthor);
         try {
-            session.remove(author);
+            session.remove(user);
             System.out.println(" delete success");
             return true;
         }catch (Exception e)
@@ -45,10 +44,10 @@ public class AuthorDAOIML implements AuthorDAO {
     }
 
     @Transactional
-    public boolean update(Author author) {
+    public boolean update(User user) {
         Session session=sessionFactory.getCurrentSession();
         try {
-            session.saveOrUpdate(author);
+            session.saveOrUpdate(user);
             System.out.println(" update success");
             return true;
         }catch (Exception e)
@@ -56,4 +55,6 @@ public class AuthorDAOIML implements AuthorDAO {
             return false;
         }
     }
+
+
 }

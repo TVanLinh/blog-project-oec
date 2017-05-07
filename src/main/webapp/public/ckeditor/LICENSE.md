@@ -110,7 +110,7 @@ rights.
 (2) offer you this license which gives you legal permission to copy,
 distribute and/or modify the software.
 
-  Also, for each author's protection and ours, we want to make certain
+  Also, for each user's protection and ours, we want to make certain
 that everyone understands that there is no warranty for this free
 software.  If the software is modified by someone else and passed on, we
 want its recipients to know that what they have is not the original, so
@@ -289,7 +289,7 @@ integrity of the free software distribution system, which is
 implemented by public license practices.  Many people have made
 generous contributions to the wide range of software distributed
 through that system in reliance on consistent application of that
-system; it is up to the author/donor to decide if he or she is willing
+system; it is up to the user/donor to decide if he or she is willing
 to distribute software through any other system and a licensee cannot
 impose that choice.
 
@@ -318,7 +318,7 @@ this License, you may choose any version ever published by the Free Software
 Foundation.
 
   10. If you wish to incorporate parts of the Program into other free
-programs whose distribution conditions are different, write to the author
+programs whose distribution conditions are different, write to the user
 to ask for permission.  For software which is copyrighted by the Free
 Software Foundation, write to the Free Software Foundation; we sometimes
 make exceptions for this.  Our decision will be guided by the two goals
@@ -409,7 +409,7 @@ permission to copy, distribute and/or modify the library.
 there is no warranty for the free library.  Also, if the library is
 modified by someone else and passed on, the recipients should know
 that what they have is not the original version, so that the original
-author's reputation will not be affected by problems that might be
+user's reputation will not be affected by problems that might be
 introduced by others.
 
   Finally, software patents pose a constant threat to the existence of
@@ -751,7 +751,7 @@ integrity of the free software distribution system which is
 implemented by public license practices.  Many people have made
 generous contributions to the wide range of software distributed
 through that system in reliance on consistent application of that
-system; it is up to the author/donor to decide if he or she is willing
+system; it is up to the user/donor to decide if he or she is willing
 to distribute software through any other system and a licensee cannot
 impose that choice.
 
@@ -781,7 +781,7 @@ the Free Software Foundation.
 
   14. If you wish to incorporate parts of the Library into other free
 programs whose distribution conditions are incompatible with these,
-write to the author to ask for permission.  For software which is
+write to the user to ask for permission.  For software which is
 copyrighted by the Free Software Foundation, write to the Free
 Software Foundation; we sometimes make exceptions for this.  Our
 decision will be guided by the two goals of preserving the free status

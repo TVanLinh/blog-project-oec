@@ -7,7 +7,7 @@
             </a>
             <div class="media-body">
                 <h4 class="media-heading">Lorem ipsum dolor asit...</h4>
-                <p class="by-author">By Jhon Doe</p>
+                <p class="by-user">By Jhon Doe</p>
                 <!-- Pager -->
                 <a>read more..</a>
             </div>
@@ -19,7 +19,7 @@
             </a>
             <div class="media-body">
                 <h4 class="media-heading">Lorem ipsum dolor asit amet</h4>
-                <p class="by-author">By Jhon Doe</p>
+                <p class="by-user">By Jhon Doe</p>
             </div>
         </li>
         <li class="media">
@@ -28,7 +28,7 @@
             </a>
             <div class="media-body">
                 <h4 class="media-heading">Lorem ipsum dolor asit amet</h4>
-                <p class="by-author">By Jhon Doe</p>
+                <p class="by-user">By Jhon Doe</p>
             </div>
         </li>
     </ul>

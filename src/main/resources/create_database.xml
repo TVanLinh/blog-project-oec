@@ -4,27 +4,50 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
-      <changeSet id="3" author="Tran Van Linh">
-              <createTable tableName="author" >
-                  <column  name="id" type="int" autoIncrement="true">
-                      <constraints primaryKey="true" nullable="false" />
-                  </column>
-                  <column name="name" type="varchar(50)">
-                      <constraints nullable="false" />
-                  </column>
-                  <column name="pass_word" type="varchar(50)"/>
-                  <column name="role" type="int" defaultValue="0"/>
-              </createTable>
+
+      <changeSet id="1" author="Tran Van Linh">
+          <createTable tableName="user" >
+              <column name="id" type="int" autoIncrement="true" >
+                  <constraints primaryKey="true"/>
+              </column>
+              <column name="user_name" type="varchar(50)">
+                  <constraints nullable="false" unique="true" />
+              </column>
+              <column name="pass_word" type="varchar(50)"/>
+              <column name="enabled" type="TINYINT(1)"/>
+          </createTable>
       </changeSet>
 
-    <changeSet id="4" author="Tran Van Linh">
+     <changeSet id="2" author="Tran Van Linh">
+         <createTable tableName="user_roles">
+             <column name="id_user_roles" autoIncrement="true" type="int" >
+                 <constraints primaryKey="true"/>
+             </column>
+             <column name="user_name" type="varchar(50)">
+                 <constraints nullable="false"/>
+             </column>
+             <column name="role" type="varchar(50)">
+                 <constraints nullable="false"/>
+             </column>
+         </createTable>
+     </changeSet>
+
+    <changeSet author="Tran Van Linh" id="addForeignKeyConstraint-user-role">
+        <addForeignKeyConstraint baseColumnNames="user_name"
+                                 baseTableName="user_roles"
+                                 constraintName="fk_user_user_roles"
+                                 referencedColumnNames="user_name"
+                                 referencedTableName="user"/>
+    </changeSet>
+
+    <changeSet id="3" author="Tran Van Linh">
         <createTable tableName="post">
 
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
-            <column name="title" type="varchar(50)">
+            <column name="title" type="varchar(150)">
                 <constraints  nullable="false"/>
             </column>
 
@@ -34,17 +57,23 @@
 
             <column name="number_view" defaultValue="0" type="int"/>
             <column name="number_like" defaultValue="0" type="int" />
-            <column name="id_author" type="int" >
-                <constraints foreignKeyName="id"/>
-            </column>
-            <column name="status" type="boolean" defaultValue="false"/>
-            <column name="approve" type="boolean" defaultValue="false"/>
+            <column name="status" type="TINYINT(1)" defaultValue="0"/>
+            <column name="approve" type="TINYINT(1)" defaultValue="0"/>
             <column name="approved_time" type="datetime" defaultValue="null"/>
             <column name="update_time" type="datetime" defaultValue="null"/>
-            <column name="person_updated" type="int" />
+            <column name="user_updated" type="varchar(40)" />
             <column name="time_post" type="datetime" defaultValue="null"/>
+            <column name="id_user" type="int"/>
         </createTable>
     </changeSet>
+
+    <!--<changeSet author="Tran Van Linh" id="addForeignKeyConstraint-post">-->
+    <!--<addForeignKeyConstraint baseColumnNames="user_name"-->
+                                 <!--baseTableName="post"-->
+                                 <!--constraintName="fk_user_post"-->
+                                 <!--referencedColumnNames="user_name"-->
+                                 <!--referencedTableName="user"/>-->
+    <!--</changeSet>-->
 
     <changeSet id="5" author="Tran Van Linh">
         <createTable  tableName="configuration">
@@ -55,5 +84,29 @@
             <column name="date_format" type="char(40)" defaultValue="HH:mm:ss dd/MM/yyyy"/>
             <column name="number_view_post" type="int" defaultValue="3"/>
         </createTable>
+    </changeSet>
+
+    <changeSet id="insert_user" author="Tran Van Linh">
+        <insert tableName="user">
+            <column name="user_name">tvlinh</column>
+            <column name="pass_word">123456</column>
+            <column name="enabled">1</column>
+        </insert>
+        <insert tableName="user">
+            <column name="user_name">admin</column>
+            <column name="pass_word">123456</column>
+            <column name="enabled">1</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert_user_roles" author="Tran Van Linh">
+        <insert tableName="user_roles">
+            <column name="user_name">tvlinh</column>
+            <column name="role">ROLE_USER</column>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="user_name">admin</column>
+            <column name="role">ROLE_ADMIN</column>
+        </insert>
     </changeSet>
 </databaseChangeLog>

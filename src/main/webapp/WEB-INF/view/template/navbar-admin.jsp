@@ -5,14 +5,11 @@
             <a class="navbar-brand" href="#">Linh Tran Blog</a>
         </div>
         <ul class="nav navbar-nav">
-            <c:if  test="${sessionScope.username !=null}">
-                <li><a href="/">New Post</a></li>
-            </c:if>
-            <c:if  test="${sessionScope.username !=null}">
-                <li><a href="/admin">Admin</a></li>
-            </c:if>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/admin">Admin</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+            <%--<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>--%>
             <c:if  test="${sessionScope.username ==null}">
                 <li><a href="/login" ><span class="glyphicon glyphicon-log-in" ></span> Login</a></li>
             </c:if>

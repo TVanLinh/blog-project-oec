@@ -3,31 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Home page blog</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="public/bootstrap/css/blog-post.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-
+<jsp:include page="template/head.jsp"/>
 <body>
 
 <!-- Navigation -->
@@ -46,7 +22,7 @@
             <!-- Title -->
             <h1>Blog Post Title</h1>
 
-            <!-- Author -->
+            <Userthor -->
             <p class="lead">
                 by <a href="#">Start Bootstrap</a>
             </p>
@@ -67,6 +43,8 @@
              <div id="content">
                 ${content}
              </div>
+            <hr>
+            <button class="btn-sm btn-xs">Like</button>  view: <button class="btn-sm btn-xs">10000000</button>
             <script type="text/javascript">
 //                document.getElementById("content").innerHTML="<h1>ok men</h1>";
             </script>
@@ -75,7 +53,7 @@
             <!-- Blog Comments -->
 
             <div id="comment">
-                <jsp:include page="comment.jsp"/>
+                <jsp:include page="template/comment.jsp"/>
             </div>
 
         </div>

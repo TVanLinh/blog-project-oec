@@ -1,19 +1,22 @@
 package Entities;
 
-import com.mysql.fabric.xmlrpc.base.Data;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "post")
-public class Post {
+public class Post  implements Serializable{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private int id;
 
+//  @NotEmpty
+//  @Size(min = 10,max = 100,message = "Min length 10.!")
   @Basic
   @Column(name = "title")
   private String title;
@@ -32,11 +35,11 @@ public class Post {
 
   @Basic
   @Column(name = "status")
-  private String status;
+  private int status;
 
   @Basic
   @Column(name = "approve")
-  private String approve;
+  private int approve;
 
   @Basic
   @Column(name = "approved_time")
@@ -47,12 +50,22 @@ public class Post {
   private Date updateTime;
 
   @Basic
-  @Column(name = "person_updated")
-  private int personUpdated;
+  @Column(name = "user_updated")
+  private String userUpdated;
 
-  @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
-  @JoinColumn(name = "id_author")
-  Author author;
+  @Basic
+  @Column(name = "time_post")
+  private Date timePost;
+
+  @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+  @JoinColumn(name = "id_user",referencedColumnName = "id")
+  User user;
+//    @Basic
+//    @Column(name = "user_name")
+////    private String user_name;
+
+    public Post() {
+    }
 
   public int getId() {
     return id;
@@ -94,19 +107,19 @@ public class Post {
     this.numberLike = numberLike;
   }
 
-  public String getStatus() {
+  public int getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(int status) {
     this.status = status;
   }
 
-  public String getApprove() {
+  public int getApprove() {
     return approve;
   }
 
-  public void setApprove(String approve) {
+  public void setApprove(int approve) {
     this.approve = approve;
   }
 
@@ -126,19 +139,34 @@ public class Post {
     this.updateTime = updateTime;
   }
 
-  public int getPersonUpdated() {
-    return personUpdated;
+  public String getUserUpdated() {
+    return userUpdated;
   }
 
-  public void setPersonUpdated(int personUpdated) {
-    this.personUpdated = personUpdated;
+  public void setUserUpdated(String  userUpdated) {
+    this.userUpdated = userUpdated;
   }
 
-  public Author getAuthor() {
-    return author;
+//  public String getUser_name() {
+//    return user_name;
+//  }
+//
+//  public void setUser_name(String user_name) {
+//    this.user_name = user_name;
+//  }
+  public User getUser() {
+    return user;
   }
 
-  public void setAuthor(Author author) {
-    this.author = author;
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public Date getTimePost() {
+    return timePost;
+  }
+
+  public void setTimePost(Date timePost) {
+    this.timePost = timePost;
   }
 }
