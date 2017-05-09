@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "post")
@@ -57,15 +57,15 @@ public class Post  implements Serializable{
   @Column(name = "time_post")
   private Date timePost;
 
-  @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+  @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
   @JoinColumn(name = "id_user",referencedColumnName = "id")
   User user;
-//    @Basic
-//    @Column(name = "user_name")
-////    private String user_name;
 
-    public Post() {
-    }
+  @OneToOne(mappedBy = "post",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+  private Image image;
+
+  public Post() {
+  }
 
   public int getId() {
     return id;
@@ -147,13 +147,6 @@ public class Post  implements Serializable{
     this.userUpdated = userUpdated;
   }
 
-//  public String getUser_name() {
-//    return user_name;
-//  }
-//
-//  public void setUser_name(String user_name) {
-//    this.user_name = user_name;
-//  }
   public User getUser() {
     return user;
   }
@@ -168,5 +161,14 @@ public class Post  implements Serializable{
 
   public void setTimePost(Date timePost) {
     this.timePost = timePost;
+  }
+
+  public Image getImage() {
+    return image;
+  }
+
+  public void setImage(Image image) {
+    this.image = image;
+    this.image.setPost(this);
   }
 }

@@ -5,7 +5,7 @@
             <a class="navbar-brand" href="#">Linh Tran Blog</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="/home">Home</a></li>
+            <li><a href="/write">New Post</a></li>
             <li><a href="/admin">Admin</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">

@@ -1,3 +1,4 @@
+<jsp:include page="import_libary.jsp"/>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,12 +9,13 @@
     <title>Home page blog</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="public/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="public/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <%--<link href="public/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>--%>
 
     <!-- Custom CSS -->
-    <link href="public/bootstrap/css/blog-post.css" rel="stylesheet"/>
-     <link href="public/asserts/css/modal.css" rel="stylesheet"/>
-     <link href="public/asserts/css/helper_class.css" rel="stylesheet"/>
+    <link href="public/bootstrap/css/blog-post.css" rel="stylesheet" type="text/css"/>
+     <link href="public/asserts/css/modal.css" rel="stylesheet" type="text/css"/>
+     <link href="public/asserts/css/helper_class.css" rel="stylesheet" type="text/css"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,5 +25,5 @@
     <!--[endif]-->
     <script src="public/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
     <script src="public/ckeditor/ckeditor.js" type="text/javascript"></script>
-    <script src="public/asserts/js/main.js" type="text/javascript"></script>
+
 </head>

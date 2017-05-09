@@ -12,3 +12,35 @@ function  login() {
     }
     return true;
 }
+
+CKEDITOR.replace( 'content' );
+
+
+(function ($)
+{
+    var A={
+      like:function like(id) {
+          window.alert('ok');
+          $.ajax({
+              type : "POST",
+              contentType : "application/text",
+              url : "/like",
+              data : {"id":id},
+              daype : 'text',
+              timeout : 1000,
+              success : function(data) {
+                  console.log("SUCCESS: ", data);
+                  display(data);
+                  $("#like").text("ok");
+              },
+              error : function(e) {
+                  console.log("ERROR: ", e);
+                  display(e);
+              },
+              done : function(e) {
+                  console.log("DONE");
+              }
+          });
+      }
+    };
+})(jQuery);

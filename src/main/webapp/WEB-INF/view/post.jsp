@@ -1,5 +1,3 @@
-<%@page language="java" pageEncoding="UTF-8" %>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,26 +18,28 @@
 
                 <!-- Blog Post -->
                 <!-- Title -->
-                <h1>Blog Post Title</h1>
+                <h2>${post.title}</h2>
+                <span class="lead">
+                by <a href="#">${post.user.userName}</a>${post.status}
+                </span>
                 <hr>
-
                 <!-- Date/Time -->
-                <p><span class="glyphicon glyphicon-time"></span> Posted on August 24, 2013 at 9:00 PM</p>
+                <p><span class="glyphicon glyphicon-time"></span> Posted on ${post.timePost}</p>
 
                 <hr>
 
-                <!-- Preview Image -->
-                <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+                <%--<!-- Preview Image -->--%>
+                <%--<img class="img-responsive" src="http://placehold.it/900x300" alt="">--%>
 
                 <hr>
 
                 <!-- Post Content -->
-                ${post.getContent}
+                ${post.content}
                 <hr>
 
-                <button class="btn-sm btn-xs">Like</button>  view: <button class="btn-sm btn-xs">10000000</button>
+                <button id="#like" onclick="load()" class="btn-sm btn-xs">Like</button><button class="btn-sm btn-xs">${post.numberLike}</button>  view: <button class="btn-sm btn-xs">${post.numberView} </button>
 
-               <div id="comment">
+                <div id="comment">
                    <jsp:include page="template/comment.jsp"/>
                </div>
 
@@ -63,7 +63,25 @@
     <!-- /.container -->
 
 
+    <%--<script>--%>
+        <%--$(document).ready(function () {--%>
+            <%--$("#like").on("click",function () {--%>
+                <%--load();--%>
+            <%--});--%>
+        <%--});--%>
+        <%--function load() {--%>
 
+                <%--$.ajax({method:"POST",url:"/like",dataType:"json",data:{"id":id},--%>
+                    <%--success:function (result,status) {--%>
+                        <%--$("#like").text("ok");--%>
+                        <%--alert("ok");--%>
+                        <%--//  alert(result);--%>
+                    <%--},error:function () {--%>
+                        <%--alert("error");--%>
+                    <%--}});--%>
+        <%--}--%>
+    <%--</script>--%>
+    <%--<script src="public/asserts/js/main.js" type="text/javascript"></script>--%>
 </body>
 
 </html>

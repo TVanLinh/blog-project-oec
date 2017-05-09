@@ -51,4 +51,14 @@ public class Configuration {
   public void setNumberViewPost(int numberViewPost) {
     this.numberViewPost = numberViewPost;
   }
+
+  @Override
+  public String toString() {
+    return "Configuration{" +
+            "id=" + id +
+            ", webTitle='" + webTitle + '\'' +
+            ", dateFormat='" + dateFormat + '\'' +
+            ", numberViewPost=" + numberViewPost +
+            '}';
+  }
 }

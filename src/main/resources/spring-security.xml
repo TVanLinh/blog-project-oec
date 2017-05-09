@@ -11,7 +11,9 @@
 
         <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/" access="permitAll()" />
-        <intercept-url pattern="/user**" access="hasRole('ROLE_USER')"/>
+        <!--<intercept-url pattern="/user**" access="hasRole('ROLE_USER')"/>-->
+        <intercept-url pattern="/write-post**" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/write**" access="permitAll"/>
         <intercept-url pattern="/login" access="permitAll()" />
         <intercept-url pattern="/logout" access="permitAll()" />
         <!-- access denied page -->
@@ -21,10 +23,10 @@
                 default-target-url="/user"
                 authentication-failure-url="/login?error"
                 username-parameter="username"
-                always-use-default-target="false"
-                password-parameter="password" />
+                password-parameter="password"
+                always-use-default-target="true"/>
 
-        <logout logout-url="logout"
+        <logout logout-url="/logout"
                 logout-success-url="/logoutSuccessful"
                 delete-cookies="JSESSIONID" invalidate-session="true" />
         <!-- enable csrf protection -->

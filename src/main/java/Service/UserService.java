@@ -1,6 +1,7 @@
 package Service;
 
 import Entities.User;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,21 +30,31 @@ public class UserService {
     }
 
     public User find(int id) {
-        return sessionFactory.openSession().find(User.class,id);
+        Session session=sessionFactory.openSession();
+        User usr=session.find(User.class,id);
+        session.close();
+        return  usr;
     }
 
     public List<User> getAllUser()
     {
-        return (List<User>)sessionFactory.openSession().createNativeQuery("select * from user").getResultList();
+        Session session=sessionFactory.openSession();
+        List<User> list=session.createNativeQuery("select * from user",User.class).getResultList();
+        session.close();
+        return list;
     }
+
 
     public User getUserByName(String name)
     {
-        List<User> list=(List<User>) sessionFactory.openSession().createNativeQuery("select * from user where user_name='"+name+"'",User.class).getResultList();
+        Session session=sessionFactory.openSession();
+        List<User> list=(List<User>) session.createNativeQuery("select * from user where user_name='"+name+"'",User.class).getResultList();
+        session.close();
         if(list==null)
         {
             return  null;
         }
         return list.get(0);
     }
+
 }

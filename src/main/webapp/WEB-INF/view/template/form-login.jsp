@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="container">
     <div class="col-sm-6 col-xs-12">
         <c:if test="${not empty error}">

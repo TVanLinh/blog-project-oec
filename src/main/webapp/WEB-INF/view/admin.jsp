@@ -1,6 +1,3 @@
-<%@page language="java" pageEncoding="UTF-8" %>
-<%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <jsp:include page="template/head.jsp"/>

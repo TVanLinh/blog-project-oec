@@ -12,6 +12,7 @@
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
+        
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
@@ -22,12 +23,17 @@
                 <value>Entities.Configuration</value>
                 <value>Entities.Post</value>
                 <value>Entities.Role</value>
+                <value>Entities.Image</value>
             </list>
         </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.dialect" >org.hibernate.dialect.MySQLDialect</prop>
+                <!--<prop key="hibernate.current_session_context_class">thread</prop>-->
+                <prop key="hibernate.connection.CharSet">utf8</prop>
+                <prop key="hibernate.connection.characterEncoding">utf8</prop>
+                <prop key="hibernate.connection.useUnicode">tr</prop>
             </props>
         </property>
      </bean>
@@ -39,4 +45,6 @@
     <context:annotation-config/>
     <context:component-scan base-package="DAO"/>
     <context:component-scan base-package="Service"/>
+    <context:component-scan base-package="Utils"/>
+    <context:component-scan base-package="Filter"/>
 </beans>

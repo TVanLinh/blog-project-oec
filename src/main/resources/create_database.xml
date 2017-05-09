@@ -4,16 +4,20 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
-
+    <changeSet id="0" author="Tran Van Linh">
+        <modifySql dbms="mysql">
+            <append value="ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_unicode_ci"/>
+        </modifySql>
+    </changeSet>
       <changeSet id="1" author="Tran Van Linh">
           <createTable tableName="user" >
               <column name="id" type="int" autoIncrement="true" >
                   <constraints primaryKey="true"/>
               </column>
-              <column name="user_name" type="varchar(50)">
+              <column name="user_name" type="varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci">
                   <constraints nullable="false" unique="true" />
               </column>
-              <column name="pass_word" type="varchar(50)"/>
+              <column name="pass_word" type="varchar(100)"/>
               <column name="enabled" type="TINYINT(1)"/>
           </createTable>
       </changeSet>
@@ -23,7 +27,7 @@
              <column name="id_user_roles" autoIncrement="true" type="int" >
                  <constraints primaryKey="true"/>
              </column>
-             <column name="user_name" type="varchar(50)">
+             <column name="user_name" type="varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci">
                  <constraints nullable="false"/>
              </column>
              <column name="role" type="varchar(50)">
@@ -47,11 +51,11 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
-            <column name="title" type="varchar(150)">
+            <column name="title" type="varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci">
                 <constraints  nullable="false"/>
             </column>
 
-            <column name="content" type="varchar(16000)">
+            <column name="content" type="text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci">
                 <constraints  nullable="false"/>
             </column>
 
@@ -61,7 +65,7 @@
             <column name="approve" type="TINYINT(1)" defaultValue="0"/>
             <column name="approved_time" type="datetime" defaultValue="null"/>
             <column name="update_time" type="datetime" defaultValue="null"/>
-            <column name="user_updated" type="varchar(40)" />
+            <column name="user_updated" type="varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" />
             <column name="time_post" type="datetime" defaultValue="null"/>
             <column name="id_user" type="int"/>
         </createTable>
@@ -80,10 +84,30 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="web_title" type="varchar(40)" defaultValue="Linh Tran Blog"/>
-            <column name="date_format" type="char(40)" defaultValue="HH:mm:ss dd/MM/yyyy"/>
+            <column name="web_title" type="varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" defaultValue="Linh Tran Blog" />
+            <column name="date_format" type="char(250)" defaultValue="HH:mm:ss dd/MM/yyyy"/>
             <column name="number_view_post" type="int" defaultValue="3"/>
         </createTable>
+    </changeSet>
+
+    <changeSet id="6" author="Tran Van Linh">
+        <createTable tableName="postimage">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" unique="true"/>
+            </column>
+            <column name="link" type="varchar(10000)" defaultValue="not-link"/>
+            <column name="alt" type="varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" defaultValue="image-blog"/>
+            <column name="id_post" type="int" />
+    </createTable>
+    </changeSet>
+
+    <changeSet id="addForeignKey_table_post-image" author="Tran Van Linh">
+        <addForeignKeyConstraint
+                baseTableName="postimage"
+                baseColumnNames="id_post"
+                constraintName="fk_post_image"
+                referencedTableName="post"
+                referencedColumnNames="id"/>
     </changeSet>
 
     <changeSet id="insert_user" author="Tran Van Linh">
@@ -107,6 +131,13 @@
         <insert tableName="user_roles">
             <column name="user_name">admin</column>
             <column name="role">ROLE_ADMIN</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert_configuration" author="Tran Van Linh">
+        <insert tableName="configuration">
+            <column name="web_title">Linh Tran Blog</column>
+            <column name="number_view_post">4</column>
         </insert>
     </changeSet>
 </databaseChangeLog>

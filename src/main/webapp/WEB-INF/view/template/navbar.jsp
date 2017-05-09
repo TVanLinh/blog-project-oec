@@ -6,7 +6,7 @@
         </div>
         <ul class="nav navbar-nav">
             <c:if  test="${sessionScope.username !=null}">
-                <li><a href="/">New Post</a></li>
+                <li><a href="/write">New Post</a></li>
             </c:if>
             <c:if  test="${sessionScope.username !=null}">
                 <li><a href="/admin">Admin</a></li>

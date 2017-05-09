@@ -36,6 +36,12 @@ public class User implements Serializable {
   public User() {
   }
 
+  public User(String userName, String passWord, int enabled) {
+    this.userName = userName;
+    this.passWord = passWord;
+    this.enabled = enabled;
+  }
+
   public User(String passWord) {
     this.passWord = passWord;
   }
@@ -43,6 +49,14 @@ public class User implements Serializable {
   public User(String name, String passWord) {
     this.userName=name;
     this.passWord = passWord;
+  }
+
+  public User(String userName, String passWord, int enabled, List<Role> roleList, List<Post> postList) {
+    this.userName = userName;
+    this.passWord = passWord;
+    this.enabled = enabled;
+    this.roleList = roleList;
+    this.postList = postList;
   }
 
   public int getId() {

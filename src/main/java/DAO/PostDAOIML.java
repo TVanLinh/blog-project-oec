@@ -47,7 +47,7 @@ public class PostDAOIML implements PostDAO {
     public boolean update(Post post) {
         Session session=sessionFactory.getCurrentSession();
         try {
-            session.saveOrUpdate(post);
+            session.merge(post);
             System.out.println(" update success");
             return true;
         }catch (Exception e)

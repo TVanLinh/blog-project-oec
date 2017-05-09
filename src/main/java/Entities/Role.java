@@ -19,12 +19,19 @@ public class Role  implements Serializable{
     @Basic
     private String role;
 
-    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_name")
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_name",referencedColumnName = "user_name")
     User user;
 
     public Role() {
     }
+
+
+    public Role(String role, User user) {
+        this.role = role;
+        this.user = user;
+    }
+
 
     public int getId() {
         return id;

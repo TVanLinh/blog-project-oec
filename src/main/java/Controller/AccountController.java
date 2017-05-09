@@ -73,15 +73,17 @@ public class AccountController {
     {
         request.getSession().removeAttribute("username");
         request.getSession().invalidate();
-
+        HttpSession session=request.getSession();
+        session.setAttribute("begin",0);
         return "/home";
     }
 
-//    @RequestMapping(value = "/logoutSuccessful", method = RequestMethod.GET)
-//    public String logoutSuccessfulPage(Model model) {
-//        model.addAttribute("title", "Logout");
-//        return "/home";
-//    }
+    @RequestMapping(value = "/logoutSuccessful", method = RequestMethod.GET)
+    public String logoutSuccessfulPage(Model model) {
+        model.addAttribute("title", "Logout");
+        return "/home";
+    }
+
     //for 403 access denied page
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public ModelAndView accesssDenied() {

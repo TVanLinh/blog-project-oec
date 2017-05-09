@@ -47,7 +47,7 @@ public class UserDAOIML implements UserDAO {
     public boolean update(User user) {
         Session session=sessionFactory.getCurrentSession();
         try {
-            session.saveOrUpdate(user);
+            session.merge(user);
             System.out.println(" update success");
             return true;
         }catch (Exception e)
