@@ -15,32 +15,54 @@ function  login() {
 
 CKEDITOR.replace( 'content' );
 
+var A;
 
-(function ($)
-{
-    var A={
-      like:function like(id) {
-          window.alert('ok');
-          $.ajax({
-              type : "POST",
-              contentType : "application/text",
-              url : "/like",
-              data : {"id":id},
-              daype : 'text',
-              timeout : 1000,
-              success : function(data) {
-                  console.log("SUCCESS: ", data);
-                  display(data);
-                  $("#like").text("ok");
-              },
-              error : function(e) {
-                  console.log("ERROR: ", e);
-                  display(e);
-              },
-              done : function(e) {
-                  console.log("DONE");
-              }
-          });
-      }
-    };
-})(jQuery);
+    jQuery(document).ready(function($) {
+        $("#like").on("click",function(event) {
+            ($(this).html("<p>Goodbye self</p>"));
+            window.alert("ok men");
+            event.preventDefault();
+            enableSearchButton(true)
+            searchViaAjax();
+        });
+
+    });
+
+function searchViaAjax() {
+
+    var search = {};
+    search["msg"] = "ok";
+    search["code"] = "4444";
+
+    $.ajax({
+        type : "POST",
+        contentType : "application/json",
+        url : "/like",
+        data : JSON.stringify(search),
+        dataType : 'json',
+        timeout : 1000,
+        success : function(data) {
+            console.log("SUCCESS: ", data);
+            display(data);
+        },
+        error : function(e) {
+            console.log("ERROR: ", e);
+            display(e);
+        },
+        done : function(e) {
+            console.log("DONE");
+            enableSearchButton(true);
+        }
+    });
+
+}
+
+function enableSearchButton(flag) {
+    $("#like").prop("disabled", flag);
+}
+
+function display(data) {
+    var json = "<h4>Ajax Response</h4><pre>"
+        + JSON.stringify(data, null, 4) + "</pre>";
+    $('#like').html(json);
+}

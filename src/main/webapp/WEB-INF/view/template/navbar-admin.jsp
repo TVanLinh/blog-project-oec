@@ -2,7 +2,7 @@
 <nav class="navbar navbar-inverse " style="border-radius: 0 !important;">
     <div class="container pdt-0 pdb-0">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Linh Tran Blog</a>
+            <a class="navbar-brand" href="/">Linh Tran Blog</a>
         </div>
         <ul class="nav navbar-nav">
             <li><a href="/write">New Post</a></li>

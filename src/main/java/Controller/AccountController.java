@@ -2,6 +2,7 @@ package Controller;
 
 import DAO.UserDAOIML;
 import Entities.User;
+import Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,6 +29,10 @@ public class AccountController {
     @Autowired
     UserDAOIML authorDAOIML;
 
+    @Autowired
+    PostService postService;
+
+
     @RequestMapping(value = "/admin**", method = RequestMethod.GET)
     public ModelAndView adminPage() {
 
@@ -39,12 +44,14 @@ public class AccountController {
 
     }
 
+
     @RequestMapping(value = "/user")
     public  String userInfor(Principal principal,HttpServletRequest request)
     {
          System.out.println(principal.getName());
          System.out.println("Create Session");
          HttpSession session=request.getSession();
+         request.setAttribute("postList",postService.getAllPost());
          session.setAttribute("username",principal.getName());
         return "author";
     }

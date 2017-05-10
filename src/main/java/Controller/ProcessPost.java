@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.persistence.PostUpdate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -75,10 +76,6 @@ public class ProcessPost {
         System.out.println(postDAO.insert(post));
         httpServletRequest.setAttribute("post", post);
         session.setAttribute("post-id", post.getId());
-//        System.out.println("------------------------------------------------------"+post.getImage().getLink());
-//        System.out.println("------------------------------------------------------"+post.getImage().getAlt());
-
-
         return new ModelAndView("redirect:/view-post");
 
     }
@@ -104,12 +101,41 @@ public class ProcessPost {
         }
     }
 
-    @RequestMapping(name = "/like")
-    @ResponseBody
-    public  String  like(HttpServletRequest httpServletRequest)
+    @RequestMapping(value = "/update",method = RequestMethod.GET)
+    public  String updatePost(HttpServletRequest request)
     {
-        String id= httpServletRequest.getParameter("id");
-        System.out.println(id+"-------------------------------------------------------");
-        return "ok duoc roi nhe";
+        HttpSession session=request.getSession();
+        String action =request.getParameter("action");
+        String postId=request.getParameter("id");
+        if(action!=null && action.trim().equals("update")&&postId!=null&&postId.trim()!="")
+        {
+            session.setAttribute("postUpdate", postService.find(Integer.valueOf(postId)));
+        }
+        return "update";
+    }
+
+    @RequestMapping(value = "/write-update",method = RequestMethod.POST)
+    public  String viewUpdatePost(@ModelAttribute(value = "post")Post post, HttpServletRequest request)
+    {
+        HttpSession session=request.getSession();
+        Post postUpdate= (Post) session.getAttribute("postUpdate");
+        Date date=Calendar.getInstance().getTime();
+
+        Post  post1=postService.find(postUpdate.getId());
+        post1.setUpdateTime(date);
+        post1.setUserUpdated((String)session.getAttribute("username"));
+        post1.setTitle(post.getTitle());
+        post1.setContent(post.getContent());
+
+        System.out.println(post.getTitle()+"   ");
+
+        postDAO.update(post1);
+        System.out.println("okkkkkkkk");
+        String linkImage= request.getParameter("link-image");
+        String altImage=request.getParameter("alt-image");
+
+        session.setAttribute("post-id",post1.getId());
+        session.removeAttribute("postUpdate");
+        return "redirect:/view-post";
     }
 }

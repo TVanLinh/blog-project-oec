@@ -10,7 +10,7 @@
 
     <h2 class="login-header">Log in</h2>
 
-    <form name="loginForm" class="login-container" action="<c:url value="/j_spring_security_check"/> " method="post">
+    <form name="loginForm" class="login-container" action="<c:url value="/login"/> " method="post">
         <p><input name="username" type="text" placeholder="Email"></p>
         <p><input name="password" type="password" placeholder="Password"></p>
         <p><input type="submit" value="Log In" onclick="return login()"></p>

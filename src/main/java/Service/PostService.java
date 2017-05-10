@@ -46,7 +46,6 @@ public class PostService {
         return list;
     }
 
-    @OrderBy(value = "time_post desc")
     public List<Post> getPost(int from,int end)
     {
         Session session=sessionFactory.openSession();
@@ -55,5 +54,4 @@ public class PostService {
         session.close();
         return list;
     }
-
 }

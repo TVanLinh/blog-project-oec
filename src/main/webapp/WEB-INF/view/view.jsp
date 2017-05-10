@@ -28,7 +28,7 @@
             <hr>
 
             <!-- Date/Time -->
-            <p><span class="glyphicon glyphicon-time"></span> Posted on  ${post.timePost}</p>
+            <p><span class="glyphicon glyphicon-time"></span> <span class="margin-left-5" >Posted on</span>  ${post.timePost}</p>
 
             <hr>
 
@@ -38,7 +38,7 @@
              </div>
             <hr>
             <button class="btn-sm btn-xs">Like</button>${post.numberLike}  view: <button class="btn-sm btn-xs">${post.numberView} </button>
-            <a href="/update">Update</a> <a href="/update">Xoa</a>
+            <a href="/update?action=update&id=${post.id}">Update</a> <a href="/update?action=delete">Xoa</a>
             <hr>
 
             <!-- Blog Comments -->

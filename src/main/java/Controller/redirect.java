@@ -62,72 +62,35 @@ public class redirect {
         return "write";
     }
 
-
-
     @RequestMapping(value={"/","/home"})
-    public String defaultHomePage(HttpServletRequest request, HttpServletResponse response)
+    public String homePage(HttpServletRequest request)
     {
-         Configuration configuration=configurationService.find(1);
-         String str=request.getParameter("action");
-         List<Post> postList;
-         HttpSession session  =request.getSession();
-
-        if(str!=null)
+        String page=request.getParameter("page");
+        List<Post> postList;
+        int limit=configurationService.find(1).getNumberViewPost();
+        if(page==null)
         {
-            Integer begin= (Integer) session.getAttribute("begin");
-            try
-            {
-                if (str.equals("old_post"))
-                {
-                    if(begin<=0)
-                    {
-                        postList=postService.getPost(0,configuration.getNumberViewPost());
-                        request.setAttribute("postList",postList);
-                        logger.info("select with in begin<=0"+begin);
-                        session.setAttribute("begin",configuration.getNumberViewPost());
-                        return "home";
-                    }else
-                    {
-                        logger.info("select with in old post "+begin +" number ");
-                        postList=postService.getPost(begin-configuration.getNumberViewPost(),configuration.getNumberViewPost());
-                        request.setAttribute("postList",postList);
-                        session.setAttribute("begin",begin-configuration.getNumberViewPost());
-                        return "home";
-                    }
-                }
-                if (str.equals("new_post"))
-                {
-                    if(begin>=postService.getAllPost().size())
-                    {
-                        logger.info("select with newpost >=size()");
-                        postList=postService.getPost(0,configuration.getNumberViewPost());
-                        request.setAttribute("postList",postList);
-                        session.setAttribute("begin",configuration.getNumberViewPost());
-                        return "home";
-                    }
-                    int numerRecord=begin+configuration.getNumberViewPost();
-                    postList=postService.getPost(begin,configuration.getNumberViewPost());
-                    logger.info((begin+" numerRecord " +numerRecord));
-                    request.setAttribute("postList",postList);
-                    session.setAttribute("begin",numerRecord);
-                    System.out.println(postList.size());
-                    return "home";
-                }
-            }catch (Exception ex)
-            {
-                return "home";
-            }
-        }else {
-
-            postList=postService.getPost(0,configuration.getNumberViewPost());
+            postList=postService.getPost(0,limit);
+            request.setAttribute("page",1);
             request.setAttribute("postList",postList);
-            System.out.println("size:"+postList.size()+" begin");
-            System.out.println("size:"+postList.size() +" default  ");
-            session.setAttribute("begin",configuration.getNumberViewPost());
+            return "home";
         }
-         return "home";
-    }
+        try
+        {
+            postList=postService.getPost((Integer.valueOf(page)-1)*limit,limit);
+            request.setAttribute("page",Integer.valueOf(page));
+            System.out.println(page);
+            request.setAttribute("postList",postList);
 
+        }catch (Exception e)
+        {
+            postList=postService.getPost(0,limit);
+            request.setAttribute("page",1);
+            request.setAttribute("postList",postList);
+            return "home";
+        }
+        return "home";
+    }
     @RequestMapping(value = "/post")
     public  String viewPost(HttpServletRequest request)
     {
@@ -151,4 +114,9 @@ public class redirect {
         return "/home";
     }
 
+    @RequestMapping(value = "/testjson")
+    public  String testJon()
+    {
+        return "testjson";
+    }
 }
