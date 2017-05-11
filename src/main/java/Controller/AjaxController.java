@@ -10,6 +10,7 @@ import Service.ConfigurationService;
 import Service.PostService;
 import Utils.CookieUtils;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+;
 
 /**
  * Created by linhtran on 09/05/2017.
@@ -134,5 +138,57 @@ public class AjaxController {
         postRestBody.setNumberPage(numberPage+1);
         System.out.println(numberPage);
         return  postRestBody;
+    }
+
+    @RequestMapping(value = "/admin-post")
+    @JsonView(Views.Public.class)
+    public  PostRestBody nextPostAdmin(@RequestBody PostRestBody postRestBody,HttpServletRequest request)
+    {
+        String action=request.getParameter("action");
+        System.out.println(postRestBody.getMsg()+"--------------------");
+        String id=request.getParameter("id");
+        if(action==null||id==null)
+        {
+            return postRestBody;
+        }
+        List<Post> postList;
+        Post post;
+        try
+        {
+            Date date;
+            Calendar calendar=Calendar.getInstance();
+            if(action.equals("approve"))
+            {
+                date=calendar.getTime();
+                System.out.println(postRestBody.getMsg());
+                post=postService.find(Integer.valueOf(id));
+                if(post!=null)
+                {
+                    post.setApprovedTime(date);
+                    post.setApprove(1);
+                    postDAO.update(post);
+                    postList =postService.getAllPost("select * from post where approve=0");
+                    postRestBody.setNumberApprove(postList.size());
+                    postRestBody.setPosts(postList);
+                    return postRestBody;
+                }
+
+            }
+
+            if(action.equals("delete"))
+            {
+                postDAO.delete(Integer.valueOf(id));
+                postList =postService.getAllPost("select * from post where approve=0");
+                postRestBody.setNumberApprove(postList.size());
+                postRestBody.setPosts(postList);
+                return postRestBody;
+            }
+
+        }catch (Exception e)
+        {
+            Logger.getLogger(this.getClass().getName()).error("Id or action not valid");
+            return  postRestBody;
+        }
+        return postRestBody;
     }
 }

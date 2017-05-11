@@ -21,6 +21,9 @@ public class PostRestBody {
     int numberConf;
 
     @JsonView(Views.Public.class)
+    int numberApprove;
+
+    @JsonView(Views.Public.class)
     List<Post> posts;
 
     public String getMsg() {
@@ -53,5 +56,13 @@ public class PostRestBody {
 
     public void setNumberConf(int numberConf) {
         this.numberConf = numberConf;
+    }
+
+    public int getNumberApprove() {
+        return numberApprove;
+    }
+
+    public void setNumberApprove(int numberApprove) {
+        this.numberApprove = numberApprove;
     }
 }

@@ -6,6 +6,7 @@ import Entities.Post;
 import Entities.User;
 import Service.ConfigurationService;
 import Service.PostService;
+import Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -39,16 +40,8 @@ public class AccountController {
     @Autowired
     ConfigurationService configurationService;
 
-    @RequestMapping(value = "/admin**", method = RequestMethod.GET)
-    public ModelAndView adminPage() {
-
-        ModelAndView model = new ModelAndView();
-        model.addObject("title", "Spring Security Login Form - Database Authentication");
-        model.addObject("message", "This page is for ROLE_ADMIN only!");
-        model.setViewName("admin");
-        return model;
-
-    }
+    @Autowired
+    UserService userService;
 
 
     @RequestMapping(value = "/user")
@@ -60,28 +53,28 @@ public class AccountController {
                 System.out.println(principal.getName());
                 System.out.println("Create Session");
                 HttpSession session=request.getSession();
-                request.setAttribute("postList",postService.getAllPost());
+                request.setAttribute("postList",postService.getPostByIdUser(userService.getUserByName(principal.getName()).getId()));
                 session.setAttribute("username",principal.getName());
             }
             List<Post> postList;
             int limit=configurationService.find(1).getNumberViewPost();
             if(page==null)
             {
-                postList=postService.getPost(0,limit);
+                postList=postService.getPostByIdUser(userService.getUserByName(principal.getName()).getId(),0,limit);
                 request.setAttribute("page",1);
                 request.setAttribute("postList",postList);
                 return "author";
             }
             try
             {
-                postList=postService.getPost((Integer.valueOf(page)-1)*limit,limit);
+                postList=postService.getPostByIdUser(userService.getUserByName(principal.getName()).getId(),(Integer.valueOf(page)-1)*limit,limit);
                 request.setAttribute("page",Integer.valueOf(page));
                 System.out.println(page);
                 request.setAttribute("postList",postList);
 
             }catch (Exception e)
             {
-                postList=postService.getPost(0,limit);
+                postList=postService.getPostByIdUser(userService.getUserByName(principal.getName()).getId(),0,limit);
                 request.setAttribute("page",1);
                 request.setAttribute("postList",postList);
                 return "author";

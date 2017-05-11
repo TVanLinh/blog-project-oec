@@ -1,6 +1,8 @@
 <div class="col-md-4">
 
-    <jsp:include page="search.jsp"   />
+    <div class="hidden-md hidden-xs hidden-sm">
+        <jsp:include page="search.jsp"   />
+    </div>
     <!-- Blog Categories Well -->
     <div class="well">
         <h4>Blog Categories</h4>

@@ -59,6 +59,7 @@ public class Post  implements Serializable{
 
   @Basic
   @Column(name = "time_post")
+  @JsonView(Views.Public.class)
   private Date timePost;
 
   @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
@@ -72,6 +73,13 @@ public class Post  implements Serializable{
 
   public Post() {
   }
+
+//  @Transient
+//  @JsonView
+//  public String timePostToString()
+//  {
+//      return timePost.toString();
+//  }
 
   public int getId() {
     return id;

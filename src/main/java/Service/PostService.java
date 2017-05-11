@@ -63,10 +63,27 @@ public class PostService {
         return list;
     }
 
-    public List<Post> getPost(int from,int end)
+    public List<Post> getPost(int from,int limit)
     {
         Session session=sessionFactory.openSession();
-        String str="select * from post where approve=1 and status=1  order by time_post desc limit "+from+","+end +"";
+        String str="select * from post where approve=1 and status=1  order by time_post desc limit "+from+","+limit +"";
+        List<Post> list=session.createNativeQuery(str,Post.class).getResultList();
+        session.close();
+        return list;
+    }
+
+    public List<Post> getPostByIdUser(int idUser,int from,int limit)
+    {
+        Session session=sessionFactory.openSession();
+        String str="select * from post where id_user="+idUser+"  order by time_post desc limit "+from+","+limit +"";
+        List<Post> list=session.createNativeQuery(str,Post.class).getResultList();
+        session.close();
+        return list;
+    }
+    public List<Post> getPostByIdUser(int idUser)
+    {
+        Session session=sessionFactory.openSession();
+        String str="select * from post where id_user="+idUser+"  order by time_post desc";
         List<Post> list=session.createNativeQuery(str,Post.class).getResultList();
         session.close();
         return list;
