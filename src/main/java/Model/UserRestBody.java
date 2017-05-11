@@ -25,6 +25,9 @@ public class UserRestBody {
     @JsonView(Views.Public.class)
     private  int numberLike;
 
+    @JsonView(Views.Public.class)
+    private  String statusImg;
+
     public String getMsg() {
         return msg;
     }
@@ -59,5 +62,13 @@ public class UserRestBody {
 
     public void setNumberLike(int numberLike) {
         this.numberLike = numberLike;
+    }
+
+    public String getStatusImg() {
+        return statusImg;
+    }
+
+    public void setStatusImg(String statusImg) {
+        this.statusImg = statusImg;
     }
 }

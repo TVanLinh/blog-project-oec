@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <jsp:include page="template/head.jsp"/>
@@ -37,11 +38,11 @@
             <!-- Pager -->
             <ul class="pager">
                 <li class="previous">
-                    <a href="/home?page=${requestScope.page-1}">&larr; Back</a>
+                    <a href="/user?page=${requestScope.page-1}">&larr; Back</a>
                 </li>
                 <li class="next">
                     <c:if test="${postList.size()!=0}">
-                        <a href="/home?page=${requestScope.page+1}">Next &rarr;</a>
+                        <a href="/user?page=${requestScope.page+1}">Next &rarr;</a>
                     </c:if>
                 </li>
             </ul>
@@ -61,11 +62,6 @@
 
 </div>
     <!-- /.row -->
-
-    <hr>
-
-    <jsp:include page="template/footer.jsp"/>
-
 </div>
 </body>
 

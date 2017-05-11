@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.PostUpdate;
@@ -137,5 +134,14 @@ public class ProcessPost {
         session.setAttribute("post-id",post1.getId());
         session.removeAttribute("postUpdate");
         return "redirect:/view-post";
+    }
+
+    @RequestMapping(value = "/delete-post")
+    public String deletePost(@RequestParam(value = "id") int id,HttpServletRequest request)
+    {
+        System.out.println("id-------------------"+id);
+        request.setAttribute("page",0);
+        postDAO.delete(id);
+        return "redirect:/user";
     }
 }

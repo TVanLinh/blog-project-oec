@@ -1,9 +1,12 @@
 package Controller;
 
 import DAO.PostDAO;
+import Entities.Configuration;
 import Entities.Post;
 import JsonViews.Views;
+import Model.PostRestBody;
 import Model.UserRestBody;
+import Service.ConfigurationService;
 import Service.PostService;
 import Utils.CookieUtils;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -13,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by linhtran on 09/05/2017.
@@ -28,6 +34,9 @@ public class AjaxController {
 
     @Autowired
     PostDAO postDAO;
+
+    @Autowired
+    ConfigurationService configurationService;
 
     @RequestMapping(value = "/like")
     @JsonView(Views.Public.class)
@@ -55,7 +64,7 @@ public class AjaxController {
             return userRestBody;
         }
 
-        if (cookieLike==null || (cookieLike!=null&& !CookieUtils.isLike(post.getId(), cookieLike.getValue())))
+        if (cookieLike==null)
         {
             cookieLike=new Cookie("status_like_post",userRestBody.getId()+",");
 
@@ -65,7 +74,7 @@ public class AjaxController {
             userRestBody.setNumberLike(post.getNumberLike());
             userRestBody.setCode("200");
             userRestBody.setMsg("Thanh cong");
-
+            userRestBody.setStatusImg("public/asserts/images/like.png");
             cookieLike.setMaxAge(365*360*24);
             response.addCookie(cookieLike);
             System.out.println(cookieLike.getValue());
@@ -73,6 +82,23 @@ public class AjaxController {
             return  userRestBody;
         }
 
+        if( (cookieLike!=null&& !CookieUtils.isLike(post.getId(), cookieLike.getValue())))
+        {
+            post.setNumberLike(post.getNumberLike()+1);
+            postDAO.update(post);
+
+            userRestBody.setNumberLike(post.getNumberLike());
+            userRestBody.setCode("200");
+            userRestBody.setMsg("Thanh cong");
+            userRestBody.setStatusImg("public/asserts/images/like.png");
+
+            cookieLike.setValue(cookieLike.getValue()+post.getId()+",");
+            cookieLike.setMaxAge(365*360*24);
+            response.addCookie(cookieLike);
+            System.out.println(cookieLike.getValue());
+            System.out.println("------------------cookies---#not---------------------------------");
+            return  userRestBody;
+        }
         String str=CookieUtils.remove(cookieLike.getValue(),post.getId());
         cookieLike.setValue(str);
 
@@ -84,10 +110,29 @@ public class AjaxController {
 
         System.out.println("dislike like ");
         System.out.println("cooke"+cookieLike.getValue());
-
+        userRestBody.setStatusImg("public/asserts/images/notlike.png");
         userRestBody.setNumberLike(post.getNumberLike());
         userRestBody.setCode("200");
         userRestBody.setMsg("Thanh cong");
         return userRestBody;
+    }
+
+    @RequestMapping(value = "/get-post")
+    @JsonView(Views.Public.class)
+    public PostRestBody nextPostSlideBar(@RequestBody PostRestBody postRestBody, HttpServletRequest request)
+    {
+        Configuration conf=configurationService.find(1);
+        int numberPage=postRestBody.getNumberPage();
+        postRestBody.setNumberConf(conf.getNumberViewPost());
+        if(numberPage<0)
+        {
+            postRestBody.setPosts(new ArrayList<Post>());
+            return postRestBody;
+        }
+        postRestBody.setPosts(postService.getPost(numberPage*conf.getNumberViewPost(),conf.getNumberViewPost()));
+//        System.out.println(postService.getPost(numberPage*conf.getNumberViewPost(),conf.getNumberViewPost()).get(0).getImage().getLink());
+        postRestBody.setNumberPage(numberPage+1);
+        System.out.println(numberPage);
+        return  postRestBody;
     }
 }

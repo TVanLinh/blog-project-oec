@@ -95,6 +95,8 @@ public class redirect {
     public  String viewPost(HttpServletRequest request)
     {
         String id=request.getParameter("id");
+        List<Post> postSlideBar=postService.getPost(0,configurationService.find(1).getNumberViewPost());
+        request.setAttribute("postSlideBar",postSlideBar);
         if(id!=null)
         {
             try {

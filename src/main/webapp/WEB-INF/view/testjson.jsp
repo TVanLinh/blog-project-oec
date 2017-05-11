@@ -1,6 +1,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="Utils.CookieUtils" %>
 <html>
 <head>
     <title>Title</title>
@@ -10,9 +12,22 @@
 </head>
 <body>
     <button id="like">click</button>
+    <%
+//        CookieUtils cookieUtils=new CookieUtils();
+//        cookieUtils.
+    %>
+    <jsp:useBean id="cookieUtils" type="Utils.CookieUtils" scope="session" class="Utils.CookieUtils"/>
 
+    ${cookie.status_like_post.value}
     <button id="feedback">click</button>
+    <%=CookieUtils.isLike(2,"1,2,3,4")%>
+   cokkie: ${cookieUtils.isLike(1,cookie.status_like_post.value)}
 
+
+
+    <%--<c:if test="${cookie.status_like_post!=null}">--%>
+        <%--&lt;%&ndash;<c:out value="<%=cookieUtils.isLike(request.getCookies().status_like_post,1)}%>"/>&ndash;%&gt;--%>
+    <%--</c:if>--%>
     <%--<script type="text/javascript">--%>
         <%--jQuery(document).ready(function($) {--%>
             <%--$("#like").on("click",function(event) {--%>

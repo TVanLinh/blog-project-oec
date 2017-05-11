@@ -23,7 +23,7 @@
 
             <!--Userthor -->
             <span class="lead">
-                by <a href="#">${post.user.userName}</a>${post.status}
+               Post by <a href="#">${post.user.userName}</a>${post.status}
             </span>
             <hr>
 
@@ -38,7 +38,7 @@
              </div>
             <hr>
             <button class="btn-sm btn-xs">Like</button>${post.numberLike}  view: <button class="btn-sm btn-xs">${post.numberView} </button>
-            <a href="/update?action=update&id=${post.id}">Update</a> <a href="/update?action=delete">Xoa</a>
+            <a id="action-update" href="/update?action=update&id=${post.id}">Update</a> <a id="action-" onclick="return window.confirm('Are you sure you want to delete this post?')" href="/delete-post&id=${post.id}">Xoa</a>
             <hr>
 
             <!-- Blog Comments -->

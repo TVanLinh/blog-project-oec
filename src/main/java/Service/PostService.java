@@ -41,7 +41,24 @@ public class PostService {
     public List<Post> getAllPost()
     {
         Session session=sessionFactory.openSession();
-        List<Post> list=session.createNativeQuery("select * from post",Post.class).getResultList();
+        List<Post> list=session.createNativeQuery("select * from post ",Post.class).getResultList();
+        session.close();
+        return list;
+    }
+
+    public  List<Post> getAllPost(String query)
+    {
+        Session session=sessionFactory.openSession();
+        List<Post> list=session.createNativeQuery(query,Post.class).getResultList();
+        session.close();
+        return list;
+    }
+
+    public  List<Post> getAllPostPublic()
+    {
+        Session session=sessionFactory.openSession();
+        String query="select * from post where approve=1 and status=1  order by time_post";
+        List<Post> list=session.createNativeQuery(query,Post.class).getResultList();
         session.close();
         return list;
     }

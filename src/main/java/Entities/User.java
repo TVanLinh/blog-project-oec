@@ -1,5 +1,8 @@
 package Entities;
 
+import JsonViews.Views;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -15,6 +18,7 @@ public class User implements Serializable {
 
   @Basic
   @Column(name = "user_name",unique = true)
+  @JsonView(Views.Public.class)
   private String userName;
 
   @Basic

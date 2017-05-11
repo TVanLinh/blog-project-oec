@@ -24,7 +24,7 @@
                     <span class="lead">
                         <span class="fs-15">By</span> <a href="index.php" class="fs-15">${post.user.userName}</a>
                     </span>
-                    <p><span class="glyphicon glyphicon-time"></span>Posted on ${DateFormatUtil.format(post.timePost,"HH:mm:ss  dd:MM:yyyy")}</p>
+                    <p><span class="glyphicon glyphicon-time"></span><span class="margin-left-3">Posted on</span> ${post.timePost}</p>
                     <hr>
                         <c:if test="${post.image.link!=null}">
                             <img src="${post.image.link}">

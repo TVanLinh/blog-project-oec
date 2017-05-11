@@ -1,5 +1,7 @@
 package Entities;
 
+import JsonViews.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -13,12 +15,14 @@ public class Post  implements Serializable{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
+  @JsonView(Views.Public.class)
   private int id;
 
 //  @NotEmpty
 //  @Size(min = 10,max = 100,message = "Min length 10.!")
   @Basic
   @Column(name = "title")
+  @JsonView(Views.Public.class)
   private String title;
 
   @Basic
@@ -59,9 +63,11 @@ public class Post  implements Serializable{
 
   @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
   @JoinColumn(name = "id_user",referencedColumnName = "id")
+  @JsonView(Views.Public.class)
   User user;
 
   @OneToOne(mappedBy = "post",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+  @JsonView(Views.Public.class)
   private Image image;
 
   public Post() {

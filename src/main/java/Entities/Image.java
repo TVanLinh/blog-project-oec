@@ -1,5 +1,7 @@
 package Entities;
 
+import JsonViews.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.*;
 import javax.persistence.CascadeType;
 
@@ -22,10 +24,12 @@ public class Image {
 
     @Basic
     @Column(name = "link")
+    @JsonView(Views.Public.class)
     private String link;
 
     @Basic
     @Column(name = "alt")
+    @JsonView(Views.Public.class)
     private  String alt;
 
     @Basic

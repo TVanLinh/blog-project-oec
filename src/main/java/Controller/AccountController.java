@@ -1,7 +1,10 @@
 package Controller;
 
 import DAO.UserDAOIML;
+import Entities.Configuration;
+import Entities.Post;
 import Entities.User;
+import Service.ConfigurationService;
 import Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -18,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.List;
 
 /**
  * Created by linhtran on 06/05/2017.
@@ -32,6 +36,8 @@ public class AccountController {
     @Autowired
     PostService postService;
 
+    @Autowired
+    ConfigurationService configurationService;
 
     @RequestMapping(value = "/admin**", method = RequestMethod.GET)
     public ModelAndView adminPage() {
@@ -48,11 +54,39 @@ public class AccountController {
     @RequestMapping(value = "/user")
     public  String userInfor(Principal principal,HttpServletRequest request)
     {
-         System.out.println(principal.getName());
-         System.out.println("Create Session");
-         HttpSession session=request.getSession();
-         request.setAttribute("postList",postService.getAllPost());
-         session.setAttribute("username",principal.getName());
+            String page=request.getParameter("page");
+            if(request.getSession().getAttribute("username")==null)
+            {
+                System.out.println(principal.getName());
+                System.out.println("Create Session");
+                HttpSession session=request.getSession();
+                request.setAttribute("postList",postService.getAllPost());
+                session.setAttribute("username",principal.getName());
+            }
+            List<Post> postList;
+            int limit=configurationService.find(1).getNumberViewPost();
+            if(page==null)
+            {
+                postList=postService.getPost(0,limit);
+                request.setAttribute("page",1);
+                request.setAttribute("postList",postList);
+                return "author";
+            }
+            try
+            {
+                postList=postService.getPost((Integer.valueOf(page)-1)*limit,limit);
+                request.setAttribute("page",Integer.valueOf(page));
+                System.out.println(page);
+                request.setAttribute("postList",postList);
+
+            }catch (Exception e)
+            {
+                postList=postService.getPost(0,limit);
+                request.setAttribute("page",1);
+                request.setAttribute("postList",postList);
+                return "author";
+            }
+
         return "author";
     }
 

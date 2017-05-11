@@ -33,6 +33,10 @@ public class ConfigurationService {
         Session session=sessionFactory.openSession();
         Configuration conf=session.find(Configuration.class,id);
         session.close();
+        if(conf==null)
+        {
+            return getAllConfiguration().get(0);
+        }
         return  conf;
     }
 
