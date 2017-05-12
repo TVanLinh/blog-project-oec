@@ -1,12 +1,4 @@
-z/*
 
-RESPONSTABLE 2.0 by jordyvanraaij
-  Designed mobile first!
-
-If you like this solution, you might also want to check out the 1.0 version:
-  https://gist.github.com/jordyvanraaij/9069194
-
-*/
 .responstable {
     margin: 1em 0;
     width: 100%;
@@ -29,14 +21,10 @@ If you like this solution, you might also want to check out the 1.0 version:
     color: #FFF;
     padding: 1em;
 }
-.responstable th:first-child {
-    display: table-cell;
+.responstable th {
     text-align: center;
 }
-.responstable th:nth-child(2) {
-    display: table-cell;
-}
-.responstable th:nth-child(2) span {
+esponstable th:nth-child(2) span {
     display: none;
 }
 .responstable th:nth-child(2):after {
@@ -53,7 +41,7 @@ If you like this solution, you might also want to check out the 1.0 version:
 .responstable td {
     display: block;
     word-wrap: break-word;
-    max-width: 400px;
+    max-width: 300px;
 }
 .responstable td:first-child {
     display: table-cell;
@@ -65,9 +53,11 @@ If you like this solution, you might also want to check out the 1.0 version:
         border: 1px solid #D9E4E6;
     }
 }
-.responstable th, .responstable td {
-    text-align: left;
+.responstable th,.responstable td {
     margin: .5em 1em;
+}
+.responstable td {
+    text-align: left;
 }
 @media (min-width: 480px) {
     .responstable th, .responstable td {

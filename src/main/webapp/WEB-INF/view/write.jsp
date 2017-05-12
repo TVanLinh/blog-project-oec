@@ -74,6 +74,7 @@
         {
             atlOutPut.value=altInput.value;
         }
+        alert(input);
     }
 </script>
 

@@ -1,7 +1,7 @@
 package Controller;
 
+import DAO.ImageDAO;
 import DAO.PostDAO;
-import DAO.UserDAOIML;
 import Entities.Image;
 import Entities.Post;
 import Entities.User;
@@ -9,16 +9,15 @@ import Service.PostService;
 import Service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.persistence.PostUpdate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,6 +39,10 @@ public class ProcessPost {
 
     @Autowired
     PostService postService;
+
+    @Autowired
+    ImageDAO imageDAO;
+
 
     @RequestMapping(value = "/write-post", method = RequestMethod.POST)
     public ModelAndView processWritePost(@ModelAttribute(value = "post") Post post, HttpServletRequest httpServletRequest, Principal principal) {
@@ -123,14 +126,36 @@ public class ProcessPost {
         post1.setUserUpdated((String)session.getAttribute("username"));
         post1.setTitle(post.getTitle());
         post1.setContent(post.getContent());
+        post1.setStatus(post.getStatus());
 
-        System.out.println(post.getTitle()+"   ");
-
-        postDAO.update(post1);
-        System.out.println("okkkkkkkk");
         String linkImage= request.getParameter("link-image");
         String altImage=request.getParameter("alt-image");
 
+        if(post.getImage()!=null)
+        {
+            if(linkImage!=null&&!linkImage.trim().equals(""))
+            {
+                post1.getImage().setLink(linkImage);
+            }
+            if(altImage!=null&&!altImage.trim().equals(""))
+            {
+                post1.getImage().setAlt(altImage);
+            }
+        }else
+        {
+            Image image=new Image();
+            if(linkImage!=null&&!linkImage.trim().equals(""))
+            {
+                image.setLink(linkImage);
+            }
+            if(altImage!=null&&!altImage.trim().equals(""))
+            {
+                image.setAlt(altImage);
+            }
+            post1.setImage(image);
+//            imageDAO.insert(image);
+        }
+        postDAO.update(post1);
         session.setAttribute("post-id",post1.getId());
         session.removeAttribute("postUpdate");
         return "redirect:/view-post";
@@ -139,8 +164,8 @@ public class ProcessPost {
     @RequestMapping(value = "/delete-post")
     public String deletePost(@RequestParam(value = "id") int id,HttpServletRequest request)
     {
-        System.out.println("id-------------------"+id);
         request.setAttribute("page",0);
+        System.out.println();
         postDAO.delete(id);
         return "redirect:/user";
     }

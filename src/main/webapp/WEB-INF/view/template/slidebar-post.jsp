@@ -18,14 +18,14 @@
             </li>
         </c:forEach>
     </ul>
-    <ul class="pager">
-        <li class="previous">
-            <a id="previousPost" href="javascript:void(0)"  class="hide" >&larr; Back</a>
-        </li>
-        <li class="next">
-            <c:if test="${postList.size()!=0}">
-                <a id="nextPost" href="javascript:void(0)" onclick="A.getPost('get-post-page-post',1)">Next &rarr;</a>
-            </c:if>
-        </li>
-    </ul>
+    <%--<ul class="pager">--%>
+        <%--<li class="previous">--%>
+            <%--<a id="previousPost" href="javascript:void(0)"  class="hide" >&larr; Back</a>--%>
+        <%--</li>--%>
+        <%--<li class="next">--%>
+            <%--<c:if test="${postList.size()!=0}">--%>
+                <%--<a id="nextPost" href="javascript:void(0)" onclick="A.getPost('get-post-page-post',1)">Next &rarr;</a>--%>
+            <%--</c:if>--%>
+        <%--</li>--%>
+    <%--</ul>--%>
 </div>

@@ -2,12 +2,8 @@ package Entities;
 
 import JsonViews.Views;
 import com.fasterxml.jackson.annotation.JsonView;
-import org.hibernate.annotations.*;
-import javax.persistence.CascadeType;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
 /**
  * Created by linhtran on 09/05/2017.
@@ -33,7 +29,7 @@ public class Image {
     private  String alt;
 
     @Basic
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "id_post",referencedColumnName = "id")
     private Post post;
 

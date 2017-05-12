@@ -11,7 +11,6 @@
     </mvc:view-resolvers>
     <mvc:view-controller path="/" view-name="home"/>
     <mvc:resources mapping="/public/**" location="/public/"/>
-    <mvc:resources mapping="/images/**" location="/images/"/>
     <context:component-scan base-package="Controller"/>
     <context:annotation-config/>
 </beans>

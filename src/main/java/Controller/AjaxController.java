@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 ;
 
 /**
@@ -134,7 +134,6 @@ public class AjaxController {
             return postRestBody;
         }
         postRestBody.setPosts(postService.getPost(numberPage*conf.getNumberViewPost(),conf.getNumberViewPost()));
-//        System.out.println(postService.getPost(numberPage*conf.getNumberViewPost(),conf.getNumberViewPost()).get(0).getImage().getLink());
         postRestBody.setNumberPage(numberPage+1);
         System.out.println(numberPage);
         return  postRestBody;
@@ -142,7 +141,7 @@ public class AjaxController {
 
     @RequestMapping(value = "/admin-post")
     @JsonView(Views.Public.class)
-    public  PostRestBody nextPostAdmin(@RequestBody PostRestBody postRestBody,HttpServletRequest request)
+    public  PostRestBody defaultPagePostAdminApprove(@RequestBody PostRestBody postRestBody,HttpServletRequest request)
     {
         String action=request.getParameter("action");
         System.out.println(postRestBody.getMsg()+"--------------------");
@@ -162,14 +161,21 @@ public class AjaxController {
                 date=calendar.getTime();
                 System.out.println(postRestBody.getMsg());
                 post=postService.find(Integer.valueOf(id));
-                if(post!=null)
-                {
+                if(post!=null) {
                     post.setApprovedTime(date);
                     post.setApprove(1);
                     postDAO.update(post);
-                    postList =postService.getAllPost("select * from post where approve=0");
-                    postRestBody.setNumberApprove(postList.size());
+                    String str = "select * from post where approve=0  order by time_post limit " + postRestBody.getNumberPage() * 10 + ",10";
+                    postList = postService.getAllPost(str);
                     postRestBody.setPosts(postList);
+                    List<Post> all = postService.getAllPost("select * from post where approve=0");
+                    if (all == null) {
+                        postRestBody.setNumberApprove(0);
+                    } else
+                    {
+                        postRestBody.setNumberApprove(all.size());
+                    }
+                    postRestBody.setNumberApprove(getNumberNotApprove());
                     return postRestBody;
                 }
 
@@ -178,8 +184,9 @@ public class AjaxController {
             if(action.equals("delete"))
             {
                 postDAO.delete(Integer.valueOf(id));
-                postList =postService.getAllPost("select * from post where approve=0");
-                postRestBody.setNumberApprove(postList.size());
+                String str="select * from post where approve=0  order by time_post limit "+postRestBody.getNumberPage()*10+",10";
+                postList =postService.getAllPost(str);
+                postRestBody.setNumberApprove(getNumberNotApprove());
                 postRestBody.setPosts(postList);
                 return postRestBody;
             }
@@ -191,4 +198,39 @@ public class AjaxController {
         }
         return postRestBody;
     }
+
+    @RequestMapping ("/approve-post")
+    @JsonView(Views.Public.class)
+    public PostRestBody  getPost(@RequestBody PostRestBody postRestBody,HttpServletRequest request)
+    {
+        System.out.println("post: "+postRestBody.getMsg()+" "+postRestBody.getNumberPage());
+        List<Post> postList;
+       try
+       {
+           String str="select * from post where approve=0  order by time_post limit "+postRestBody.getNumberPage()*10+",10";
+           postList=postService.getAllPost(str);
+           if(postList==null)
+           {
+               postList=new ArrayList<Post>();
+           }
+           postRestBody.setPosts(postList);
+           postRestBody.setNumberApprove(getNumberNotApprove());
+       }catch (Exception exception)
+       {
+           Logger.getLogger(this.getClass().getName()).error("Error in function getPost");
+           return postRestBody;
+       }
+        System.out.println(postService.getAllPost("select * from post where approve = 0 ").size());
+       return postRestBody;
+    }
+
+    public  int getNumberNotApprove()
+    {
+        List<Post> all = postService.getAllPost("select * from post where approve=0");
+        if (all == null) {
+           return 0;
+        }
+       return all.size();
+    }
+
 }

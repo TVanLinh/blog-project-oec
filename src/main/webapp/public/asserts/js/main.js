@@ -136,12 +136,12 @@ function dsplayPostSlidebar(data) {
 function  getPostTableRemove(msg,page) {
     var data ={};
     data['msg']=msg;
-    // data['numberPage']=page;
+    data['numberPage']=page;
     $.ajax({
         type:"POST",
         contentType:"application/json",
         data : JSON.stringify(data),
-        url:"/admin-post?"+msg,
+        url:msg,
         dataType:"json",
         timeout:1000,
         success:function (data) {
@@ -161,33 +161,12 @@ function  getPostTableRemove(msg,page) {
 function showPostAdmin(data,idContent,content) {
 
     var postList=data.posts;
-    if(postList.length==0&&data.numberPage-2<0)
+    if(postList.length==0)
     {
         $(idContent).html(content);
-        $('#previousPost').addClass('hide');
         return;
     }
-    if(data.numberPage-2<=0)
-    {
-        $('#previousPost').addClass('hide');
-    }else(data.numberPage-2>0)
-    {
-        $('#previousPost').removeClass('hide');
-    }
-
-    if((postList.length<data.numberConf&&data.numberPage>1))
-    {
-        $('#nextPost').addClass('hide');
-    }else
-    {
-        $('#nextPost').removeClass('hide');
-    }
-    console.log("numberConf "+data.numberConf);
-    console.log(content);
     $(idContent).html(content);
-    $("#nextPost").attr("onclick","A.getPost('get-post-page-post',"+data.numberPage+")");
-    $("#previousPost").attr("onclick","A.getPost('get-post-page-post',"+(data.numberPage-2)+")");
-    console.log( $("#nextPost"));
 }
 
 function  displayTablePostImprove(postList) {
@@ -199,20 +178,22 @@ function  displayTablePostImprove(postList) {
    var del;
    var approve;
    for(var i=0;i<postList.length;i++) {
-       del="'action=delete&id="+ postList[i].id+"'";
+       del="'/admin-post?action=delete&id="+ postList[i].id+"'";
 
-       approve="'action=approve&id="+ postList[i].id+"'";
+       approve="'/admin-post?action=approve&id="+ postList[i].id+"'";
        console.log(del+"----------"+approve);
        content += "<tr>" +
+               "<td>"+(i+1)+"</td>"
+               +
            "<td>" + postList[i].user.userName + "</td>" +
-           "<td>" + postList[i].title + "</td>" +
+           "<td><a href='/post?id="+postList[i].id+"'>" + postList[i].title +"</a></td>" +
            "<td>" + formaDate(postList[i].timePost) + "</td>" +
            "<td>" +
-           "<a href='javascript:void(0)' "+" onclick=A.getPostImprove("+ approve +","+"'ok'"+")" + ">" +
+           "<a href='javascript:void(0)' "+" onclick=A.getPostImprove("+ approve +","+"1"+")" + ">" +
 
            "<span class='glyphicon glyphicon-ok mgr-10'></span>" +
            "</a>" +
-           "<a href='javascript:void(0)' " +" onclick=A.getPostImprove("+ del +","+"'ok'"+")"+ ">" +
+           "<a href='javascript:void(0)' " +" onclick=A.getPostImprove("+ del +","+"1"+")"+ ">" +
            "<span class='glyphicon glyphicon-remove mgl-10'></span>" +
            "</a>" +
            "<a href='/update?action=update&id=" + postList[i].id + "'>" +

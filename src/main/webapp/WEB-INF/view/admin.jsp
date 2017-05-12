@@ -1,4 +1,5 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <jsp:include page="template/head.jsp"/>
@@ -14,11 +15,11 @@
                 <div class="col-md-8">
                     <ul class="list-group">
                         <li class="list-inline btn btn-danger mgl-10 mgr-10" onclick="A.getPostImprove('action=approve&id=4',44)">Manager Post</li>
-                        <li class="list-inline btn btn-success mgr-10"><span class="glyphicon glyphicon-cog mgr-5"></span>Configuration System</li>
+                        <li class="list-inline btn btn-success mgr-10"><a href="/configuration"><span class="glyphicon glyphicon-cog mgr-5"></span>Configuration System</a></li>
                         <li class="list-inline btn btn-warning mgl-10 ">Manager User</li>
                     </ul>
                     <ul class="list-group">
-                        <li class="list-group-item">Sum <span class="badge" id="numberApprove">${requestScope.postList.size()}</span></li>
+                        <li class="list-group-item">Total post have not approve <span class="badge" id="numberApprove">${requestScope.totalPost}</span></li>
                     </ul>
                     <jsp:include page="template/table-list-post.jsp"/>
                 </div>

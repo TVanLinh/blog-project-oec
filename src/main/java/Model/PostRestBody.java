@@ -26,6 +26,9 @@ public class PostRestBody {
     @JsonView(Views.Public.class)
     List<Post> posts;
 
+    @JsonView(Views.Public.class)
+    private  int totalPost;
+
     public String getMsg() {
         return msg;
     }
@@ -64,5 +67,13 @@ public class PostRestBody {
 
     public void setNumberApprove(int numberApprove) {
         this.numberApprove = numberApprove;
+    }
+
+    public int getTotalPost() {
+        return totalPost;
+    }
+
+    public void setTotalPost(int totalPost) {
+        this.totalPost = totalPost;
     }
 }
