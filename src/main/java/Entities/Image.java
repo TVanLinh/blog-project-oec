@@ -29,7 +29,7 @@ public class Image {
     private  String alt;
 
     @Basic
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_post",referencedColumnName = "id")
     private Post post;
 

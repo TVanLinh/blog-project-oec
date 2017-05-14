@@ -53,7 +53,7 @@
 
     <!-- Footer -->
     <jsp:include page="template/footer.jsp"/>
-    <button onclick="alert(getImages())">jfkjkgkjgfkjfg</button>
+    <%--<button onclick="alert(getImages())">jfkjkgkjgfkjfg</button>--%>
 </div>
 <!-- /.container -->
 

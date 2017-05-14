@@ -21,7 +21,7 @@ public class PostDAOIML implements PostDAO {
         Session session=sessionFactory.getCurrentSession();
         try {
             session.persist(post);
-            System.out.println(" insert success");
+            System.out.println(" insert post success");
             return true;
         }catch (Exception e)
         {
@@ -35,7 +35,7 @@ public class PostDAOIML implements PostDAO {
         Post post=session.find(Post.class,idPost);
         try {
             session.remove(post);
-            System.out.println(" delete success");
+            System.out.println(" delete post success");
             return true;
         }catch (Exception e)
         {
@@ -48,7 +48,7 @@ public class PostDAOIML implements PostDAO {
         Session session=sessionFactory.getCurrentSession();
         try {
             session.merge(post);
-            System.out.println(" update success");
+            System.out.println(" update post success");
             return true;
         }catch (Exception e)
         {

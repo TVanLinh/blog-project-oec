@@ -20,7 +20,7 @@ public class ConfigurationDAOIML  implements ConfigurationDAO{
         Session session=sessionFactory.getCurrentSession();
         try {
             session.persist(conf);
-            System.out.println(" insert success");
+            System.out.println(" insert Configuration success");
             return true;
         }catch (Exception e)
         {
@@ -34,7 +34,7 @@ public class ConfigurationDAOIML  implements ConfigurationDAO{
         Configuration conf =session.find(Configuration.class,idAuthor);
         try {
             session.remove(conf);
-            System.out.println(" delete success");
+            System.out.println(" delete Configuration success");
             return true;
         }catch (Exception e)
         {
@@ -47,7 +47,7 @@ public class ConfigurationDAOIML  implements ConfigurationDAO{
         Session session=sessionFactory.getCurrentSession();
         try {
             session.merge(conf);
-            System.out.println(" update success");
+            System.out.println(" update Configuration success");
             return true;
         }catch (Exception e)
         {

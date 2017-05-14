@@ -2,7 +2,6 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="Utils.DateFormatUtil" %>
 <!DOCTYPE html>
 <html lang="en">
 <jsp:include page="template/head.jsp"/>
@@ -19,12 +18,13 @@
                 <div class="col-md-8">
                      <c:forEach var="post" items="${postList}">
                 <!-- First Blog Post -->
-                    <h2><a href="/post?id=${post.id}" target="_blank">${post.title} <button>${post.id}</button></a></h2>
+                    <h2><a href="/post?id=${post.id}" target="_blank">${post.title} </a></h2> <!--button>${post.id}</button-->
 
                     <span class="lead">
-                        <span class="fs-15">By</span> <a href="index.php" class="fs-15">${post.user.userName}</a>
+                        <span class="fs-15">By</span> <a href="#" class="fs-15">${post.user.userName}</a>
                     </span>
-                    <p><span class="glyphicon glyphicon-time"></span><span class="margin-left-3">Posted on</span> ${post.timePost}</p>
+                         <jsp:useBean id="dateUtil" class="Utils.DateFormatUtil" scope="session"/>
+                    <p><span class="glyphicon glyphicon-time"></span><span class="margin-left-3">Posted on</span> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</p>
                     <hr>
                         <c:if test="${post.image.link!=null}">
                             <img src="${post.image.link}">

@@ -2,10 +2,8 @@ package Entities;
 
 import JsonViews.Views;
 import com.fasterxml.jackson.annotation.JsonView;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -67,19 +65,12 @@ public class Post  implements Serializable{
   @JsonView(Views.Public.class)
   User user;
 
-  @OneToOne(mappedBy = "post",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+  @OneToOne(mappedBy = "post",fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
   @JsonView(Views.Public.class)
   private Image image;
 
   public Post() {
   }
-
-//  @Transient
-//  @JsonView
-//  public String timePostToString()
-//  {
-//      return timePost.toString();
-//  }
 
   public int getId() {
     return id;

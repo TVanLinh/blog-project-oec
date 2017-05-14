@@ -21,7 +21,7 @@ public class UserDAOIML implements UserDAO {
         Session session=sessionFactory.getCurrentSession();
         try {
             session.persist(user);
-            System.out.println(" insert success");
+            System.out.println(" insert User success");
             return true;
         }catch (Exception e)
         {
@@ -35,7 +35,7 @@ public class UserDAOIML implements UserDAO {
         User user =session.find(User.class,idAuthor);
         try {
             session.remove(user);
-            System.out.println(" delete success");
+            System.out.println(" delete User success");
             return true;
         }catch (Exception e)
         {
@@ -48,7 +48,7 @@ public class UserDAOIML implements UserDAO {
         Session session=sessionFactory.getCurrentSession();
         try {
             session.merge(user);
-            System.out.println(" update success");
+            System.out.println(" update User success");
             return true;
         }catch (Exception e)
         {

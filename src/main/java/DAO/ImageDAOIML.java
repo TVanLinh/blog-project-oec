@@ -21,7 +21,7 @@ public class ImageDAOIML implements ImageDAO {
         Session session=sessionFactory.getCurrentSession();
         try {
             session.persist(image);
-            System.out.println(" insert success");
+            System.out.println(" insert image success");
             return true;
         }catch (Exception e)
         {
@@ -35,7 +35,7 @@ public class ImageDAOIML implements ImageDAO {
         Image image =session.find(Image.class,idAuthor);
         try {
             session.remove(image);
-            System.out.println(" delete success");
+            System.out.println(" delete image success");
             return true;
         }catch (Exception e)
         {
@@ -48,7 +48,7 @@ public class ImageDAOIML implements ImageDAO {
         Session session=sessionFactory.getCurrentSession();
         try {
             session.merge(image);
-            System.out.println(" update success");
+            System.out.println(" update image success");
             return true;
         }catch (Exception e)
         {

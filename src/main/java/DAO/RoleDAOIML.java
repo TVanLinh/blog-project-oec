@@ -21,7 +21,7 @@ public class RoleDAOIML implements RoleDAO {
         Session session=sessionFactory.getCurrentSession();
         try {
             session.persist(role);
-            System.out.println(" insert success");
+            System.out.println(" insert Role success");
             return true;
         }catch (Exception e)
         {
@@ -35,7 +35,7 @@ public class RoleDAOIML implements RoleDAO {
         Role role =session.find(Role.class,idRole);
         try {
             session.remove(role);
-            System.out.println(" delete success");
+            System.out.println(" delete Role success");
             return true;
         }catch (Exception e)
         {
@@ -48,7 +48,7 @@ public class RoleDAOIML implements RoleDAO {
         Session session=sessionFactory.getCurrentSession();
         try {
             session.saveOrUpdate(role);
-            System.out.println(" update success");
+            System.out.println(" update Role success");
             return true;
         }catch (Exception e)
         {

@@ -5,8 +5,10 @@ import DAO.PostDAO;
 import Entities.Image;
 import Entities.Post;
 import Entities.User;
+import Service.ConfigurationService;
 import Service.PostService;
 import Service.UserService;
+import Utils.DefaultPage;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,10 +45,17 @@ public class ProcessPost {
     @Autowired
     ImageDAO imageDAO;
 
+    @Autowired
+    ConfigurationService     configurationService;
+
+    @Autowired
+    DefaultPage  defaultPage;
 
     @RequestMapping(value = "/write-post", method = RequestMethod.POST)
     public ModelAndView processWritePost(@ModelAttribute(value = "post") Post post, HttpServletRequest httpServletRequest, Principal principal) {
+        defaultPage.setDaultPage(httpServletRequest);
         HttpSession session = httpServletRequest.getSession();
+
         User user = userService.getUserByName(principal.getName());
         post.setUser(user);
 
@@ -81,12 +90,15 @@ public class ProcessPost {
     }
 
     @RequestMapping(value = "/write-post", method = RequestMethod.GET)
-    public String processWritePost() {
+    public String processWritePost(HttpServletRequest request) {
+        defaultPage.setDaultPage(request);
         return "home";
     }
 
     @RequestMapping(value = "/view-post", method = RequestMethod.GET)
     public String view(HttpServletRequest request) {
+        defaultPage.setDaultPage(request);
+
         HttpSession session = request.getSession();
         Integer postId = (Integer) session.getAttribute("post-id");
         try {
@@ -104,6 +116,7 @@ public class ProcessPost {
     @RequestMapping(value = "/update",method = RequestMethod.GET)
     public  String updatePost(HttpServletRequest request)
     {
+        defaultPage.setDaultPage(request);
         HttpSession session=request.getSession();
         String action =request.getParameter("action");
         String postId=request.getParameter("id");
@@ -117,7 +130,9 @@ public class ProcessPost {
     @RequestMapping(value = "/write-update",method = RequestMethod.POST)
     public  String viewUpdatePost(@ModelAttribute(value = "post")Post post, HttpServletRequest request)
     {
+        defaultPage.setDaultPage(request);
         HttpSession session=request.getSession();
+
         Post postUpdate= (Post) session.getAttribute("postUpdate");
         Date date=Calendar.getInstance().getTime();
 
@@ -152,8 +167,12 @@ public class ProcessPost {
             {
                 image.setAlt(altImage);
             }
-            post1.setImage(image);
-//            imageDAO.insert(image);
+            if(image.getLink()!=null)
+            {
+                System.out.println(image.getLink());
+                image.setPost(post1);
+                imageDAO.insert(image);
+            }
         }
         postDAO.update(post1);
         session.setAttribute("post-id",post1.getId());
@@ -169,4 +188,6 @@ public class ProcessPost {
         postDAO.delete(id);
         return "redirect:/user";
     }
+
+
 }

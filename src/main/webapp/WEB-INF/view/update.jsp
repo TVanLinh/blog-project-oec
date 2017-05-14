@@ -54,7 +54,7 @@
     <jsp:include page="template/footer.jsp"/>
 </div>
 <!-- /.container -->
-<button onclick="getImages()">ok</button>
+<%--<button onclick="getImages()">ok</button>--%>
 </body>
 <script type="text/javascript">
     function getImages()

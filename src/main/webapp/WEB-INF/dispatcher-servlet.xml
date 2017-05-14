@@ -12,5 +12,7 @@
     <mvc:view-controller path="/" view-name="home"/>
     <mvc:resources mapping="/public/**" location="/public/"/>
     <context:component-scan base-package="Controller"/>
+    <context:component-scan base-package="Filter"/>
+    <context:component-scan base-package="Utils"/>
     <context:annotation-config/>
 </beans>

@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="user" content="">
 
-    <title>Home page blog</title>
+    <title>Blog By Linh Tran</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<s:url value="public/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet" type="text/css"/>

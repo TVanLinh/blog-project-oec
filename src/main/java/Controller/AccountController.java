@@ -3,7 +3,6 @@ package Controller;
 import DAO.UserDAOIML;
 import Entities.Configuration;
 import Entities.Post;
-import Entities.User;
 import Service.ConfigurationService;
 import Service.PostService;
 import Service.UserService;
@@ -47,6 +46,7 @@ public class AccountController {
     @RequestMapping(value = "/user")
     public  String userInfor(Principal principal,HttpServletRequest request)
     {
+
             String page=request.getParameter("page");
             if(request.getSession().getAttribute("username")==null)
             {
@@ -55,6 +55,16 @@ public class AccountController {
                 HttpSession session=request.getSession();
                 request.setAttribute("postList",postService.getPostByIdUser(userService.getUserByName(principal.getName()).getId()));
                 session.setAttribute("username",principal.getName());
+                //----------------------------------------------
+                Configuration configuration=configurationService.getAllConfiguration().get(0);
+                session=request.getSession();
+                if(configuration!=null)
+                {
+                    session.setAttribute("dateFormat",configuration.getDateFormat());
+                    session.setAttribute("blogTitle",configuration.getWebTitle());
+                }
+
+                //-----------------------------
             }
             List<Post> postList;
             int limit=configurationService.find(1).getNumberViewPost();

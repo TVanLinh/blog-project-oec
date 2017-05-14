@@ -5,6 +5,7 @@ import Entities.Configuration;
 import Entities.Post;
 import Service.ConfigurationService;
 import Service.PostService;
+import Utils.DefaultPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +32,11 @@ public class AdminController
     @Autowired
     ConfigurationDAO configDAO;
 
+    @Autowired
+    DefaultPage defaultPage;
     @RequestMapping(value = "/admin**", method = RequestMethod.GET)
     public ModelAndView adminPage(HttpServletRequest request) {
-
+        defaultPage.setDaultPage(request);
         ModelAndView model = new ModelAndView();
         model.setViewName("admin");
         List<Post> postList= postService.getAllPost("select * from post where approve=0  limit 1,10");
@@ -99,6 +102,7 @@ public class AdminController
            if(result==1)
            {
                configDAO.update(configuration);
+               defaultPage.setDaultPage(request);
            }
            request.setAttribute("error","Successfully!");
        }catch (Exception e)

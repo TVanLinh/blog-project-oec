@@ -1,28 +1,20 @@
 package Controller;
 
+import DAO.ImageDAO;
 import DAO.PostDAO;
 import DAO.RoleDAO;
 import DAO.UserDAO;
-import Entities.Configuration;
 import Entities.Post;
-import Entities.Role;
-import Entities.User;
 import Service.ConfigurationService;
 import Service.PostService;
 import Service.UserService;
+import Utils.DefaultPage;
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import sun.management.HotspotMemoryMBean;
 
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,21 +42,20 @@ public class redirect {
     @Autowired
     ConfigurationService configurationService;
 
-
+    @Autowired
+    DefaultPage defaultPage;
 
     @RequestMapping(value = "/write")
-    public  String viewWriter()
+    public  String viewWriter(HttpServletRequest request)
     {
-        System.out.println(postService.getPost(4,8).size());
-        System.out.println(postService.getPost(4,8).size());
-        System.out.println("five:"+postService.getPost(5,10).size());
-        System.out.println("first:"+postService.getPost(0,4).size());
+        defaultPage.setDaultPage(request);
         return "write";
     }
 
     @RequestMapping(value={"/","/home"})
     public String homePage(HttpServletRequest request)
     {
+        defaultPage.setDaultPage(request);
         String page=request.getParameter("page");
         List<Post> postList;
         int limit=configurationService.find(1).getNumberViewPost();
@@ -94,6 +85,8 @@ public class redirect {
     @RequestMapping(value = "/post")
     public  String viewPost(HttpServletRequest request)
     {
+        defaultPage.setDaultPage(request);
+        //-----------------------------
         String id=request.getParameter("id");
         List<Post> postSlideBar=postService.getPost(0,configurationService.find(1).getNumberViewPost());
         request.setAttribute("postSlideBar",postSlideBar);
@@ -121,4 +114,19 @@ public class redirect {
     {
         return "testjson";
     }
+
+    @Autowired
+    ImageDAO imageDAO;
+    @RequestMapping(value = "/image")
+    public String insertImage()
+    {
+//        Post post=postService.find(47);
+//        Image image=new Image();
+//        image.setPost(post);
+//        image.setLink("Ok");
+//        image.setAlt("ok");
+//        System.out.println(imageDAO.insert(image));
+        return "test";
+    }
+
 }
