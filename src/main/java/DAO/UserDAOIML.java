@@ -17,43 +17,25 @@ public class UserDAOIML implements UserDAO {
     @Autowired
     SessionFactory sessionFactory;
     @Transactional
-    public boolean insert(User user) {
+    public void insert(User user) {
         Session session=sessionFactory.getCurrentSession();
-        try {
-            session.persist(user);
-            System.out.println(" insert User success");
-            return true;
-        }catch (Exception e)
-        {
-            return false;
-        }
+        session.persist(user);
+        System.out.println(" insert User success");
     }
 
     @Transactional
-    public boolean delete(int idAuthor) {
+    public void delete(int idAuthor) {
         Session session=sessionFactory.getCurrentSession();
         User user =session.find(User.class,idAuthor);
-        try {
-            session.remove(user);
-            System.out.println(" delete User success");
-            return true;
-        }catch (Exception e)
-        {
-            return false;
-        }
+        session.remove(user);
+        System.out.println(" delete User success");
     }
 
     @Transactional
-    public boolean update(User user) {
+    public void update(User user) {
         Session session=sessionFactory.getCurrentSession();
-        try {
-            session.merge(user);
-            System.out.println(" update User success");
-            return true;
-        }catch (Exception e)
-        {
-            return false;
-        }
+        session.merge(user);
+        System.out.println(" update User success");
     }
 
 

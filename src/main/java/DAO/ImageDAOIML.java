@@ -17,43 +17,25 @@ public class ImageDAOIML implements ImageDAO {
     @Autowired
     SessionFactory sessionFactory;
     @Transactional
-    public boolean insert(Image image) {
+    public void insert(Image image) {
         Session session=sessionFactory.getCurrentSession();
-        try {
-            session.persist(image);
-            System.out.println(" insert image success");
-            return true;
-        }catch (Exception e)
-        {
-            return false;
-        }
+        session.saveOrUpdate(image);
+        System.out.println(" insert image success");
     }
 
     @Transactional
-    public boolean delete(int idAuthor) {
+    public void delete(int idAuthor) {
         Session session=sessionFactory.getCurrentSession();
         Image image =session.find(Image.class,idAuthor);
-        try {
-            session.remove(image);
-            System.out.println(" delete image success");
-            return true;
-        }catch (Exception e)
-        {
-            return false;
-        }
+        session.remove(image);
+        System.out.println(" delete image success");
     }
 
     @Transactional
-    public boolean update(Image image) {
+    public void update(Image image) {
         Session session=sessionFactory.getCurrentSession();
-        try {
-            session.merge(image);
-            System.out.println(" update image success");
-            return true;
-        }catch (Exception e)
-        {
-            return false;
-        }
+        session.merge(image);
+        System.out.println(" update image success");
     }
 
 

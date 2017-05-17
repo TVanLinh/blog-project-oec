@@ -4,6 +4,7 @@ import DAO.ImageDAO;
 import DAO.PostDAO;
 import DAO.RoleDAO;
 import DAO.UserDAO;
+import Entities.Image;
 import Entities.Post;
 import Service.ConfigurationService;
 import Service.PostService;
@@ -120,12 +121,13 @@ public class redirect {
     @RequestMapping(value = "/image")
     public String insertImage()
     {
-//        Post post=postService.find(47);
-//        Image image=new Image();
-//        image.setPost(post);
-//        image.setLink("Ok");
-//        image.setAlt("ok");
-//        System.out.println(imageDAO.insert(image));
+        Post post = postService.find(47);
+        System.out.println(post);
+        Image image= new Image();
+        image.setPost(post);
+        image.setLink("Ok");
+        image.setAlt("ok");
+        imageDAO.insert(image);
         return "test";
     }
 

@@ -17,43 +17,25 @@ public class PostDAOIML implements PostDAO {
     @Autowired
     SessionFactory sessionFactory;
     @Transactional
-    public boolean insert(Post post) {
+    public void insert(Post post) {
         Session session=sessionFactory.getCurrentSession();
-        try {
-            session.persist(post);
-            System.out.println(" insert post success");
-            return true;
-        }catch (Exception e)
-        {
-            return false;
-        }
+        session.persist(post);
+        System.out.println(" insert post success");
     }
 
     @Transactional
-    public boolean delete(int idPost) {
+    public void delete(int idPost) {
         Session session=sessionFactory.getCurrentSession();
         Post post=session.find(Post.class,idPost);
-        try {
-            session.remove(post);
-            System.out.println(" delete post success");
-            return true;
-        }catch (Exception e)
-        {
-            return false;
-        }
+        session.remove(post);
+        System.out.println(" delete post success");
     }
 
     @Transactional
-    public boolean update(Post post) {
+    public void update(Post post) {
         Session session=sessionFactory.getCurrentSession();
-        try {
-            session.merge(post);
-            System.out.println(" update post success");
-            return true;
-        }catch (Exception e)
-        {
-            return false;
-        }
+        session.merge(post);
+        System.out.println(" update post success");
     }
 
 }

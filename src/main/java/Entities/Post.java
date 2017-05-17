@@ -65,7 +65,7 @@ public class Post  implements Serializable{
   @JsonView(Views.Public.class)
   User user;
 
-  @OneToOne(mappedBy = "post",fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
+  @OneToOne(mappedBy = "post",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
   @JsonView(Views.Public.class)
   private Image image;
 

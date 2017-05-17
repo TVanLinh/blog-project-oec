@@ -17,43 +17,25 @@ public class RoleDAOIML implements RoleDAO {
     @Autowired
     SessionFactory sessionFactory;
     @Transactional
-    public boolean insert(Role role) {
+    public void insert(Role role) {
         Session session=sessionFactory.getCurrentSession();
-        try {
-            session.persist(role);
-            System.out.println(" insert Role success");
-            return true;
-        }catch (Exception e)
-        {
-            return false;
-        }
+        session.persist(role);
+        System.out.println(" insert Role success");
     }
 
     @Transactional
-    public boolean delete(int idRole) {
+    public void delete(int idRole) {
         Session session=sessionFactory.getCurrentSession();
         Role role =session.find(Role.class,idRole);
-        try {
-            session.remove(role);
-            System.out.println(" delete Role success");
-            return true;
-        }catch (Exception e)
-        {
-            return false;
-        }
+        session.remove(role);
+        System.out.println(" delete Role success");
     }
 
     @Transactional
-    public boolean update(Role role) {
+    public void update(Role role) {
         Session session=sessionFactory.getCurrentSession();
-        try {
-            session.saveOrUpdate(role);
-            System.out.println(" update Role success");
-            return true;
-        }catch (Exception e)
-        {
-            return false;
-        }
+        session.saveOrUpdate(role);
+        System.out.println(" update Role success");
     }
 
 

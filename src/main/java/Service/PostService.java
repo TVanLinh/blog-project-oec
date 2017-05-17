@@ -5,9 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.OrderBy;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,6 +14,7 @@ import java.util.List;
  */
 
 @Service
+@Transactional
 public class PostService {
 
     @Autowired
@@ -32,59 +32,52 @@ public class PostService {
     }
 
     public Post find(int id) {
-        Session session=sessionFactory.openSession();
-        Post usr=session.find(Post.class,id);
-        session.close();
-        return  usr;
+        Session session = sessionFactory.getCurrentSession();
+        return session.find(Post.class, id);
     }
 
-    public List<Post> getAllPost()
-    {
-        Session session=sessionFactory.openSession();
-        List<Post> list=session.createNativeQuery("select * from post ",Post.class).getResultList();
+    public List<Post> getAllPost() {
+        Session session = sessionFactory.openSession();
+        List<Post> list = session.createNativeQuery("select * from post ", Post.class).getResultList();
         session.close();
         return list;
     }
 
-    public  List<Post> getAllPost(String query)
-    {
-        Session session=sessionFactory.openSession();
-        List<Post> list=session.createNativeQuery(query,Post.class).getResultList();
+    public List<Post> getAllPost(String query) {
+        Session session = sessionFactory.openSession();
+        List<Post> list = session.createNativeQuery(query, Post.class).getResultList();
         session.close();
         return list;
     }
 
-    public  List<Post> getAllPostPublic()
-    {
-        Session session=sessionFactory.openSession();
-        String query="select * from post where approve=1 and status=1  order by time_post";
-        List<Post> list=session.createNativeQuery(query,Post.class).getResultList();
+    public List<Post> getAllPostPublic() {
+        Session session = sessionFactory.openSession();
+        String query = "select * from post where approve=1 and status=1  order by time_post";
+        List<Post> list = session.createNativeQuery(query, Post.class).getResultList();
         session.close();
         return list;
     }
 
-    public List<Post> getPost(int from,int limit)
-    {
-        Session session=sessionFactory.openSession();
-        String str="select * from post where approve=1 and status=1  order by time_post desc limit "+from+","+limit +"";
-        List<Post> list=session.createNativeQuery(str,Post.class).getResultList();
+    public List<Post> getPost(int from, int limit) {
+        Session session = sessionFactory.openSession();
+        String str = "select * from post where approve=1 and status=1  order by time_post desc limit " + from + "," + limit + "";
+        List<Post> list = session.createNativeQuery(str, Post.class).getResultList();
         session.close();
         return list;
     }
 
-    public List<Post> getPostByIdUser(int idUser,int from,int limit)
-    {
-        Session session=sessionFactory.openSession();
-        String str="select * from post where id_user="+idUser+"  order by time_post desc limit "+from+","+limit +"";
-        List<Post> list=session.createNativeQuery(str,Post.class).getResultList();
+    public List<Post> getPostByIdUser(int idUser, int from, int limit) {
+        Session session = sessionFactory.openSession();
+        String str = "select * from post where id_user=" + idUser + "  order by time_post desc limit " + from + "," + limit + "";
+        List<Post> list = session.createNativeQuery(str, Post.class).getResultList();
         session.close();
         return list;
     }
-    public List<Post> getPostByIdUser(int idUser)
-    {
-        Session session=sessionFactory.openSession();
-        String str="select * from post where id_user="+idUser+"  order by time_post desc";
-        List<Post> list=session.createNativeQuery(str,Post.class).getResultList();
+
+    public List<Post> getPostByIdUser(int idUser) {
+        Session session = sessionFactory.openSession();
+        String str = "select * from post where id_user=" + idUser + "  order by time_post desc";
+        List<Post> list = session.createNativeQuery(str, Post.class).getResultList();
         session.close();
         return list;
     }

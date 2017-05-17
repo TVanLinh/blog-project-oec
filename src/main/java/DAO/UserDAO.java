@@ -6,7 +6,7 @@ import Entities.User;
  * Created by linhtran on 06/05/2017.
  */
 public interface UserDAO {
-    boolean insert(User user);
-    boolean delete(int idAuthor);
-    boolean update(User user);
+    void insert(User user);
+    void delete(int idAuthor);
+    void update(User user);
 }
