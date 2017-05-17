@@ -16,11 +16,11 @@
         <div class="col-md-8">
             <form ACTION="/processConfigurarion" METHOD="post">
                 <div class="form-group">
-                    <label for="titleBlog">Title Blog:</label>
+                    <label for="titleBlog">${messageSource.getMessage("titleBlog",null,locale)}:</label>
                     <input type="text" class="form-control " name="titleBlog" id="titleBlog">
                 </div>
                 <div class="form-group">
-                    <label for="formatTime" id="formatTime" >Format Time:</label>
+                    <label for="formatTime" id="formatTime" >${messageSource.getMessage("fomatDate",null,locale)}:</label>
                     <select class="form-control"  name="formatTime">
                         <option value="HH:mm:ss dd:MM:yyyy">HH:mm:ss dd:MM:yyyy</option>
                         <option value="HH:mm:ss dd:MM:yyyy">HH:mm:ss dd/MM/yyyy</option>
@@ -32,7 +32,7 @@
                     <%--<input type="text" class="form-control pd-0" name="formatTime" id="formatTime">--%>
                 </div>
                 <div class="form-group">
-                    <label for="numberPost">Number view post:</label>
+                    <label for="numberPost">${messageSource.getMessage("numberView",null,locale)}:</label>
                     <input type="number" min="1"  value="3" class="form-control pd-0" name="numberPost" id="numberPost">
                 </div>
                 <input type="submit" value="SAVE">

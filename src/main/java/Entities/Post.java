@@ -37,10 +37,12 @@ public class Post  implements Serializable{
 
   @Basic
   @Column(name = "status")
+  @JsonView(Views.Public.class)
   private int status;
 
   @Basic
   @Column(name = "approve")
+  @JsonView(Views.Public.class)
   private int approve;
 
   @Basic

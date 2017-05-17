@@ -1,11 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <jsp:include page="template/head.jsp"/>
 <body>
 
 <!-- Navigation -->
-<jsp:include page="template/navbar-admin.jsp"/>
+<jsp:include page="template/navbar.jsp"/>
 <%--<%@page session="true"%>--%>
 <!-- Page Content -->
 <div class="container">
@@ -13,37 +14,40 @@
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-md-8">
-            <c:forEach var="post" items="${requestScope.postList}">
+            <c:forEach var="post" items="${postList}">
                 <!-- First Blog Post -->
-                <h2><a href="/post?id=${post.id}" target="_blank">${post.title} </a></h2>
+                <h2><a href="/post?id=${post.id}" target="_self">${post.title} </a></h2> <!--button>${post.id}</button-->
 
                 <span class="lead">
-                        <span class="fs-15">By</span> <a href="#" class="fs-15">${post.user.userName}</a>
+                        <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span> <a href="#" class="fs-15">${post.user.userName}</a>
                     </span>
                 <jsp:useBean id="dateUtil" class="Utils.DateFormatUtil" scope="session"/>
-                <p><span class="glyphicon glyphicon-time"></span><span class="margin-left-3">Posted on</span> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</p>
+                <p><span class="glyphicon glyphicon-time"></span><span class="margin-left-3">${messageSource.getMessage("postTime",null,locale)}</span> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</p>
                 <hr>
                 <c:if test="${post.image.link!=null}">
-                    <img src="${post.image.link}">
+                    <img class="img-responsive pdb-15" src="${post.image.link}">
                 </c:if>
                 <c:if test="${post.image.link==null}">
-                    <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+                    <img class="img-responsive pdb-15" src="http://placehold.it/900x300" alt="">
                 </c:if>
                 <%--<hr>--%>
 
-                <p>${post.content.trim().substring(0,50)}</p>
-                <a class="btn btn-primary" href="/post?id=${post.id}" target="_blank"> Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-
+                <p>${post.content.replaceAll("\\<.*?>","").substring(0,50)}...</p>
+                <%--<p>${ Jsoup.parse(post.content).text()}</p>--%>
+                <a class="btn btn-primary" href="/post?id=${post.id}" target="_self"> ${messageSource.getMessage("read",null,locale)} <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <c:if test="${sessionScope.username!=null}">
+                    <a id="action-update" href="/update?action=update&id=${post.id}"><img src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a> <a id="action-" onclick="return window.confirm('Are you sure you want to delete this post?')" href="/delete-post?id=${post.id}">${messageSource.getMessage("delete",null,locale)}</a>
+                </c:if>
                 <hr>
             </c:forEach>
             <!-- Pager -->
             <ul class="pager">
                 <li class="previous">
-                    <a href="/user?page=${requestScope.page-1}">&larr; Back</a>
+                    <a href="/user?page=${requestScope.page-1}">&larr; ${messageSource.getMessage("back",null,locale)}</a>
                 </li>
                 <li class="next">
                     <c:if test="${postList.size()!=0}">
-                        <a href="/user?page=${requestScope.page+1}">Next &rarr;</a>
+                        <a href="/user?page=${requestScope.page+1}">${messageSource.getMessage("next",null,locale)} &rarr;</a>
                     </c:if>
                 </li>
             </ul>

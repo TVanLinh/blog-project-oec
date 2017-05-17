@@ -81,8 +81,7 @@ public class ProcessPost {
             }
             post.setImage(image);
         }
-
-        System.out.println(postDAO.insert(post));
+        postDAO.insert(post);
         httpServletRequest.setAttribute("post", post);
         session.setAttribute("post-id", post.getId());
         return new ModelAndView("redirect:/view-post");
@@ -101,6 +100,7 @@ public class ProcessPost {
 
         HttpSession session = request.getSession();
         Integer postId = (Integer) session.getAttribute("post-id");
+        System.out.println("--------------------------------------------"+postId);
         try {
             System.out.println("nuber: " + postId);
             Post post = postService.find(postId);

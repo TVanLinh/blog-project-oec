@@ -6,6 +6,7 @@ import Entities.Post;
 import Service.ConfigurationService;
 import Service.PostService;
 import Service.UserService;
+import Utils.DefaultPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -42,11 +43,12 @@ public class AccountController {
     @Autowired
     UserService userService;
 
-
+    @Autowired
+    DefaultPage defaultPage;
     @RequestMapping(value = "/user")
     public  String userInfor(Principal principal,HttpServletRequest request)
     {
-
+            defaultPage.setDaultPage(request);
             String page=request.getParameter("page");
             if(request.getSession().getAttribute("username")==null)
             {

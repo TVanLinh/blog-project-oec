@@ -13,7 +13,9 @@
 //     return true;
 // }
 
-// CKEDITOR.replace( 'content' );
+// CKEDITOR.replace( 'content',{
+//     height:"1200px"
+// });
 
 var A;
 jQuery(document).ready(function($) {
@@ -147,7 +149,10 @@ function  getPostTableRemove(msg,page) {
         success:function (data) {
             console.log(data);
             showPostAdmin(data,"#table-post-approve",displayTablePostImprove(data.posts));
+            showPostAdmin(data,"#table-all-post",displayTablePost(data.posts));
+            displayTablePost(data.posts);
             $("#numberApprove").text(data.numberApprove);
+            $("#totalPost").text(data.totalPost);
         },
         error : function(e) {
             console.log("ERROR: ", e);
@@ -179,7 +184,6 @@ function  displayTablePostImprove(postList) {
    var approve;
    for(var i=0;i<postList.length;i++) {
        del="'/admin-post?action=delete&id="+ postList[i].id+"'";
-
        approve="'/admin-post?action=approve&id="+ postList[i].id+"'";
        console.log(del+"----------"+approve);
        content += "<tr>" +
@@ -210,4 +214,44 @@ function formaDate(str) {
     return   date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear()+" "+
         date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
 
+}
+
+function  displayTablePost(postList) {
+    var content="";
+    if(postList===null||postList.length<=0)
+    {
+        return content;
+    }
+    var del;
+    for(var i=0;i<postList.length;i++) {
+        var approve="No";
+        var status="private";
+        del="'/manager-get-all-post-delete?id="+ postList[i].id+"'";
+        if(postList[i].status==1)
+        {
+            status="public";
+        }
+        if(postList[i].approve==1)
+        {
+            approve="Yes";
+        }
+        content += "<tr>" +
+            "<td>"+(i+1)+"</td>"
+            +
+            "<td>" + postList[i].user.userName + "</td>" +
+            "<td><a href='/post?id="+postList[i].id+"'>" + postList[i].title +"</a></td>" +
+            "<td>" + formaDate(postList[i].timePost) + "</td>" +
+            "<td>"+status+"</td>"+
+            "<td>"+approve+"</td>"+
+            "<td>" +
+                "<a href='javascript:void(0)' " +" onclick=A.getPostImprove("+ del +","+"1"+")"+ ">" +
+                "<span class='glyphicon glyphicon-remove mgl-10'></span>" +
+                "</a>" +
+                "<a href='/update?action=update&id=" + postList[i].id + "'>" +
+                "<img class='mgt--5 mgl-10' src='public/asserts/images/edit.gif' alt/>" +
+                "</a>" +
+            "</td>" +
+            "</tr>";
+    }
+    return content;
 }

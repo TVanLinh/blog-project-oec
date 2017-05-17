@@ -39,7 +39,7 @@ public class AdminController
         defaultPage.setDaultPage(request);
         ModelAndView model = new ModelAndView();
         model.setViewName("admin");
-        List<Post> postList= postService.getAllPost("select * from post where approve=0  limit 1,10");
+        List<Post> postList= postService.getAllPost("select * from post where approve=0  limit 0,10");
         System.out.println(postList.size());
         if(postList==null)
         {
@@ -53,6 +53,7 @@ public class AdminController
     @RequestMapping(value = "/configuration")
     public  String configurarion(HttpServletRequest request)
     {
+        defaultPage.setDaultPage(request);
         return "configuration";
     }
 
@@ -111,4 +112,18 @@ public class AdminController
        }
         return "configuration";
     }
+
+    @RequestMapping("/manager-post")
+    public  String managerPost(HttpServletRequest request)
+    {
+        List<Post> postList=postService.getAllPost("select * from post  order by time_post limit 0,10");
+        if(postList==null)
+        {
+            postList=new ArrayList<Post>();
+        }
+        request.setAttribute("postList",postList);
+        request.setAttribute("totalPost",postService.getAllPost().size());
+        return "manager-post";
+    }
+
 }

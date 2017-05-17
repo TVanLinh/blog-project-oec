@@ -6,20 +6,21 @@
             <a class="navbar-brand" href="/">${sessionScope.blogTitle}</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="/write">New Post</a></li>
+            <li><a href="/write"> ${messageSource.getMessage("newpost",null,locale)}</a></li>
+            <li><a href="/user">User</a></li>
             <li><a href="/admin">Admin</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <%--<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>--%>
             <c:if  test="${sessionScope.username ==null}">
-                <li><a href="/login" ><span class="glyphicon glyphicon-log-in" ></span> Login</a></li>
+                <li><a href="/login" ><span class="glyphicon glyphicon-log-in" ></span>  ${messageSource.getMessage("login",null,locale)}</a></li>
             </c:if>
             <c:if  test="${sessionScope.username !=null}">
-                <li><a href="/logout" ><span class="glyphicon glyphicon-log-out" ></span> Logout</a></li>
+                <li><a href="/logout" ><span class="glyphicon glyphicon-log-out" ></span>  ${messageSource.getMessage("logout",null,locale)}</a></li>
             </c:if>
 
-                <li><a href="#"><img src="<s:url value="public/asserts/images/US.gif"/>" alt="USA"></a></li>
-                <li><a href="#"><img src="<s:url value="public/asserts/images/VI.gif"/>"></a></li>
+            <li><a href="/language?language=en"><img src="<s:url value="public/asserts/images/US.gif"/>" alt="USA"></a></li>
+            <li><a href="/language?language=vi"><img src="<s:url value="public/asserts/images/VI.gif"/>"></a></li>
         </ul>
     </div>
 </nav>

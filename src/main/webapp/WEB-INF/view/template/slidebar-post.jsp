@@ -13,7 +13,7 @@
                     <h4 class="media-heading">${post.title}</h4>
                     <p class="by-user color-main2">By ${post.user.userName}</p>
                     <!-- Pager -->
-                    <a href="/post?id=${post.id}">read more..</a>
+                    <a href="/post?id=${post.id}">${messageSource.getMessage("read",null,locale)}</a>
                 </div>
             </li>
         </c:forEach>

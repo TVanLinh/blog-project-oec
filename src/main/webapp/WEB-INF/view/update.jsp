@@ -16,19 +16,19 @@
         <!-- Blog Post Content Column -->
         <div class="col-lg-8">
             <form:form action="/write-update"  commandName="post">
-                <label class="fs-20">Title:</label>
+                <label class="fs-20">${messageSource.getMessage("title",null,locale)}:</label>
                 <%--<form:errors path="title"/>--%>
                 <input name="title" type="text" class="input-xs mgb-40" style=";margin-bottom: 30px" value="${sessionScope.postUpdate.title}"><br>
                 <textarea class="ckeditor" cols="80" id="content" name="content" rows="50">
                      ${sessionScope.postUpdate.content}
                     </textarea>
                 <select name="status" >
-                    <option value="1" >Public</option>
-                    <option value="0">Private</option>
+                    <option value="1" >${messageSource.getMessage("public",null,locale)}</option>
+                    <option value="0">${messageSource.getMessage("private",null,locale)}</option>
                 </select>
                 <input class="hide" name="link-image" id="link-image" type="text" >
                 <input class="hide" name="alt-image" id="alt-image" type="text" >
-                <input type="submit" value="send" class="mgt-25 btn-md" onclick="getImages()">
+                <input type="submit" value="${messageSource.getMessage("save",null,locale)}" class="mgt-25 btn-md" onclick="getImages()">
             </form:form>
 
             <hr>

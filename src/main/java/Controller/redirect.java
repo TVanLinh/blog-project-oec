@@ -4,7 +4,6 @@ import DAO.ImageDAO;
 import DAO.PostDAO;
 import DAO.RoleDAO;
 import DAO.UserDAO;
-import Entities.Image;
 import Entities.Post;
 import Service.ConfigurationService;
 import Service.PostService;
@@ -12,6 +11,7 @@ import Service.UserService;
 import Utils.DefaultPage;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -45,6 +45,9 @@ public class redirect {
 
     @Autowired
     DefaultPage defaultPage;
+
+    @Autowired
+    ResourceBundleMessageSource messageSource;
 
     @RequestMapping(value = "/write")
     public  String viewWriter(HttpServletRequest request)
@@ -119,15 +122,12 @@ public class redirect {
     @Autowired
     ImageDAO imageDAO;
     @RequestMapping(value = "/image")
-    public String insertImage()
+    public String insertImage(HttpServletRequest request)
     {
-        Post post = postService.find(47);
-        System.out.println(post);
-        Image image= new Image();
-        image.setPost(post);
-        image.setLink("Ok");
-        image.setAlt("ok");
-        imageDAO.insert(image);
+//        messageSource.setBasename("blog_en_US");
+//        Locale locale=new Locale("en", "US");
+//        request.setAttribute("messageSource",messageSource);
+//        request.setAttribute("locale",locale);
         return "test";
     }
 

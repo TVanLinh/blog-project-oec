@@ -38,7 +38,7 @@ public class PostService {
 
     public List<Post> getAllPost() {
         Session session = sessionFactory.openSession();
-        List<Post> list = session.createNativeQuery("select * from post ", Post.class).getResultList();
+        List<Post> list = session.createNativeQuery("select * from post order by time_post ", Post.class).getResultList();
         session.close();
         return list;
     }

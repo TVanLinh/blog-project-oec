@@ -8,12 +8,12 @@
 <div class="login">
     <div class="login-triangle"></div>
 
-    <h2 class="login-header">Log in</h2>
+    <h2 class="login-header">${messageSource.getMessage("login",null,locale)}</h2>
 
     <form name="loginForm" class="login-container" action="<c:url value="/login"/> " method="post">
         <p><input name="username" type="text" placeholder="Email"></p>
         <p><input name="password" type="password" placeholder="Password"></p>
-        <p><input type="submit" value="Log In" onclick="return login()"></p>
+        <p><input type="submit" value="${messageSource.getMessage("login",null,locale)}" onclick="return login()"></p>
         <center><span class="login-error">
             <c:if test="${not empty error}">
                 <div class="error">${error}</div>

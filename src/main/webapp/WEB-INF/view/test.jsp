@@ -17,5 +17,6 @@
     numberViewPost=:${ConfigurationService.find(1).toString()}
     <jsp:useBean id="dateformate" class="Utils.DateFormatUtil"/>
     <%--${dateformate.format(pageContext.getAttribute("date"),"hh:MM:ss dd-MM-yyyy")}--%>
+    ${messageSource.getMessage("post",null,locale)}
 </body>
 </html>

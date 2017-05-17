@@ -1,19 +1,15 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="${postList.size()==0}">
-    <h1>Zero Post not Approve</h1>
-</c:if>
-<c:if test="${postList.size()>0}">
-    <h1>List Post Have Not Approve</h1>
 
+<c:if test="${postList.size()>0}">
     <table class="responstable" >
 
         <tr>
             <th data-th="Driver details"><span>STT</span></th>
-            <th data-th="Driver details"><span>Author</span></th>
-            <th class="text-center">Title</th>
-            <th>Time-Post</th>
-            <th>Action</th>
+            <th data-th="Driver details"><span>${messageSource.getMessage("td.author",null,locale)}</span></th>
+            <th class="text-center">${messageSource.getMessage("td.title",null,locale)}</th>
+            <th>${messageSource.getMessage("td.timePost",null,locale)}</th>
+            <th>${messageSource.getMessage("td.action",null,locale)}</th>
         </tr>
         <tbody id="table-post-approve">
             <c:forEach var="post"   items="${postList}"  varStatus="loop">
@@ -23,8 +19,8 @@
                     <td><a href="/post?id=${post.id}">${post.title}</a></td>
                     <td>${post.timePost}</td>
                     <td>
-                        <a href="javascript:void(0)" onclick="A.getPostImprove('/admin-post?action=approve&id='+${post.id},null)"> <span class="glyphicon glyphicon-ok mgr-10"></span></a>
-                        <a href="javascript:void(0)" onclick="A.getPostImprove('/admin-post?action=delete&id='+${post.id},null)"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
+                        <a href="javascript:void(0)" onclick="A.getPostImprove('/admin-post-approve?action=approve&id='+${post.id},null)"> <span class="glyphicon glyphicon-ok mgr-10"></span></a>
+                        <a href="javascript:void(0)" onclick="A.getPostImprove('/admin-post-approve?action=delete&id='+${post.id},null)"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
                         <a href="/update?action=update&id=${post.id}"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a>
 
                     </td>

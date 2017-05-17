@@ -121,6 +121,7 @@ public class AjaxController {
         return userRestBody;
     }
 
+    // get post in slider bar page post
     @RequestMapping(value = "/get-post")
     @JsonView(Views.Public.class)
     public PostRestBody nextPostSlideBar(@RequestBody PostRestBody postRestBody, HttpServletRequest request)
@@ -139,7 +140,7 @@ public class AjaxController {
         return  postRestBody;
     }
 
-    @RequestMapping(value = "/admin-post")
+    @RequestMapping(value = "/admin-post-approve")
     @JsonView(Views.Public.class)
     public  PostRestBody defaultPagePostAdminApprove(@RequestBody PostRestBody postRestBody,HttpServletRequest request)
     {
@@ -199,11 +200,11 @@ public class AjaxController {
         return postRestBody;
     }
 
+    // get post not approve page
     @RequestMapping ("/approve-post")
     @JsonView(Views.Public.class)
     public PostRestBody  getPost(@RequestBody PostRestBody postRestBody,HttpServletRequest request)
     {
-        System.out.println("post: "+postRestBody.getMsg()+" "+postRestBody.getNumberPage());
         List<Post> postList;
        try
        {
@@ -233,4 +234,55 @@ public class AjaxController {
        return all.size();
     }
 
+    @RequestMapping("/manager-get-all-post")
+    @JsonView(Views.Public.class)
+    public  PostRestBody managerPost(@RequestBody PostRestBody postRestBody)
+    {
+        List<Post> postList;
+        try
+        {
+            String str="select * from post   order by time_post limit "+postRestBody.getNumberPage()*10+",10";
+            postList=postService.getAllPost(str);
+            if(postList==null)
+            {
+                postList=new ArrayList<Post>();
+            }
+            postRestBody.setPosts(postList);
+            postRestBody.setNumberApprove(getNumberNotApprove());
+            postRestBody.setTotalPost(postService.getAllPost().size());
+        }catch (Exception exception)
+        {
+            Logger.getLogger(this.getClass().getName()).error("Error in function getPost");
+            return postRestBody;
+        }
+        return postRestBody;
+    }
+
+
+    @RequestMapping("/manager-get-all-post-delete")
+    @JsonView(Views.Public.class)
+    public  PostRestBody managerPostDelete(@RequestBody PostRestBody postRestBody,HttpServletRequest request)
+    {
+        List<Post> postList;
+        String id=request.getParameter("id");
+
+        try
+        {
+            postDAO.delete(Integer.valueOf(id));
+            String str="select * from post   order by time_post limit "+postRestBody.getNumberPage()*10+",10";
+            postList=postService.getAllPost(str);
+            if(postList==null)
+            {
+                postList=new ArrayList<Post>();
+            }
+            postRestBody.setPosts(postList);
+            postRestBody.setNumberApprove(getNumberNotApprove());
+            postRestBody.setTotalPost(postService.getAllPost().size());
+        }catch (Exception exception)
+        {
+            Logger.getLogger(this.getClass().getName()).error("Error in function getPost");
+            return postRestBody;
+        }
+        return postRestBody;
+    }
 }
