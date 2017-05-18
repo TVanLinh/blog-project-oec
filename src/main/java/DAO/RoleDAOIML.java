@@ -38,5 +38,12 @@ public class RoleDAOIML implements RoleDAO {
         System.out.println(" update Role success");
     }
 
+    @Transactional
+    public void delete(String userName) {
+        Session session=sessionFactory.getCurrentSession();
+        session.createNativeQuery("DELETE  from user_roles WHERE user_name = '"+userName+"'").executeUpdate();
+        System.out.println(" delete Role success-----------------------------------------");
+    }
+
 
 }

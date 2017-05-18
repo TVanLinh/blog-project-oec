@@ -36,6 +36,7 @@ public class UserService {
         return  usr;
     }
 
+
     public List<User> getAllUser()
     {
         Session session=sessionFactory.openSession();
@@ -44,17 +45,23 @@ public class UserService {
         return list;
     }
 
+    public  List<User> getAllUser(String query)
+    {
+        Session session=sessionFactory.openSession();
+        List<User> list=session.createNativeQuery(query,User.class).getResultList();
+        session.close();
+        return list;
+    }
 
     public User getUserByName(String name)
     {
         Session session=sessionFactory.openSession();
-        List<User> list=(List<User>) session.createNativeQuery("select * from user where user_name='"+name+"'",User.class).getResultList();
+        List<User> list = session.createNativeQuery("select * from user where user_name='"+name+"' limit 0,1",User.class).getResultList();
         session.close();
-        if(list==null)
+        if(list.size() == 0)
         {
-            return  null;
+            return null;
         }
-        return list.get(0);
+        return  list.get(0);
     }
-
 }

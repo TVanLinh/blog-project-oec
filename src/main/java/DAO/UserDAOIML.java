@@ -34,7 +34,7 @@ public class UserDAOIML implements UserDAO {
     @Transactional
     public void update(User user) {
         Session session=sessionFactory.getCurrentSession();
-        session.merge(user);
+        session.saveOrUpdate(user);
         System.out.println(" update User success");
     }
 

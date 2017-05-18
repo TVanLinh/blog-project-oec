@@ -1,5 +1,8 @@
 package Entities;
 
+import JsonViews.Views;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -17,6 +20,7 @@ public class Role  implements Serializable{
     private  int id;
 
     @Basic
+    @JsonView(Views.Public.class)
     private String role;
 
     @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
@@ -26,6 +30,9 @@ public class Role  implements Serializable{
     public Role() {
     }
 
+    public Role(String role) {
+        this.role = role;
+    }
 
     public Role(String role, User user) {
         this.role = role;

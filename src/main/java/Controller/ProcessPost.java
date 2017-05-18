@@ -146,34 +146,22 @@ public class ProcessPost {
         String linkImage= request.getParameter("link-image");
         String altImage=request.getParameter("alt-image");
 
-        if(post.getImage()!=null)
+        Image image=new  Image();
+
+        if(linkImage!=null&&!linkImage.trim().equals(""))
         {
-            if(linkImage!=null&&!linkImage.trim().equals(""))
-            {
-                post1.getImage().setLink(linkImage);
-            }
-            if(altImage!=null&&!altImage.trim().equals(""))
-            {
-                post1.getImage().setAlt(altImage);
-            }
-        }else
-        {
-            Image image=new Image();
-            if(linkImage!=null&&!linkImage.trim().equals(""))
-            {
-                image.setLink(linkImage);
-            }
-            if(altImage!=null&&!altImage.trim().equals(""))
-            {
-                image.setAlt(altImage);
-            }
-            if(image.getLink()!=null)
-            {
-                System.out.println(image.getLink());
-                image.setPost(post1);
-                imageDAO.insert(image);
-            }
+            image.setLink(linkImage);
         }
+        if(altImage!=null&&!altImage.trim().equals(""))
+        {
+            image.setAlt(altImage);
+        }
+
+        if(post1.getImage()!=null)
+        {
+            imageDAO.deleteByIdPost(post1.getId());
+        }
+        post1.setImage(image);
         postDAO.update(post1);
         session.setAttribute("post-id",post1.getId());
         session.removeAttribute("postUpdate");

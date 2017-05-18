@@ -18,33 +18,22 @@
                 <li class="list-inline btn btn-success mgr-10  mgb-15"><a href="/configuration"><span class="glyphicon glyphicon-cog mgr-5"></span>${messageSource.getMessage("configSystem",null,locale)}</a></li>
                 <li class="list-inline btn btn-warning mgl-10  mgb-15"><a href="/manager-user">${messageSource.getMessage("managerUser",null,locale)}</a></li>
             </ul>
+            <a class="btn btn-default mgb-15" href="/insert-user">${messageSource.getMessage("insertUser",null,locale)}</a>
             <ul class="list-group">
-                <li class="list-group-item">${messageSource.getMessage("totalAllPost",null,locale)}<span class="badge" id="num">${requestScope.totalPost}</span></li>
+                <li class="list-group-item">${messageSource.getMessage("totalUser",null,locale)}<span class="badge" id="num">${requestScope.userList.size()}</span></li>
             </ul>
-            <!-------form search-------------->
             <jsp:include page="template/search.jsp">
-                <jsp:param name="action" value="mySearch.postSearch('/search-all-post','#search','#table-all-post')"/>
+                <jsp:param name="action" value="mySearch.userSearch('/search-user','#search','#table-all-user')"/>
             </jsp:include>
-            <!---------------------------->
-            <!---------------list table -------------------------->
-            <c:if test="${postList.size()==0}">
-                  <h1 class="text-center">${messageSource.getMessage("table.zeroAllPost",null,locale)}</h1>
-            </c:if>
-            <c:if test="${postList.size()!=0}">
-              <h1 class="text-center">${messageSource.getMessage("table.allPost",null,locale)}</h1>
-            </c:if>
-            <jsp:include page="template/table-all-post.jsp"/>
+
+            <jsp:include page="template/table-list-user.jsp"/>
+
             <!----------------end list-table ------------------------->
         </div>
-        <!-- Blog Sidebar Widgets Column -->
-        <%--<div>--%>
-            <%--<jsp:include page="template/slidebar.jsp"/>--%>
-        <%--</div>--%>
     </div>
     <!-- /.row -->
     <hr>
     <jsp:include page="template/footer.jsp"/>
-
 </div>
 <script src="<s:url value="/public/asserts/js/main.js"/>"></script>
 <script src="<s:url value="/public/asserts/js/search.js"/>"></script>

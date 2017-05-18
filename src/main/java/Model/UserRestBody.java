@@ -1,11 +1,10 @@
 package Model;
 
-import Entities.Post;
-
-import java.util.List;
-
+import Entities.User;
 import JsonViews.Views;
 import com.fasterxml.jackson.annotation.JsonView;
+
+import java.util.List;
 /**
  * Created by linhtran on 10/05/2017.
  */
@@ -27,6 +26,9 @@ public class UserRestBody {
 
     @JsonView(Views.Public.class)
     private  String statusImg;
+
+    @JsonView(Views.Public.class)
+    List<User> userList;
 
     public String getMsg() {
         return msg;
@@ -70,5 +72,13 @@ public class UserRestBody {
 
     public void setStatusImg(String statusImg) {
         this.statusImg = statusImg;
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 }

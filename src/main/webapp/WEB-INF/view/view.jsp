@@ -66,7 +66,6 @@
     <!-- /.row -->
 
     <hr>
-
     <!-- Footer -->
     <jsp:include page="template/footer.jsp"/>
 

@@ -46,7 +46,7 @@
         </tbody>
     </table>
     <div>
-        <c:if test="${requestScope.totalPost/10>0}">
+        <c:if test="${requestScope.totalPost/10>1}">
             <ul class="pagination">
                 <c:forEach var="i"  begin="0" end="${requestScope.totalPost/10}">
                     <c:if test="${i==0}">

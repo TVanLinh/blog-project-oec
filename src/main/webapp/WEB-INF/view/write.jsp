@@ -19,7 +19,7 @@
         <form:form action="/write-post"  commandName="post" >
                 <label class="fs-20">Title:</label>
                 <%--<form:errors path="title"/>--%>
-                <input name="title" type="text" class="input-xs mgb-40" style=";margin-bottom: 30px"><br>
+                <input name="title" type="text" class="input-xs mgb-40 title" style="margin-bottom: 30px"><br>
                   <textarea class="ckeditor" cols="80" id="content" name="content" rows="30">
                     This is my textarea to be replaced with CKEditor.
                     </textarea>

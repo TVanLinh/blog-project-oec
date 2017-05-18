@@ -23,14 +23,16 @@ public class User implements Serializable {
 
   @Basic
   @Column(name = "pass_word")
+  @JsonView(Views.Public.class)
   private String passWord;
 
   @Basic
   @Column(name = "enabled")
-  private int  enabled;
+  private int  enabled=1;
 
   @OrderBy(value = "id asc")
-  @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Role.class)
+  @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Role.class)
+  @JsonView(Views.Public.class)
   List<Role> roleList;
 
   @OrderBy(value = "id asc")

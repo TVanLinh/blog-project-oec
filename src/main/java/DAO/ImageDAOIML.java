@@ -32,11 +32,17 @@ public class ImageDAOIML implements ImageDAO {
     }
 
     @Transactional
+    public void deleteByIdPost(int id) {
+        Session session=sessionFactory.getCurrentSession();
+        session.createNativeQuery("DELETE  from  postimage where id_post="+id).executeUpdate();
+        System.out.println("delete image  deleteByIdPosts");
+    }
+
+    @Transactional
     public void update(Image image) {
         Session session=sessionFactory.getCurrentSession();
         session.merge(image);
         System.out.println(" update image success");
     }
-
 
 }

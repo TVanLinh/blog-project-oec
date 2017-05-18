@@ -9,4 +9,5 @@ public interface RoleDAO {
     void insert(Role role);
     void delete(int idAuthor);
     void update(Role role);
+    void delete(String userName);
 }

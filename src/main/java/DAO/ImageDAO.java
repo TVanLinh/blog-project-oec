@@ -8,5 +8,6 @@ import Entities.Image;
 public interface ImageDAO {
     void insert(Image image);
     void delete(int id);
+    void deleteByIdPost(int id);
     void update(Image image);
 }

@@ -22,7 +22,7 @@ img
     font-size: 16px;
     font-style: italic;
 }
-#titleBlog,#numberPost
+#titleBlog,#numberPost,#passWord,#userName,input[type='text']
 {
     padding:0px;
     padding-left: 10px;
@@ -35,4 +35,12 @@ img
 #formatTime option:focus
 {
     outline: none;
+}
+.title
+{
+    padding: 12px 30px !important;
+}
+#username,#password
+{
+   padding: 15px 10px !important;
 }

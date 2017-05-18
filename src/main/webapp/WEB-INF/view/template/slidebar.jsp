@@ -1,7 +1,7 @@
 <div class="col-md-4">
 
     <div class="hidden-md hidden-xs hidden-sm">
-        <jsp:include page="search.jsp"   />
+        <jsp:include page="search2.jsp"   />
     </div>
     <!-- Blog Categories Well -->
     <div class="well">

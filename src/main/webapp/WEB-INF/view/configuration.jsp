@@ -14,6 +14,11 @@
     <!-- Blog Entries Column -->
     <div class="row">
         <div class="col-md-8">
+            <ul class="list-group">
+                <li class="list-inline btn btn-danger mgl-10 mgr-10  mgb-15" ><a href="/manager-post">${messageSource.getMessage("managerPost",null,locale)}</a></li>
+                <li class="list-inline btn btn-success mgr-10  mgb-15"><a href="/configuration"><span class="glyphicon glyphicon-cog mgr-5"></span>${messageSource.getMessage("configSystem",null,locale)}</a></li>
+                <li class="list-inline btn btn-warning mgl-10  mgb-15"><a href="/manager-user">${messageSource.getMessage("managerUser",null,locale)}</a></li>
+            </ul>
             <form ACTION="/processConfigurarion" METHOD="post">
                 <div class="form-group">
                     <label for="titleBlog">${messageSource.getMessage("titleBlog",null,locale)}:</label>
@@ -35,7 +40,7 @@
                     <label for="numberPost">${messageSource.getMessage("numberView",null,locale)}:</label>
                     <input type="number" min="1"  value="3" class="form-control pd-0" name="numberPost" id="numberPost">
                 </div>
-                <input type="submit" value="SAVE">
+                <input type="submit" value="${messageSource.getMessage("save",null,locale)}">
                 <p class="pd-10 error">${requestScope.error}</p>
             </form>
         </div>

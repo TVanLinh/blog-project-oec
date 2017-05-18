@@ -30,9 +30,9 @@
         </tbody>
     </table>
     <div>
-        <c:if test="${requestScope.totalPost/10>0}">
+        <c:if test="${requestScope.totalPost/10>1}">
             <ul class="pagination">
-                <c:forEach var="i"  begin="0" end="${requestScope.totalPost/10}">
+                <c:forEach var="i"  begin="1" end="${requestScope.totalPost/10}">
                     <c:if test="${i==0}">
                         <li class="active"><a  href="javascript:void(0)" onclick="A.getPostImprove('/approve-post',${i})">${i}</a></li>
                     </c:if>
