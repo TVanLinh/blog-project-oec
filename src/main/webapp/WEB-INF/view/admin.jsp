@@ -30,12 +30,13 @@
                     </c:if>
 
                     <!-------form search-------------->
-                    <jsp:include page="template/search.jsp">
-                        <jsp:param name="action" value="mySearch.postSearch('/search-all-post-approve','#search','#table-post-approve')"/>
-                    </jsp:include>
+                    <%--<jsp:include page="template/search.jsp">--%>
+                        <%--<jsp:param name="action" value="mySearch.postSearch('/search-all-post-approve','#search','#table-post-approve')"/>--%>
+                    <%--</jsp:include>--%>
                     <!---------------------------->
                     <!------table-------->
-                    <jsp:include page="template/table-list-post-not-approve.jsp"/>
+                    <%--<jsp:include page="template/table-list-post-not-approve.jsp"/>  --%>
+                    <jsp:include page="template/table_approve.jsp"/>
                     <!----------------end list-table ------------------------->
                 </div>
             <!-- Blog Sidebar Widgets Column -->

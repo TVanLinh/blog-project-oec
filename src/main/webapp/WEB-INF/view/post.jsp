@@ -58,7 +58,13 @@
 
             <!-- Blog Sidebar Widgets Column -->
             <div>
-                <jsp:include page="template/slidebar-post.jsp"/>
+                <%--<jsp:include page="template/slidebar-post.jsp"/>--%>
+                <%--<div>--%>
+                    <jsp:include page="template/slidebar-post.jsp">
+                        <jsp:param name="action" value="mySearch.formSearch('/view-search?title=','#search')"/>
+                        <jsp:param name="urlTarget" value="/view-search"/>
+                    </jsp:include>
+                <%--</div>--%>
             </div>
 
 

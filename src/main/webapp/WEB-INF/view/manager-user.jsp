@@ -22,11 +22,12 @@
             <ul class="list-group">
                 <li class="list-group-item">${messageSource.getMessage("totalUser",null,locale)}<span class="badge" id="num">${requestScope.userList.size()}</span></li>
             </ul>
-            <jsp:include page="template/search.jsp">
-                <jsp:param name="action" value="mySearch.userSearch('/search-user','#search','#table-all-user')"/>
-            </jsp:include>
+            <%--<jsp:include page="template/search.jsp">--%>
+                <%--<jsp:param name="action" value="mySearch.userSearch('/search-user','#search','#table-all-user')"/>--%>
+            <%--</jsp:include>--%>
 
-            <jsp:include page="template/table-list-user.jsp"/>
+            <%--<jsp:include page="template/table-list-user.jsp"/> --%>
+            <jsp:include page="template/table_user.jsp"/>
 
             <!----------------end list-table ------------------------->
         </div>

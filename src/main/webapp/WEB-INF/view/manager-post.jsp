@@ -22,9 +22,9 @@
                 <li class="list-group-item">${messageSource.getMessage("totalAllPost",null,locale)}<span class="badge" id="num">${requestScope.totalPost}</span></li>
             </ul>
             <!-------form search-------------->
-            <jsp:include page="template/search.jsp">
-                <jsp:param name="action" value="mySearch.postSearch('/search-all-post','#search','#table-all-post')"/>
-            </jsp:include>
+            <%--<jsp:include page="template/search.jsp">--%>
+                <%--<jsp:param name="action" value="mySearch.postSearch('/search-all-post','#search','#table-all-post')"/>--%>
+            <%--</jsp:include>--%>
             <!---------------------------->
             <!---------------list table -------------------------->
             <c:if test="${postList.size()==0}">
@@ -33,7 +33,8 @@
             <c:if test="${postList.size()!=0}">
               <h1 class="text-center">${messageSource.getMessage("table.allPost",null,locale)}</h1>
             </c:if>
-            <jsp:include page="template/table-all-post.jsp"/>
+            <%--<jsp:include page="template/table-all-post.jsp"/>--%>
+            <jsp:include page="template/table_post_all.jsp"/>
             <!----------------end list-table ------------------------->
         </div>
         <!-- Blog Sidebar Widgets Column -->

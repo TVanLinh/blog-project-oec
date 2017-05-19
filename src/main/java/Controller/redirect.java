@@ -1,6 +1,5 @@
 package Controller;
 
-import DAO.ImageDAO;
 import DAO.PostDAO;
 import DAO.RoleDAO;
 import DAO.UserDAO;
@@ -62,6 +61,7 @@ public class redirect {
         defaultPage.setDaultPage(request);
         String page=request.getParameter("page");
         List<Post> postList;
+
         int limit=configurationService.find(1).getNumberViewPost();
         if(page==null)
         {
@@ -113,22 +113,5 @@ public class redirect {
         return "/home";
     }
 
-    @RequestMapping(value = "/testjson")
-    public  String testJon()
-    {
-        return "testjson";
-    }
-
-    @Autowired
-    ImageDAO imageDAO;
-    @RequestMapping(value = "/image")
-    public String insertImage(HttpServletRequest request)
-    {
-//        messageSource.setBasename("blog_en_US");
-//        Locale locale=new Locale("en", "US");
-//        request.setAttribute("messageSource",messageSource);
-//        request.setAttribute("locale",locale);
-        return "test";
-    }
 
 }

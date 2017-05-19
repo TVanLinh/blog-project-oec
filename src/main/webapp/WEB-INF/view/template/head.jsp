@@ -18,8 +18,9 @@
      <link href="<s:url value="public/asserts/css/modal.css"/>" rel="stylesheet" type="text/css"/>
      <link href="<s:url value="public/asserts/css/helper_class.css"/>" rel="stylesheet" type="text/css"/>
      <link href="<s:url value="public/asserts/css/main.css"/>" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="<s:url value="public/Sortable-HTML-Tables-jQuery-sortable-js/sortable.css"/>">
      <link href="<s:url value="public/asserts/css/table-list-post.css"/>" rel="stylesheet" type="text/css"/>
-
+    <link rel="stylesheet" type="text/css" href="<s:url value="public/data-table-plugin/css/jquery.dataTables.min.css"/>">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]-z-->

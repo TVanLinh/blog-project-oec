@@ -56,7 +56,10 @@
                 </div>
             <!-- Blog Sidebar Widgets Column -->
             <div>
-                <jsp:include page="template/slidebar.jsp"/>
+                <jsp:include page="template/slidebar.jsp">
+                    <jsp:param name="action" value="mySearch.formSearch('/view-search?title=','#search')"/>
+                    <jsp:param name="urlTarget" value="/view-search"/>
+                </jsp:include>
             </div>
 
         </div>
@@ -70,7 +73,9 @@
     </div>
 
 
+<script src="<s:url value="public/asserts/js/search.js"/>">
 
+</script>
 
 </body>
 

@@ -7,6 +7,12 @@ jQuery(document).ready(function($) {
         },
         postSearch:function (url,query,idContent) {
             loadSearchPost(url,query,idContent);
+        },
+        formSearch:function (url,id) {
+            setValueInput(url,id);
+        },
+        cheackSearch:function (id) {
+            cheackSearch(id);
         }
     };
 
@@ -102,4 +108,26 @@ function  loadSearchPost(url,query,idContent) {
             console.log("DONE");
         }
     });
+}
+
+function setValueInput(url,id) {
+   if($(id).length>0)
+   {
+       $(id).keyup(function () {
+           $("#link-search").attr("href",url+$(id).val());
+           console.log($(id).val());
+       });
+       $(id).change(function () {
+           $("#link-search").attr("href",url+$(id).val());
+           console.log($(id).val());
+       });
+   }
+}
+
+function cheackSearch(id) {
+    if($(id).val().trim()==="")
+    {
+        return false;
+    }
+    return true;
 }
