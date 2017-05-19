@@ -1,3 +1,5 @@
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+
 <!-- Footer -->
 <footer>
     <div class="row">
@@ -6,6 +8,10 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
+    <div id="top">
+        <img src="<s:url value="public/asserts/images/top.png"/> ">
+    </div>
+    <script src="<s:url value="public/asserts/js/top.js"/>"></script>
     <!-- /.row -->
 </footer>
 <!-- jQuery -->
@@ -13,3 +19,4 @@
 
 <!-- Bootstrap Core JavaScript -->
 <script src="public/bootstrap/js/bootstrap.min.js"></script>
+<script src="<s:url value="public/asserts/js/top.js"/>"></script>

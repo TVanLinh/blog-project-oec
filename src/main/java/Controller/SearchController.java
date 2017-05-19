@@ -42,7 +42,7 @@ public class SearchController {
             return "view-search";
         }
         List<Post> list;
-        list=postService.getAllPost("select * from post  where status=1 and  approve=1 and title like '%"+title+"%'");
+        list=postService.getAllPost("select * from post  where status=1 and  approve=1 and UPPER(title) like '%"+title.toUpperCase()+"%'");
         if(list==null)
         {
             list=new ArrayList<Post>();
@@ -64,7 +64,7 @@ public class SearchController {
         List<Post> list;
         String name= (String) request.getSession().getAttribute("username");
         User user= (User) userService.getUserByName(name);
-        list=postService.getAllPost("select * from post where id_user =  "+user.getId()+" and title like '%"+title+"%'");
+        list=postService.getAllPost("select * from post where id_user =  "+user.getId()+" and UPPER(title) like '%"+title.toUpperCase()+"%'");
         if(list==null)
         {
             list=new ArrayList<Post>();

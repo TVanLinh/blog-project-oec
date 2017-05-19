@@ -124,7 +124,7 @@ function setValueInput(url,id) {
    }
 }
 
-function cheackSearch(id) {
+function checkSearch(id) {
     if($(id).val().trim()==="")
     {
         return false;

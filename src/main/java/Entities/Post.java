@@ -29,10 +29,12 @@ public class Post  implements Serializable{
 
   @Basic
   @Column(name = "number_view")
+  @JsonView(Views.Public.class)
   private int numberView;
 
   @Basic
   @Column(name = "number_like")
+  @JsonView(Views.Public.class)
   private int numberLike;
 
   @Basic

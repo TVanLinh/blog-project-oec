@@ -12,6 +12,8 @@
               <th>${messageSource.getMessage("td.timePost",null,locale)}</th>
               <th>${messageSource.getMessage("td.status",null,locale)}</th>
               <th>${messageSource.getMessage("td.approve",null,locale)}</th>
+              <th>${messageSource.getMessage("nLike",null,locale)}</th>
+              <th>${messageSource.getMessage("nView",null,locale)}</th>
               <th>${messageSource.getMessage("td.action",null,locale)}</th>
           </tr>
       </thead>
@@ -38,6 +40,8 @@
                         No
                     </c:if>
                 </td>
+                <td>${post.numberLike}</td>
+                <td>${post.numberView}</td>
                 <td>
                     <a href="javascript:void(0)" onclick="A.getPostImprove('/manager-get-all-post-delete?id='+${post.id},null)"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
                     <a href="/update?action=update&id=${post.id}"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a>
@@ -47,6 +51,7 @@
 
         </tbody>
     </table>
+
     <%--<div>--%>
         <%--<c:if test="${requestScope.totalPost/10>1}">--%>
             <%--<ul class="pagination">--%>
@@ -61,16 +66,17 @@
             <%--</ul>--%>
         <%--</c:if>--%>
     <%--</div>--%>
-    <script>
-        $(document).ready(function () {
-            $("li").on("click",function () {
-                $("li").removeClass('active');
-                $(this).addClass("active");
-            });
-        });
-    </script>
+    <%--<script>--%>
+        <%--$(document).ready(function () {--%>
+            <%--$("li").on("click",function () {--%>
+                <%--$("li").removeClass('active');--%>
+                <%--$(this).addClass("active");--%>
+            <%--});--%>
+        <%--});--%>
+    <%--</script>--%>
+
 </c:if>
 
 <script src="<s:url value="public/data-table-plugin/js/jquery.dataTables.min.js"/>" type="text/javascript"></script>
-<script src="<s:url value="public/Sortable-HTML-Tables-jQuery-sortable-js/sortable.js"/>" type="text/javascript"></script>
 <script src="<s:url value="public/asserts/js/sort.js"/>" type="text/javascript"></script>
+<script src="<s:url value="public/asserts/js/main.js"/>" type="text/javascript"></script>

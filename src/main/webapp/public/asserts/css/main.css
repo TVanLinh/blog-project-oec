@@ -44,3 +44,22 @@ img
 {
    padding: 15px 10px !important;
 }
+#top
+{
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    display: none;
+    cursor: pointer;
+}
+#cke_1_contents
+{
+    min-height: 600px;
+}
+@media (min-width: 768px) {
+    .img-slidebar
+    {
+        height: 150px;
+        width: 150px;
+    }
+}

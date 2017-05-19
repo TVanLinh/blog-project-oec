@@ -92,7 +92,7 @@ public class redirect {
         defaultPage.setDaultPage(request);
         //-----------------------------
         String id=request.getParameter("id");
-        List<Post> postSlideBar=postService.getPost(0,configurationService.find(1).getNumberViewPost());
+        List<Post> postSlideBar=postService.getAllPost("select * from post  where status=1 and approve=1 order by time_post desc limit 0,5");
         request.setAttribute("postSlideBar",postSlideBar);
         if(id!=null)
         {

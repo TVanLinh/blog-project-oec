@@ -32,18 +32,18 @@
         </tbody>
     </table>
     <div>
-        <c:if test="${requestScope.totalPost/10>1}">
-            <ul class="pagination">
-                <c:forEach var="i"  begin="1" end="${requestScope.totalPost/10}">
-                    <c:if test="${i==0}">
-                        <li class="active"><a  href="javascript:void(0)" onclick="A.getPostImprove('/approve-post',${i})">${i}</a></li>
-                    </c:if>
-                    <c:if test="${i!=0}">
-                        <li><a href="javascript:void(0)" onclick="A.getPostImprove('/approve-post',${i})">${i}</a></li>
-                    </c:if>
-                </c:forEach>
-            </ul>
-        </c:if>
+        <%--<c:if test="${requestScope.totalPost/10>1}">--%>
+            <%--<ul class="pagination">--%>
+                <%--<c:forEach var="i"  begin="1" end="${requestScope.totalPost/10}">--%>
+                    <%--<c:if test="${i==0}">--%>
+                        <%--<li class="active"><a  href="javascript:void(0)" onclick="A.getPostImprove('/approve-post',${i})">${i}</a></li>--%>
+                    <%--</c:if>--%>
+                    <%--<c:if test="${i!=0}">--%>
+                        <%--<li><a href="javascript:void(0)" onclick="A.getPostImprove('/approve-post',${i})">${i}</a></li>--%>
+                    <%--</c:if>--%>
+                <%--</c:forEach>--%>
+            <%--</ul>--%>
+        <%--</c:if>--%>
     </div>
 </c:if>
 <script src="<s:url value="public/data-table-plugin/js/jquery.dataTables.min.js"/>" type="text/javascript"></script>

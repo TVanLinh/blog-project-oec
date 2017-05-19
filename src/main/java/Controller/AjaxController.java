@@ -45,9 +45,7 @@ public class AjaxController {
     @RequestMapping(value = "/like")
     @JsonView(Views.Public.class)
     public synchronized UserRestBody like(@RequestBody UserRestBody userRestBody, HttpServletRequest request, HttpServletResponse response) {
-//        System.out.println(userRestBody.getMsg());
-//        System.out.println(userRestBody.getCode());
-//        System.out.println("id:" +userRestBody.getId());
+
         Cookie cookie[]=request.getCookies();
         Cookie cookieLike=null;
         for(int i=0;i<cookie.length;i++)

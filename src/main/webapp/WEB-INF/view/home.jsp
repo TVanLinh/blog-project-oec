@@ -33,8 +33,13 @@
                                 <img class="img-responsive pdb-15" src="http://placehold.it/900x300" alt="">
                             </c:if>
                         <%--<hr>--%>
-
-                        <p>${post.content.replaceAll("\\<.*?>","").substring(0,50)}...</p>
+                         ${pageContext.setAttribute("str","\\<.*?>")}
+                        <c:if test="${post.content.replaceAll(str,'').length()>500}">
+                            <p>${post.content.replaceAll(str,"").substring(0,500)}...</p>
+                        </c:if>
+                         <c:if test="${post.content.replaceAll(str,'').length()<500}">
+                             <p>${post.content.replaceAll(str,"")}...</p>
+                         </c:if>
                         <%--<p>${ Jsoup.parse(post.content).text()}</p>--%>
                         <a class="btn btn-primary" href="/post?id=${post.id}" target="_self"> ${messageSource.getMessage("read",null,locale)} <span class="glyphicon glyphicon-chevron-right"></span></a>
                              <c:if test="${sessionScope.username!=null}">
@@ -66,14 +71,16 @@
         <!-- /.row -->
 
         <hr>
-
-      <jsp:include page="template/footer.jsp"/>
-
-
     </div>
 
-
-<script src="<s:url value="public/asserts/js/search.js"/>">
+<div class="container">
+    <jsp:include page="template/footer.jsp"/>
+</div>
+    <%--<div id="top">--%>
+        <%--<img src="<s:url value="public/asserts/images/top.png"/> ">--%>
+    <%--</div>--%>
+    <%--<script src="<s:url value="public/asserts/js/top.js"/>"></script>--%>
+    <script src="<s:url value="public/asserts/js/search.js"/>">
 
 </script>
 

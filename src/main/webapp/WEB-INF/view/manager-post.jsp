@@ -27,12 +27,12 @@
             <%--</jsp:include>--%>
             <!---------------------------->
             <!---------------list table -------------------------->
-            <c:if test="${postList.size()==0}">
-                  <h1 class="text-center">${messageSource.getMessage("table.zeroAllPost",null,locale)}</h1>
-            </c:if>
-            <c:if test="${postList.size()!=0}">
-              <h1 class="text-center">${messageSource.getMessage("table.allPost",null,locale)}</h1>
-            </c:if>
+            <%--<c:if test="${postList.size()==0}">--%>
+                  <%--<h1 class="text-center">${messageSource.getMessage("table.zeroAllPost",null,locale)}</h1>--%>
+            <%--</c:if>--%>
+            <%--<c:if test="${postList.size()!=0}">--%>
+              <%--<h1 class="text-center">${messageSource.getMessage("table.allPost",null,locale)}</h1>--%>
+            <%--</c:if>--%>
             <%--<jsp:include page="template/table-all-post.jsp"/>--%>
             <jsp:include page="template/table_post_all.jsp"/>
             <!----------------end list-table ------------------------->

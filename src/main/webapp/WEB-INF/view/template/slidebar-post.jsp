@@ -6,9 +6,12 @@
     <ul class="media-list main-list" id="content-slidebar">
         <c:forEach var="post" items="${postSlideBar}">
             <li class="media" >
-                <a class="pull-left pdb-15" href="/post?id=${post.id}">
-                    <img class="media-object" src="${post.image.link}" alt="${post.image.alt}">
-                </a>
+                <c:if test="${post.image.link!=null}">
+                    <a class="pull-left pdb-15" href="/post?id=${post.id}">
+                        <img class="media-object img-slidebar" src="${post.image.link}" alt="${post.image.alt}">
+                    </a>
+                </c:if>
+
                 <div class="media-body">
                     <h4 class="media-heading">${post.title}</h4>
                     <p class="by-user color-main2">By ${post.user.userName}</p>

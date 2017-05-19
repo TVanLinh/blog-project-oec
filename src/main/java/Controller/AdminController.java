@@ -61,7 +61,7 @@ public class AdminController
         defaultPage.setDaultPage(request);
         ModelAndView model = new ModelAndView();
         model.setViewName("admin");
-        List<Post> postList= postService.getAllPost("select * from post where approve=0");
+        List<Post> postList= postService.getAllPost("select * from post where approve=0 ");
         System.out.println(postList.size());
         if(postList==null)
         {
@@ -76,12 +76,15 @@ public class AdminController
     public  String configurarion(HttpServletRequest request)
     {
         defaultPage.setDaultPage(request);
+        request.setAttribute("conf",configService.getAllConfiguration().get(0));
         return "configuration";
     }
 
     @RequestMapping("/processConfigurarion")
     public  String processConfigurarion(HttpServletRequest request)
     {
+        defaultPage.setDaultPage(request);
+
         String title=request.getParameter("titleBlog");
         String formatTime =request.getParameter("formatTime");
         String numberPost =request.getParameter("numberPost");
@@ -90,17 +93,20 @@ public class AdminController
         if(title==null||formatTime==null||numberPost==null)
         {
             request.setAttribute("error","Not valid!");
+            request.setAttribute("conf",configService.getAllConfiguration().get(0));
             return "configuration";
         }
 
         if(title.trim().equals("")||formatTime.trim().equals("")||numberPost.trim().equals(""))
         {
             request.setAttribute("error","Title ,format time not valid");
+            request.setAttribute("conf",configService.getAllConfiguration().get(0));
             return "configuration";
         }
         if(Integer.valueOf(numberPost)<0)
         {
             request.setAttribute("error","Number Post must great than 0.!");
+            request.setAttribute("conf",configService.getAllConfiguration().get(0));
             return "configuration";
         }
         Configuration configuration=configService.getAllConfiguration().get(0);
@@ -128,6 +134,7 @@ public class AdminController
                defaultPage.setDaultPage(request);
            }
            request.setAttribute("error","Successfully!");
+           request.setAttribute("conf",configService.getAllConfiguration().get(0));
        }catch (Exception e)
        {
            return "configuration";
@@ -139,7 +146,7 @@ public class AdminController
     public  String managerPost(HttpServletRequest request)
     {
         defaultPage.setDaultPage(request);
-        List<Post> postList=postService.getAllPost("select * from post");
+        List<Post> postList=postService.getAllPost("select * from post ");
         if(postList==null)
         {
             postList=new ArrayList<Post>();

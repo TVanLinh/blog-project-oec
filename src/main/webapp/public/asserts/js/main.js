@@ -11,6 +11,7 @@ jQuery(document).ready(function($) {
         },
         getPostImprove:function (msg,page) {
             getPostTableRemove(msg,page);
+            location.reload();
         }
     }
 });
@@ -123,12 +124,12 @@ function  getPostTableRemove(msg,page) {
         data : JSON.stringify(data),
         url:msg,
         dataType:"json",
-        timeout:1000,
+        timeout:10000,
         success:function (data) {
             console.log(data);
             showPostAdmin(data,"#table-post-approve",displayTablePostImprove(data.posts));
             showPostAdmin(data,"#table-all-post",displayTablePost(data.posts));
-            displayTablePost(data.posts);
+            // displayTablePost(data.posts);
             $("#numberApprove").text(data.numberApprove);
             $("#totalPost").text(data.totalPost);
         },
@@ -221,6 +222,8 @@ function  displayTablePost(postList) {
             "<td>" + formaDate(postList[i].timePost) + "</td>" +
             "<td>"+status+"</td>"+
             "<td>"+approve+"</td>"+
+            "<td>"+postList[i].numberLike+"</td>"+
+            "<td>"+postList[i].numberView+"</td>"+
             "<td>" +
                 "<a href='javascript:void(0)' " +" onclick=A.getPostImprove("+ del +","+"1"+")"+ ">" +
                 "<span class='glyphicon glyphicon-remove mgl-10'></span>" +

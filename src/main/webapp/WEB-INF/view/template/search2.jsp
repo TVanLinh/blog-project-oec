@@ -4,7 +4,7 @@
             <input type="text" class="form-control"  id="search" name="title" onkeyup="${param.action}">
             <span class="input-group-btn">
                <%--<a href="javascript:void(0)" id="link-search">--%>
-                   <button class="btn btn-default" type="submit" onclick="return mySearch.cheackSearch('#search')">
+                   <button class="btn btn-default" type="submit" onclick="return mySearch.checkSearch('#search')" onsubmit="return mySearch.checkSearch('#search')">
                     <span class="glyphicon glyphicon-search"></span>
                     </button>
                <%--</a>--%>

@@ -160,8 +160,12 @@ public class ProcessPost {
         if(post1.getImage()!=null)
         {
             imageDAO.deleteByIdPost(post1.getId());
+            post1.setImage(image);
+        }else
+        {
+            post1.setImage(image);
         }
-        post1.setImage(image);
+
         postDAO.update(post1);
         session.setAttribute("post-id",post1.getId());
         session.removeAttribute("postUpdate");
