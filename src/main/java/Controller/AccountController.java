@@ -1,5 +1,6 @@
 package Controller;
 
+import DAO.PostDAO;
 import DAO.UserDAOIML;
 import Entities.Configuration;
 import Entities.Post;
@@ -17,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +44,9 @@ public class AccountController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    private PostDAO postDAO;
 
     @Autowired
     DefaultPage defaultPage;
@@ -152,8 +157,20 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/wellcome/index")
+    @ResponseBody
     public  String index()
     {
+//        User u = this.userService.find(1);
+//        for (int i = 101; i < 1000; i++) {
+//            Post p = new Post();
+//            p.setTitle("Title " + i);
+//            p.setContent("Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat.");
+//            p.setStatus(1);
+//            p.setApprove(1);
+//            p.setUser(u);
+//
+//            this.postDAO.insert(p);
+//        }
         return "index";
     }
 

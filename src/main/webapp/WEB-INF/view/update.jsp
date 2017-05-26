@@ -15,7 +15,7 @@
     <div class="row">
 
         <!-- Blog Post Content Column -->
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <form:form action="/write-update"  commandName="post">
                 <label class="fs-20">${messageSource.getMessage("title",null,locale)}:</label>
                 <%--<form:errors path="title"/>--%>
@@ -42,9 +42,9 @@
         </div>
 
         <!-- Blog Sidebar Widgets Column -->
-        <div>
-            <jsp:include page="template/slidebar-post.jsp"/>
-        </div>
+        <%--<div>--%>
+            <%--<jsp:include page="template/slidebar-post.jsp"/>--%>
+        <%--</div>--%>
 
     </div>
     <!-- /.row -->

@@ -29,6 +29,7 @@ public class LanguageController {
         }else {
             setResource(request,"blog_vn_VN",new Locale("vn","VN"));
         }
+        System.out.println(request.getRequestURL().toString());
         return "redirect:/";
     }
 

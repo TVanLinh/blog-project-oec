@@ -16,13 +16,13 @@
     <div class="row">
 
         <!-- Blog Post Content Column -->
-        <div class="col-lg-8">
+        <div class="col-lg-12">
         <form:form action="/write-post"  commandName="post" >
-                <label class="fs-20">${messageSource.getMessage("title",null,locale)}:</label>
+                <label class="fs-20 text-center">${messageSource.getMessage("title",null,locale)}:</label>
                 <%--<form:errors path="title"/>--%>
                 <input name="title" id="idTitle" type="text" class="input-xs mgb-40 title" style="margin-bottom: 30px"><br>
-                  <textarea class="ckeditor" cols="80" id="content" name="content" rows="30">
-                    This is my textarea to be replaced with CKEditor.
+                    <textarea class="ckeditor" cols="80" id="content" name="content" rows="30">
+                         Blog create By Linh Tran
                     </textarea>
                     <select name="status" >
                         <option value="1" >${messageSource.getMessage("public",null,locale)}</option>
@@ -43,9 +43,9 @@
         </div>
 
         <!-- Blog Sidebar Widgets Column -->
-        <div>
-            <jsp:include page="template/slidebar-post.jsp"/>
-        </div>
+        <%--<div>--%>
+            <%--<jsp:include page="template/slidebar-post.jsp"/>--%>
+        <%--</div>--%>
 
     </div>
     <!-- /.row -->
