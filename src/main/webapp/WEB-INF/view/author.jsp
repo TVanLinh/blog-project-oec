@@ -49,9 +49,11 @@
             </c:forEach>
             <!-- Pager -->
             <ul class="pager">
-                <li class="previous">
-                    <a href="/user?page=${requestScope.page-1}">&larr; ${messageSource.getMessage("back",null,locale)}</a>
-                </li>
+                <c:if test="${requestScope.page>1}">
+                    <li class="previous">
+                        <a href="/user?page=${requestScope.page-1}">&larr; ${messageSource.getMessage("back",null,locale)}</a>
+                    </li>
+               </c:if>
                 <li class="next">
                     <c:if test="${postList.size()!=0}">
                         <a href="/user?page=${requestScope.page+1}">${messageSource.getMessage("next",null,locale)} &rarr;</a>

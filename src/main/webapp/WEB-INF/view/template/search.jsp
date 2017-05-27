@@ -14,20 +14,3 @@
         </div>
     </form>
 </div>
-<%--<script type="text/javascript">--%>
-<%--//    jQuery(document).ready(function($) {--%>
-    <%--var search={--%>
-
-        <%--like:function () {--%>
-            <%--alert("ok");--%>
-        <%--}--%>
-    <%--};--%>
-
-<%--//function abc () {alert("ok");--%>
-<%--//}--%>
-<%--//        $("#search").val("fgg");--%>
-<%--//        $( "#search" ).keyup(function() {--%>
-<%--//            search.like();--%>
-<%--//        });--%>
-<%--//    });--%>
-<%--</script>--%>

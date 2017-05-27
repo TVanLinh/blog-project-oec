@@ -13,10 +13,10 @@
     <!-- Blog Entries Column -->
     <div class="row">
         <div class="col-xs-12">
-            <ul class="list-group">
-                <li class="list-inline btn btn-danger mgl-10 mgr-10  mgb-15" ><a href="/manager-post">${messageSource.getMessage("managerPost",null,locale)}</a></li>
+            <ul class="list-group menu-admin">
+                <li class="list-inline btn btn-danger mgl-10 mgr-10  mgb-15" ><a href="/manager-post"><img src="<s:url value="public/asserts/images/post1.png" />" class="mgr-10">${messageSource.getMessage("managerPost",null,locale)}</a></li>
                 <li class="list-inline btn btn-success mgr-10  mgb-15"><a href="/configuration"><span class="glyphicon glyphicon-cog mgr-5"></span>${messageSource.getMessage("configSystem",null,locale)}</a></li>
-                <li class="list-inline btn btn-warning mgl-10  mgb-15"><a href="/manager-user">${messageSource.getMessage("managerUser",null,locale)}</a></li>
+                <li class="list-inline btn btn-warning mgl-10  mgb-15"> <a href="/manager-user"><i class="glyphicon glyphicon-user mgr-10"></i>${messageSource.getMessage("managerUser",null,locale)}</a></li>
             </ul>
             <ul class="list-group">
                 <li class="list-group-item">${messageSource.getMessage("totalAllPost",null,locale)}<span class="badge" id="num">${requestScope.totalPost}</span></li>
@@ -25,22 +25,26 @@
             <%--<jsp:include page="template/search.jsp">--%>
                 <%--<jsp:param name="action" value="mySearch.postSearch('/search-all-post','#search','#table-all-post')"/>--%>
             <%--</jsp:include>--%>
-            <!---------------------------->
-            <!---------------list table -------------------------->
-            <%--<c:if test="${postList.size()==0}">--%>
-                  <%--<h1 class="text-center">${messageSource.getMessage("table.zeroAllPost",null,locale)}</h1>--%>
-            <%--</c:if>--%>
-            <%--<c:if test="${postList.size()!=0}">--%>
-              <%--<h1 class="text-center">${messageSource.getMessage("table.allPost",null,locale)}</h1>--%>
-            <%--</c:if>--%>
-            <%--<jsp:include page="template/table-all-post.jsp"/>--%>
+
+            <jsp:include page="template/search3.jsp">
+                 <jsp:param name="action" value="/manager-post-search"/>
+            </jsp:include>
+            <%--<div >--%>
+                    <%--<form method="get" action="/manager-post-search">--%>
+                        <%--<div class="input-group">--%>
+                            <%--<input type="text" class="form-control"  id="search" name="query_search">--%>
+                            <%--<span class="input-group-btn">--%>
+                        <%--<button class="btn btn-default" type="submit">--%>
+                            <%--<span class="glyphicon glyphicon-search"></span>--%>
+                        <%--</button>--%>
+                <%--</span>--%>
+                        <%--</div>--%>
+                    <%--</form>--%>
+            <%--</div>--%>
             <jsp:include page="template/table_post_all.jsp"/>
             <!----------------end list-table ------------------------->
         </div>
-        <!-- Blog Sidebar Widgets Column -->
-        <%--<div>--%>
-            <%--<jsp:include page="template/slidebar.jsp"/>--%>
-        <%--</div>--%>
+
     </div>
     <!-- /.row -->
     <hr>

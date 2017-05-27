@@ -32,18 +32,21 @@
         </tbody>
     </table>
     <div>
-        <%--<c:if test="${requestScope.totalPost/10>1}">--%>
-            <%--<ul class="pagination">--%>
-                <%--<c:forEach var="i"  begin="1" end="${requestScope.totalPost/10}">--%>
-                    <%--<c:if test="${i==0}">--%>
-                        <%--<li class="active"><a  href="javascript:void(0)" onclick="A.getPostImprove('/approve-post',${i})">${i}</a></li>--%>
+        <%--<ul class="pager">--%>
+            <%--<c:if test="${requestScope.page>=2}">--%>
+                <%--<li class="previous">--%>
+                    <%--<a href="/manager-post?page=${requestScope.page-1}">&larr; ${messageSource.getMessage("back",null,locale)}</a>--%>
+                <%--</li>--%>
+            <%--</c:if>--%>
+
+            <%--<c:if test="${requestScope.page<=requestScope.totalPost/10}">--%>
+                <%--<li class="next">--%>
+                    <%--<c:if test="${postList.size()!=0}">--%>
+                        <%--<a href="/manager-post?page=${requestScope.page+1}">${messageSource.getMessage("next",null,locale)} &rarr;</a>--%>
                     <%--</c:if>--%>
-                    <%--<c:if test="${i!=0}">--%>
-                        <%--<li><a href="javascript:void(0)" onclick="A.getPostImprove('/approve-post',${i})">${i}</a></li>--%>
-                    <%--</c:if>--%>
-                <%--</c:forEach>--%>
-            <%--</ul>--%>
-        <%--</c:if>--%>
+                <%--</li>--%>
+            <%--</c:if>--%>
+        <%--</ul>--%>
     </div>
 </c:if>
 <script src="<s:url value="public/data-table-plugin/js/jquery.dataTables.min.js"/>" type="text/javascript"></script>

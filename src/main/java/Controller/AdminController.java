@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO.ConfigurationDAO;
+import DAO.PostDAO;
 import DAO.RoleDAO;
 import DAO.UserDAO;
 import Entities.Configuration;
@@ -12,6 +13,10 @@ import Service.PostService;
 import Service.RoleService;
 import Service.UserService;
 import Utils.DefaultPage;
+import Utils.NumberViewSort;
+import Utils.PortSort;
+import Utils.SortType;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +61,11 @@ public class AdminController
     @Autowired
     RoleDAO roleDAO;
 
+    @Autowired
+    PostDAO postDAO;
+
+    @Autowired
+    PortSort portSort;
 
     @RequestMapping(value = "/admin**", method = RequestMethod.GET)
     public ModelAndView adminPage(HttpServletRequest request) {
@@ -146,16 +157,82 @@ public class AdminController
     public  String managerPost(HttpServletRequest request)
     {
         defaultPage.setDaultPage(request);
-        List<Post> postList=postService.getAllPost("select * from post ");
+        List<Post> postList;
+        HttpSession session=request.getSession();
+
+        String page=request.getParameter("page");
+
+         if(page==null||page.trim()==""||!StringUtils.isNumeric(page)||Integer.valueOf(page)==0)
+         {
+                deletePost(request);
+                postList=postService.getAllPost(portSort.getQuerySortAllPost(request,0));
+                setListPost(request,postList);
+                request.setAttribute("page",1);
+                return "manager-post";
+         }
+
+        deletePost(request);
+        postList=postService.getAllPost(portSort.getQuerySortAllPost(request,(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW));
+        setListPost(request,postList);
+        request.setAttribute("page", Integer.valueOf(page));
+        return "manager-post";
+    }
+
+    @RequestMapping(value = "/manager-post-search",method = RequestMethod.GET)
+    public  String searchTableAllPost(HttpServletRequest request)
+    {
+        defaultPage.setDaultPage(request);
+        String page=request.getParameter("page");
+        String querySearch=request.getParameter("query_search");
+        HttpSession session=request.getSession();
+        SortType sortType=portSort.getCurrentSortType(request);
+        List<Post> postList;
+
+        if(sortType==null)
+        {
+            sortType=new SortType();
+        }
+        if(page==null||page.trim()==""||!StringUtils.isNumeric(page)||Integer.valueOf(page)==0||querySearch==null||querySearch.trim().equals("'")||querySearch.trim().equals(""))
+        {
+
+            postList=postService.getAllPost("select * from  post where title like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit 0,"+NumberViewSort.NUMBER_VIEW);
+            setListPost(request,postList);
+            request.setAttribute("page",1);
+            request.setAttribute("querySearch",querySearch);
+            request.setAttribute("totalPost",postService.getAllPost("select * from  post where title like '%"+querySearch+"%'").size());
+            System.out.println("----------------------------------------------------------------------------------------------------------");
+            return "manager-post";
+        }
+        postList=postService.getAllPost("select * from post  where title like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit "+(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW+","+NumberViewSort.NUMBER_VIEW);
+        setListPost(request,postList);
+        request.setAttribute("page", Integer.valueOf(page));
+        request.setAttribute("querySearch",querySearch);
+        request.setAttribute("totalPost",postService.getAllPost("select * from  post where title like '%"+querySearch+"%'").size());
+        return "manager-post";
+    }
+
+    public void setListPost(HttpServletRequest request,List<Post> postList)
+    {
         if(postList==null)
         {
             postList=new ArrayList<Post>();
         }
         request.setAttribute("postList",postList);
         request.setAttribute("totalPost",postService.getAllPost().size());
-        return "manager-post";
     }
 
+    public void deletePost(HttpServletRequest request)
+    {
+        String action=request.getParameter("action");
+        String id=request.getParameter("id");
+        if(action!=null &&action.equals("delete"))
+        {
+            if(id!=null&& StringUtils.isNumeric(id))
+            {
+                postDAO.delete(Integer.valueOf(id));
+            }
+        }
+    }
     @RequestMapping("/manager-user")
     public  String managerUser(HttpServletRequest request)
     {

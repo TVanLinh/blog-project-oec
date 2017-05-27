@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
     if ($('#showTable').length > 0) {
-        $('#showTable').DataTable();
+        $('#showTable').DataTable({
+            "lengthMenu":[20]
+        });
     }
 } );

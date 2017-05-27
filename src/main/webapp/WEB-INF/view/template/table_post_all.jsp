@@ -2,18 +2,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:if test="${postList.size()>0}">
-    <table class="display " id="showTable">
+    <table class="responstable  " id="">
 
       <thead>
           <tr>
               <th data-th="Driver details"><span>STT</span></th>
-              <th data-th="Driver details"><span>${messageSource.getMessage("td.author",null,locale)}</span></th>
-              <th class="text-center">${messageSource.getMessage("td.title",null,locale)}</th>
-              <th>${messageSource.getMessage("td.timePost",null,locale)}</th>
-              <th>${messageSource.getMessage("td.status",null,locale)}</th>
-              <th>${messageSource.getMessage("td.approve",null,locale)}</th>
-              <th>${messageSource.getMessage("nLike",null,locale)}</th>
-              <th>${messageSource.getMessage("nView",null,locale)}</th>
+              <th data-th="Driver details"><a href="/manager-post?orderBy=id_user"><span>${messageSource.getMessage("td.author",null,locale)}</span></a></th>
+              <th class="text-center"><a href="/manager-post?orderBy=title">${messageSource.getMessage("td.title",null,locale)}</a></th>
+              <th><a href="/manager-post?orderBy=time_post">${messageSource.getMessage("td.timePost",null,locale)}</a></th>
+              <th><a href="/manager-post?orderBy=status">${messageSource.getMessage("td.status",null,locale)}</a></th>
+              <th><a href="/manager-post?orderBy=approve">${messageSource.getMessage("td.approve",null,locale)}</a></th>
+              <th><a href="/manager-post?orderBy=number_like">${messageSource.getMessage("nLike",null,locale)}</a></th>
+              <th><a href="/manager-post?orderBy=number_view">${messageSource.getMessage("nView",null,locale)}</a></th>
               <th>${messageSource.getMessage("td.action",null,locale)}</th>
           </tr>
       </thead>
@@ -43,7 +43,9 @@
                 <td>${post.numberLike}</td>
                 <td>${post.numberView}</td>
                 <td>
-                    <a href="javascript:void(0)" onclick="A.getPostImprove('/manager-get-all-post-delete?id='+${post.id},null)"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
+                    <%--<a href="javascript:void(0)" onclick="A.getPostImprove('/manager-get-all-post-delete?id='+${post.id},null)"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>--%>
+                    <%--<a href="/update?action=update&id=${post.id}"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a> --%>
+                    <a href="/manager-post?page=${requestScope.page}&&action=delete&&id=${post.id}" > <span class="glyphicon glyphicon-remove mgl-10"></span></a>
                     <a href="/update?action=update&id=${post.id}"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a>
                 </td>
             </tr>
@@ -52,28 +54,42 @@
         </tbody>
     </table>
 
-    <%--<div>--%>
-        <%--<c:if test="${requestScope.totalPost/10>1}">--%>
-            <%--<ul class="pagination">--%>
-                <%--<c:forEach var="i"  begin="0" end="${requestScope.totalPost/10}">--%>
-                    <%--<c:if test="${i==0}">--%>
-                        <%--<li class="active"><a  href="javascript:void(0)" onclick="A.getPostImprove('/manager-get-all-post',${i})">${i}</a></li>--%>
-                    <%--</c:if>--%>
-                    <%--<c:if test="${i!=0}">--%>
-                        <%--<li><a href="javascript:void(0)" onclick="A.getPostImprove('/manager-get-all-post',${i})">${i}</a></li>--%>
-                    <%--</c:if>--%>
-                <%--</c:forEach>--%>
-            <%--</ul>--%>
-        <%--</c:if>--%>
-    <%--</div>--%>
-    <%--<script>--%>
-        <%--$(document).ready(function () {--%>
-            <%--$("li").on("click",function () {--%>
-                <%--$("li").removeClass('active');--%>
-                <%--$(this).addClass("active");--%>
-            <%--});--%>
-        <%--});--%>
-    <%--</script>--%>
+    <div>
+        <ul class="pager">
+            <c:if test="${requestScope.querySearch==null}">
+                <c:if test="${requestScope.page>=2}">
+                    <li class="previous">
+                        <a href="/manager-post?page=${requestScope.page-1}">&larr; ${messageSource.getMessage("back",null,locale)}</a>
+                    </li>
+                </c:if>
+
+                <c:if test="${requestScope.page<=requestScope.totalPost/10}">
+                    <li class="next">
+                        <c:if test="${postList.size()!=0}">
+                            <a href="/manager-post?page=${requestScope.page+1}">${messageSource.getMessage("next",null,locale)} &rarr;</a>
+                        </c:if>
+                    </li>
+                </c:if>
+            </c:if>
+
+            <c:if test="${requestScope.querySearch!=null}">
+                <c:if test="${requestScope.page>=2}">
+                    llll
+                    <li class="previous">
+                        <a href="/manager-post-search?page=${requestScope.page-1}&query_search=${requestScope.querySearch}">&larr; ${messageSource.getMessage("back",null,locale)}</a>
+                    </li>
+                </c:if>
+
+                <c:if test="${requestScope.page<=requestScope.totalPost/10}">
+                    <li class="next">
+                        <c:if test="${postList.size()!=0}">
+                            <a href="/manager-post-search?page=${requestScope.page+1}&query_search=${requestScope.querySearch}">${messageSource.getMessage("next",null,locale)} &rarr;</a>
+                        </c:if>
+                    </li>
+                </c:if>
+            </c:if>
+        </ul>
+    </div>
 
 </c:if>
 

@@ -22,6 +22,10 @@ img
     font-size: 16px;
     font-style: italic;
 }
+.menu-admin li a
+{
+    color: #fff;
+}
 #titleBlog,#numberPost,#passWord,#userName,input[type='text']
 {
     padding:0px;

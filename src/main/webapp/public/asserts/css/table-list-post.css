@@ -81,3 +81,21 @@ h1 {
 h1 span {
     color: #167F92;
 }
+thead tr a,thead tr a:hover{
+    color: #fff;
+}
+#showTable_paginate,#showTable_info,#showTable_length
+{
+    display: none;
+}
+/*th{*/
+    /*border:1px solid #000;*/
+    /*border-right:0.5px;*/
+/*}*/
+th tr
+{
+    border:none;
+}
+table{
+    border:1px solid #000;
+}
