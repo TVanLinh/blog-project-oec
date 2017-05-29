@@ -106,10 +106,7 @@
 <div class="container">
     <jsp:include page="template/footer.jsp"/>
 </div>
-<%--<div id="top">--%>
-<%--<img src="<s:url value="public/asserts/images/top.png"/> ">--%>
-<%--</div>--%>
-<%--<script src="<s:url value="public/asserts/js/top.js"/>"></script>--%>
+
 <script src="<s:url value="public/asserts/js/search.js"/>">
 
 </script>

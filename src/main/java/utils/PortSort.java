@@ -75,14 +75,12 @@ public class PortSort {
         return null;
     }
 
-    public SortType getCurrentSortType(HttpServletRequest request,String nameListCurrent,String orderByCurrent)
-    {
+    public SortType getCurrentSortType(HttpServletRequest request,String nameListCurrent,String orderByCurrent) {
 
         HttpSession session = request.getSession();
         List<SortType> orderList = (List<SortType>) session.getAttribute(nameListCurrent);
         String current = (String) session.getAttribute(orderByCurrent);
-        if(current != null)
-        {
+        if(current != null) {
             return getSortType(current,orderList);
         }
         return  new SortType();
@@ -96,19 +94,15 @@ public class PortSort {
         List<SortType> orderList = (List<SortType>) session.getAttribute(StringSessionUtil.POST_APPROVE_TYPE_SORT);
         SortType sortItem;
 
-        if(orderBy != null)
-        {
-            if(!checkOrderBy(orderBy))
-            {
+        if(orderBy != null) {
+            if(!checkOrderBy(orderBy)) {
                 orderBy = "id_user";
             }
             session.setAttribute(StringSessionUtil.CURRENT_APPROVE_POST,orderBy);
-        }
-        else
+        } else
         {
             orderBy = (String) session.getAttribute(StringSessionUtil.CURRENT_APPROVE_POST);
-            if(orderBy == null&&option == true)
-            {
+            if(orderBy == null&&option == true) {
                 session.setAttribute(StringSessionUtil.CURRENT_APPROVE_POST,"id_user");
             }
         }
@@ -120,8 +114,7 @@ public class PortSort {
                 sortItem.orderBy = "id_user";
             }else if (option == false && orderBy == null && session.getAttribute(StringSessionUtil.CURRENT_APPROVE_POST) != null) {
                  sortItem.orderBy = (String) session.getAttribute(StringSessionUtil.CURRENT_APPROVE_POST);
-            }else if(option == false  &&  orderBy == null && session.getAttribute(StringSessionUtil.CURRENT_APPROVE_POST) == null)
-            {
+            }else if(option == false  &&  orderBy == null && session.getAttribute(StringSessionUtil.CURRENT_APPROVE_POST) == null) {
                 sortItem.orderBy = "id_user";
             }
             else {
@@ -148,8 +141,7 @@ public class PortSort {
         return "select * from post  where approve = 0  order by  " + sortItem.orderBy + " " + sortItem.typeOrder + " limit " +ofset + "," + NumberViewSort.NUMBER_VIEW;
     }
 
-    private   boolean checkOrderBy(String orderBy)
-    {
+    private   boolean checkOrderBy(String orderBy) {
         Set<String> set  = new HashSet<String>();
         set.add("title");
         set.add("id");

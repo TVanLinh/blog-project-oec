@@ -28,10 +28,6 @@
             <jsp:include page="template/table_post_all.jsp"/>
             <!----------------end list-table ------------------------->
         </div>
-        <!-- Blog Sidebar Widgets Column -->
-        <%--<div>--%>
-        <%--<jsp:include page="template/slidebar.jsp"/>--%>
-        <%--</div>--%>
     </div>
     <!-- /.row -->
     <hr>

@@ -19,16 +19,6 @@
                 <li class="list-inline btn btn-warning mgl-10  mgb-15"> <a href="/manager-user"><i class="glyphicon glyphicon-user mgr-10"></i>${messageSource.getMessage("managerUser",null,locale)}</a></li>
             </ul>
             <a class="btn btn-default mgb-15" href="/insert-user"><img src="<s:url value="public/asserts/images/add_user.png"/> " class="mgr-10">${messageSource.getMessage("insertUser",null,locale)}</a>
-            <%--<ul class="list-group">--%>
-              <%--<c:if test="${requestScope.querySearch==null}">--%>
-                  <%--<li class="list-group-item">${messageSource.getMessage("totalUser",null,locale)}<span class="badge" id="num">${requestScope.totalList}</span></li>--%>
-              <%--</c:if>--%>
-
-             <%--<c:if test="${requestScope.querySearch!=null}">--%>
-                  <%--<li class="list-group-item">${messageSource.getMessage("resultFind",null,locale)}<span class="badge" id="num">${requestScope.totalList}</span></li>--%>
-              <%--</c:if>--%>
-
-            <%--</ul>--%>
 
             <jsp:include page="template/search3.jsp">
                   <jsp:param name="action" value="/manager-user-search"/>

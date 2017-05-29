@@ -15,13 +15,12 @@ import javax.servlet.http.HttpSession;
 public class DefaultPage {
     @Autowired
     ConfigurationService configurationService;
-    public void setDaultPage(HttpServletRequest request)
-    {
+    public void setDaultPage(HttpServletRequest request) {
         HttpSession session = request.getSession();
 
         Configuration configuration = configurationService.getAllConfiguration().get(0);
-        if(configuration != null)
-        {
+
+        if(configuration != null) {
             session.setAttribute("dateFormat",configuration.getDateFormat());
             session.setAttribute("blogTitle",configuration.getWebTitle());
         }

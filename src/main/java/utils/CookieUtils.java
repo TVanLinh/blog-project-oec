@@ -7,34 +7,29 @@ import java.util.Set;
  * Created by linhtran on 10/05/2017.
  */
 public class CookieUtils {
-    public static  boolean isLike(int id,String str)
-    {
+    public static  boolean isLike(int id,String str) {
         if (str.trim().equals("")) {
             return false;
         }
 
         Set<Integer> set = new HashSet<Integer>();
         String list[] = str.trim().split(",");
-        if(list.length == 0)
-        {
+        if(list.length == 0) {
             return false;
         }
         for(int i = 0 ; i < list.length ; i++)
         {
-            if(!list[i].equals("")||!list[i].equals(","))
-            {
+            if(!list[i].equals("")||!list[i].equals(",")) {
                 set.add(Integer.valueOf(list[i]));
             }
         }
-        if(set.contains(id))
-        {
+        if(set.contains(id)) {
             return true;
         }
         return false;
     }
 
-    public static String format(Object arr[],String st)
-    {
+    public static String format(Object arr[],String st) {
         StringBuilder result=new StringBuilder("");
         for(int i = 0 ; i <arr.length ; i++)
         {
@@ -43,8 +38,7 @@ public class CookieUtils {
         return result.toString();
     }
 
-    public static  String  remove(String str,int id)
-    {
+    public static  String  remove(String str,int id) {
         Set<Object> set = new HashSet<Object>();
         String list[] = str.split(",");
         for(int i = 0 ; i<list.length ; i++)

@@ -89,8 +89,7 @@ public class UserSort {
         HttpSession session = request.getSession();
         List<SortType> orderList = (List<SortType>) session.getAttribute(StringSessionUtil.USER_TYPE_SORT);
         String orderBy = request.getParameter("orderBy");
-        if(orderBy != null && orderBy.equals("role"))
-        {
+        if(orderBy != null && orderBy.equals("role")) {
             SortType sortItem = sort.getSortType(orderBy, orderList);
             if (sortItem == null) {
                 sortItem = new SortType();
@@ -107,8 +106,7 @@ public class UserSort {
         return null;
     }
 
-    private   boolean checkOrderBy(String orderBy)
-    {
+    private   boolean checkOrderBy(String orderBy) {
         Set<String> set = new HashSet<String>();
         set.add("role");
         set.add("id");

@@ -17,8 +17,7 @@ import java.util.Locale;
 public class LanguageController {
 
     @RequestMapping("/language")
-    public String changeLanguage(HttpServletRequest request, @RequestParam String language)
-    {
+    public String changeLanguage(HttpServletRequest request, @RequestParam String language) {
 
         if(language == null) {
             setResource(request,"blog_vn_VN",new Locale("vn","VN"));
@@ -31,8 +30,7 @@ public class LanguageController {
         return "redirect:/";
     }
 
-    public  void setResource(HttpServletRequest request,String source ,Locale locale)
-    {
+    public  void setResource(HttpServletRequest request,String source ,Locale locale) {
         HttpSession session=request.getSession();
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename(source);

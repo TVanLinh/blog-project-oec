@@ -35,20 +35,16 @@ public class SearchController {
 
 
     @RequestMapping(value = "/view-search")
-    public  String  processSearchAll(HttpServletRequest request)
-    {
+    public  String  processSearchAll(HttpServletRequest request) {
         defaultPage.setDaultPage(request);
         int limit = configurationService.getAllConfiguration().get(0).getNumberViewPost();
         String title = request.getParameter("title");
         String page = request.getParameter("page");
 
-
-        if(title == null)
-        {
+        if(title == null) {
             return "redirect:/home";
         }
-       if( defaultSearch(request,page,title))
-       {
+       if( defaultSearch(request,page,title)) {
            return "view-search";
        }
         setPostListClient(request,title,(Integer.valueOf(page)-1)*limit);
@@ -57,13 +53,11 @@ public class SearchController {
         return "view-search";
     }
 
-    public void setPostListClient(HttpServletRequest request,String searchBy,int offset)
-    {
+    public void setPostListClient(HttpServletRequest request,String searchBy,int offset) {
         List<Post> list;
         int limit = configurationService.getAllConfiguration().get(0).getNumberViewPost();
         list=postService.getAllPost("select * from post  where status=1 and  approve=1 and UPPER(title) like '%"+searchBy.toUpperCase()+"%' order by time_post desc limit "+offset+","+limit);
-        if(list == null)
-        {
+        if(list == null) {
             list = new ArrayList<Post>();
         }
         request.setAttribute("postList",list);
@@ -71,17 +65,14 @@ public class SearchController {
         request.setAttribute("totalList",postService.getAllPost("select * from post  where status=1 and  approve=1 and UPPER(title) like '%"+searchBy.toUpperCase()+"%' ").size());
     }
 
-    public  boolean defaultSearch(HttpServletRequest request,String page,String searchBy)
-    {
+    public  boolean defaultSearch(HttpServletRequest request,String page,String searchBy) {
         request.setAttribute("userSerVice",userService);
         int limit = configurationService.getAllConfiguration().get(0).getNumberViewPost();
 
-        if(searchBy == null)
-        {
+        if(searchBy == null) {
             return false;
         }
-        if(page == null || page.trim().equals("") || !StringUtils.isNumeric(page))
-        {
+        if(page == null || page.trim().equals("") || !StringUtils.isNumeric(page)) {
             setPostListClient(request,searchBy,0);
             request.setAttribute("page",1);
             request.setAttribute("limit",limit);
@@ -91,19 +82,16 @@ public class SearchController {
     }
 
     @RequestMapping(value = "/user-search")
-    public  String  processUserSearch(HttpServletRequest request)
-    {
+    public  String  processUserSearch(HttpServletRequest request) {
         defaultPage.setDaultPage(request);
         int limit = configurationService.getAllConfiguration().get(0).getNumberViewPost();
         String title = request.getParameter("title");
         String page = request.getParameter("page");
 
-        if(title == null)
-        {
+        if(title == null) {
             return "redirect:/home";
         }
-        if( defaultSearch(request,page,title))
-        {
+        if( defaultSearch(request,page,title)) {
             return "view-search";
         }
         setPostListUser(request,title,(Integer.valueOf(page)-1)*limit);
@@ -112,15 +100,13 @@ public class SearchController {
         return "view-search";
 
     }
-    public void setPostListUser(HttpServletRequest request,String searchBy,int offset)
-    {
+    public void setPostListUser(HttpServletRequest request,String searchBy,int offset) {
         List<Post> list;
         int limit = configurationService.getAllConfiguration().get(0).getNumberViewPost();
         String name = (String) request.getSession().getAttribute("username");
         User user =  userService.getUserByName(name);
         list = postService.getAllPost("select * from post where (status = 1 or id_user =  "+user.getId()+") and UPPER(title) like '%"+searchBy.toUpperCase()+"%' limit "+offset+","+limit);
-        if(list == null)
-        {
+        if(list == null) {
             list = new ArrayList<Post>();
         }
         request.setAttribute("postList",list);

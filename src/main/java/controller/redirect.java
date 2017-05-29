@@ -6,7 +6,6 @@ import entities.Post;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import service.ConfigurationService;
@@ -43,19 +42,14 @@ public class redirect {
     @Autowired
     DefaultPage defaultPage;
 
-    @Autowired
-    ResourceBundleMessageSource messageSource;
-
     @RequestMapping(value = "/write")
-    public  String viewWriter(HttpServletRequest request)
-    {
+    public  String viewWriter(HttpServletRequest request) {
         defaultPage.setDaultPage(request);
         return "write";
     }
 
     @RequestMapping(value={"/","/home"})
-    public String homePage(HttpServletRequest request)
-    {
+    public String homePage(HttpServletRequest request) {
         defaultPage.setDaultPage(request);
         String page=request.getParameter("page");
         List<Post> postList;
@@ -79,8 +73,7 @@ public class redirect {
         return "home";
     }
     @RequestMapping(value = "/post")
-    public  String viewPost(HttpServletRequest request)
-    {
+    public  String viewPost(HttpServletRequest request) {
         defaultPage.setDaultPage(request);
 
         String id = request.getParameter("id");

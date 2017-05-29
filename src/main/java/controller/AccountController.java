@@ -43,10 +43,10 @@ public class AccountController {
     DefaultPage defaultPage;
 
     @RequestMapping(value = "/user")
-    public  String userInfor(Principal principal,HttpServletRequest request)
-    {
+
+    public  String userInfor(Principal principal,HttpServletRequest request) {
             defaultPage.setDaultPage(request);
-            String page=request.getParameter("page");
+            String page = request.getParameter("page");
             if(request.getSession().getAttribute("username") == null) {
                 System.out.println(principal.getName());
                 System.out.println("Create Session");
@@ -67,13 +67,13 @@ public class AccountController {
             int limit = configurationService.find(1).getNumberViewPost();
 
             if(page == null) {
-                postList=postService.getPostByIdUser(userService.getUserByName(principal.getName()).getId(),0,limit);
+                postList = postService.getPostByIdUser(userService.getUserByName(principal.getName()).getId(),0,limit);
                 request.setAttribute("page",1);
                 request.setAttribute("postList",postList);
                 return "author";
             }
             try {
-                postList=postService.getPostByIdUser(userService.getUserByName(principal.getName()).getId(),(Integer.valueOf(page)-1)*limit,limit);
+                postList = postService.getPostByIdUser(userService.getUserByName(principal.getName()).getId(),(Integer.valueOf(page)-1)*limit,limit);
                 request.setAttribute("page",Integer.valueOf(page));
                 System.out.println(page);
                 request.setAttribute("postList",postList);
@@ -89,10 +89,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-                              @RequestParam(value = "logout", required = false) String logout, HttpSession session) {
-
-
+    public ModelAndView login(@RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout) {
         ModelAndView model = new ModelAndView();
         if (error != null) {
             model.addObject("error", "Invalid username or password!");
@@ -108,8 +105,7 @@ public class AccountController {
 
     }
     @RequestMapping(value = "/logout")
-    public String  logout(HttpServletRequest request)
-    {
+    public String  logout(HttpServletRequest request) {
         request.getSession().removeAttribute("username");
         request.getSession().invalidate();
         HttpSession session = request.getSession();

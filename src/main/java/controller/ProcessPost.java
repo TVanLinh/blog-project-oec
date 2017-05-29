@@ -104,8 +104,7 @@ public class ProcessPost {
     }
 
     @RequestMapping(value = "/update",method = RequestMethod.GET)
-    public  String updatePost(HttpServletRequest request)
-    {
+    public  String updatePost(HttpServletRequest request) {
         defaultPage.setDaultPage(request);
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
@@ -118,8 +117,7 @@ public class ProcessPost {
     }
 
     @RequestMapping(value = "/write-update",method = RequestMethod.POST)
-    public  String viewUpdatePost(@ModelAttribute(value = "post")Post post, HttpServletRequest request)
-    {
+    public  String viewUpdatePost(@ModelAttribute(value = "post")Post post, HttpServletRequest request) {
         defaultPage.setDaultPage(request);
         HttpSession session = request.getSession();
 
@@ -138,21 +136,17 @@ public class ProcessPost {
 
         Image image = new  Image();
 
-        if(linkImage != null && !linkImage.trim().equals(""))
-        {
+        if(linkImage != null && !linkImage.trim().equals("")) {
             image.setLink(linkImage);
         }
-        if(altImage != null && !altImage.trim().equals(""))
-        {
+        if(altImage != null && !altImage.trim().equals("")) {
             image.setAlt(altImage);
         }
 
-        if(post1.getImage() != null)
-        {
+        if(post1.getImage() != null) {
             imageDAO.deleteByIdPost(post1.getId());
             post1.setImage(image);
-        }else
-        {
+        }else {
             post1.setImage(image);
         }
 
@@ -163,11 +157,12 @@ public class ProcessPost {
     }
 
     @RequestMapping(value = "/delete-post")
-    public String deletePost(@RequestParam(value = "id") int id,HttpServletRequest request)
-    {
+    public String deletePost(@RequestParam(value = "id") int id,HttpServletRequest request) {
         request.setAttribute("page",0);
         System.out.println();
-        postDAO.delete(id);
+        if(postService.find(id)!=null) {
+            postDAO.delete(id);
+        }
         return "redirect:/user";
     }
 

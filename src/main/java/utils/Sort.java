@@ -21,14 +21,12 @@ public class   Sort {
         return null;
     }
 
-    public SortType getCurrentSortType(HttpServletRequest request,String nameListCurrent,String orderByCurrent)
-    {
+    public SortType getCurrentSortType(HttpServletRequest request,String nameListCurrent,String orderByCurrent) {
 
         HttpSession session = request.getSession();
         List<SortType> orderList = (List<SortType>) session.getAttribute(nameListCurrent);
         String current = (String) session.getAttribute(orderByCurrent);
-        if(current != null)
-        {
+        if(current != null) {
             return getSortType(current,orderList);
         }
         return  new SortType();

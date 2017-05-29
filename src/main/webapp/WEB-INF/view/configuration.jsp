@@ -43,10 +43,7 @@
                 <p class="pd-10 error">${requestScope.error}</p>
             </form>
         </div>
-        <!-- Blog Sidebar Widgets Column -->
-        <%--<div>--%>
-            <%--<jsp:include page="template/slidebar.jsp"/>--%>
-        <%--</div>--%>
+
     </div>
     <!-- /.row -->
     <hr>
