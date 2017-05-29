@@ -1,6 +1,8 @@
 package Controller;
 
+import DAO.UserDAO;
 import Entities.Post;
+import Entities.Role;
 import Entities.User;
 import JsonViews.Views;
 import Model.PostRestBody;
@@ -14,10 +16,12 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,6 +38,9 @@ public class AjaxSearchController {
 
     @Autowired
     PortSort portSort;
+
+    @Autowired
+    UserDAO userDAO;
 
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/search-user")
@@ -94,5 +101,29 @@ public class AjaxSearchController {
         postRestBody.setPosts(list);
         System.out.println(list.size()+"----------------getPostSearch");
         return  postRestBody;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user-test")
+    public  void insertUser()
+    {
+        List<Role> roles=new ArrayList<Role>();
+        Role role=new Role();
+        role.setRole("ROLE_USER");
+        Role role2=new Role();
+        role2.setRole("ROLE_ADMIN");
+        roles.add(role);
+        roles.add(role2);
+        User user;
+        for (int i=3;i<50;i++)
+        {
+            user=new User();
+            user.setUserName("user "+(i+1));
+            user.setRoleList(roles);
+            user.setPassWord("1234455667");
+            userDAO.insert(user);
+
+        }
+        System.out.println("ok");
     }
 }

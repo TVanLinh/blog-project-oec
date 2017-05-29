@@ -8,6 +8,7 @@ import Service.ConfigurationService;
 import Service.PostService;
 import Service.UserService;
 import Utils.DefaultPage;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -63,27 +64,21 @@ public class redirect {
         List<Post> postList;
 
         int limit=configurationService.find(1).getNumberViewPost();
-        if(page==null)
+        if(page==null|| !StringUtils.isNumeric(page) || page.trim()=="")
         {
             postList=postService.getPost(0,limit);
             request.setAttribute("page",1);
             request.setAttribute("postList",postList);
+            request.setAttribute("totalList",postService.getAllPostPublic().size());
+            request.setAttribute("limit",configurationService.getAllConfiguration().get(0).getNumberViewPost());
             return "home";
         }
-        try
-        {
-            postList=postService.getPost((Integer.valueOf(page)-1)*limit,limit);
-            request.setAttribute("page",Integer.valueOf(page));
-            System.out.println(page);
-            request.setAttribute("postList",postList);
 
-        }catch (Exception e)
-        {
-            postList=postService.getPost(0,limit);
-            request.setAttribute("page",1);
-            request.setAttribute("postList",postList);
-            return "home";
-        }
+        postList=postService.getPost((Integer.valueOf(page)-1)*limit,limit);
+        request.setAttribute("page",Integer.valueOf(page));
+        request.setAttribute("postList",postList);
+        request.setAttribute("totalList",postService.getAllPostPublic().size());
+        request.setAttribute("limit",configurationService.getAllConfiguration().get(0).getNumberViewPost());
         return "home";
     }
     @RequestMapping(value = "/post")

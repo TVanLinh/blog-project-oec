@@ -14,4 +14,16 @@ public class SortType {
 
     public  String orderBy="id_user";
     public  String  typeOrder="desc"; //0 asc,1 desc
+
+    public  void toggleTypeOrder()
+    {
+        if(this.typeOrder=="desc")
+        {
+            this.typeOrder="asc";
+        }
+        else {
+            this.typeOrder="desc";
+        }
+    }
+
 }

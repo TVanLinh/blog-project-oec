@@ -18,9 +18,15 @@
                 <li class="list-inline btn btn-success mgr-10  mgb-15"><a href="/configuration"><span class="glyphicon glyphicon-cog mgr-5"></span>${messageSource.getMessage("configSystem",null,locale)}</a></li>
                 <li class="list-inline btn btn-warning mgl-10  mgb-15"> <a href="/manager-user"><i class="glyphicon glyphicon-user mgr-10"></i>${messageSource.getMessage("managerUser",null,locale)}</a></li>
             </ul>
-            <ul class="list-group">
-                <li class="list-group-item">${messageSource.getMessage("totalAllPost",null,locale)}<span class="badge" id="num">${requestScope.totalPost}</span></li>
-            </ul>
+            <%--<ul class="list-group">--%>
+                <%--<c:if test="${requestScope.querySearch==null}">--%>
+                    <%--<li class="list-group-item">${messageSource.getMessage("totalApprove",null,locale)}<span class="badge" id="numberApprove">${requestScope.totalPost}</span></li>--%>
+                <%--</c:if>--%>
+                <%--&lt;%&ndash;<c:if test="${requestScope.querySearch!=null}">&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;<li class="list-group-item">${messageSource.getMessage("resultFind",null,locale)}<span class="badge" id="numberApprove">${requestScope.totalPost}</span></li>&ndash;%&gt;--%>
+                <%--&lt;%&ndash;</c:if>&ndash;%&gt;--%>
+            <%--</ul>--%>
+
             <!-------form search-------------->
             <%--<jsp:include page="template/search.jsp">--%>
                 <%--<jsp:param name="action" value="mySearch.postSearch('/search-all-post','#search','#table-all-post')"/>--%>

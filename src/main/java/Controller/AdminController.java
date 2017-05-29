@@ -12,10 +12,7 @@ import Service.ConfigurationService;
 import Service.PostService;
 import Service.RoleService;
 import Service.UserService;
-import Utils.DefaultPage;
-import Utils.NumberViewSort;
-import Utils.PortSort;
-import Utils.SortType;
+import Utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -67,21 +66,82 @@ public class AdminController
     @Autowired
     PortSort portSort;
 
+    @Autowired
+    UserSort userSort;
+
     @RequestMapping(value = "/admin**", method = RequestMethod.GET)
     public ModelAndView adminPage(HttpServletRequest request) {
         defaultPage.setDaultPage(request);
         ModelAndView model = new ModelAndView();
-        model.setViewName("admin");
-        List<Post> postList= postService.getAllPost("select * from post where approve=0 ");
-        System.out.println(postList.size());
-        if(postList==null)
+//        model.setViewName("admin");
+//        List<Post> postList= postService.getAllPost("select * from post where approve=0 ");
+//        System.out.println(postList.size());
+//        if(postList==null)
+//        {
+//            postList=new ArrayList<Post>();
+//        }
+//        request.setAttribute("postList",postList);
+//        request.setAttribute("totalPost",postService.getAllPost("select * from post where approve = 0 ").size());
+        List<Post> postList;
+
+        String page=request.getParameter("page");
+
+        if(page==null||page.trim()==""||!StringUtils.isNumeric(page)||Integer.valueOf(page)==0)
         {
-            postList=new ArrayList<Post>();
+            deletePost(request);
+            aprrovePost(request);
+            postList=postService.getAllPost(portSort.getQuerySortAllPostAprrove(request,0,true));
+            setListPost(request,postList);
+            request.setAttribute("page",1);
+            model.setViewName("admin");
+            request.setAttribute("totalPost",postService.getAllPost("select * from post where approve = 0 ").size());
+            return model;
         }
-        request.setAttribute("postList",postList);
+
+        deletePost(request);
+        aprrovePost(request);
+        postList=postService.getAllPost(portSort.getQuerySortAllPostAprrove(request,(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW,true));
+        setListPost(request,postList);
+        request.setAttribute("page", Integer.valueOf(page));
+        model.setViewName("admin");
         request.setAttribute("totalPost",postService.getAllPost("select * from post where approve = 0 ").size());
         return model;
     }
+
+
+    @RequestMapping(value = "/admin-search-post-approve",method = RequestMethod.GET)
+    public  String searchTableApprovePost(HttpServletRequest request)
+    {
+        defaultPage.setDaultPage(request);
+        String page=request.getParameter("page");
+        String querySearch=request.getParameter("query_search");
+        SortType sortType=portSort.getCurrentSortType(request, StringSessionUtil.POST_APPROVE_TYPE_SORT,StringSessionUtil.CurentApprovePost);
+        List<Post> postList;
+
+        if(sortType==null)
+        {
+            sortType=new SortType();
+        }
+        if(page==null||page.trim()==""||!StringUtils.isNumeric(page)||Integer.valueOf(page)==0||querySearch==null||querySearch.trim().equals("'")||querySearch.trim().equals(""))
+        {
+
+            postList=postService.getAllPost("select * from  post where approve=0 and title like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit 0,"+NumberViewSort.NUMBER_VIEW);
+            setListPost(request,postList);
+            request.setAttribute("page",1);
+            request.setAttribute("querySearch",querySearch);
+            request.setAttribute("totalPost",postService.getAllPost("select * from  post where approve = 0 and title like '%"+querySearch+"%'").size());
+            System.out.println("----------------------------------------------------------------------------------------------------------");
+            return "admin";
+        }
+        postList=postService.getAllPost("select * from post  where approve = 0 and title like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit "+(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW+","+NumberViewSort.NUMBER_VIEW);
+        setListPost(request,postList);
+        request.setAttribute("page", Integer.valueOf(page));
+        request.setAttribute("querySearch",querySearch);
+        request.setAttribute("totalPost",postService.getAllPost("select * from  post where approve = 0 and title like '%"+querySearch+"%'").size());
+        return "admin";
+    }
+
+
 
     @RequestMapping(value = "/configuration")
     public  String configurarion(HttpServletRequest request)
@@ -185,7 +245,7 @@ public class AdminController
         String page=request.getParameter("page");
         String querySearch=request.getParameter("query_search");
         HttpSession session=request.getSession();
-        SortType sortType=portSort.getCurrentSortType(request);
+        SortType sortType=portSort.getCurrentSortType(request,StringSessionUtil.POST_ALL_TYPE_SORT,StringSessionUtil.CurentALLPost);
         List<Post> postList;
 
         if(sortType==null)
@@ -233,31 +293,110 @@ public class AdminController
             }
         }
     }
+
+    public void aprrovePost(HttpServletRequest request)
+    {
+        String action=request.getParameter("action");
+        String id=request.getParameter("id");
+        if(action!=null &&action.equals("approve"))
+        {
+            Date date;
+            Calendar calendar=Calendar.getInstance();
+            Post post;
+            date=calendar.getTime();
+            post=postService.find(Integer.valueOf(id));
+            if(post!=null) {
+
+                post.setApprovedTime(date);
+                post.setApprove(1);
+                postDAO.update(post);
+            }
+        }
+    }
+
     @RequestMapping("/manager-user")
     public  String managerUser(HttpServletRequest request)
     {
+//        defaultPage.setDaultPage(request);
+//        String action=request.getParameter("action");
+//        String id=request.getParameter("id");
+//        if(action!=null&&id!=null)
+//        {
+//            if(action.trim().equals("delete"))
+//            {
+//                userDAO.delete(Integer.valueOf(id));
+//            }
+         //   setListUser(request);
+//            return "manager-user";
+//        }
+//        else
+//        {
+//            setListUser(request);
+//        }
+
+
         defaultPage.setDaultPage(request);
-        String action=request.getParameter("action");
-        String id=request.getParameter("id");
-        if(action!=null&&id!=null)
+        List<User> userList;
+        String page=request.getParameter("page");
+
+        if(page==null||page.trim()==""||!StringUtils.isNumeric(page)||Integer.valueOf(page)==0)
         {
-            if(action.trim().equals("delete"))
+            if(userSort.getQueryUserByRole(request,0)!=null)
             {
-                userDAO.delete(Integer.valueOf(id));
+                userList=userService.getAllUser(userSort.getQueryUserByRole(request,0));
+                setListUser(request,userList);
+                request.setAttribute("totalList",userService.getAllUser().size());
+                request.setAttribute("page",1);
+                return "manager-user";
             }
-            setListUser(request);
+
+            deleteUser(request);
+            userList=userService.getAllUser(userSort.getQuerySort(request,0));
+            setListUser(request,userList);
+            request.setAttribute("totalList",userService.getAllUser().size());
+            request.setAttribute("page",1);
             return "manager-user";
         }
-        else
+
+        deleteUser(request);
+        if(userSort.getQueryUserByRole(request,0)!=null)
         {
-            setListUser(request);
+            userList=userService.getAllUser(userSort.getQueryUserByRole(request,(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW));
+            setListUser(request,userList);
+            request.setAttribute("totalList",userService.getAllUser().size());
+            request.setAttribute("page",Integer.valueOf(page));
+            return "manager-user";
         }
+
+        userList=userService.getAllUser(userSort.getQuerySort(request,(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW));
+        setListUser(request,userList);
+        request.setAttribute("totalList",userService.getAllUser().size());
+        request.setAttribute("page", Integer.valueOf(page));
         return "manager-user";
     }
 
-    public void setListUser(HttpServletRequest request)
+    public void deleteUser(HttpServletRequest request)
     {
-        List<User> users=userService.getAllUser();
+        String action=request.getParameter("action");
+        String id=request.getParameter("id");
+
+        if(action!=null &&action.equals("delete"))
+        {
+
+            if(id!=null&& StringUtils.isNumeric(id))
+            {
+                User user=userService.find(Integer.valueOf(id));
+                if(user!=null)
+                {
+                    userDAO.delete(user.getId());
+                    System.out.println(user+"------------------------------------------");
+                }
+
+            }
+        }
+    }
+    public void setListUser(HttpServletRequest request,  List<User> users)
+    {
         if(users==null)
         {
             users=new ArrayList<User>();
@@ -275,13 +414,14 @@ public class AdminController
     @RequestMapping(value = "/action-insert-user",method = RequestMethod.GET)
     public String actionInsertUser(HttpServletRequest request)
     {
-        setListUser(request);
-        return "manager-user";
+        defaultPage.setDaultPage(request);
+          return "redirect:manager-user";
     }
     @RequestMapping(value = "/action-insert-user",method = RequestMethod.POST)
     public  String actionInsertUser(HttpServletRequest request,@ModelAttribute User user)
     {
-        System.out.println(user);
+        defaultPage.setDaultPage(request);
+//        System.out.println(user);
         String[] arr=request.getParameterValues("listRole");
         if(!checkUserInsert(request,user,arr))
         {
@@ -297,8 +437,7 @@ public class AdminController
         System.out.println("roles ---------------"+roles.size());
         user.setRoleList(roles);
         userDAO.insert(user);
-        setListUser(request);
-        return "manager-user";
+        return "redirect:manager-user";
     }
 
     public boolean checkUserInsert(HttpServletRequest request,User user,String[] arr)
@@ -333,14 +472,17 @@ public class AdminController
     {
         defaultPage.setDaultPage(request);
         request.setAttribute("user",userService.find(id));
+        request.getSession().setAttribute("idUser",id);
         return "update-user";
     }
+
 
     @RequestMapping(value = "/action-update-user",method = RequestMethod.GET)
     public String actionUpdateUser(HttpServletRequest request)
     {
-        setListUser(request);
-        return "manager-user";
+         defaultPage.setDaultPage(request);
+//        setListUser(request);
+        return "redirect:manager-user";
     }
     @RequestMapping(value = "/action-update-user",method = RequestMethod.POST)
     public String actionUpdateUser(HttpServletRequest request,@ModelAttribute User user)
@@ -353,16 +495,65 @@ public class AdminController
            return "update-user";
        }else
        {
-           User user1=userService.getUserByName(user.getUserName());
-           roleDAO.delete(user1.getUserName());
-           user1.setRoleList(roleService.getListRole(listRoles));
-           userDAO.update(user1);
+           HttpSession session=request.getSession();
+           User userUpdate=userService.find((Integer) session.getAttribute("idUser"));
+           System.out.println("userUpdate    "+userUpdate+"---------------------------------------------------");
+           if(userUpdate.getUserName().equalsIgnoreCase(user.getUserName()))
+           {
+               User user1=userService.getUserByName(user.getUserName());
+               roleDAO.delete(user1.getUserName());
+               user1.setRoleList(roleService.getListRole(listRoles));
+               user1.setPassWord(user.getPassWord());
+               userDAO.update(user1);
+               return "redirect:manager-user";
+           }else if(userService.getUserByName(user.getUserName())!=null)
+           {
+               request.setAttribute("error"," user name exits available !");
+               return "update-user";
+           }else {
+               User user1=userService.find((Integer) session.getAttribute("idUser"));
+               roleDAO.delete(user1.getUserName());
+               userDAO.delete(user1.getId());
+
+               user.setRoleList(roleService.getListRole(listRoles));
+
+               userDAO.update(user);
+           }
        }
-        setListUser(request);
-        return "manager-user";
+        return "redirect:manager-user";
     }
 
+    @RequestMapping(value = "/manager-user-search",method = RequestMethod.GET)
+    public  String searchUser(HttpServletRequest request)
+    {
+        defaultPage.setDaultPage(request);
+        String page=request.getParameter("page");
+        String querySearch=request.getParameter("query_search");
+        SortType sortType=userSort.getSort().getCurrentSortType(request,StringSessionUtil.USER_TYPE_SORT,StringSessionUtil.CurrentUserSort);
+        List<User> userList;
 
+        if(sortType==null)
+        {
+            sortType=new SortType();
+        }
+        if(page==null||page.trim()==""||!StringUtils.isNumeric(page)||Integer.valueOf(page)==0||querySearch==null||querySearch.trim().equals("'")||querySearch.trim().equals(""))
+        {
+
+            userList=userService.getAllUser("select * from  user where user_name like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit 0,"+NumberViewSort.NUMBER_VIEW);
+            setListUser(request,userList);
+            request.setAttribute("page",1);
+            request.setAttribute("querySearch",querySearch);
+            request.setAttribute("totalList",userService.getAllUser("select * from  user where user_name like '%"+querySearch+"%'").size());
+            System.out.println("----------------------------------------------------------------------------------------------------------");
+            return "manager-user";
+        }
+        userList=userService.getAllUser("select * from user  where user_name like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit "+(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW+","+NumberViewSort.NUMBER_VIEW);
+        setListUser(request,userList);
+        request.setAttribute("page", Integer.valueOf(page));
+        request.setAttribute("querySearch",querySearch);
+        request.setAttribute("totalList",userService.getAllUser("select * from  user where user_name like '%"+querySearch+"%'").size());
+        return "manager-user";
+    }
     public boolean checkUserUpdate(HttpServletRequest request,User user,String[] arr)
     {
         if(user.getUserName()==null||user.getUserName().trim().equals(""))

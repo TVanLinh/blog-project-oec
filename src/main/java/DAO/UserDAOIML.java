@@ -1,6 +1,7 @@
 package DAO;
 
 import Entities.User;
+import Service.UserService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class UserDAOIML implements UserDAO {
 
     @Autowired
     SessionFactory sessionFactory;
+
+    @Autowired
+    UserService userService;
     @Transactional
     public void insert(User user) {
         Session session=sessionFactory.getCurrentSession();
@@ -26,7 +30,7 @@ public class UserDAOIML implements UserDAO {
     @Transactional
     public void delete(int idAuthor) {
         Session session=sessionFactory.getCurrentSession();
-        User user =session.find(User.class,idAuthor);
+        User user =userService.find(idAuthor);
         session.remove(user);
         System.out.println(" delete User success");
     }

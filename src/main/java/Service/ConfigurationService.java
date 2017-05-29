@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  */
 
 @Service
+@Transactional
 public class ConfigurationService {
 
     @Autowired
@@ -30,9 +32,8 @@ public class ConfigurationService {
     }
 
     public Configuration find(int id) {
-        Session session=sessionFactory.openSession();
+        Session session=sessionFactory.getCurrentSession();
         Configuration conf=session.find(Configuration.class,id);
-        session.close();
         if(conf==null)
         {
             return getAllConfiguration().get(0);
@@ -42,10 +43,9 @@ public class ConfigurationService {
 
     public List<Configuration> getAllConfiguration()
     {
-        Session session=sessionFactory.openSession();
+        Session session=sessionFactory.getCurrentSession();
 
         List<Configuration> list= session.createNativeQuery("select * from configuration",Configuration.class).getResultList();
-        session.close();
         return list;
     }
 

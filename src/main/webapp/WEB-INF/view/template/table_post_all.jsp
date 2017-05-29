@@ -56,6 +56,7 @@
 
     <div>
         <ul class="pager">
+            <jsp:useBean id="numberView" class="Utils.NumberViewSort"/>
             <c:if test="${requestScope.querySearch==null}">
                 <c:if test="${requestScope.page>=2}">
                     <li class="previous">
@@ -63,7 +64,7 @@
                     </li>
                 </c:if>
 
-                <c:if test="${requestScope.page<=requestScope.totalPost/10}">
+                <c:if test="${requestScope.page<=requestScope.totalPost/numberView.getNumberView()}">
                     <li class="next">
                         <c:if test="${postList.size()!=0}">
                             <a href="/manager-post?page=${requestScope.page+1}">${messageSource.getMessage("next",null,locale)} &rarr;</a>
@@ -80,7 +81,7 @@
                     </li>
                 </c:if>
 
-                <c:if test="${requestScope.page<=requestScope.totalPost/10}">
+                <c:if test="${requestScope.page<=requestScope.totalPost/numberView.getNumberView()}">
                     <li class="next">
                         <c:if test="${postList.size()!=0}">
                             <a href="/manager-post-search?page=${requestScope.page+1}&query_search=${requestScope.querySearch}">${messageSource.getMessage("next",null,locale)} &rarr;</a>

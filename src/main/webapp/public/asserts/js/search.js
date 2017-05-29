@@ -11,7 +11,7 @@ jQuery(document).ready(function($) {
         formSearch:function (url,id) {
             setValueInput(url,id);
         },
-        cheackSearch:function (id) {
+        checkSearch:function (id) {
             cheackSearch(id);
         }
     };
@@ -124,9 +124,20 @@ function setValueInput(url,id) {
    }
 }
 
-function checkSearch(id) {
+function cheackSearch(id) {
     if($(id).val().trim()==="")
     {
+        return false;
+    }
+    return true;
+}
+
+function  checkFormValid() {
+    var value=document.getElementById("search").value;
+    console.log(value);
+    if(value.trim()==="")
+    {
+        window.alert("Enter key word to search..!")
         return false;
     }
     return true;

@@ -27,7 +27,7 @@ public class DefaultPage implements Filter {
             request.getSession().setAttribute("dateFormat","HH:mm:ss dd/MM/YYYY");
         }
         filterChain.doFilter(servletRequest,servletResponse);
-        System.out.println("DefaultPage");
+//        System.out.println("DefaultPage");
     }
 
     public void destroy() {

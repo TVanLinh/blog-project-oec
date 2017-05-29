@@ -9,6 +9,7 @@ import Model.UserRestBody;
 import Service.ConfigurationService;
 import Service.PostService;
 import Utils.CookieUtils;
+import Utils.PortSort;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,9 @@ public class AjaxController {
 
     @Autowired
     ConfigurationService configurationService;
+
+    @Autowired
+    PortSort portSort;
 
     @RequestMapping(value = "/like")
     @JsonView(Views.Public.class)
@@ -158,16 +162,20 @@ public class AjaxController {
             if(action.equals("approve"))
             {
                 date=calendar.getTime();
-                System.out.println(postRestBody.getMsg());
+
                 post=postService.find(Integer.valueOf(id));
+
                 if(post!=null) {
+
                     post.setApprovedTime(date);
                     post.setApprove(1);
                     postDAO.update(post);
-                    String str = "select * from post where approve=0  order by time_post limit " + postRestBody.getNumberPage() * 10 + ",10";
-                    postList = postService.getAllPost(str);
+//
+                    postList = postService.getAllPost(portSort.getQuerySortAllPostAprrove(request,0,false));
                     postRestBody.setPosts(postList);
+
                     List<Post> all = postService.getAllPost("select * from post where approve=0");
+
                     if (all == null) {
                         postRestBody.setNumberApprove(0);
                     } else
@@ -175,16 +183,14 @@ public class AjaxController {
                         postRestBody.setNumberApprove(all.size());
                     }
                     postRestBody.setNumberApprove(getNumberNotApprove());
-                    return postRestBody;
                 }
-
+                return postRestBody;
             }
 
             if(action.equals("delete"))
             {
                 postDAO.delete(Integer.valueOf(id));
-                String str="select * from post where approve=0  order by time_post limit "+postRestBody.getNumberPage()*10+",10";
-                postList =postService.getAllPost(str);
+                postList = postService.getAllPost(portSort.getQuerySortAllPostAprrove(request,0,false));
                 postRestBody.setNumberApprove(getNumberNotApprove());
                 postRestBody.setPosts(postList);
                 return postRestBody;
