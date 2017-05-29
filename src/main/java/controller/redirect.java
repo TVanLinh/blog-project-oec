@@ -2,7 +2,6 @@ package controller;
 
 import dao.PostDAO;
 import dao.RoleDAO;
-import dao.UserDAO;
 import entities.Post;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -25,8 +24,6 @@ import java.util.List;
 public class redirect {
     final static Logger logger = Logger.getLogger(ProcessPost.class);
 
-    @Autowired
-    UserDAO userDAO;
 
     @Autowired
     UserService userService;

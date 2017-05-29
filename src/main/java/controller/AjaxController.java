@@ -149,7 +149,7 @@ public class AjaxController {
         String action=request.getParameter("action");
         System.out.println(postRestBody.getMsg()+"--------------------");
         String id=request.getParameter("id");
-        if(action==null||id==null)
+        if(action ==null || id == null)
         {
             return postRestBody;
         }
@@ -165,12 +165,11 @@ public class AjaxController {
 
                 post=postService.find(Integer.valueOf(id));
 
-                if(post!=null) {
+                if(post != null) {
 
                     post.setApprovedTime(date);
                     post.setApprove(1);
                     postDAO.update(post);
-//
                     postList = postService.getAllPost(portSort.getQuerySortAllPostAprrove(request,0,false));
                     postRestBody.setPosts(postList);
 
