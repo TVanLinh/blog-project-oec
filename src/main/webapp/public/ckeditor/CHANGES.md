@@ -43,7 +43,7 @@ New Features:
 * [#14569](http://dev.ckeditor.com/ticket/14569): Added a new, flat, default CKEditor skin called [Moono-Lisa](http://ckeditor.com/addon/moono-lisa). Refreshed default colors available in the [Color Button](http://ckeditor.com/addon/colorbutton) plugin ([Text Color and Background Color](http://docs.ckeditor.com/#!/guide/dev_colorbutton) feature).
 * [#14707](http://dev.ckeditor.com/ticket/14707): Added a new [Copy Formatting](http://ckeditor.com/addon/copyformatting) feature to enable easy copying of styles between your document parts.
 * Introduced the completely rewritten [Paste from Word](http://ckeditor.com/addon/pastefromword) plugin:
-	* Backward incompatibility: The [`config.pasteFromWordRemoveFontStyles`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-pasteFromWordRemoveFontStyles) option now defaults to `false`. This option will be deprecated in the future. Use [Advanced Content Filter](http://docs.ckeditor.com/#!/guide/dev_acf) to replicate the effect of setting it to `true`.
+	* Backward incompatibility: The [`config.pasteFromWordRemoveFontStyles`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-pasteFromWordRemoveFontStyles) option now defaults to `false`. This option will be deprecated in the future. Use [Advanced Content filter](http://docs.ckeditor.com/#!/guide/dev_acf) to replicate the effect of setting it to `true`.
 	* Backward incompatibility: The [`config.pasteFromWordNumberedHeadingToList`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-pasteFromWordNumberedHeadingToList) and [`config.pasteFromWordRemoveStyles`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-pasteFromWordRemoveStyles) options were dropped and no longer have any effect on pasted content.
 	* Major improvements in preservation of list numbering, styling and indentation (nested lists with multiple levels).
 	* Major improvements in document structure parsing that fix plenty of issues with distorted or missing content after paste.
@@ -296,7 +296,7 @@ Fixed Issues:
 * [#13494](http://dev.ckeditor.com/ticket/13494): Fixed: Error thrown in the toolbar configurator if plugin requirements are not met.
 * [#13409](http://dev.ckeditor.com/ticket/13409): Fixed: List elements incorrectly merged when pressing *Backspace* or *Delete*.
 * [#13434](http://dev.ckeditor.com/ticket/13434): Fixed: Dialog state indicator broken in Right–To–Left environments.
-* [#13460](http://dev.ckeditor.com/ticket/13460): [IE8] Fixed: Copying inline widgets is broken when [Advanced Content Filter](http://docs.ckeditor.com/#!/guide/dev_acf) is disabled.
+* [#13460](http://dev.ckeditor.com/ticket/13460): [IE8] Fixed: Copying inline widgets is broken when [Advanced Content filter](http://docs.ckeditor.com/#!/guide/dev_acf) is disabled.
 * [#13495](http://dev.ckeditor.com/ticket/13495): [Firefox, IE] Fixed: Text is not word-wrapped in the Paste dialog window.
 * [#13528](http://dev.ckeditor.com/ticket/13528): [Firefox@Windows] Fixed: Content copied from Microsoft Word and other external applications is pasted as a plain text. Removed the `CKEDITOR.plugins.clipboard.isHtmlInExternalDataTransfer` property as the check must be dynamic.
 * [#13583](http://dev.ckeditor.com/ticket/13583): Fixed: [`DataTransfer.getData()`](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.clipboard.dataTransfer-method-getData) should work consistently in all browsers and should not strip valuable content. Fixed pasting tables from Microsoft Excel on Chrome.
@@ -351,7 +351,7 @@ Fixed Issues:
 * [#13300](http://dev.ckeditor.com/ticket/13300): Fixed: The `internalCommit` argument in the [Image](http://ckeditor.com/addon/image) dialog seems to be never used.
 * [#13036](http://dev.ckeditor.com/ticket/13036): Fixed: Notifications are moved 10px to the right.
 * [#13280](http://dev.ckeditor.com/ticket/13280): [IE8] Fixed: Undo after inline widget drag&drop throws an error.
-* [#13186](http://dev.ckeditor.com/ticket/13186): Fixed: Content dropped into a nested editable is not filtered by [Advanced Content Filter](http://docs.ckeditor.com/#!/guide/dev_acf).
+* [#13186](http://dev.ckeditor.com/ticket/13186): Fixed: Content dropped into a nested editable is not filtered by [Advanced Content filter](http://docs.ckeditor.com/#!/guide/dev_acf).
 * [#13140](http://dev.ckeditor.com/ticket/13140): Fixed: Error thrown when dropping a block widget right after itself.
 * [#13176](http://dev.ckeditor.com/ticket/13176): [IE8] Fixed: Errors on drag&drop of embed widgets.
 * [#13015](http://dev.ckeditor.com/ticket/13015): Fixed: Dropping an image file on [Enhanced Image](http://ckeditor.com/addon/image2) causes a page reload.
@@ -533,7 +533,7 @@ New Features:
 Fixed Issues:
 
 * [#12506](http://dev.ckeditor.com/ticket/12506): [Safari] Fixed: Cannot paste into inline editor if the page has `user-select: none` style. Thanks to [shaohua](https://github.com/shaohua)!
-* [#12683](http://dev.ckeditor.com/ticket/12683): Fixed: [Filter](http://docs.ckeditor.com/#!/guide/dev_acf) fails to remove custom tags. Thanks to [timselier](https://github.com/timselier)!
+* [#12683](http://dev.ckeditor.com/ticket/12683): Fixed: [filter](http://docs.ckeditor.com/#!/guide/dev_acf) fails to remove custom tags. Thanks to [timselier](https://github.com/timselier)!
 * [#12489](http://dev.ckeditor.com/ticket/12489) and [#12491](http://dev.ckeditor.com/ticket/12491): Fixed: Various issues related to restoring the selection after performing operations on filler character. See the [fixed cases](http://dev.ckeditor.com/ticket/12491#comment:4).
 * [#12621](http://dev.ckeditor.com/ticket/12621): Fixed: Cannot remove inline styles (bold, italic, etc.) in empty lines.
 * [#12630](http://dev.ckeditor.com/ticket/12630): [Chrome] Fixed: Selection is placed outside the paragraph when the [New Page](http://ckeditor.com/addon/newpage) button is clicked. This patch significantly simplified the way how the initial selection (a selection after the content of the editable is overwritten) is being fixed. That might have fixed many related scenarios in all browsers.
@@ -566,7 +566,7 @@ Fixed Issues:
 * [#12315](http://dev.ckeditor.com/ticket/12315): Fixed: Marked [`config.autoParagraph`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-autoParagraph) as deprecated.
 * [#12113](http://dev.ckeditor.com/ticket/12113): Fixed: A [code snippet](http://ckeditor.com/addon/codesnippet) should be presented in the [elements path](http://ckeditor.com/addon/elementspath) as "code snippet" (translatable).
 * [#12311](http://dev.ckeditor.com/ticket/12311): Fixed: [Remove Format](http://ckeditor.com/addon/removeformat) should also remove `<cite>` elements.
-* [#12261](http://dev.ckeditor.com/ticket/12261): Fixed: Filter has to be destroyed and removed from [`CKEDITOR.filter.instances`](http://docs.ckeditor.com/#!/api/CKEDITOR.filter-static-property-instances) on editor destroy.
+* [#12261](http://dev.ckeditor.com/ticket/12261): Fixed: filter has to be destroyed and removed from [`CKEDITOR.filter.instances`](http://docs.ckeditor.com/#!/api/CKEDITOR.filter-static-property-instances) on editor destroy.
 * [#12398](http://dev.ckeditor.com/ticket/12398): Fixed: [Maximize](http://ckeditor.com/addon/maximize) does not work on an instance without a [title](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-title).
 * [#12097](http://dev.ckeditor.com/ticket/12097): Fixed: JAWS not reading the number of options correctly in the [Text Color and Background Color](http://ckeditor.com/addon/colorbutton) button menu.
 * [#12411](http://dev.ckeditor.com/ticket/12411): Fixed: [Page Break](http://ckeditor.com/addon/pagebreak) used directly in the editable breaks the editor.
@@ -692,7 +692,7 @@ Fixed Issues:
 * [#11822](http://dev.ckeditor.com/ticket/11822): [WebKit] Fixed: Editing anchors by double-click is broken in some cases.
 * [#11823](http://dev.ckeditor.com/ticket/11823): [IE8] Fixed: [Table Resize](http://ckeditor.com/addon/tableresize) throws an error over scrollbar.
 * [#11788](http://dev.ckeditor.com/ticket/11788): Fixed: It is not possible to change the language back to _Not set_ in the [Code Snippet](http://ckeditor.com/addon/codesnippet) dialog window.
-* [#11788](http://dev.ckeditor.com/ticket/11788): Fixed: [Filter](http://docs.ckeditor.com/#!/api/CKEDITOR.htmlParser.filter) rules are not applied inside elements with the `contenteditable` attribute set to `true`.
+* [#11788](http://dev.ckeditor.com/ticket/11788): Fixed: [filter](http://docs.ckeditor.com/#!/api/CKEDITOR.htmlParser.filter) rules are not applied inside elements with the `contenteditable` attribute set to `true`.
 * [#11798](http://dev.ckeditor.com/ticket/11798): Fixed: Inserting a non-editable element inside a table cell breaks the table.
 * [#11793](http://dev.ckeditor.com/ticket/11793): Fixed: Drop-down is not "on" when clicking it while the editor is blurred.
 * [#11850](http://dev.ckeditor.com/ticket/11850): Fixed: Fake objects with the `contenteditable` attribute set to `false` are not downcasted properly.
@@ -712,7 +712,7 @@ Other Changes:
 
 * Marked the [`editor.beforePaste`](http://docs.ckeditor.com/#!/api/CKEDITOR.editor-event-beforePaste) event as deprecated.
 * The default class of captioned images has changed to `image` (was: `caption`). Please note that once edited in CKEditor 4.4+, all existing images of the `caption` class (`<figure class="caption">`) will be [filtered out](http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter) unless the [`config.image2_captionedClass`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-image2_captionedClass) option is set to `caption`. For backward compatibility (i.e. when upgrading), it is highly recommended to use this setting, which also helps prevent CSS conflicts, etc. This does not apply to new CKEditor integrations.
-* Widgets without defined buttons are no longer registered automatically to the [Advanced Content Filter](http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter). Before CKEditor 4.4 widgets were registered to the ACF which was an incorrect behavior ([#11567](http://dev.ckeditor.com/ticket/11567)). This change should not have any impact on standard scenarios, but if your button does not execute the widget command, you need to set [`allowedContent`](http://docs.ckeditor.com/#!/api/CKEDITOR.feature-property-allowedContent) and [`requiredContent`](http://docs.ckeditor.com/#!/api/CKEDITOR.feature-property-requiredContent) properties for it manually, because the editor will not be able to find them.
+* Widgets without defined buttons are no longer registered automatically to the [Advanced Content filter](http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter). Before CKEditor 4.4 widgets were registered to the ACF which was an incorrect behavior ([#11567](http://dev.ckeditor.com/ticket/11567)). This change should not have any impact on standard scenarios, but if your button does not execute the widget command, you need to set [`allowedContent`](http://docs.ckeditor.com/#!/api/CKEDITOR.feature-property-allowedContent) and [`requiredContent`](http://docs.ckeditor.com/#!/api/CKEDITOR.feature-property-requiredContent) properties for it manually, because the editor will not be able to find them.
 * The [Show Borders](http://ckeditor.com/addon/showborders) plugin was added to the Standard installation package in order to ensure that unstyled tables are still visible for the user ([#11665](http://dev.ckeditor.com/ticket/11665)).
 * Since CKEditor 4.4 the editor instance should be passed to [`CKEDITOR.style`](http://docs.ckeditor.com/#!/api/CKEDITOR.style) methods to ensure full compatibility with other features (e.g. applying styles to widgets requires that). We ensured backward compatibility though, so the [`CKEDITOR.style`](http://docs.ckeditor.com/#!/api/CKEDITOR.style) will work even when the editor instance is not provided.
 
@@ -722,7 +722,7 @@ New Features:
   * Introduced the [`CKEDITOR.style.addCustomHandler()`](http://docs.ckeditor.com/#!/api/CKEDITOR.style-static-method-addCustomHandler) method for registering custom style handlers.
   * The [`CKEDITOR.style.apply()`](http://docs.ckeditor.com/#!/api/CKEDITOR.style-method-apply) and [`CKEDITOR.style.remove()`](http://docs.ckeditor.com/#!/api/CKEDITOR.style-method-remove) methods are now called with an editor instance instead of the document so they can be reused by the [`CKEDITOR.editor.applyStyle()`](http://docs.ckeditor.com/#!/api/CKEDITOR.editor-method-applyStyle) and [`CKEDITOR.editor.removeStyle()`](http://docs.ckeditor.com/#!/api/CKEDITOR.editor-method-removeStyle) methods. Backward compatibility was preserved, but from CKEditor 4.4 it is highly recommended to pass an editor instead of a document to these methods.
   * Many new methods and properties were introduced in the [Widget API](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.widget) to make the handling of styles by widgets fully customizable. See: [`widget.definition.styleableElements`](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.widget.definition-property-styleableElements), [`widget.definition.styleToAllowedContentRule`](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.widget.definition-property-styleToAllowedContentRules), [`widget.addClass()`](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.widget-method-addClass), [`widget.removeClass()`](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.widget-method-removeClass), [`widget.getClasses()`](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.widget-method-getClasses), [`widget.hasClass()`](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.widget-method-hasClass), [`widget.applyStyle()`](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.widget-method-applyStyle), [`widget.removeStyle()`](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.widget-method-removeStyle), [`widget.checkStyleActive()`](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.widget-method-checkStyleActive).
-  * Integration with the [Allowed Content Filter](http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter) required an introduction of the [`CKEDITOR.style.toAllowedContent()`](http://docs.ckeditor.com/#!/api/CKEDITOR.style-method-toAllowedContentRules) method which can be implemented by the custom style handler and if exists, it is used by the [`CKEDITOR.filter`](http://docs.ckeditor.com/#!/api/CKEDITOR.filter) to translate a style to [allowed content rules](http://docs.ckeditor.com/#!/api/CKEDITOR.filter.allowedContentRules).
+  * Integration with the [Allowed Content filter](http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter) required an introduction of the [`CKEDITOR.style.toAllowedContent()`](http://docs.ckeditor.com/#!/api/CKEDITOR.style-method-toAllowedContentRules) method which can be implemented by the custom style handler and if exists, it is used by the [`CKEDITOR.filter`](http://docs.ckeditor.com/#!/api/CKEDITOR.filter) to translate a style to [allowed content rules](http://docs.ckeditor.com/#!/api/CKEDITOR.filter.allowedContentRules).
 * [#11300](http://dev.ckeditor.com/ticket/11300): Various changes in the [Enhanced Image](http://ckeditor.com/addon/image2) plugin:
   * Introduced the [`config.image2_captionedClass`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-image2_captionedClass) option to configure the class of captioned images.
   * Introduced the [`config.image2_alignClasses`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-image2_alignClasses) option to configure the way images are aligned with CSS classes.
@@ -730,7 +730,7 @@ New Features:
   * Default image caption can be translated (customized) with the `editor.lang.image2.captionPlaceholder` string.
 * [#11341](http://dev.ckeditor.com/ticket/11341): [Enhanced Image](http://ckeditor.com/addon/image2) plugin: It is now possible to add a link to any image type.
 * [#10202](http://dev.ckeditor.com/ticket/10202): Introduced wildcard support in the [Allowed Content Rules](http://docs.ckeditor.com/#!/guide/dev_allowed_content_rules) format.
-* [#10276](http://dev.ckeditor.com/ticket/10276): Introduced blacklisting in the [Allowed Content Filter](http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter).
+* [#10276](http://dev.ckeditor.com/ticket/10276): Introduced blacklisting in the [Allowed Content filter](http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter).
 * [#10480](http://dev.ckeditor.com/ticket/10480): Introduced code snippets with code highlighting. There are two versions available so far &mdash; the default [Code Snippet](http://ckeditor.com/addon/codesnippet) which uses the [highlight.js](http://highlightjs.org) library and the [Code Snippet GeSHi](http://ckeditor.com/addon/codesnippetgeshi) which uses the [GeSHi](http://qbnz.com/highlighter/) library.
 * [#11737](http://dev.ckeditor.com/ticket/11737): Introduced an option to prevent [filtering](http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter) of an element that matches custom criteria (see [`filter.addElementCallback()`](http://docs.ckeditor.com/#!/api/CKEDITOR.filter-method-addElementCallback)).
 * [#11532](http://dev.ckeditor.com/ticket/11532): Introduced the [`editor.addContentsCss()`](http://docs.ckeditor.com/#!/api/CKEDITOR.editor-method-addContentsCss) method that can be used for [adding custom CSS files](http://docs.ckeditor.com/#!/guide/plugin_sdk_styles).
@@ -801,7 +801,7 @@ Fixed Issues:
 * [#11390](http://dev.ckeditor.com/ticket/11390): [IE] All [XML](http://ckeditor.com/addon/xml) plugin [methods](http://docs.ckeditor.com/#!/api/CKEDITOR.xml) now work in IE10+.
 * [#11542](http://dev.ckeditor.com/ticket/11542): [IE11] Fixed: Blurry toolbar icons when Right-to-Left UI language is set.
 * [#11504](http://dev.ckeditor.com/ticket/11504): Fixed: When [`config.fullPage`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-fullPage) is set to `true`, entities are not encoded in editor output.
-* [#11004](http://dev.ckeditor.com/ticket/11004): Integrated [Enhanced Image](http://ckeditor.com/addon/image2) dialog window with [Advanced Content Filter](http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter).
+* [#11004](http://dev.ckeditor.com/ticket/11004): Integrated [Enhanced Image](http://ckeditor.com/addon/image2) dialog window with [Advanced Content filter](http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter).
 * [#11439](http://dev.ckeditor.com/ticket/11439): Fixed: Properties get cloned in the Cell Properties dialog window if multiple cells are selected.
 
 ## CKEditor 4.3.2
@@ -1012,7 +1012,7 @@ Fixed Issues:
 
 * Dropped compatibility support for Internet Explorer 7 and Firefox 3.6.
 
-* Both the Basic and the Standard distribution packages will not contain the new [Indent Block](http://ckeditor.com/addon/indentblock) plugin. Because of this the [Advanced Content Filter](http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter) might remove block indentations from existing contents. If you want to prevent this, either [add an appropriate ACF rule to your filter](http://docs.ckeditor.com/#!/guide/dev_allowed_content_rules) or create a custom build based on the Basic/Standard package and add the Indent Block plugin in [CKBuilder](http://ckeditor.com/builder).
+* Both the Basic and the Standard distribution packages will not contain the new [Indent Block](http://ckeditor.com/addon/indentblock) plugin. Because of this the [Advanced Content filter](http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter) might remove block indentations from existing contents. If you want to prevent this, either [add an appropriate ACF rule to your filter](http://docs.ckeditor.com/#!/guide/dev_allowed_content_rules) or create a custom build based on the Basic/Standard package and add the Indent Block plugin in [CKBuilder](http://ckeditor.com/builder).
 
 New Features:
 
@@ -1042,7 +1042,7 @@ Fixed Issues:
 * [#10644](http://dev.ckeditor.com/ticket/10644): Fixed a critical bug when pasting plain text in Blink-based browsers.
 * [#5189](http://dev.ckeditor.com/ticket/5189): [Find/Replace](http://ckeditor.com/addon/find) dialog window: rename "Cancel" button to "Close".
 * [#10562](http://dev.ckeditor.com/ticket/10562): [Housekeeping] Unified CSS gradient filter formats in the [Moono](http://ckeditor.com/addon/moono) skin.
-* [#10537](http://dev.ckeditor.com/ticket/10537): Advanced Content Filter should register a default rule for [`config.shiftEnterMode`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-shiftEnterMode).
+* [#10537](http://dev.ckeditor.com/ticket/10537): Advanced Content filter should register a default rule for [`config.shiftEnterMode`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-shiftEnterMode).
 * [#10610](http://dev.ckeditor.com/ticket/10610): [`CKEDITOR.dialog.addIframe()`](http://docs.ckeditor.com/#!/api/CKEDITOR.dialog-static-method-addIframe) incorrectly sets the iframe size in dialog windows.
 
 ## CKEditor 4.1.2
@@ -1081,8 +1081,8 @@ Fixed Issues:
 * [#10249](http://dev.ckeditor.com/ticket/10249): Wrong undo/redo states at start.
 * [#10268](http://dev.ckeditor.com/ticket/10268): [Show Blocks](http://ckeditor.com/addon/showblocks) does not recover after switching to Source view.
 * [#9995](http://dev.ckeditor.com/ticket/9995): HTML code in the `<textarea>` should not be modified by the [`htmlDataProcessor`](http://docs.ckeditor.com/#!/api/CKEDITOR.htmlDataProcessor).
-* [#10320](http://dev.ckeditor.com/ticket/10320): [Justify](http://ckeditor.com/addon/justify) plugin should add elements to Advanced Content Filter based on current [Enter mode](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-enterMode).
-* [#10260](http://dev.ckeditor.com/ticket/10260): Fixed: Advanced Content Filter blocks [`tabSpaces`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-tabSpaces). Unified `data-cke-*` attributes filtering.
+* [#10320](http://dev.ckeditor.com/ticket/10320): [Justify](http://ckeditor.com/addon/justify) plugin should add elements to Advanced Content filter based on current [Enter mode](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-enterMode).
+* [#10260](http://dev.ckeditor.com/ticket/10260): Fixed: Advanced Content filter blocks [`tabSpaces`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-tabSpaces). Unified `data-cke-*` attributes filtering.
 * [#10315](http://dev.ckeditor.com/ticket/10315): [WebKit] [Undo manager](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.undo.UndoManager) should not record snapshots after a filling character was added/removed.
 * [#10291](http://dev.ckeditor.com/ticket/10291): [WebKit] Space after a filling character should be secured.
 * [#10330](http://dev.ckeditor.com/ticket/10330): [WebKit] The filling character is not removed on `keydown` in specific cases.
@@ -1094,19 +1094,19 @@ Fixed Issues:
 
 Fixed Issues:
 
-* [#10192](http://dev.ckeditor.com/ticket/10192): Closing lists with the *Enter* key does not work with [Advanced Content Filter](http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter) in several cases.
+* [#10192](http://dev.ckeditor.com/ticket/10192): Closing lists with the *Enter* key does not work with [Advanced Content filter](http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter) in several cases.
 * [#10191](http://dev.ckeditor.com/ticket/10191): Fixed allowed content rules unification, so the [`filter.allowedContent`](http://docs.ckeditor.com/#!/api/CKEDITOR.filter-property-allowedContent) property always contains rules in the same format.
-* [#10224](http://dev.ckeditor.com/ticket/10224): Advanced Content Filter does not remove non-empty `<a>` elements anymore.
-* Minor issues in plugin integration with Advanced Content Filter:
-  * [#10166](http://dev.ckeditor.com/ticket/10166): Added transformation from the `align` attribute to `float` style to preserve backward compatibility after the introduction of Advanced Content Filter.
-  * [#10195](http://dev.ckeditor.com/ticket/10195): [Image](http://ckeditor.com/addon/image) plugin no longer registers rules for links to Advanced Content Filter.
-  * [#10213](http://dev.ckeditor.com/ticket/10213): [Justify](http://ckeditor.com/addon/justify) plugin is now correctly registering rules to Advanced Content Filter when [`config.justifyClasses`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-justifyClasses) is defined.
+* [#10224](http://dev.ckeditor.com/ticket/10224): Advanced Content filter does not remove non-empty `<a>` elements anymore.
+* Minor issues in plugin integration with Advanced Content filter:
+  * [#10166](http://dev.ckeditor.com/ticket/10166): Added transformation from the `align` attribute to `float` style to preserve backward compatibility after the introduction of Advanced Content filter.
+  * [#10195](http://dev.ckeditor.com/ticket/10195): [Image](http://ckeditor.com/addon/image) plugin no longer registers rules for links to Advanced Content filter.
+  * [#10213](http://dev.ckeditor.com/ticket/10213): [Justify](http://ckeditor.com/addon/justify) plugin is now correctly registering rules to Advanced Content filter when [`config.justifyClasses`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-justifyClasses) is defined.
 
 ## CKEditor 4.1 RC
 
 New Features:
 
-* [#9829](http://dev.ckeditor.com/ticket/9829): Advanced Content Filter - data and features activation based on editor configuration.
+* [#9829](http://dev.ckeditor.com/ticket/9829): Advanced Content filter - data and features activation based on editor configuration.
 
   Brand new data filtering system that works in 2 modes:
 

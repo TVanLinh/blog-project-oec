@@ -21,7 +21,7 @@
                 <span class="lead">
                         <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span> <a href="#" class="fs-15">${post.user.userName}</a>
                     </span>
-                <jsp:useBean id="dateUtil" class="Utils.DateFormatUtil" scope="session"/>
+                <jsp:useBean id="dateUtil" class="utils.DateFormatUtil" scope="session"/>
                 <p><span class="glyphicon glyphicon-time"></span><span class="margin-left-3">${messageSource.getMessage("postTime",null,locale)}</span> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</p>
                 <hr>
                 <c:if test="${post.image.link!=null}">
@@ -42,7 +42,7 @@
 
                 <%--<p>${ Jsoup.parse(post.content).text()}</p>--%>
                 <a class="btn btn-primary" href="/post?id=${post.id}" target="_self"> ${messageSource.getMessage("read",null,locale)} <span class="glyphicon glyphicon-chevron-right"></span></a>
-                <c:if test="${sessionScope.username!=null}">
+                <c:if test="${sessionScope.username!=null && requestScope.userSerVice.find(post.user.id).userName==sessionScope.username}">
                     <a id="action-update" href="/update?action=update&id=${post.id}"><img src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a> <a id="action-" onclick="return window.confirm('Are you sure you want to delete this post?')" href="/delete-post?id=${post.id}">${messageSource.getMessage("delete",null,locale)}</a>
                 </c:if>
                 <hr>

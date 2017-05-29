@@ -4,7 +4,7 @@
 /*jshint unused: false */
 
 /*
-Filter widget tested parts
+filter widget tested parts
 ========================
 OPTIONS:
 	filter_defaultAttrib, filter_ignoreCase, filter_startsWith,
@@ -146,9 +146,9 @@ jQuery(function($){
 
 
 	/************************************************
-		Filter widget
+		filter widget
 	************************************************/
-	QUnit.test( 'Filter: init', function(assert) {
+	QUnit.test( 'filter: init', function(assert) {
 		assert.expect(6);
 
 		assert.equal( this.init, true, 'Init event' );
@@ -162,7 +162,7 @@ jQuery(function($){
 		assert.cacheCompare( this.table, 3, [ 12, 18, 13, 18 ], 'starting filter value on age column', true );
 	});
 
-	QUnit.test( 'Filter column range', function(assert) {
+	QUnit.test( 'filter column range', function(assert) {
 		assert.expect(10);
 		var range = $.tablesorter.filter.findRange,
 			c = { columns: 10 }; // psuedo table.config
@@ -179,7 +179,7 @@ jQuery(function($){
 		assert.deepEqual( range( c, 'a-b-c,100' ), [ 0,1,2,3,4,5,6,7,8,9 ], 'text with dashes & commas -> all columns' );
 	});
 
-	QUnit.test( 'Filter process filters', function(assert) {
+	QUnit.test( 'filter process filters', function(assert) {
 		assert.expect(2);
 		var processFilters = this.ts.filter.processFilters,
 			filters = [],
@@ -192,7 +192,7 @@ jQuery(function($){
 		assert.deepEqual( processFilters( filters, false ), results );
 	});
 
-	QUnit.test( 'Filter comparison', function(assert) {
+	QUnit.test( 'filter comparison', function(assert) {
 		assert.expect(10);
 		var undef,
 			c = { columns: 10 }, // psuedo table.config
@@ -211,7 +211,7 @@ jQuery(function($){
 		assert.equal( compare( c, [undef, '1', ''], ['', undef, '1'] ), false, 'same value diff position' );
 	});
 
-	QUnit.test( 'Filter searches', function(assert) {
+	QUnit.test( 'filter searches', function(assert) {
 		var ts = this.ts,
 			c = this.c,
 			wo = this.wo,
@@ -367,7 +367,7 @@ jQuery(function($){
 		).promise();
 	});
 
-	QUnit.test( 'Filter: function & selectSource', function(assert) {
+	QUnit.test( 'filter: function & selectSource', function(assert) {
 		assert.expect(3);
 
 		var $t, opts = [];
@@ -386,7 +386,7 @@ jQuery(function($){
 		assert.equal ( 'len=' + opts.length + ',' + opts.join(''), 'len=4,abcdefzyx', 'filter_selectSource set' );
 	});
 
-	QUnit.test( 'Filter: select & matching (table2)', function(assert) {
+	QUnit.test( 'filter: select & matching (table2)', function(assert) {
 		var self = this,
 			ts = this.ts,
 			$table = this.$table,

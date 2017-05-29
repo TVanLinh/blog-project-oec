@@ -1329,7 +1329,7 @@
 			}
 
 			if ( c.debug ) {
-				console.log( 'Filter: Starting filter widget search', filters );
+				console.log( 'filter: Starting filter widget search', filters );
 				time = new Date();
 			}
 			// filtered rows count
@@ -1428,7 +1428,7 @@
 					// can't search when all rows are hidden - this happens when looking for exact matches
 					if ( searchFiltered && notFiltered === 0 ) { searchFiltered = false; }
 					if ( c.debug ) {
-						console.log( 'Filter: Searching through ' +
+						console.log( 'filter: Searching through ' +
 							( searchFiltered && notFiltered < len ? notFiltered : 'all' ) + ' rows' );
 					}
 					if ( data.anyMatchFlag ) {

@@ -7,13 +7,13 @@
       <thead>
           <tr>
               <th data-th="Driver details"><span>STT</span></th>
-              <th data-th="Driver details"><a href="/manager-post?orderBy=id_user"><span>${messageSource.getMessage("td.author",null,locale)}</span></a></th>
-              <th class="text-center"><a href="/manager-post?orderBy=title">${messageSource.getMessage("td.title",null,locale)}</a></th>
-              <th><a href="/manager-post?orderBy=time_post">${messageSource.getMessage("td.timePost",null,locale)}</a></th>
-              <th><a href="/manager-post?orderBy=status">${messageSource.getMessage("td.status",null,locale)}</a></th>
-              <th><a href="/manager-post?orderBy=approve">${messageSource.getMessage("td.approve",null,locale)}</a></th>
-              <th><a href="/manager-post?orderBy=number_like">${messageSource.getMessage("nLike",null,locale)}</a></th>
-              <th><a href="/manager-post?orderBy=number_view">${messageSource.getMessage("nView",null,locale)}</a></th>
+              <th data-th="Driver details"><a href="/manager-post?orderBy=id_user"><img src="<s:url value="public/asserts/images/sort.png" />"><span class="dp-inline">${messageSource.getMessage("td.author",null,locale)}</span></a></th>
+              <th class="text-center"><a href="/manager-post?orderBy=title"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("td.title",null,locale)}</a></th>
+              <th><a href="/manager-post?orderBy=time_post"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("td.timePost",null,locale)}</a></th>
+              <th><a href="/manager-post?orderBy=status"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("td.status",null,locale)}</a></th>
+              <th><a href="/manager-post?orderBy=approve"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("td.approve",null,locale)}</a></th>
+              <th><a href="/manager-post?orderBy=number_like"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("nLike",null,locale)}</a></th>
+              <th><a href="/manager-post?orderBy=number_view"><img src="<s:url value="public/asserts/images/sort.png" />">${messageSource.getMessage("nView",null,locale)}</a></th>
               <th>${messageSource.getMessage("td.action",null,locale)}</th>
           </tr>
       </thead>
@@ -45,7 +45,7 @@
                 <td>
                     <%--<a href="javascript:void(0)" onclick="A.getPostImprove('/manager-get-all-post-delete?id='+${post.id},null)"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>--%>
                     <%--<a href="/update?action=update&id=${post.id}"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a> --%>
-                    <a href="/manager-post?page=${requestScope.page}&&action=delete&&id=${post.id}" > <span class="glyphicon glyphicon-remove mgl-10"></span></a>
+                    <a href="/manager-post?page=${requestScope.page}&&action=delete&&id=${post.id}" onclick="return window.confirm('Are you sure you want to delete this post?')"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
                     <a href="/update?action=update&id=${post.id}"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a>
                 </td>
             </tr>
@@ -56,7 +56,7 @@
 
     <div>
         <ul class="pager">
-            <jsp:useBean id="numberView" class="Utils.NumberViewSort"/>
+            <jsp:useBean id="numberView" class="utils.NumberViewSort"/>
             <c:if test="${requestScope.querySearch==null}">
                 <c:if test="${requestScope.page>=2}">
                     <li class="previous">

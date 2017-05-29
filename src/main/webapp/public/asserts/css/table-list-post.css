@@ -99,3 +99,7 @@ th tr
 table{
     border:1px solid #000;
 }
+.dp-inline
+{
+    display: inline !important;
+}

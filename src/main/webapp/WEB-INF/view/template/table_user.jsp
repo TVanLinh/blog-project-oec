@@ -6,14 +6,14 @@
         <thead>
             <tr>
                 <th data-th="Driver details"><span>STT</span></th>
-                <th data-th="Driver details"><a href="/manager-user?orderBy=user_name"> <span>${messageSource.getMessage("name",null,locale)}</span></a></th>
-                <th class="text-center"><a href="/manager-user?orderBy=pass_word">${messageSource.getMessage("passWord",null,locale)}</a></th>
-                <th><a href="/manager-user?orderBy=role">${messageSource.getMessage("role",null,locale)}</a></th>
+                <th data-th="Driver details"><a href="/manager-user?orderBy=user_name"><img src="<s:url value="public/asserts/images/sort.png" />"> <span class="dp-inline">${messageSource.getMessage("name",null,locale)}</span></a></th>
+                <th class="text-center"><a href="/manager-user?orderBy=pass_word"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("passWord",null,locale)}</a></th>
+                <th><a href="/manager-user?orderBy=role"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("role",null,locale)}</a></th>
                 <th>${messageSource.getMessage("td.action",null,locale)}</th>
             </tr>
         </thead>
         <tbody id="table-all-user">
-        <jsp:useBean id="roleService" scope="page" class="Service.RoleService"/>
+        <jsp:useBean id="roleService" scope="page" class="service.RoleService"/>
         <c:forEach var="user"   items="${userList}"  varStatus="loop">
             <tr >
                 <td>${loop.index+1}</td>
@@ -29,7 +29,7 @@
 
         </tbody>
     </table>
-    <jsp:useBean id="numberView" class="Utils.NumberViewSort"/>
+    <jsp:useBean id="numberView" class="utils.NumberViewSort"/>
     <div>
         <ul class="pager">
             <c:if test="${requestScope.querySearch==null}">

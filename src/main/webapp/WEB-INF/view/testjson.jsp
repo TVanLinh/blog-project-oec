@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="Utils.CookieUtils" %>
+<%@ page import="utils.CookieUtils" %>
 <html>
 <head>
     <title>Title</title>
@@ -16,7 +16,7 @@
 //        CookieUtils cookieUtils=new CookieUtils();
 //        cookieUtils.
     %>
-    <jsp:useBean id="cookieUtils" type="Utils.CookieUtils" scope="session" class="Utils.CookieUtils"/>
+    <jsp:useBean id="cookieUtils" type="utils.CookieUtils" scope="session" class="utils.CookieUtils"/>
 
     ${cookie.status_like_post.value}
     <button id="feedback">click</button>

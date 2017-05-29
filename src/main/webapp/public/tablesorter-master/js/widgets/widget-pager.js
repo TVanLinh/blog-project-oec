@@ -545,7 +545,7 @@
 		},
 
 		buildPageSelect: function( c, p ) {
-			// Filter the options page number link array if it's larger than 'pager_maxOptionSize'
+			// filter the options page number link array if it's larger than 'pager_maxOptionSize'
 			// as large page set links will slow the browser on large dom inserts
 			var i, centralFocusSize, focusOptionPages, insertIndex, optionLength, focusLength,
 				wo = c.widgetOptions,

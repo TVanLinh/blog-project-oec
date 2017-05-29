@@ -17,14 +17,16 @@
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-md-8">
-            <p class="fs-20">
-                <span>${messageSource.getMessage("resultFind",null,locale)} </span>
-                <span>${requestScope.totalList}</span>
-                <span class="pd-10">${messageSource.getMessage("recordFrom",null,locale)}</span>
-                <span>${(requestScope.page-1)*requestScope.limit+1} </span>
-                <span class="pd-10">${messageSource.getMessage("to",null,locale)}</span>
-                <span>${(requestScope.page-1)*requestScope.limit+requestScope.postList.size()}</span>
-            </p>
+            <c:if test="${requestScope.totalList>0}">
+                    <p class="fs-20">
+                        <span>${messageSource.getMessage("resultFind",null,locale)} </span>
+                        <span>${requestScope.totalList}</span>
+                        <span class="pd-10">${messageSource.getMessage("recordFrom",null,locale)}</span>
+                        <span>${(requestScope.page-1)*requestScope.limit+1} </span>
+                        <span class="pd-10">${messageSource.getMessage("to",null,locale)}</span>
+                        <span>${(requestScope.page-1)*requestScope.limit+requestScope.postList.size()}</span>
+                    </p>
+            </c:if>
 
             <c:forEach var="post" items="${postList}">
                 <!-- First Blog Post -->
@@ -33,7 +35,7 @@
                 <span class="lead">
                             <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span> <a href="#" class="fs-15">${post.user.userName}</a>
                         </span>
-                <jsp:useBean id="dateUtil" class="Utils.DateFormatUtil" scope="session"/>
+                <jsp:useBean id="dateUtil" class="utils.DateFormatUtil" scope="session"/>
                 <p><span class="glyphicon glyphicon-time"></span><span class="margin-left-3">${messageSource.getMessage("postTime",null,locale)}</span>
                         ${dateUtil.format(post.timePost,sessionScope.dateFormat)}
                 </p>
@@ -75,14 +77,16 @@
                     </li>
                 </c:if>
             </ul>
-            <p class="fs-20">
-                <span>${messageSource.getMessage("resultFind",null,locale)} </span>
-                <span>${requestScope.totalList}</span>
-                <span class="pd-10">${messageSource.getMessage("recordFrom",null,locale)}</span>
-                <span>${(requestScope.page-1)*requestScope.limit+1} </span>
-                <span class="pd-10">${messageSource.getMessage("to",null,locale)}</span>
-                <span>${(requestScope.page-1)*requestScope.limit+requestScope.postList.size()}</span>
-            </p>
+            <c:if test="${requestScope.totalList>0}">
+                <p class="fs-20">
+                    <span>${messageSource.getMessage("resultFind",null,locale)} </span>
+                    <span>${requestScope.totalList}</span>
+                    <span class="pd-10">${messageSource.getMessage("recordFrom",null,locale)}</span>
+                    <span>${(requestScope.page-1)*requestScope.limit+1} </span>
+                    <span class="pd-10">${messageSource.getMessage("to",null,locale)}</span>
+                    <span>${(requestScope.page-1)*requestScope.limit+requestScope.postList.size()}</span>
+                </p>
+            </c:if>
         </div>
         <!-- Blog Sidebar Widgets Column -->
         <div>

@@ -132,8 +132,8 @@ ul { padding-left: 20px; }
 		<li>This demo shows how to get around an issue with the filter widget:
 			<ul>
 				<li>The <span class="label label-info">zebra widget button</span> below was added to show that when materialize's "striped" class is applied, the css defined zebra striping will not apply correctly because table rows are hidden but still accounted for by the css <code>nth-child()</code> selector.</li>
-				<li>To better understand this issue, disable the zebra widget (using the toggle button). Now <button type="button" class="filter btn" data-column="5" data-filter=">80"><i class="material-icons">search</i> Filter ">80"</button> in the "Calculus" column.</li>
-				<li>Try other filter searches with the zebra widget disabled, like <button type="button" class="filter btn" data-column="2" data-filter="male"><i class="material-icons">search</i> Filter "male"</button> in the "Sex" column.</li>
+				<li>To better understand this issue, disable the zebra widget (using the toggle button). Now <button type="button" class="filter btn" data-column="5" data-filter=">80"><i class="material-icons">search</i> filter ">80"</button> in the "Calculus" column.</li>
+				<li>Try other filter searches with the zebra widget disabled, like <button type="button" class="filter btn" data-column="2" data-filter="male"><i class="material-icons">search</i> filter "male"</button> in the "Sex" column.</li>
 				<li>To solve this issue, just enable the zebra widget and the "even" and "odd" row class names <del>will</del> should over-ride the <code>nth-child()</code> styling.</li>
 				<li>The only down side is that for custom materialize themes, you'll need to edit the "theme.materialize.css" file.</li>
 			</ul>

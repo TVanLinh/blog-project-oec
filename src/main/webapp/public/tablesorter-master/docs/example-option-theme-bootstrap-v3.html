@@ -192,8 +192,8 @@
 		<li>This demo shows how to get around an issue with the filter widget:
 			<ul>
 				<li>The <span class="label label-info">zebra widget button</span> below was added to show that when bootstrap's "table-striped" class is applied, the css defined zebra striping will not apply correctly because table rows are hidden but still accounted for by the css <code>nth-child()</code> selector.</li>
-				<li>To better understand this issue, disable the zebra widget (using the toggle button). Now <button type="button" class="filter btn btn-sm btn-primary" data-column="5" data-filter=">80"><i class="icon-white icon-filter glyphicon glyphicon-filter"></i> Filter ">80"</button> in the "Calculus" column.</li>
-				<li>Try other filter searches with the zebra widget disabled, like <button type="button" class="filter btn btn-sm btn-primary" data-column="2" data-filter="male"><i class="icon-white icon-filter glyphicon glyphicon-filter"></i> Filter "male"</button> in the "Sex" column.</li>
+				<li>To better understand this issue, disable the zebra widget (using the toggle button). Now <button type="button" class="filter btn btn-sm btn-primary" data-column="5" data-filter=">80"><i class="icon-white icon-filter glyphicon glyphicon-filter"></i> filter ">80"</button> in the "Calculus" column.</li>
+				<li>Try other filter searches with the zebra widget disabled, like <button type="button" class="filter btn btn-sm btn-primary" data-column="2" data-filter="male"><i class="icon-white icon-filter glyphicon glyphicon-filter"></i> filter "male"</button> in the "Sex" column.</li>
 				<li>To solve this issue, just enable the zebra widget and the "even" and "odd" row class names <del>will</del> should over-ride the <code>nth-child()</code> styling.<br><span class="label label-warning">NOTE!</span> This doesn't seem to work in the latest Bootstrap version, so you'll have to remove the "table-striped" class completely from the table.</li>
 				<li>The only down side is that for custom bootstrap themes, you'll need to edit the "theme.bootstrap.css" file for bootstrap.</li>
 			</ul>

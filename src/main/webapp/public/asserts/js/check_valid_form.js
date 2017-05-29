@@ -69,3 +69,31 @@ function getImages()
     }
     return true;
 }
+
+function  checkFormInsertUser() {
+    var userName=document.getElementById("userName").value;
+    var passWord=document.getElementById("passWord").value;
+    var rePassWord=document.getElementById("rePassWord").value;
+    var listRole=document.getElementById("listRole").value;
+    if(userName.trim()=="")
+    {
+        window.alert("Enter user name !");
+        return false;
+    }
+    if(passWord.trim()=="")
+    {
+        window.alert("Enter pass word !");
+        return false;
+    }
+    if(passWord.trim()!==""&&passWord.trim()!=rePassWord.trim())
+    {
+        window.alert("The two passwords do not overlap !");
+        return false;
+    }
+    if(listRole==="")
+    {
+        window.alert("Not select role !");
+        return false ;
+    }
+    return true;
+}

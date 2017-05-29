@@ -83,7 +83,7 @@ $secondaryEven : lighten( $primaryEven, 5% );
 $tertiaryOdd   : $secondaryEven;
 $tertiaryEven  : lighten( $secondaryEven, 5% );
 
-/* Filter widget transition */
+/* filter widget transition */
 @mixin filterWidgetTransition {
 	-webkit-transition: line-height $filterTransitionTime ease;
 	-moz-transition: line-height $filterTransitionTime ease;

@@ -12,7 +12,7 @@
             <th>${messageSource.getMessage("td.action",null,locale)}</th>
         </tr>
         <tbody id="table-all-user">
-        <jsp:useBean id="roleService" scope="page" class="Service.RoleService"/>
+        <jsp:useBean id="roleService" scope="page" class="service.RoleService"/>
         <c:forEach var="user"   items="${userList}"  varStatus="loop">
             <tr >
                 <td>${loop.index+1}</td>

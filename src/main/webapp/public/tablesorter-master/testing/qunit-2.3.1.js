@@ -3201,7 +3201,7 @@
 
   		addClass(filter, "qunit-filter");
 
-  		label.innerHTML = "Filter: ";
+  		label.innerHTML = "filter: ";
 
   		input.type = "text";
   		input.value = config.filter || "";

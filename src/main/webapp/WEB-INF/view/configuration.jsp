@@ -13,7 +13,7 @@
 <div class="container">
     <!-- Blog Entries Column -->
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <ul class="list-group menu-admin">
                 <li class="list-inline btn btn-danger mgl-10 mgr-10  mgb-15" ><a href="/manager-post"><img src="<s:url value="public/asserts/images/post1.png" />" class="mgr-10">${messageSource.getMessage("managerPost",null,locale)}</a></li>
                 <li class="list-inline btn btn-success mgr-10  mgb-15"><a href="/configuration"><span class="glyphicon glyphicon-cog mgr-5"></span>${messageSource.getMessage("configSystem",null,locale)}</a></li>
@@ -27,10 +27,9 @@
                 <div class="form-group">
                     <label for="formatTime" id="formatTime" >${messageSource.getMessage("fomatDate",null,locale)}:</label>
                     <select class="form-control"  name="formatTime" >
-                        <option value="HH:mm:ss dd:MM:yyyy">HH:mm:ss dd:MM:yyyy</option>
-                        <option value="HH:mm:ss dd:MM:yyyy">HH:mm:ss dd/MM/yyyy</option>
-                        <option value="HH:mm:ss dd:MM:yyyy">HH:mm:ss dd-MM-yyyy</option>
-                        <option value="dd:MM:yyyy">dd:MM:yyyy</option>
+                        <option value="HH:mm:ss dd/MM/yyyy">HH:mm:ss dd/MM/yyyy</option>
+                        <option value="HH:mm:ss dd-MM-yyyy">HH:mm:ss dd-MM-yyyy</option>
+                        <option value="dd/MM/yyyy">dd/MM/yyyy</option>
                         <option value="dd-MM-yyyy">dd-MM-yyyy</option>
                     </select>
 
@@ -45,9 +44,9 @@
             </form>
         </div>
         <!-- Blog Sidebar Widgets Column -->
-        <div>
-            <jsp:include page="template/slidebar.jsp"/>
-        </div>
+        <%--<div>--%>
+            <%--<jsp:include page="template/slidebar.jsp"/>--%>
+        <%--</div>--%>
     </div>
     <!-- /.row -->
     <hr>

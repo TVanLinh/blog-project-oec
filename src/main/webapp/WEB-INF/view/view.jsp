@@ -26,7 +26,7 @@
                 <span class="lead">
                         <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span> <a href="#" class="fs-15">${post.user.userName}</a>
                     </span>
-                <jsp:useBean id="dateUtil" class="Utils.DateFormatUtil" scope="session"/>
+                <jsp:useBean id="dateUtil" class="utils.DateFormatUtil" scope="session"/>
                 <p><span class="glyphicon glyphicon-time"></span><span class="margin-left-3">${messageSource.getMessage("postTime",null,locale)}</span> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</p>
                 <hr>
 

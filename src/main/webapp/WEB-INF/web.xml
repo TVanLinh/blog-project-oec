@@ -14,7 +14,7 @@
 
     <filter>
         <filter-name>login-filter</filter-name>
-        <filter-class>Filter.LoginFilter</filter-class>
+        <filter-class>filter.LoginFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -24,7 +24,7 @@
 
     <filter>
         <filter-name>user-fileter</filter-name>
-        <filter-class>Filter.UserFilter</filter-class>
+        <filter-class>filter.UserFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -51,7 +51,7 @@
 
     <filter>
         <filter-name>defaultPage</filter-name>
-        <filter-class>Filter.DefaultPage</filter-class>
+        <filter-class>filter.DefaultPage</filter-class>
     </filter>
 
     <filter-mapping>
@@ -61,7 +61,7 @@
 
     <filter>
         <filter-name>language</filter-name>
-        <filter-class>Filter.FilterLanguage</filter-class>
+        <filter-class>filter.FilterLanguage</filter-class>
     </filter>
 
     <filter-mapping>

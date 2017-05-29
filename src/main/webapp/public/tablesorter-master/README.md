@@ -136,7 +136,7 @@ View the [complete change log here](https://github.com/Mottie/tablesorter/wiki/C
   * Update version tags.
 * Core:
   * Fixed `updateCell` to work correctly with child rows. Thanks [@andysleigh](https://github.com/andysleigh); see [PR #1381](https://github.com/Mottie/tablesorter/pull/1381).
-* Filter:
+* filter:
   * Add `equalFilters` function; for more reliable comparisons.
 * Pager:
   * use `equalFilters` function for comparison. See [issue #1384](https://github.com/Mottie/tablesorter/issues/1384).

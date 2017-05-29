@@ -11,11 +11,11 @@
     <title>Title</title>
 </head>
 <body>
-    <%--<jsp:useBean id="ok" scope="page" class="Service.ConfigurationService"/>--%>
+    <%--<jsp:useBean id="ok" scope="page" class="service.ConfigurationService"/>--%>
     <%pageContext.setAttribute("date",new Date());%>
 
     numberViewPost=:${ConfigurationService.find(1).toString()}
-    <jsp:useBean id="dateformate" class="Utils.DateFormatUtil"/>
+    <jsp:useBean id="dateformate" class="utils.DateFormatUtil"/>
     <%--${dateformate.format(pageContext.getAttribute("date"),"hh:MM:ss dd-MM-yyyy")}--%>
     ${messageSource.getMessage("post",null,locale)}
 </body>

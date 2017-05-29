@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>jQuery tablesorter 2.0 - Filter Widget</title>
+	<title>jQuery tablesorter 2.0 - filter Widget</title>
 
 	<!-- jQuery -->
 	<script src="js/jquery-latest.min.js"></script>
@@ -144,7 +144,7 @@
 			// So typing in "a" will find "albert" but not "frank", both have a's; default is false
 			filter_startsWith : false,
 
-			// Filter using parsed content for ALL columns
+			// filter using parsed content for ALL columns
 			// be careful on using this on date columns as the date is parsed and stored as time in seconds
 			filter_useParsedData : false,
 
@@ -238,7 +238,7 @@ $(function(){
 <body>
 <div id="banner">
 	<h1>table<em>sorter</em></h1>
-	<h2>Filter Widget</h2>
+	<h2>filter Widget</h2>
 	<h3>Flexible client-side table sorting</h3>
 	<a href="index.html">Back to documentation</a>
 </div>
@@ -317,11 +317,11 @@ $(function(){
 							</tr>
 						</thead>
 						<tbody>
-							<tr><td class="center">1</td><td class="center"><code>|</code> or <code>&nbsp;OR&nbsp;</code></td><td>Logical &quot;or&quot; (Vertical bar). Filter the column for content that matches text from either side of the bar <small class="bright">(2)</small>.</td><td><code>box|bat</code> (matches a column cell with either &quot;box&quot; or &quot;bat&quot;);<button type="button" data-filter-column="1">Alex|Peter</button> (Find text that contains either &quot;Alex&quot; or &quot;Peter&quot;); <button type="button" data-filter-column="3">&lt20 or &gt;40</button></td></tr>
-							<tr><td class="center">2</td><td class="center"><code>&nbsp;&&&nbsp;</code> or <code>&nbsp;AND&nbsp;</code></td><td>Logical &quot;and&quot;. Filter the column for content that matches text from either side of the operator.</td><td><code>box && bat</code> (matches a column cell that contains both &quot;box&quot; and &quot;bat&quot;), <button type="button" data-filter-column="1">Br && c</button> (Find text that contains both &quot;br&quot; and &quot;c&quot;), <button type="button" data-filter-column="3">&gt;20 && &lt;40</button> or <button type="button" data-filter-column="1">a and !o</button> (When "filter-match" is set, find content with the letter "a", but not the letter "o")</td></tr>
+							<tr><td class="center">1</td><td class="center"><code>|</code> or <code>&nbsp;OR&nbsp;</code></td><td>Logical &quot;or&quot; (Vertical bar). filter the column for content that matches text from either side of the bar <small class="bright">(2)</small>.</td><td><code>box|bat</code> (matches a column cell with either &quot;box&quot; or &quot;bat&quot;);<button type="button" data-filter-column="1">Alex|Peter</button> (Find text that contains either &quot;Alex&quot; or &quot;Peter&quot;); <button type="button" data-filter-column="3">&lt20 or &gt;40</button></td></tr>
+							<tr><td class="center">2</td><td class="center"><code>&nbsp;&&&nbsp;</code> or <code>&nbsp;AND&nbsp;</code></td><td>Logical &quot;and&quot;. filter the column for content that matches text from either side of the operator.</td><td><code>box && bat</code> (matches a column cell that contains both &quot;box&quot; and &quot;bat&quot;), <button type="button" data-filter-column="1">Br && c</button> (Find text that contains both &quot;br&quot; and &quot;c&quot;), <button type="button" data-filter-column="3">&gt;20 && &lt;40</button> or <button type="button" data-filter-column="1">a and !o</button> (When "filter-match" is set, find content with the letter "a", but not the letter "o")</td></tr>
 							<tr><td class="center">3</td><td class="center"><code>/\d/</code></td><td>Add any regex to the query to use in the query ("mig" flags can be included <code>/\w/mig</code>)</td><td><code>/b[aeiou]g/i</code> (finds &quot;bag&quot;, &quot;beg&quot;, &quot;BIG&quot;, &quot;Bug&quot;, etc);<button type="button" data-filter-column="1">/r$/</button> (matches text that ends with an &quot;r&quot;)</td></tr>
 							<tr><td class="center">4</td><td class="center"><code>&lt; &lt;= &gt;= &gt;</code></td><td>Find alphabetical or numerical values less than or greater than or equal to the filtered query <small class="bright">(1)</small>.</td><td><button type="button" data-filter-column="5">&gt;= 10</button> (find values greater than or equal to 10)</td></tr>
-							<tr><td class="center">5</td><td class="center"><code>!</code> or <code>!=</code></td><td>Not operator, or not exactly match. Filter the column with content that <strong>do not</strong> match the query. Include an equal (<code>=</code>), single (<code>'</code>) or double quote (<code>&quot;</code>) to exactly <em>not</em> match a filter (<span class="version">v2.17.1</span>).</td><td><code>!fe</code> (hide rows with &quot;female&quot; in that column, but shows rows with &quot;male&quot;);<button type="button" data-filter-column="1">!a</button> (find text that doesn't contain an &quot;a&quot;);<button type="button" data-filter-column="1">!"Bruce"</button> (find content that does not exactly match "Bruce")</td></tr>
+							<tr><td class="center">5</td><td class="center"><code>!</code> or <code>!=</code></td><td>Not operator, or not exactly match. filter the column with content that <strong>do not</strong> match the query. Include an equal (<code>=</code>), single (<code>'</code>) or double quote (<code>&quot;</code>) to exactly <em>not</em> match a filter (<span class="version">v2.17.1</span>).</td><td><code>!fe</code> (hide rows with &quot;female&quot; in that column, but shows rows with &quot;male&quot;);<button type="button" data-filter-column="1">!a</button> (find text that doesn't contain an &quot;a&quot;);<button type="button" data-filter-column="1">!"Bruce"</button> (find content that does not exactly match "Bruce")</td></tr>
 							<tr><td class="center">6</td><td class="center"><code>&quot;</code> or <code>=</code></td><td>To exactly match the search query, add a quote, apostrophe or equal sign to the beginning and/or end of the query</td><td><code>abc&quot;</code> or <code>abc=</code> (exactly match &quot;abc&quot;);<button type="button" data-filter-column="1">John&quot;</button> or <button type="button" data-filter-column="1">John=</button> (exactly match &quot;John&quot;)</td></tr>
 							<tr><td class="center">7</td><td class="center"><code>&nbsp;-&nbsp;</code> or <code>&nbsp;to&nbsp;</code></td><td>Find a range of values. Make sure there is a space before and after the dash (or the word &quot;to&quot;) <small class="bright">(3)</small>.</td><td><button type="button" data-filter-column="3">10 - 30</button> or <button type="button" data-filter-column="4">10 to 30</button> (match values between 10 and 30)</td></tr>
 							<tr><td class="center">8</td><td class="center"><code>?</code></td><td>Wildcard for a single, non-space character.</td><td><code>J?n</code> (finds &quot;Jan&quot; and &quot;Jun&quot;, but not &quot;Joan&quot;);<button type="button" data-filter-column="2">a?s</button> (finds &quot;Dumass&quot; and &quot;Evans&quot;, but not &quot;McMasters&quot;)</td></tr>
@@ -339,7 +339,7 @@ $(function(){
 
 		<h3><a href="#">Options</a></h3>
 		<div>
-			<h4>Filter widget defaults (added inside of tablesorter <code>widgetOptions</code>)</h4>
+			<h4>filter widget defaults (added inside of tablesorter <code>widgetOptions</code>)</h4>
 			<h4><span class="label warning">NOTE</span> This table includes very basic information about the filter options. For more extensive information &amp; links to demos, see the main page <a href="index.html#Widget-options">Widget &amp; Pager Options</a> section.</h4>
 			<div>
 				<span class="label label-info">TIP!</span> Click on the link in the function column to reveal full details (or <a href="#" class="toggleAll">toggle</a>|<a href="#" class="showAll">show</a>|<a href="#" class="hideAll">hide</a> all) or double click to update the browser location.
@@ -396,7 +396,7 @@ $(function(){
 							<p></p>
 							For example: In the table below, searching for <code>2:aa</code> in an anymatch filter will result in "Phillip Aaron Wong" and "Aaron" showing in the First Name column.
 							<p></p>
-							See live examples in the <a href="example-widget-filter-any-match.html#anymatch_searches">Filter Widget External Search</a> demo.
+							See live examples in the <a href="example-widget-filter-any-match.html#anymatch_searches">filter Widget External Search</a> demo.
 							</div>
 						</td>
 					</tr>
@@ -612,7 +612,7 @@ $(function(){
 					<tr id="filter-use-parsed-data">
 						<td><span class="permalink">filter_useParsedData</span></td>
 						<td>false</td>
-						<td>Filter all data using parsed content.</td>
+						<td>filter all data using parsed content.</td>
 					</tr>
 
 				</tbody>
@@ -654,7 +654,7 @@ $(function(){
 
 		<h3><a href="#">Methods</a></h3>
 		<div>
-			<h3 id="method-placeholder">Set Filter Placeholder Text</h3>
+			<h3 id="method-placeholder">Set filter Placeholder Text</h3>
 			<blockquote>
 			Set a <code>data-placeholder</code> attribute on the associated table header with your desired placeholder text
 			<pre class="prettyprint lang-html">&lt;th data-placeholder=&quot;Enter Something&quot;&gt;Name&lt;/th&gt;</pre>
@@ -662,7 +662,7 @@ $(function(){
 			<pre class="prettyprint lang-javascript">$('.tablesorter th:eq(0)').data('placeholder', 'Search for...')</pre>
 			</blockquote>
 
-			<h3 id="method-initial-search">Set Filter Initial Searches</h3>
+			<h3 id="method-initial-search">Set filter Initial Searches</h3>
 			<blockquote>
 			Set a <code>data-value</code> attribute (data-attribute name set by the <code>filter_defaultAttrib</code> option) on the associated table header with the desired initial search value.
 			<pre class="prettyprint lang-html">&lt;th data-value=&quot;&lt;=100&quot;&gt;Price&lt;/th&gt;</pre>

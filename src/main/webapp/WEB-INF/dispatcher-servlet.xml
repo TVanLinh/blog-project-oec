@@ -11,8 +11,8 @@
     </mvc:view-resolvers>
     <mvc:view-controller path="/" view-name="home"/>
     <mvc:resources mapping="/public/**" location="/public/"/>
-    <context:component-scan base-package="Controller"/>
-    <context:component-scan base-package="Filter"/>
-    <context:component-scan base-package="Utils"/>
+    <context:component-scan base-package="controller"/>
+    <context:component-scan base-package="filter"/>
+    <context:component-scan base-package="utils"/>
     <context:annotation-config/>
 </beans>

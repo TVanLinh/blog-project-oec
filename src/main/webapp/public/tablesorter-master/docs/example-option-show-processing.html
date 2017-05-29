@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>jQuery tablesorter 2.0 - showProcessing & Filter events</title>
+	<title>jQuery tablesorter 2.0 - showProcessing & filter events</title>
 
 	<!-- jQuery -->
 	<script src="js/jquery-1.4.4.min.js"></script>
@@ -42,10 +42,10 @@
 		if (e.type === 'filterStart') {
 			start = e.timeStamp;
 			vis = true;
-			t = '<li>Filter Started: [' + filter + ']</li>';
+			t = '<li>filter Started: [' + filter + ']</li>';
 		} else if (start) {
 			vis = false;
-			t = '<li>Filter Ended after ' + ( (e.timeStamp - start)/1000 ).toFixed(2) + ' seconds</li>';
+			t = '<li>filter Ended after ' + ( (e.timeStamp - start)/1000 ).toFixed(2) + ' seconds</li>';
 			start = 0;
 		} else {
 			return;
@@ -70,7 +70,7 @@
 
 <div id="banner">
 	<h1>table<em>sorter</em></h1>
-	<h2>showProcessing &amp; Filter events</h2>
+	<h2>showProcessing &amp; filter events</h2>
 	<h3>Flexible client-side table sorting</h3>
 	<a href="index.html">Back to documentation</a>
 </div>
@@ -96,9 +96,9 @@
 		<pre class="prettyprint lang-javascript"></pre>
 	</div>
 
-	<h1>Filter Events</h1>
+	<h1>filter Events</h1>
 	<ul id="display">
-		<li>Filter events will appear here.</li>
+		<li>filter events will appear here.</li>
 		<li>&nbsp;</li>
 		<li>&nbsp;</li>
 	</ul>
@@ -106,8 +106,8 @@
 	<h1>Demo</h1>
 
 	<!-- ",l,f,>80".split(",") ends up as an array [ "", "l", "f", ">80" ] -->
-	<button type="button" data-search=",l,f,>80">Filter</button> (females majoring in languages with a score >80)<br>
-	<button type="button" data-search=",l,!female,>80">Filter</button> (males majoring in languages with a score >80)<br>
+	<button type="button" data-search=",l,f,>80">filter</button> (females majoring in languages with a score >80)<br>
+	<button type="button" data-search=",l,!female,>80">filter</button> (males majoring in languages with a score >80)<br>
 	<button type="button" class="reset">Reset</button><br>
 	<button type="button" class="toggle">Toggle</button>
 

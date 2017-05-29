@@ -465,7 +465,7 @@
 		<li><a href="example-widget-editable.html">Content editable widget</a> (v2.9; <span class="version updated">v2.28.7</span>).</li>
 		<li><a href="example-widget-current-sort.html">Current Sort Widget</a> (<span class="version">v2.27.0</span>).</li>
 		<li><span class="label label-info">Beta</span> <a href="example-dragtable.html">Dragtable mod</a>  - (jQuery UI widget for column reordering [<a class="external" href="http://stackoverflow.com/a/27770224/145346">ref</a>]; <span class="version">v2.24.0</span>).</li>
-		<li><span class="results">&dagger;</span> Filter widget (<span class="version updated">v2.28.8</span>):
+		<li><span class="results">&dagger;</span> filter widget (<span class="version updated">v2.28.8</span>):
 			<ul>
 				<li><a href="example-widget-filter.html">basic</a> (v2.0.18; <span class="version updated">v2.26.6</span>).</li>
 				<li><a href="example-widget-filter-any-match.html">external option (match any column)</a> (<span class="version">v2.13.3</span>; <span class="version updated">v2.27.5</span>).</li>
@@ -517,7 +517,7 @@
 
 		<li><span class="results">&dagger;</span> <a href="#function-storage">Storage Widget</a> (<span class="version">v2.20.0</span>; <span class="version updated">v2.28.8</span>).</li>
 
-		<li><span class="label label-info">Beta</span> <a href="example-widget-toggle-tablesorter.html">Toggle Sort & Filter Widget</a> (<span class="version">v2.24.4</span>).</li>
+		<li><span class="label label-info">Beta</span> <a href="example-widget-toggle-tablesorter.html">Toggle Sort & filter Widget</a> (<span class="version">v2.24.4</span>).</li>
 
 		<li><span class="results">&dagger;</span> UITheme widget (<span class="version">v2.0.9</span>; <span class="version updated">v2.27.0</span>):
 			<ul>
@@ -2513,7 +2513,7 @@ $(function(){
 				<td>Boolean</td>
 				<td>false</td>
 				<td>
-					Filter widget: If there are child rows in the table (rows with class name from <a href="#csschildrow"><code>&quot;cssChildRow&quot;</code></a> option) and this option is <code>true</code> and a match is found anywhere in the child row, then it will make that row visible.
+					filter widget: If there are child rows in the table (rows with class name from <a href="#csschildrow"><code>&quot;cssChildRow&quot;</code></a> option) and this option is <code>true</code> and a match is found anywhere in the child row, then it will make that row visible.
 					(Modified v2.1).
 					<div class="collapsible">
 					<p><span class="label label-info">*NOTE*</span> When using this option, please be aware that all child row content will be obtained from each table cell using <code>textContent</code>, so none of the markup will be preserved. Also, carriage returns (<code>&lt;br&gt;</code>) will not be included. To account for the loss of white space, especially after carriage returns, please add an extra space to the end of the line. Using <code>innerText</code>, could have been an option for preserving the white space, but it is not standardized across all browsers (<a class="external" href="http://perfectionkills.com/the-poor-misunderstood-innerText/">ref</a>).</p>
@@ -2535,7 +2535,7 @@ $(function(){
 				<td>Boolean</td>
 				<td>false</td>
 				<td>
-					Filter widget: If <code>true</code>, queries will search child row content by column (<span class="version">v2.22.0</span>).
+					filter widget: If <code>true</code>, queries will search child row content by column (<span class="version">v2.22.0</span>).
 					<div class="collapsible">
 						<p>The <code>filter_childRows</code> option must also be <code>true</code> for this option to work.</p>
 						<p>If <code>false</code>, and the <code>filter_childRows</code> option is <code>true</code>, then queries in <em>any column</em> will search all child content, as before this option was added.</p>
@@ -2560,7 +2560,7 @@ $(function(){
 				<td>Boolean</td>
 				<td>true</td>
 				<td>
-					Filter widget: include all sibling rows of the matching child row (<span class="version">v2.23.4</span>).
+					filter widget: include all sibling rows of the matching child row (<span class="version">v2.23.4</span>).
 					<div class="collapsible">
 						<p>Both <code>filter_childRows</code> &amp; <code>filter_childByColumn</code> options must be set to <code>true</code> for this option to work.</p>
 						<p>If <code>false</code>, this option will only show the child row that matches the filter; and its parent row.</p>
@@ -2586,14 +2586,14 @@ $(function(){
 				<td>Boolean</td>
 				<td>true</td>
 				<td>
-					Filter widget: If <code>true</code>, allows using "#:{query}" in anyMatch searches (<span class="version">v2.20.0</span>).
+					filter widget: If <code>true</code>, allows using "#:{query}" in anyMatch searches (<span class="version">v2.20.0</span>).
 					<div class="collapsible">
 					<br>
 					Users can use the anymatch input to target a specific column, using a one-based index.
 					<p></p>
 					For example: In the table below, searching for <code>2:aa</code> in an anymatch filter will result in "Phillip Aaron Wong" and "Aaron" showing in the First Name column.
 					<p></p>
-					See live examples in the <a href="example-widget-filter-any-match.html#anymatch_searches">Filter Widget External Search</a> demo.
+					See live examples in the <a href="example-widget-filter-any-match.html#anymatch_searches">filter Widget External Search</a> demo.
 					</div>
 				</td>
 				<td></td>
@@ -2604,7 +2604,7 @@ $(function(){
 				<td>Boolean</td>
 				<td>true</td>
 				<td>
-					Filter widget: If <code>true</code>, a filter will be added to the top of each table column (v2.4).
+					filter widget: If <code>true</code>, a filter will be added to the top of each table column (v2.4).
 					<div class="collapsible">
 					<br>
 					Use the <a href="#widget-filter-columnFilters"><code>filter_columnFilters</code></a> option as follows:
@@ -2624,7 +2624,7 @@ $(function(){
 				<td><a href="#" class="permalink">filter_cellFilter</a></td>
 				<td>String or Array</td>
 				<td>&quot;&quot;</td>
-				<td>Filter widget: Additional CSS class applied to each filter cell (<span class="version">v2.18.0</span>).
+				<td>filter widget: Additional CSS class applied to each filter cell (<span class="version">v2.18.0</span>).
 					<div class="collapsible"><br>
 						When the filter row is built, each table cell (<code>&lt;td&gt;</code>) will get the class name from this option.
 						<ul>
@@ -2658,7 +2658,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td><a href="#" class="permalink">filter_cssFilter</a></td>
 				<td>String or Array</td>
 				<td>&quot;&quot;</td>
-				<td>Filter widget: Additional CSS class applied to each filter (<span class="version updated">v2.15</span>).
+				<td>filter widget: Additional CSS class applied to each filter (<span class="version updated">v2.15</span>).
 					<div class="collapsible"><br>
 						As of v2.15, this option can also contain an array of class names that are to be applied to input filters.<br>
 						<br>
@@ -2684,7 +2684,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>Object</td>
 				<td>{ }</td>
 				<td>
-					Filter widget: Add a default filter type to a column (<span class="version">v2.17.8</span>).
+					filter widget: Add a default filter type to a column (<span class="version">v2.17.8</span>).
 					<div class="collapsible">
 					<br>
 					<span class="label warning">Warning</span> If a column has a default filter set, the user <strong>will not</strong> be able to use other filters.<br>
@@ -2732,7 +2732,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td><a href="#" class="permalink">filter_excludeFilter</a></td>
 				<td>Object</td>
 				<td>{ }</td>
-				<td>Filter widget: Additional CSS class applied to each filter (<span class="version">v2.17.8</span>).
+				<td>filter widget: Additional CSS class applied to each filter (<span class="version">v2.17.8</span>).
 					Exclude a filter type(s) for a column.
 					<div class="collapsible">
 					<br>
@@ -2775,7 +2775,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>String</td>
 				<td>&quot;&quot;</td>
 				<td>
-					Filter widget: jQuery selector string of inputs, outside of the table, to be used for searching table content (<span class="version">v2.15</span>).
+					filter widget: jQuery selector string of inputs, outside of the table, to be used for searching table content (<span class="version">v2.15</span>).
 					<div class="collapsible">
 					<br>
 					Set this option to be a jQuery selector string, or jQuery object, pointing to any external inputs that are to be used for searching the table.<br>
@@ -2806,7 +2806,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>String</td>
 				<td>&quot;filtered&quot;</td>
 				<td>
-					Filter widget: This is the class name applied to all rows that do not match the filter (hidden rows); used by pager plugin (<span class="version">v2.10</span>).
+					filter widget: This is the class name applied to all rows that do not match the filter (hidden rows); used by pager plugin (<span class="version">v2.10</span>).
 					<div class="collapsible">
 						<br>
 						<span class="label alert">*NOTE*</span> If creating a custom theme, make sure to include this definition (set to <code>display:none</code> or the filter widget will appear to be broken!
@@ -2820,7 +2820,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>Object</td>
 				<td>null</td>
 				<td>
-					Filter widget: This option allows you to add custom controls within the filter widget row (v2.7.7; <span class="version updated">v2.17.0</span>).<br>
+					filter widget: This option allows you to add custom controls within the filter widget row (v2.7.7; <span class="version updated">v2.17.0</span>).<br>
 					<div class="collapsible">
 					<br>
 					In <span class="version updated">v2.17.0</span>, the <code>filter_formatter</code> column can also be referenced by using a jQuery selector (e.g. class name or ID) that points to a table <em>header</em> cell.<br>
@@ -2865,7 +2865,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 });</pre>Any of the other <a class="external" href="http://api.jqueryui.com/spinner/">jQuery UI spinner widget options</a> can also be included.<br>
 							<br>
 						</li>
-						<li>Filter formatter functions include: "uiSpinner", "uiSlider", "uiRange" (uiSlider ranged), "uiDatepicker" (range only), "html5Number", "html5Range" and "html5Color".</li>
+						<li>filter formatter functions include: "uiSpinner", "uiSlider", "uiRange" (uiSlider ranged), "uiDatepicker" (range only), "html5Number", "html5Range" and "html5Color".</li>
 						<li>
 							For other examples, please refer to the example pages. Formatter part 1 (example 1) adds jQuery UI controls to the filter row, while formatter part 2 (example 2) adds HTML5 controls, if supported, to the filter row.
 						</li>
@@ -2883,7 +2883,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>Object</td>
 				<td>null</td>
 				<td>
-					Filter widget: Customize the filter widget by adding a select dropdown with content, custom options or custom filter functions (v2.3.6; <span class="version updated">v2.17.0</span>).
+					filter widget: Customize the filter widget by adding a select dropdown with content, custom options or custom filter functions (v2.3.6; <span class="version updated">v2.17.0</span>).
 					<div class="collapsible">
 					<br>
 					In <span class="version updated">v2.22.0</span>, a <code>data</code> parameter was added to that long list of parameters.<p></p>
@@ -3018,7 +3018,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>Boolean</td>
 				<td>true</td>
 				<td>
-					Filter widget: Set this option to <code>false</code> to always show the filter row; by default, the filter row is completely hidden when no rows exist within the tbody (<span class="version">v2.15</span>).
+					filter widget: Set this option to <code>false</code> to always show the filter row; by default, the filter row is completely hidden when no rows exist within the tbody (<span class="version">v2.15</span>).
 					<div class="collapsible">
 					<br>
 					Use the <a href="#widget-filter-hideempty"><code>filter_hideEmpty</code></a> option as follows:
@@ -3039,7 +3039,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>Boolean, or Function</td>
 				<td>false</td>
 				<td>
-					Filter widget: Set this option to <code>true</code> to hide the filter row initially. The row is revealed by hovering over the visible portion of the filter row or by giving any filter input/select focus (tab key) (v2.4; <span class="version updated">v2.26.6</span>).
+					filter widget: Set this option to <code>true</code> to hide the filter row initially. The row is revealed by hovering over the visible portion of the filter row or by giving any filter input/select focus (tab key) (v2.4; <span class="version updated">v2.26.6</span>).
 					<div class="collapsible">
 					<br>
 					Use the <a href="#widget-filter-hidefilters"><code>filter_hideFilters</code></a> option as follows:
@@ -3083,7 +3083,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>Boolean</td>
 				<td>true</td>
 				<td>
-					Filter widget: Set this option to <code>false</code> to make the column content search case-sensitive, so typing in &quot;a&quot; will not find &quot;Albert&quot;. (v2.3.4)
+					filter widget: Set this option to <code>false</code> to make the column content search case-sensitive, so typing in &quot;a&quot; will not find &quot;Albert&quot;. (v2.3.4)
 					<div class="collapsible">
 					<br>
 					Use the <a href="#widget-filter-ignorecase"><code>filter_ignoreCase</code></a> option as follows:
@@ -3104,7 +3104,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>Boolean, Number or Object</td>
 				<td>true</td>
 				<td>
-					Filter widget: If <code>true</code>, a search of the column content will occur as the user types, with the delay set in the <code>filter_searchDelay</code> option (v2.9; <span class="version updated">v2.27.3</span>).
+					filter widget: If <code>true</code>, a search of the column content will occur as the user types, with the delay set in the <code>filter_searchDelay</code> option (v2.9; <span class="version updated">v2.27.3</span>).
 					<div class="collapsible">
 					<br>
 					This option, when <code>false</code> allows you to disable the live search behavior, so that a filter is only applied when the user presses <kbd>Enter</kbd> (or uses <kbd>Esc</kbd> to clear and cancel the search).<br>
@@ -3139,7 +3139,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>Object</td>
 				<td>{ 'input': 'exact', 'select': 'exact' }</td>
 				<td>
-					Filter widget: This option sets the global setting that applied to either input or select filters (<span class="version">v2.25.5</span>)
+					filter widget: This option sets the global setting that applied to either input or select filters (<span class="version">v2.25.5</span>)
 					<div class="collapsible">
 					<p>A basic input filter will match the filter query until a "and" and "or" type search is performed.</p>
 					<p>By default, select filters and "and" and "or type searchs will look for an exact match, and to override this behavior you *had* to add a "filter-match" class to the columns to allow partial matches.</p>
@@ -3156,7 +3156,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>String</td>
 				<td>&quot;filter-onlyAvail&quot;</td>
 				<td>
-					Filter widget: If a header contains a select dropdown and this class name, only the available (visible) options in the column will show (<span class="version">v2.10.1</span>; <span class="version updated">v2.17.6</span>).
+					filter widget: If a header contains a select dropdown and this class name, only the available (visible) options in the column will show (<span class="version">v2.10.1</span>; <span class="version updated">v2.17.6</span>).
 					<div class="collapsible">
 					<br>
 					In <span class="version">v2.17.6</span>, columns with the only available class name set, that <em>are not</em> currently being filtered will only show the available options. Conversely, the column(s) with a selected option will show all options.<br>
@@ -3174,7 +3174,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>object</td>
 				<td>{ search : '', select : '' }</td>
 				<td>
-					Filter widget: Set global filter input placeholder text for search inputs and selects (<span class="version">v2.16</span>).
+					filter widget: Set global filter input placeholder text for search inputs and selects (<span class="version">v2.16</span>).
 					<div class="collapsible">
 					<br>
 					Any search type input added to the filter row will automatically get a placeholder attribute added, the source of this placeholder text is from the following sources, in order of priority:
@@ -3204,7 +3204,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>String, jQuery object</td>
 				<td>null</td>
 				<td>
-					Filter widget: jQuery selector string of an element used to reset the filters (v2.4; <span class="version updated">v2.16</span>).
+					filter widget: jQuery selector string of an element used to reset the filters (v2.4; <span class="version updated">v2.16</span>).
 					<div class="collapsible">
 					<p>
 					When this option points to a reset element using a jQuery selector string, it is bound using <a class="external" href="http://api.jquery.com/on/#direct-and-delegated-events">event delegation</a>. So if any additional reset elements, with the same class name, are added to the page dynamically, they will be associated with the same table.<br>
@@ -3233,7 +3233,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>Boolean</td>
 				<td>true</td>
 				<td>
-					Filter widget: when <code>true</code>, normalize pressing escape to clear filter input across browsers (<span class="version">v2.25.2</span>).
+					filter widget: when <code>true</code>, normalize pressing escape to clear filter input across browsers (<span class="version">v2.25.2</span>).
 					<div class="collapsible">
 						<p>Webkit browsers automatically clear the filter search input when pressing escape, but IE and Firefox do not. Setting this option to <code>true</code>, clears the filter input when the user presses escape.</p>
 						When this option is set to <code>false</code>, pressing escape inside the search field is ignored.
@@ -3247,7 +3247,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>Boolean</td>
 				<td>false</td>
 				<td>
-					Filter widget: If the storage utility is available (included with <code>jquery.tablesorter.widgets.js</code> file, the last applied filter is saved to storage (<span class="version">v2.14</span>).
+					filter widget: If the storage utility is available (included with <code>jquery.tablesorter.widgets.js</code> file, the last applied filter is saved to storage (<span class="version">v2.14</span>).
 					<div class="collapsible">
 					<br>
 					Filters saved to local storage (or cookies) will override any default filters within the header data-attribute (set by the <a href="#widget-filter-defaultattrib"><code>filter_defaultAttrib</code> option</a>) and be available to the pager before any ajax calls are made.<br>
@@ -3264,7 +3264,7 @@ filter_cssFilter : [ '', 'hidden', '', 'hidden' ]</pre>
 				<td>Numeric</td>
 				<td>300</td>
 				<td>
-					Filter widget: Set this option to the number of milliseconds to delay the search. (v2.3.4).
+					filter widget: Set this option to the number of milliseconds to delay the search. (v2.3.4).
 					<div class="collapsible">
 					<br>
 					Use the <a href="#widget-filter-searchdelay"><code>filter_searchDelay</code></a> option as follows:
@@ -3298,7 +3298,7 @@ $('table').trigger('search', false);</pre></div>
 				<td>Boolean</td>
 				<td>true</td>
 				<td>
-					Filter widget: Set this option to allow searching through already filtered rows (in special conditions); this will speed up searching in large tables (<span class="version">v2.17.4</span>).
+					filter widget: Set this option to allow searching through already filtered rows (in special conditions); this will speed up searching in large tables (<span class="version">v2.17.4</span>).
 					<div class="collapsible">
 					<br>
 					To better explain this, lets do it by example. Lets say you have a column of color names and you enter "light" and results like "light blue" and "light grey" show up.<br>
@@ -3337,7 +3337,7 @@ $('table').trigger('search', false);</pre></div>
 				<td>Function</td>
 				<td>null</td>
 				<td>
-					Filter widget: Include a function to return an array of values to be added to the column filter select (<span class="version">v2.16.0</span>; <span class="version updated">v2.24.4</span>).
+					filter widget: Include a function to return an array of values to be added to the column filter select (<span class="version">v2.16.0</span>; <span class="version updated">v2.24.4</span>).
 					<div class="collapsible">
 					<br>
 					In <span class="version updated">v2.24.4</span>, this option will now accept an array of objects which can contain extra information for each option. Here is an example modified from the <a href="example-widget-filter-selectmenu.html">filter selectmenu demo</a>:
@@ -3439,7 +3439,7 @@ $('table').trigger('search', false);</pre></div>
 				<td>String</td>
 				<td>'|'</td>
 				<td>
-					Filter widget: Set this option to be any separator (<span class="version">v2.17.6</span>) that is to be used within the <code>filter_selectSource</code> returned array.
+					filter widget: Set this option to be any separator (<span class="version">v2.17.6</span>) that is to be used within the <code>filter_selectSource</code> returned array.
 					<div class="collapsible">
 					<br>
 					Use the <a href="#widget-filter-selectsource-separator"><code>filter_selectSourceSeparator</code></a> option as follows:
@@ -3495,7 +3495,7 @@ $('table').trigger('search', false);</pre></div>
 				<td>Boolean</td>
 				<td>false</td>
 				<td>
-					Filter widget: Set this option to <code>true</code> if filtering is performed on the server-side (v2.5.3).
+					filter widget: Set this option to <code>true</code> if filtering is performed on the server-side (v2.5.3).
 					<div class="collapsible">
 					<br>
 					Use the <a href="#widget-filter-serversidefiltering"><code>filter_serversideFiltering</code></a> option as follows:
@@ -3516,7 +3516,7 @@ $('table').trigger('search', false);</pre></div>
 				<td>Boolean</td>
 				<td>false</td>
 				<td>
-					Filter widget: Set this option to <code>true</code> to use the filter to find text from the start of the column, so typing in &quot;a&quot; will find &quot;albert&quot; but not &quot;frank&quot;, both have a's. (v2.1).
+					filter widget: Set this option to <code>true</code> to use the filter to find text from the start of the column, so typing in &quot;a&quot; will find &quot;albert&quot; but not &quot;frank&quot;, both have a's. (v2.1).
 					<div class="collapsible">
 					<br>
 					Use the <a href="#widget-filter-startswith"><code>filter_startsWith</code></a> option as follows:
@@ -3537,7 +3537,7 @@ $('table').trigger('search', false);</pre></div>
 				<td>Boolean</td>
 				<td>false</td>
 				<td>
-					Filter widget: If <code>true</code>, ALL filter searches will only use parsed data (v2.4).
+					filter widget: If <code>true</code>, ALL filter searches will only use parsed data (v2.4).
 					<div class="collapsible">
 					<br>
 					Use the <a href="#widget-filter-useParsedData"><code>filter_useParsedData</code></a> option as follows:
@@ -3570,7 +3570,7 @@ $('table').trigger('search', false);</pre></div>
 				<td>String</td>
 				<td>&quot;data-value&quot;</td>
 				<td>
-					Filter widget: This option contains the name of the data-attribute which contains the default (starting) filter value (<span class="version">v2.10.8</span>).
+					filter widget: This option contains the name of the data-attribute which contains the default (starting) filter value (<span class="version">v2.10.8</span>).
 					<div class="collapsible">
 					<br>
 					Use the <a href="#widget-filter-defaultattrib"><code>filter_defaultAttrib</code></a> option as follows:
@@ -4931,7 +4931,7 @@ $('table').trigger('search', false);</pre></div>
 				<td>Boolean</td>
 				<td>false</td>
 				<td>
-					Filter: This option was <span class="label label-danger">removed</span> in <span class="version updated">v2.15</span>... sorry for the sudden notice.
+					filter: This option was <span class="label label-danger">removed</span> in <span class="version updated">v2.15</span>... sorry for the sudden notice.
 					<div class="collapsible">
 					<br>
 					This option has been replaced by the <a href="#widget-filter-external"><code>filter_external</code></a> option.<br>

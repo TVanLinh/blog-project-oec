@@ -11,7 +11,7 @@
 	ts.filterFormatter = ts.filterFormatter || {};
 
 	/************************\
-	 Select2 Filter Formatter
+	 Select2 filter Formatter
 	\************************/
 	ts.filterFormatter.select2 = function($cell, indx, select2Def) {
 		var o = $.extend({

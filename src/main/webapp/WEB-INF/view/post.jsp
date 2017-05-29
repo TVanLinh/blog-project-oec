@@ -25,14 +25,14 @@
                 <span class="lead">
                         <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span> <a href="index.php" class="fs-15">${post.user.userName}</a>
                     </span>
-                <jsp:useBean id="dateUtil" class="Utils.DateFormatUtil" scope="session"/>
+                <jsp:useBean id="dateUtil" class="utils.DateFormatUtil" scope="session"/>
                 <p><span class="glyphicon glyphicon-time"></span><span class="margin-left-3">${messageSource.getMessage("postTime",null,locale)}</span> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</p>
                 <hr>
 
                 <!-- Post Content -->
                 ${post.content}
 
-                <jsp:useBean id="cookieUtils" type="Utils.CookieUtils" scope="session" class="Utils.CookieUtils"/>
+                <jsp:useBean id="cookieUtils" type="utils.CookieUtils" scope="session" class="utils.CookieUtils"/>
                 <hr>
                 <c:if test="${cookie.status_like_post==null ||cookie.status_like_post!=null&&cookieUtils.isLike(post.id,cookie.status_like_post.value)==false}">
                     <img id="like" onclick="A.like(${post.id},'dislike','#like','#not-like')" src="<s:url value="public/asserts/images/notlike.png"/>" alt="not like"  class="">
