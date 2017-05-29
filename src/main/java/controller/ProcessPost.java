@@ -5,6 +5,7 @@ import dao.PostDAO;
 import entities.Image;
 import entities.Post;
 import entities.User;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import service.ConfigurationService;
 import service.PostService;
 import service.UserService;
 import utils.DefaultPage;
@@ -19,8 +21,10 @@ import utils.DefaultPage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by linhtran on 06/05/2017.
@@ -44,6 +48,9 @@ public class ProcessPost {
 
     @Autowired
     DefaultPage  defaultPage;
+
+    @Autowired
+    ConfigurationService configurationService;
 
     @RequestMapping(value = "/write-post", method = RequestMethod.POST)
     public ModelAndView processWritePost(@ModelAttribute(value = "post") Post post, HttpServletRequest httpServletRequest, Principal principal) {
@@ -166,5 +173,52 @@ public class ProcessPost {
         return "redirect:/user";
     }
 
+    @RequestMapping(value = "/list-post-by-user")
+    public  String  getPostByUser(HttpServletRequest request,@RequestParam(value = "username") String username,@RequestParam(required = false) String page )
+    {
+        defaultPage.setDaultPage(request);
 
+        List<Post> posts;
+        User user;
+        int limit = configurationService.getAllConfiguration().get(0).getNumberViewPost();
+        if(page == null || page.trim().equals("")|| !StringUtils.isNumeric(page)) {
+            if(username==null) {
+                return "redirect:/home";
+            }
+
+            user = userService.getUserByName(username);
+            if(user!=null) {
+                posts=postService.getAllPost("select * from post where status = 1 and id_user = "+user.getId()+" order by time_post desc limit 0,"+limit);
+                setPostList(request,posts);
+                request.setAttribute("page",1);
+                request.setAttribute("totalList", postService.getAllPost("select * from post where status = 1 and id_user = "+user.getId()).size());
+                return  "post-by-user";
+            }else{
+                return "redirect:/home";
+            }
+
+        }
+
+        user = userService.getUserByName(username);
+        if(user != null) {
+            posts = postService.getAllPost("select * from post where status = 1 and id_user = "+user.getId()+" order by time_post desc limit "+(Integer.valueOf(page)-1)*limit +"," +limit);
+            setPostList(request,posts);
+            request.setAttribute("page",Integer.valueOf(page));
+            request.setAttribute("totalList",postService.getAllPost("select * from post where status = 1 and id_user = "+user.getId()).size());
+            return  "post-by-user";
+        }
+
+        return "redirect:/home";
+
+    }
+
+    private  void setPostList(HttpServletRequest request,List<Post> list)
+    {
+        if(list == null)
+        {
+            request.setAttribute("postList", new ArrayList<Post>());
+        }else {
+            request.setAttribute("postList",list);
+        }
+    }
 }

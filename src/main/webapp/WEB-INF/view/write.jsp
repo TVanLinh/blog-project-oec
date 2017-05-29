@@ -35,17 +35,8 @@
 
             <hr>
 
-            <!-- Blog Comments -->
-            <%--<div id="comment">--%>
-                <%--<jsp:include page="comment.jsp"/>--%>
-            <%--</div>--%>
 
         </div>
-
-        <!-- Blog Sidebar Widgets Column -->
-        <%--<div>--%>
-            <%--<jsp:include page="template/slidebar-post.jsp"/>--%>
-        <%--</div>--%>
 
     </div>
     <!-- /.row -->
