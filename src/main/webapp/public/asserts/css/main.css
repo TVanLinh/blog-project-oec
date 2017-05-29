@@ -1,6 +1,10 @@
 a,a:active,a:hover,a:focus{
     text-decoration: none;
 }
+/*a:active*/
+/*{*/
+    /*color: #fff;*/
+/*}*/
 img
 {
     max-width: 100%;
@@ -66,4 +70,8 @@ img
         height: 150px;
         width: 150px;
     }
+}
+.active
+{
+    color: #fff !important;
 }

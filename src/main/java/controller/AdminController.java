@@ -83,6 +83,7 @@ public class AdminController
             setListPost(request,postList);
             request.setAttribute("page",1);
             model.setViewName("admin");
+            request.setAttribute("active","admin");
             request.setAttribute("totalPost",postService.getAllPost("select * from post where approve = 0 ").size());
             return model;
         }
@@ -93,6 +94,7 @@ public class AdminController
         setListPost(request,postList);
         request.setAttribute("page", Integer.valueOf(page));
         model.setViewName("admin");
+        request.setAttribute("active","admin");
         request.setAttribute("totalPost",postService.getAllPost("select * from post where approve = 0 ").size());
         return model;
     }
@@ -118,6 +120,7 @@ public class AdminController
             request.setAttribute("page",1);
             request.setAttribute("querySearch",querySearch);
             request.setAttribute("totalPost",postService.getAllPost("select * from  post where approve = 0 and title like '%"+querySearch+"%'").size());
+            request.setAttribute("active","admin");
             return "admin";
         }
         postList = postService.getAllPost("select * from post  where approve = 0 and title like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit "+(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW+","+NumberViewSort.NUMBER_VIEW);
@@ -125,6 +128,7 @@ public class AdminController
         request.setAttribute("page", Integer.valueOf(page));
         request.setAttribute("querySearch",querySearch);
         request.setAttribute("totalPost",postService.getAllPost("select * from  post where approve = 0 and title like '%"+querySearch+"%'").size());
+        request.setAttribute("active","admin");
         return "admin";
     }
 

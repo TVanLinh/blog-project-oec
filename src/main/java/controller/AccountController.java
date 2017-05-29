@@ -70,6 +70,7 @@ public class AccountController {
                 postList = postService.getPostByIdUser(userService.getUserByName(principal.getName()).getId(),0,limit);
                 request.setAttribute("page",1);
                 request.setAttribute("postList",postList);
+                request.setAttribute("active","author");
                 return "author";
             }
             try {
@@ -84,7 +85,7 @@ public class AccountController {
                 request.setAttribute("postList",postList);
                 return "author";
             }
-
+        request.setAttribute("active","author");
         return "author";
     }
 

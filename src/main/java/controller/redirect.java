@@ -45,6 +45,7 @@ public class redirect {
     @RequestMapping(value = "/write")
     public  String viewWriter(HttpServletRequest request) {
         defaultPage.setDaultPage(request);
+        request.setAttribute("active","write");
         return "write";
     }
 
@@ -62,6 +63,7 @@ public class redirect {
             request.setAttribute("postList",postList);
             request.setAttribute("totalList",postService.getAllPostPublic().size());
             request.setAttribute("limit",configurationService.getAllConfiguration().get(0).getNumberViewPost());
+            request.setAttribute("active","home");
             return "home";
         }
 
@@ -70,6 +72,7 @@ public class redirect {
         request.setAttribute("postList",postList);
         request.setAttribute("totalList",postService.getAllPostPublic().size());
         request.setAttribute("limit",configurationService.getAllConfiguration().get(0).getNumberViewPost());
+        request.setAttribute("active","home");
         return "home";
     }
     @RequestMapping(value = "/post")
@@ -87,11 +90,13 @@ public class redirect {
                     postDAO.update(post);
                     request.setAttribute("post",post);
                 }
+                request.setAttribute("active","post");
                 return "post";
             }catch (Exception e) {
                 return "/home";
             }
         }
+        request.setAttribute("active","home");
         return "/home";
     }
 

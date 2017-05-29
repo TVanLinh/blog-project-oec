@@ -7,7 +7,7 @@
 <body>
 
 <!-- Navigation -->
-    <jsp:include page="template/navbar-admin.jsp"/>
+    <jsp:include page="template/navbar.jsp"/>
 
     <div class="container">
         <!-- Blog Entries Column -->
