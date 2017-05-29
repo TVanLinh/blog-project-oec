@@ -15,19 +15,17 @@ public class DefaultPage implements Filter {
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request=(HttpServletRequest)servletRequest;
-        String dateFormat= (String) request.getSession().getAttribute("dateFormat");
-        String titleBlog=(String) request.getSession().getAttribute("titleBlog");
-        if(titleBlog==null)
-        {
+        HttpServletRequest request = (HttpServletRequest)servletRequest;
+        String dateFormat =  (String) request.getSession().getAttribute("dateFormat");
+        String titleBlog = (String) request.getSession().getAttribute("titleBlog");
+        if(titleBlog == null) {
             request.getSession().setAttribute("blogTitle","My Blog");
         }
-        if(dateFormat==null)
-        {
+
+        if(dateFormat ==null) {
             request.getSession().setAttribute("dateFormat","HH:mm:ss dd/MM/YYYY");
         }
         filterChain.doFilter(servletRequest,servletResponse);
-//        System.out.println("DefaultPage");
     }
 
     public void destroy() {

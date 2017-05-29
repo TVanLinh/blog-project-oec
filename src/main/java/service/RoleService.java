@@ -14,7 +14,7 @@ import java.util.List;
 public class RoleService {
     public  String getStringFromListRole(List<Role> list)
     {
-        StringBuilder builder=new StringBuilder("");
+        StringBuilder builder = new StringBuilder("");
         for (Role role:list) {
             builder.append(role.getRole());
             builder.append("  ");
@@ -24,8 +24,8 @@ public class RoleService {
 
     public List<Role> getListRole(String[] listRole)
     {
-        List<Role> list=new ArrayList<Role>();
-        for (int i=0;i<listRole.length;i++)
+        List<Role> list = new ArrayList<Role>();
+        for (int i = 0 ; i < listRole.length ; i++)
         {
             list.add(new Role(listRole[i]));
         }

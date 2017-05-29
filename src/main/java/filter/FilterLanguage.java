@@ -17,8 +17,7 @@ public class FilterLanguage implements Filter{
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request=(HttpServletRequest)servletRequest;
-        if(request.getSession().getAttribute("messageSource")==null)
-        {
+        if(request.getSession().getAttribute("messageSource") == null) {
             setReSource(request);
         }
         filterChain.doFilter(servletRequest,servletResponse);
@@ -30,10 +29,9 @@ public class FilterLanguage implements Filter{
 
     public  void setReSource(HttpServletRequest request)
     {
-        ResourceBundleMessageSource messageSource=new ResourceBundleMessageSource();
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename("blog_vn_VN");
         messageSource.setDefaultEncoding("UTF-8");
-        System.out.println("request.getRequestUR   "+request.getRequestURI());
         request.getSession().setAttribute("messageSource",messageSource);
         request.getSession().setAttribute("locale",new Locale("vn","VN"));
     }

@@ -22,22 +22,22 @@ public class UserDAOIML implements UserDAO {
     UserService userService;
     @Transactional
     public void insert(User user) {
-        Session session=sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.persist(user);
         System.out.println(" insert User success");
     }
 
     @Transactional
     public void delete(int idAuthor) {
-        Session session=sessionFactory.getCurrentSession();
-        User user =userService.find(idAuthor);
+        Session session = sessionFactory.getCurrentSession();
+        User user  = userService.find(idAuthor);
         session.remove(user);
         System.out.println(" delete User success");
     }
 
     @Transactional
     public void update(User user) {
-        Session session=sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(user);
         System.out.println(" update User success");
     }

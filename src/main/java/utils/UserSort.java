@@ -42,27 +42,23 @@ public class UserSort {
         List<SortType> orderList = (List<SortType>) session.getAttribute(StringSessionUtil.USER_TYPE_SORT);
         SortType sortItem;
 
-        if(orderBy!=null)
-        {
-            if(!checkOrderBy(orderBy))
-            {
+        if(orderBy != null) {
+            if(!checkOrderBy(orderBy)) {
                 orderBy="user_name";
             }
-            session.setAttribute(StringSessionUtil.CurrentUserSort,orderBy);
-        }
-        else
-        {
-            orderBy= (String) session.getAttribute(StringSessionUtil.CurrentUserSort);
-            if(orderBy==null)
+            session.setAttribute(StringSessionUtil.CURRENT_USER_SORT,orderBy);
+        } else {
+            orderBy = (String) session.getAttribute(StringSessionUtil.CURRENT_USER_SORT);
+            if(orderBy == null)
             {
-                session.setAttribute(StringSessionUtil.CurrentUserSort,"user_name");
+                session.setAttribute(StringSessionUtil.CURRENT_USER_SORT,"user_name");
             }
         }
 
         if (orderList == null) {
             orderList = new ArrayList<SortType>();
             sortItem = new SortType();
-            if (orderBy == null || orderBy.trim() == "") {
+            if (orderBy == null || orderBy.trim().equals("")) {
                 sortItem.orderBy = "user_name";
             } else {
                 sortItem.orderBy = orderBy;
@@ -79,8 +75,7 @@ public class UserSort {
             sortItem.typeOrder = "desc";
             orderList.add(sortItem);
         } else {
-            if(request.getParameter("page")==null)
-            {
+            if(request.getParameter("page") == null) {
                 sortItem.toggleTypeOrder();
             }
         }
@@ -94,19 +89,16 @@ public class UserSort {
         HttpSession session = request.getSession();
         List<SortType> orderList = (List<SortType>) session.getAttribute(StringSessionUtil.USER_TYPE_SORT);
         String orderBy = request.getParameter("orderBy");
-        if(orderBy!=null&&orderBy.equals("role"))
+        if(orderBy != null && orderBy.equals("role"))
         {
             SortType sortItem = sort.getSortType(orderBy, orderList);
-            if (sortItem==null)
-            {
+            if (sortItem == null) {
                 sortItem = new SortType();
                 sortItem.orderBy = orderBy;
                 sortItem.typeOrder = "desc";
                 orderList.add(sortItem);
-            }else
-            {
-                if(request.getParameter("page")==null)
-                {
+            }else {
+                if(request.getParameter("page") == null) {
                     sortItem.toggleTypeOrder();
                 }
             }
@@ -115,16 +107,15 @@ public class UserSort {
         return null;
     }
 
-    public  boolean checkOrderBy(String orderBy)
+    private   boolean checkOrderBy(String orderBy)
     {
-        Set<String> set=new HashSet<String>();
+        Set<String> set = new HashSet<String>();
         set.add("role");
         set.add("id");
         set.add("pass_word");
         set.add("user_name");
 
-        if(set.contains(orderBy))
-        {
+        if(set.contains(orderBy)) {
             return true;
         }
         return  false;

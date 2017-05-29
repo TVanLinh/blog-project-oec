@@ -19,24 +19,22 @@ public class LanguageController {
     @RequestMapping("/language")
     public String changeLanguage(HttpServletRequest request, @RequestParam String language)
     {
-        HttpSession session=request.getSession();
-        if(language==null)
-        {
+
+        if(language == null) {
             setResource(request,"blog_vn_VN",new Locale("vn","VN"));
-        }else if(language.trim().equalsIgnoreCase("en"))
-        {
+        }else if(language.trim().equalsIgnoreCase("en")) {
             setResource(request,"blog_en_US",new Locale("en","US"));
         }else {
             setResource(request,"blog_vn_VN",new Locale("vn","VN"));
         }
-        System.out.println(request.getRequestURL().toString());
+
         return "redirect:/";
     }
 
     public  void setResource(HttpServletRequest request,String source ,Locale locale)
     {
         HttpSession session=request.getSession();
-        ResourceBundleMessageSource messageSource= new ResourceBundleMessageSource();
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename(source);
         session.setAttribute("locale",locale);
         session.setAttribute("messageSource",messageSource);

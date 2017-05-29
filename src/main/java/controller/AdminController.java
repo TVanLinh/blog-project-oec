@@ -105,7 +105,7 @@ public class AdminController
         defaultPage.setDaultPage(request);
         String page=request.getParameter("page");
         String querySearch=request.getParameter("query_search");
-        SortType sortType=portSort.getCurrentSortType(request, StringSessionUtil.POST_APPROVE_TYPE_SORT,StringSessionUtil.CurentApprovePost);
+        SortType sortType=portSort.getCurrentSortType(request, StringSessionUtil.POST_APPROVE_TYPE_SORT,StringSessionUtil.CURRENT_APPROVE_POST);
         List<Post> postList;
 
         if(sortType==null)
@@ -233,7 +233,7 @@ public class AdminController
         String page=request.getParameter("page");
         String querySearch=request.getParameter("query_search");
         HttpSession session=request.getSession();
-        SortType sortType=portSort.getCurrentSortType(request,StringSessionUtil.POST_ALL_TYPE_SORT,StringSessionUtil.CurentALLPost);
+        SortType sortType=portSort.getCurrentSortType(request,StringSessionUtil.POST_ALL_TYPE_SORT,StringSessionUtil.CURRENT_ALL_POST);
         List<Post> postList;
 
         if(sortType==null)
@@ -456,8 +456,8 @@ public class AdminController
         defaultPage.setDaultPage(request);
         request.setAttribute("roleList",userService.getAllUser());
         String []listRoles=request.getParameterValues("listRole");
-       if(!checkUserUpdate(request,user,listRoles))
-       {
+
+       if(!checkUserUpdate(request,user,listRoles)) {
            return "update-user";
        }else {
            HttpSession session=request.getSession();
@@ -492,15 +492,14 @@ public class AdminController
         defaultPage.setDaultPage(request);
         String page = request.getParameter("page");
         String querySearch=request.getParameter("query_search");
-        SortType sortType = userSort.getSort().getCurrentSortType(request,StringSessionUtil.USER_TYPE_SORT,StringSessionUtil.CurrentUserSort);
+        SortType sortType = userSort.getSort().getCurrentSortType(request,StringSessionUtil.USER_TYPE_SORT,StringSessionUtil.CURRENT_USER_SORT);
         List<User> userList;
 
-        if(sortType == null)
-        {
+        if(sortType == null) {
             sortType=new SortType();
         }
-        if(page == null || page.trim().equals("") || !StringUtils.isNumeric(page)||Integer.valueOf(page) == 0 || querySearch == null || querySearch.trim().equals("'") || querySearch.trim().equals(""))
-        {
+
+        if(page == null || page.trim().equals("") || !StringUtils.isNumeric(page)||Integer.valueOf(page) == 0 || querySearch == null || querySearch.trim().equals("'") || querySearch.trim().equals("")) {
 
             userList=userService.getAllUser("select * from  user where user_name like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit 0,"+NumberViewSort.NUMBER_VIEW);
             setListUser(request,userList);
@@ -509,6 +508,7 @@ public class AdminController
             request.setAttribute("totalList",userService.getAllUser("select * from  user where user_name like '%"+querySearch+"%'").size());
             return "manager-user";
         }
+
         userList=userService.getAllUser("select * from user  where user_name like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit "+(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW+","+NumberViewSort.NUMBER_VIEW);
         setListUser(request,userList);
         request.setAttribute("page", Integer.valueOf(page));
@@ -516,20 +516,17 @@ public class AdminController
         request.setAttribute("totalList",userService.getAllUser("select * from  user where user_name like '%"+querySearch+"%'").size());
         return "manager-user";
     }
-    public boolean checkUserUpdate(HttpServletRequest request,User user,String[] arr)
+    private boolean checkUserUpdate(HttpServletRequest request,User user,String[] arr)
     {
-        if(user.getUserName() == null || user.getUserName().trim().equals(""))
-        {
+        if(user.getUserName() == null || user.getUserName().trim().equals("")) {
             request.setAttribute("error"," user name not null!");
             return false;
         }
-        if(user.getPassWord() == null || user.getPassWord().trim().equals(""))
-        {
+        if(user.getPassWord() == null || user.getPassWord().trim().equals("")) {
             request.setAttribute("error"," pass word not null!");
             return false;
         }
-        if(arr == null)
-        {
+        if(arr == null) {
             request.setAttribute("error","Not choice role!");
             return false;
         }

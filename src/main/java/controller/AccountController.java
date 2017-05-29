@@ -47,8 +47,7 @@ public class AccountController {
     {
             defaultPage.setDaultPage(request);
             String page=request.getParameter("page");
-            if(request.getSession().getAttribute("username") == null)
-            {
+            if(request.getSession().getAttribute("username") == null) {
                 System.out.println(principal.getName());
                 System.out.println("Create Session");
                 HttpSession session=request.getSession();
@@ -57,31 +56,29 @@ public class AccountController {
 
                 Configuration configuration=configurationService.getAllConfiguration().get(0);
                 session = request.getSession();
-                if(configuration != null)
-                {
+                if(configuration != null) {
                     session.setAttribute("dateFormat",configuration.getDateFormat());
                     session.setAttribute("blogTitle",configuration.getWebTitle());
                 }
 
             }
+
             List<Post> postList;
             int limit = configurationService.find(1).getNumberViewPost();
-            if(page == null)
-            {
+
+            if(page == null) {
                 postList=postService.getPostByIdUser(userService.getUserByName(principal.getName()).getId(),0,limit);
                 request.setAttribute("page",1);
                 request.setAttribute("postList",postList);
                 return "author";
             }
-            try
-            {
+            try {
                 postList=postService.getPostByIdUser(userService.getUserByName(principal.getName()).getId(),(Integer.valueOf(page)-1)*limit,limit);
                 request.setAttribute("page",Integer.valueOf(page));
                 System.out.println(page);
                 request.setAttribute("postList",postList);
 
-            }catch (Exception e)
-            {
+            }catch (Exception e) {
                 postList = postService.getPostByIdUser(userService.getUserByName(principal.getName()).getId(),0,limit);
                 request.setAttribute("page",1);
                 request.setAttribute("postList",postList);
@@ -136,10 +133,7 @@ public class AccountController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            System.out.println(userDetail);
-
             model.addObject("username", userDetail.getUsername());
-
         }
 
         model.setViewName("403");

@@ -5,7 +5,6 @@ import dao.PostDAO;
 import entities.Image;
 import entities.Post;
 import entities.User;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import service.ConfigurationService;
 import service.PostService;
 import service.UserService;
 import utils.DefaultPage;
@@ -31,8 +29,6 @@ import java.util.Date;
 @Controller
 public class ProcessPost {
 
-    final static Logger logger = Logger.getLogger(ProcessPost.class);
-
     @Autowired
     UserService userService;
 
@@ -45,8 +41,6 @@ public class ProcessPost {
     @Autowired
     ImageDAO imageDAO;
 
-    @Autowired
-    ConfigurationService     configurationService;
 
     @Autowired
     DefaultPage  defaultPage;
@@ -68,16 +62,13 @@ public class ProcessPost {
         post.setUserUpdated(principal.getName());
         post.setUpdateTime(date);
 
-        String linkImage= httpServletRequest.getParameter("link-image");
+        String linkImage = httpServletRequest.getParameter("link-image");
         String altImage=httpServletRequest.getParameter("alt-image");
-        if(linkImage!=null && linkImage.trim()!="")
-        {
-            Image image=new Image();
+        if(linkImage != null && !linkImage.trim().equals("")) {
+            Image image = new Image();
             image.setLink(linkImage);
-            if(altImage!=null&&altImage.trim()!="")
-            {
+            if(altImage != null && !altImage.trim().equals("")) {
                 image.setAlt(altImage);
-                System.out.println(image+"------------------------------------------------------");
             }
             post.setImage(image);
         }
@@ -100,7 +91,6 @@ public class ProcessPost {
 
         HttpSession session = request.getSession();
         Integer postId = (Integer) session.getAttribute("post-id");
-        System.out.println("--------------------------------------------"+postId);
         try {
             System.out.println("nuber: " + postId);
             Post post = postService.find(postId);
@@ -117,11 +107,11 @@ public class ProcessPost {
     public  String updatePost(HttpServletRequest request)
     {
         defaultPage.setDaultPage(request);
-        HttpSession session=request.getSession();
-        String action =request.getParameter("action");
-        String postId=request.getParameter("id");
-        if(action!=null && action.trim().equals("update")&&postId!=null&&postId.trim()!="")
-        {
+        HttpSession session = request.getSession();
+        String action = request.getParameter("action");
+        String postId = request.getParameter("id");
+
+        if(action != null && action.trim().equals("update") && postId != null && !postId.trim().equals("")) {
             session.setAttribute("postUpdate", postService.find(Integer.valueOf(postId)));
         }
         return "update";
@@ -131,33 +121,33 @@ public class ProcessPost {
     public  String viewUpdatePost(@ModelAttribute(value = "post")Post post, HttpServletRequest request)
     {
         defaultPage.setDaultPage(request);
-        HttpSession session=request.getSession();
+        HttpSession session = request.getSession();
 
-        Post postUpdate= (Post) session.getAttribute("postUpdate");
-        Date date=Calendar.getInstance().getTime();
+        Post postUpdate = (Post) session.getAttribute("postUpdate");
+        Date date = Calendar.getInstance().getTime();
 
-        Post  post1=postService.find(postUpdate.getId());
+        Post  post1 = postService.find(postUpdate.getId());
         post1.setUpdateTime(date);
         post1.setUserUpdated((String)session.getAttribute("username"));
         post1.setTitle(post.getTitle());
         post1.setContent(post.getContent());
         post1.setStatus(post.getStatus());
 
-        String linkImage= request.getParameter("link-image");
-        String altImage=request.getParameter("alt-image");
+        String linkImage = request.getParameter("link-image");
+        String altImage = request.getParameter("alt-image");
 
-        Image image=new  Image();
+        Image image = new  Image();
 
-        if(linkImage!=null&&!linkImage.trim().equals(""))
+        if(linkImage != null && !linkImage.trim().equals(""))
         {
             image.setLink(linkImage);
         }
-        if(altImage!=null&&!altImage.trim().equals(""))
+        if(altImage != null && !altImage.trim().equals(""))
         {
             image.setAlt(altImage);
         }
 
-        if(post1.getImage()!=null)
+        if(post1.getImage() != null)
         {
             imageDAO.deleteByIdPost(post1.getId());
             post1.setImage(image);

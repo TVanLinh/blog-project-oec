@@ -32,9 +32,9 @@ public class ConfigurationService {
     }
 
     public Configuration find(int id) {
-        Session session=sessionFactory.getCurrentSession();
-        Configuration conf=session.find(Configuration.class,id);
-        if(conf==null)
+        Session session = sessionFactory.getCurrentSession();
+        Configuration conf = session.find(Configuration.class,id);
+        if(conf == null)
         {
             return getAllConfiguration().get(0);
         }
@@ -43,9 +43,9 @@ public class ConfigurationService {
 
     public List<Configuration> getAllConfiguration()
     {
-        Session session=sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
 
-        List<Configuration> list= session.createNativeQuery("select * from configuration",Configuration.class).getResultList();
+        List<Configuration> list = session.createNativeQuery("select * from configuration",Configuration.class).getResultList();
         return list;
     }
 

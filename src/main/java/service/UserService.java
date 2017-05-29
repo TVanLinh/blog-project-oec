@@ -34,8 +34,8 @@ public class UserService {
 
     @Transactional
     public User find(int id) {
-        Session session=sessionFactory.getCurrentSession();
-        Query query = session.createNativeQuery("select * from user where user.id = :id",User.class);
+        Session session = sessionFactory.getCurrentSession();
+        Query query  =  session.createNativeQuery("select * from user where user.id  =  :id",User.class);
         query.setParameter("id", id);
         return (User) query.getSingleResult();
     }
@@ -43,21 +43,21 @@ public class UserService {
     @Transactional
     public List<User> getAllUser()
     {
-        Session session=sessionFactory.getCurrentSession();
-        List<User> list=session.createNativeQuery("select * from user",User.class).getResultList();
+        Session session = sessionFactory.getCurrentSession();
+        List<User> list = session.createNativeQuery("select * from user",User.class).getResultList();
         return list;
     }
 
     public  List<User> getAllUser(String query)
     {
-        Session session=sessionFactory.getCurrentSession();
-        List<User> list=session.createNativeQuery(query,User.class).getResultList();
+        Session session = sessionFactory.getCurrentSession();
+        List<User> list = session.createNativeQuery(query,User.class).getResultList();
         return list;
     }
 
     public User getUserByName(String name)
     {
-        Session session=sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         List<User> list = session.createNativeQuery("select * from user where user_name='"+name+"' limit 0,1",User.class).getResultList();
         if(list.size() == 0)
         {

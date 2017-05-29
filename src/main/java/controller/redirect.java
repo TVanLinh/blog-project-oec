@@ -60,11 +60,10 @@ public class redirect {
         String page=request.getParameter("page");
         List<Post> postList;
 
-        int limit=configurationService.find(1).getNumberViewPost();
+        int limit = configurationService.find(1).getNumberViewPost();
         request.setAttribute("userSerVice",userService);
-        if(page==null|| !StringUtils.isNumeric(page) || page.trim()=="")
-        {
-            postList=postService.getPost(0,limit);
+        if(page == null|| !StringUtils.isNumeric(page) || page.trim().equals("")) {
+            postList = postService.getPost(0,limit);
             request.setAttribute("page",1);
             request.setAttribute("postList",postList);
             request.setAttribute("totalList",postService.getAllPostPublic().size());
@@ -72,7 +71,7 @@ public class redirect {
             return "home";
         }
 
-        postList=postService.getPost((Integer.valueOf(page)-1)*limit,limit);
+        postList = postService.getPost((Integer.valueOf(page)-1)*limit,limit);
         request.setAttribute("page",Integer.valueOf(page));
         request.setAttribute("postList",postList);
         request.setAttribute("totalList",postService.getAllPostPublic().size());
@@ -83,23 +82,20 @@ public class redirect {
     public  String viewPost(HttpServletRequest request)
     {
         defaultPage.setDaultPage(request);
-        //-----------------------------
-        String id=request.getParameter("id");
-        List<Post> postSlideBar=postService.getAllPost("select * from post  where status=1 and approve=1 order by time_post desc limit 0,5");
+
+        String id = request.getParameter("id");
+        List<Post> postSlideBar = postService.getAllPost("select * from post  where status=1 and approve=1 order by time_post desc limit 0,5");
         request.setAttribute("postSlideBar",postSlideBar);
-        if(id!=null)
-        {
+        if(id != null) {
             try {
                 Post post=postService.find(Integer.valueOf(id));
-                if(post!=null)
-                {
+                if(post != null) {
                     post.setNumberView(post.getNumberView()+1);
                     postDAO.update(post);
                     request.setAttribute("post",post);
                 }
                 return "post";
-            }catch (Exception e)
-            {
+            }catch (Exception e) {
                 return "/home";
             }
         }

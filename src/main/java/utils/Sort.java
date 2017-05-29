@@ -24,10 +24,10 @@ public class   Sort {
     public SortType getCurrentSortType(HttpServletRequest request,String nameListCurrent,String orderByCurrent)
     {
 
-        HttpSession session=request.getSession();
-        List<SortType> orderList= (List<SortType>) session.getAttribute(nameListCurrent);
-        String current= (String) session.getAttribute(orderByCurrent);
-        if(current!=null)
+        HttpSession session = request.getSession();
+        List<SortType> orderList = (List<SortType>) session.getAttribute(nameListCurrent);
+        String current = (String) session.getAttribute(orderByCurrent);
+        if(current != null)
         {
             return getSortType(current,orderList);
         }

@@ -18,29 +18,29 @@ public class ImageDAOIML implements ImageDAO {
     SessionFactory sessionFactory;
     @Transactional
     public void insert(Image image) {
-        Session session=sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(image);
         System.out.println(" insert image success");
     }
 
     @Transactional
     public void delete(int idAuthor) {
-        Session session=sessionFactory.getCurrentSession();
-        Image image =session.find(Image.class,idAuthor);
+        Session session = sessionFactory.getCurrentSession();
+        Image image  = session.find(Image.class,idAuthor);
         session.remove(image);
         System.out.println(" delete image success");
     }
 
     @Transactional
     public void deleteByIdPost(int id) {
-        Session session=sessionFactory.getCurrentSession();
-        session.createNativeQuery("DELETE  from  postimage where id_post="+id).executeUpdate();
+        Session session = sessionFactory.getCurrentSession();
+        session.createNativeQuery("DELETE  from  postimage where id_post = "+id).executeUpdate();
         System.out.println("delete image  deleteByIdPosts");
     }
 
     @Transactional
     public void update(Image image) {
-        Session session=sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.merge(image);
         System.out.println(" update image success");
     }
