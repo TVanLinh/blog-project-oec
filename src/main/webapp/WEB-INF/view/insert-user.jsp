@@ -14,7 +14,7 @@
     <!-- Blog Entries Column -->
     <div class="row">
         <div class="col-md-8">
-            <form:form ACTION="/action-insert-user" METHOD="post"  onsubmit="return checkFormInsertUser()">
+            <form method="post" action="<s:url value="/action-insert-user"/> "  onsubmit="return checkFormInsertUser()">
                 <div class="form-group">
                     <label for="userName">${messageSource.getMessage("name",null,locale)}:</label>
                     <input type="text" class="form-control " name="userName" id="userName">
@@ -24,7 +24,7 @@
                     <input type="password" class="form-control " name="passWord" id="passWord">
                 </div>
                 <div class="form-group">
-                    <label for="passWord">${messageSource.getMessage("passWord",null,locale)}:</label>
+                    <label for="passWord">${messageSource.getMessage("rePassWord",null,locale)}:</label>
                     <input type="password" class="form-control " name="rePassWord" id="rePassWord">
                 </div>
                 <div class="form-group">
@@ -38,7 +38,7 @@
                 </div>
                 <input type="submit" value="${messageSource.getMessage("save",null,locale)}" onsubmit="return checkFormInsertUser()" onclick="return checkFormInsertUser()">
                 <p class="pd-10 error">${requestScope.error}</p>
-            </form:form>
+            </form>
         </div>
         <!-- Blog Sidebar Widgets Column -->
         <div>

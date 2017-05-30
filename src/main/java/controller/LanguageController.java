@@ -31,7 +31,7 @@ public class LanguageController {
     }
 
     public  void setResource(HttpServletRequest request,String source ,Locale locale) {
-        HttpSession session=request.getSession();
+        HttpSession session = request.getSession();
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename(source);
         session.setAttribute("locale",locale);

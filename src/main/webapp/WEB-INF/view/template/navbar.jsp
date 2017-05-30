@@ -8,7 +8,7 @@
                 <a class="navbar-brand active" href="<s:url value="/"/>">${sessionScope.blogTitle}</a>
             </c:if>
             <c:if test="${requestScope.active!='home'}">
-                <a class="navbar-brand" href="/">${sessionScope.blogTitle}</a>
+                <a class="navbar-brand" href="<s:url value="/"/>" >${sessionScope.blogTitle}</a>
             </c:if>
 
         </div>

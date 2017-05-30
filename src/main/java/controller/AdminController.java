@@ -46,7 +46,7 @@ public class AdminController
     DefaultPage defaultPage;
 
     @Autowired
-    UserDAO userDAO;
+    UserDAO  userDAO;
 
     @Autowired
     RoleService roleService;
@@ -65,7 +65,7 @@ public class AdminController
 
     @RequestMapping(value = "/admin**", method = RequestMethod.GET)
     public ModelAndView adminPage(HttpServletRequest request) {
-        defaultPage.setDaultPage(request);
+        this.defaultPage.setDaultPage(request);
         ModelAndView model = new ModelAndView();
         List<Post> postList;
         String page=request.getParameter("page");
@@ -73,33 +73,33 @@ public class AdminController
         if(page == null || page.trim().equals("") || !StringUtils.isNumeric(page) || Integer.valueOf(page) == 0) {
             deletePost(request);
             aprrovePost(request);
-            postList=postDAO.getAllPost(portSort.getQuerySortAllPostAprrove(request,0,true));
+            postList=this.postDAO.getAllPost(this.portSort.getQuerySortAllPostAprrove(request,0,true));
             setListPost(request,postList);
             request.setAttribute("page",1);
             model.setViewName("admin");
             request.setAttribute("active","admin");
-            request.setAttribute("totalPost",postDAO.getAllPost("select * from post where approve = 0 ").size());
+            request.setAttribute("totalPost",this.postDAO.getAllPost("select * from post where approve = 0 ").size());
             return model;
         }
 
         deletePost(request);
         aprrovePost(request);
-        postList=postDAO.getAllPost(portSort.getQuerySortAllPostAprrove(request,(Integer.valueOf(page)-1)* NumberViewSort.NUMBER_VIEW,true));
+        postList=this.postDAO.getAllPost(this.portSort.getQuerySortAllPostAprrove(request,(Integer.valueOf(page)-1)* NumberViewSort.NUMBER_VIEW,true));
         setListPost(request,postList);
         request.setAttribute("page", Integer.valueOf(page));
         model.setViewName("admin");
         request.setAttribute("active","admin");
-        request.setAttribute("totalPost",postDAO.getAllPost("select * from post where approve = 0 ").size());
+        request.setAttribute("totalPost",this.postDAO.getAllPost("select * from post where approve = 0 ").size());
         return model;
     }
 
 
     @RequestMapping(value = "/admin-search-post-approve",method = RequestMethod.GET)
     public  String searchTableApprovePost(HttpServletRequest request) {
-        defaultPage.setDaultPage(request);
+        this.defaultPage.setDaultPage(request);
         String page=request.getParameter("page");
         String querySearch=request.getParameter("query_search");
-        SortType sortType=portSort.getCurrentSortType(request, StringSessionUtil.POST_APPROVE_TYPE_SORT,StringSessionUtil.CURRENT_APPROVE_POST);
+        SortType sortType=this.portSort.getCurrentSortType(request, StringSessionUtil.POST_APPROVE_TYPE_SORT,StringSessionUtil.CURRENT_APPROVE_POST);
         List<Post> postList;
 
         if(sortType == null)
@@ -109,35 +109,36 @@ public class AdminController
         if(page == null || page.trim().equals("") || !StringUtils.isNumeric(page) || Integer.valueOf(page) == 0 || querySearch == null || querySearch.trim().equals("'") || querySearch.trim().equals(""))
         {
 
-            postList = postDAO.getAllPost("select * from  post where approve=0 and title like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit 0,"+NumberViewSort.NUMBER_VIEW);
+            postList = this.postDAO.getAllPost("select * from  post where approve=0 and title like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit 0,"+NumberViewSort.NUMBER_VIEW);
             setListPost(request,postList);
-            request.setAttribute("page",1);
-            request.setAttribute("querySearch",querySearch);
-            request.setAttribute("totalPost",postDAO.getAllPost("select * from  post where approve = 0 and title like '%"+querySearch+"%'").size());
-            request.setAttribute("active","admin");
+            setResponseAdmin( request, querySearch, "admin",1);
             return "admin";
         }
-        postList = postDAO.getAllPost("select * from post  where approve = 0 and title like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit "+(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW+","+NumberViewSort.NUMBER_VIEW);
+        postList = this.postDAO.getAllPost("select * from post  where approve = 0 and title like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit "+(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW+","+NumberViewSort.NUMBER_VIEW);
         setListPost(request,postList);
+        setResponseAdmin( request, querySearch, "admin", Integer.valueOf(page));
         request.setAttribute("page", Integer.valueOf(page));
-        request.setAttribute("querySearch",querySearch);
-        request.setAttribute("totalPost",postDAO.getAllPost("select * from  post where approve = 0 and title like '%"+querySearch+"%'").size());
-        request.setAttribute("active","admin");
         return "admin";
     }
 
-
+    public  void setResponseAdmin(HttpServletRequest request,String querySearch,String pageActive,int page)
+    {
+        request.setAttribute("page",1);
+        request.setAttribute("querySearch",querySearch);
+        request.setAttribute("totalPost",this.postDAO.getAllPost("select * from  post where approve = 0 and title like '%"+querySearch+"%'").size());
+        request.setAttribute("active",pageActive);
+    }
 
     @RequestMapping(value = "/configuration")
     public  String configurarion(HttpServletRequest request) {
-        defaultPage.setDaultPage(request);
-        request.setAttribute("conf",configDAO.getAllConfiguration().get(0));
+        this.defaultPage.setDaultPage(request);
+        request.setAttribute("conf",this.configDAO.getAllConfiguration().get(0));
         return "configuration";
     }
 
     @RequestMapping("/processConfigurarion")
     public  String processConfigurarion(HttpServletRequest request) {
-        defaultPage.setDaultPage(request);
+        this.defaultPage.setDaultPage(request);
 
         String title=request.getParameter("titleBlog");
         String formatTime =request.getParameter("formatTime");
@@ -145,30 +146,27 @@ public class AdminController
         System.out.println(title+"  \t"+formatTime+"\t"+numberPost);
 
         if(title == null || formatTime == null || numberPost == null) {
-            request.setAttribute("error","Not valid!");
-            request.setAttribute("conf",configDAO.getAllConfiguration().get(0));
+            this.setResultConfig(request,"Not valid!");
             return "configuration";
         }
 
         if(title.trim().equals("") || formatTime.trim().equals("") || numberPost.trim().equals("")) {
-            request.setAttribute("error","Title ,format time not valid");
-            request.setAttribute("conf",configDAO.getAllConfiguration().get(0));
+            this.setResultConfig(request,"Title ,format time not valid!");
             return "configuration";
         }
 
         if(Integer.valueOf(numberPost)<0) {
-            request.setAttribute("error","Number Post must great than 0.!");
-            request.setAttribute("conf",configDAO.getAllConfiguration().get(0));
+            this.setResultConfig(request,"Number Post must great than 0.!");
             return "configuration";
         }
 
-        Configuration configuration=configDAO.getAllConfiguration().get(0);
+        Configuration configuration = this.configDAO.getAllConfiguration().get(0);
 
         try {
-           int result=0;
-           if(configuration==null)
+           int result = 0;
+           if(configuration == null)
            {
-               configuration=new Configuration();
+               configuration = new Configuration();
            }else {
                result=1;
            }
@@ -177,16 +175,14 @@ public class AdminController
            configuration.setWebTitle(title);
            configuration.setDateFormat(formatTime);
 
-           if(result==0) {
-               configDAO.update(configuration);
+           if(result == 0) {
+               this.configDAO.update(configuration);
            }
-           if(result==1) {
-               configDAO.update(configuration);
-               defaultPage.setDaultPage(request);
+           if(result == 1) {
+               this.configDAO.update(configuration);
+               this.defaultPage.setDaultPage(request);
            }
-
-           request.setAttribute("error","Successfully!");
-           request.setAttribute("conf",configDAO.getAllConfiguration().get(0));
+            this.setResultConfig(request,"Successfully !");
        }catch (Exception e)
        {
            return "configuration";
@@ -194,24 +190,30 @@ public class AdminController
         return "configuration";
     }
 
+    private void  setResultConfig(HttpServletRequest request,String err)
+    {
+        request.setAttribute("error",err);
+        request.setAttribute("conf",this.configDAO.getAllConfiguration().get(0));
+    }
+
     @RequestMapping("/manager-post")
     public  String managerPost(HttpServletRequest request) {
-        defaultPage.setDaultPage(request);
+        this.defaultPage.setDaultPage(request);
         List<Post> postList;
         HttpSession session=request.getSession();
 
-        String page=request.getParameter("page");
+        String page = request.getParameter("page");
 
-         if(page==null||page.trim()==""||!StringUtils.isNumeric(page)||Integer.valueOf(page)==0) {
+         if(page == null||page.trim().equals("") || !StringUtils.isNumeric(page)||Integer.valueOf(page )== 0) {
                 deletePost(request);
-                postList=postDAO.getAllPost(portSort.getQuerySortAllPost(request,0));
+                postList=this.postDAO.getAllPost(this.portSort.getQuerySortAllPost(request,0));
                 setListPost(request,postList);
                 request.setAttribute("page",1);
                 return "manager-post";
          }
 
         deletePost(request);
-        postList=postDAO.getAllPost(portSort.getQuerySortAllPost(request,(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW));
+        postList = this.postDAO.getAllPost(this.portSort.getQuerySortAllPost(request,(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW));
         setListPost(request,postList);
         request.setAttribute("page", Integer.valueOf(page));
         return "manager-post";
@@ -219,50 +221,53 @@ public class AdminController
 
     @RequestMapping(value = "/manager-post-search",method = RequestMethod.GET)
     public  String searchTableAllPost(HttpServletRequest request) {
-        defaultPage.setDaultPage(request);
+        this.defaultPage.setDaultPage(request);
         String page=request.getParameter("page");
         String querySearch=request.getParameter("query_search");
-        HttpSession session=request.getSession();
-        SortType sortType=portSort.getCurrentSortType(request,StringSessionUtil.POST_ALL_TYPE_SORT,StringSessionUtil.CURRENT_ALL_POST);
+        SortType sortType=this.portSort.getCurrentSortType(request,StringSessionUtil.POST_ALL_TYPE_SORT,StringSessionUtil.CURRENT_ALL_POST);
         List<Post> postList;
 
-        if(sortType==null) {
+        if(sortType == null) {
             sortType=new SortType();
         }
-        if(page==null||page.trim()==""||!StringUtils.isNumeric(page)||Integer.valueOf(page)==0||querySearch==null||querySearch.trim().equals("'")||querySearch.trim().equals("")) {
 
-            postList=postDAO.getAllPost("select * from  post where title like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit 0,"+NumberViewSort.NUMBER_VIEW);
+        if(page == null||page.trim().equals("") || !StringUtils.isNumeric(page) || Integer.valueOf(page)==0 || querySearch == null || querySearch.trim().equals("'") || querySearch.trim().equals("")) {
+
+            postList = this.postDAO.getAllPost("select * from  post where title like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit 0,"+NumberViewSort.NUMBER_VIEW);
             setListPost(request,postList);
-            request.setAttribute("page",1);
-            request.setAttribute("querySearch",querySearch);
-            request.setAttribute("totalPost",postDAO.getAllPost("select * from  post where title like '%"+querySearch+"%'").size());
+            setResultManagerPost(request,querySearch,1);
             return "manager-post";
         }
 
-        postList=postDAO.getAllPost("select * from post  where title like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit "+(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW+","+NumberViewSort.NUMBER_VIEW);
+        postList = this.postDAO.getAllPost("select * from post  where title like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit "+(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW+","+NumberViewSort.NUMBER_VIEW);
         setListPost(request,postList);
-        request.setAttribute("page", Integer.valueOf(page));
-        request.setAttribute("querySearch",querySearch);
-        request.setAttribute("totalPost",postDAO.getAllPost("select * from  post where title like '%"+querySearch+"%'").size());
+        setResultManagerPost(request,querySearch,Integer.valueOf(page));
         return "manager-post";
     }
 
+    private void setResultManagerPost(HttpServletRequest request,String querySearch,int page)
+    {
+        request.setAttribute("page",page);
+        request.setAttribute("querySearch",querySearch);
+        request.setAttribute("totalPost",this.postDAO.getAllPost("select * from  post where title like '%"+querySearch+"%'").size());
+    }
+
     private void setListPost(HttpServletRequest request,List<Post> postList) {
-        if(postList==null) {
-            postList=new ArrayList<Post>();
+        if(postList == null) {
+            postList = new ArrayList<Post>();
         }
         request.setAttribute("postList",postList);
-        request.setAttribute("totalPost",postDAO.getAllPost().size());
+        request.setAttribute("totalPost",this.postDAO.getAllPost().size());
     }
 
     private void deletePost(HttpServletRequest request) {
-        String action=request.getParameter("action");
+        String action = request.getParameter("action");
         String id  = request.getParameter("id");
 
-        if(action!=null &&action.equals("delete")) {
+        if(action != null &&action.equals("delete")) {
             if(id != null && StringUtils.isNumeric(id)) {
-                if(postDAO.find(Integer.valueOf(id))!=null) {
-                    postDAO.delete(Integer.valueOf(id));
+                if(this.postDAO.find(Integer.valueOf(id)) != null) {
+                    this.postDAO.delete(Integer.valueOf(id));
                 }
             }
         }
@@ -272,17 +277,17 @@ public class AdminController
     {
         String action = request.getParameter("action");
         String id = request.getParameter("id");
-        if(action!=null && action.equals("approve")) {
+        if(action != null && action.equals("approve")) {
             Date date;
             Calendar calendar=Calendar.getInstance();
             Post post;
             date = calendar.getTime();
-            post = postDAO.find(Integer.valueOf(id));
+            post = this.postDAO.find(Integer.valueOf(id));
             if(post != null) {
 
                 post.setApprovedTime(date);
                 post.setApprove(1);
-                postDAO.update(post);
+                this.postDAO.update(post);
             }
         }
     }
@@ -290,43 +295,47 @@ public class AdminController
     @RequestMapping("/manager-user")
     public  String managerUser(HttpServletRequest request)
     {
-        defaultPage.setDaultPage(request);
+        this.defaultPage.setDaultPage(request);
         List<User> userList;
         String page=request.getParameter("page");
 
         if(page == null || page.trim().equals("") || !StringUtils.isNumeric(page) || Integer.valueOf(page) == 0) {
-            if(userSort.getQueryUserByRole(request,0)!=null) {
-                userList=userDAO.getAllUser(userSort.getQueryUserByRole(request,0));
+            if(this.userSort.getQueryUserByRole(request,0)!=null) {
+                userList=this.userDAO.getAllUser(this.userSort.getQueryUserByRole(request,0));
                 setListUser(request,userList);
-                request.setAttribute("totalList",userDAO.getAllUser().size());
-                request.setAttribute("page",1);
+                setResultManagerUser(request,1);
                 return "manager-user";
             }
 
             deleteUser(request);
-            userList = userDAO.getAllUser(userSort.getQuerySort(request,0));
+
+            userList = this.userDAO.getAllUser(this.userSort.getQuerySort(request,0));
             setListUser(request,userList);
-            request.setAttribute("totalList",userDAO.getAllUser().size());
-            request.setAttribute("page",1);
+            setResultManagerUser(request,1);
             return "manager-user";
         }
 
         deleteUser(request);
 
-        if(userSort.getQueryUserByRole(request,0) != null) {
-            userList = userDAO.getAllUser(userSort.getQueryUserByRole(request,(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW));
+        if(this.userSort.getQueryUserByRole(request,0) != null) {
+            userList = this.userDAO.getAllUser(this.userSort.getQueryUserByRole(request,(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW));
             setListUser(request,userList);
-            request.setAttribute("totalList",userDAO.getAllUser().size());
-            request.setAttribute("page",Integer.valueOf(page));
+            setResultManagerUser(request,Integer.valueOf(page));
             return "manager-user";
         }
 
-        userList = userDAO.getAllUser(userSort.getQuerySort(request,(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW));
+        userList = this.userDAO.getAllUser(this.userSort.getQuerySort(request,(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW));
         setListUser(request,userList);
-        request.setAttribute("totalList",userDAO.getAllUser().size());
-        request.setAttribute("page", Integer.valueOf(page));
+        setResultManagerUser(request,Integer.valueOf(page));
         return "manager-user";
     }
+
+    private void setResultManagerUser(HttpServletRequest request,int page)
+    {
+        request.setAttribute("page",page);
+        request.setAttribute("totalList",this.userDAO.getAllUser().size());
+    }
+
 
     private void deleteUser(HttpServletRequest request)
     {
@@ -334,12 +343,10 @@ public class AdminController
         String id=request.getParameter("id");
 
         if(action != null && action.equals("delete")) {
-
-            if(id != null && StringUtils.isNumeric(id))
-            {
-                User user=userDAO.find(Integer.valueOf(id));
+            if(id != null && StringUtils.isNumeric(id)) {
+                User user = this.userDAO.find(Integer.valueOf(id));
                 if(user != null) {
-                    userDAO.delete(user.getId());
+                    this.userDAO.delete(user.getId());
                 }
 
             }
@@ -355,19 +362,19 @@ public class AdminController
 
     @RequestMapping(value = "/insert-user")
     public  String pageInsertUser(HttpServletRequest request) {
-        defaultPage.setDaultPage(request);
+        this.defaultPage.setDaultPage(request);
         return "insert-user";
     }
 
     @RequestMapping(value = "/action-insert-user",method = RequestMethod.GET)
     public String actionInsertUser(HttpServletRequest request)
     {
-        defaultPage.setDaultPage(request);
+        this.defaultPage.setDaultPage(request);
           return "redirect:manager-user";
     }
     @RequestMapping(value = "/action-insert-user",method = RequestMethod.POST)
     public  String actionInsertUser(HttpServletRequest request,@ModelAttribute User user) {
-        defaultPage.setDaultPage(request);
+        this.defaultPage.setDaultPage(request);
 
         String[] arr = request.getParameterValues("listRole");
         if(!checkUserInsert(request,user,arr))
@@ -381,7 +388,7 @@ public class AdminController
             roles.add(new Role(arr[i],user));
         }
         user.setRoleList(roles);
-        userDAO.update(user);
+        this.userDAO.update(user);
         return "redirect:manager-user";
     }
 
@@ -391,7 +398,7 @@ public class AdminController
             request.setAttribute("error"," user name not null!");
             return false;
         }
-        if(userDAO.getUserByName(user.getUserName().trim()) != null)
+        if(this.userDAO.getUserByName(user.getUserName().trim()) != null)
         {
             request.setAttribute("error"," user name exits available !");
             return false;
@@ -412,8 +419,8 @@ public class AdminController
 
     @RequestMapping(value = "/update-user")
     public  String pageUpdateUser(HttpServletRequest request, @RequestParam(value = "id") int id) {
-        defaultPage.setDaultPage(request);
-        request.setAttribute("user",userDAO.find(id));
+        this.defaultPage.setDaultPage(request);
+        request.setAttribute("user",this.userDAO.find(id));
         request.getSession().setAttribute("idUser",id);
         return "update-user";
     }
@@ -421,39 +428,43 @@ public class AdminController
 
     @RequestMapping(value = "/action-update-user",method = RequestMethod.GET)
     public String actionUpdateUser(HttpServletRequest request) {
-         defaultPage.setDaultPage(request);
+         this.defaultPage.setDaultPage(request);
         return "redirect:manager-user";
     }
 
     @RequestMapping(value = "/action-update-user",method = RequestMethod.POST)
     public String actionUpdateUser(HttpServletRequest request,@ModelAttribute User user) {
-        defaultPage.setDaultPage(request);
-        request.setAttribute("roleList",userDAO.getAllUser());
+        this.defaultPage.setDaultPage(request);
+        request.setAttribute("roleList",this.userDAO.getAllUser());
         String []listRoles = request.getParameterValues("listRole");
 
        if(!checkUserUpdate(request,user,listRoles)) {
            return "update-user";
        }else {
            HttpSession session = request.getSession();
-           User userUpdate = userDAO.find((Integer) session.getAttribute("idUser"));
+           User userUpdate = this.userDAO.find((Integer) session.getAttribute("idUser"));
            if(userUpdate.getUserName().equalsIgnoreCase(user.getUserName())) {
-               User user1 = userDAO.getUserByName(user.getUserName());
-               roleDAO.delete(user1.getUserName());
-               user1.setRoleList(roleService.getListRole(listRoles));
+               User user1 = this.userDAO.getUserByName(user.getUserName());
+               if(user != null)
+               {
+                   this.roleDAO.delete(user1.getUserName());
+               }
+               user1.setRoleList(this.roleService.getListRole(listRoles));
                user1.setPassWord(user.getPassWord());
-               userDAO.update(user1);
+               this.userDAO.update(user1);
                return "redirect:manager-user";
-           }else if(userDAO.getUserByName(user.getUserName()) !=  null) {
+           }else if(this.userDAO.getUserByName(user.getUserName()) !=  null) {
                request.setAttribute("error"," user name exits available !");
                return "update-user";
            }else {
-               User user1 = userDAO.find((Integer) session.getAttribute("idUser"));
-               roleDAO.delete(user1.getUserName());
-               userDAO.delete(user1.getId());
+               User user1 = this.userDAO.find((Integer) session.getAttribute("idUser"));
+                if(user1!=null)
+                {
+                    this.userDAO.delete(user1.getId());
+                }
+               user.setRoleList(this.roleService.getListRole(listRoles));
 
-               user.setRoleList(roleService.getListRole(listRoles));
-
-               userDAO.update(user);
+               this.userDAO.update(user);
            }
        }
         return "redirect:manager-user";
@@ -461,10 +472,10 @@ public class AdminController
 
     @RequestMapping(value = "/manager-user-search",method = RequestMethod.GET)
     public  String searchUser(HttpServletRequest request) {
-        defaultPage.setDaultPage(request);
+        this.defaultPage.setDaultPage(request);
         String page = request.getParameter("page");
         String querySearch = request.getParameter("query_search");
-        SortType sortType = userSort.getSort().getCurrentSortType(request,StringSessionUtil.USER_TYPE_SORT,StringSessionUtil.CURRENT_USER_SORT);
+        SortType sortType = this.userSort.getSort().getCurrentSortType(request,StringSessionUtil.USER_TYPE_SORT,StringSessionUtil.CURRENT_USER_SORT);
         List<User> userList;
 
         if(sortType == null) {
@@ -473,21 +484,26 @@ public class AdminController
 
         if(page == null || page.trim().equals("") || !StringUtils.isNumeric(page)||Integer.valueOf(page) == 0 || querySearch == null || querySearch.trim().equals("'") || querySearch.trim().equals("")) {
 
-            userList = userDAO.getAllUser("select * from  user where user_name like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit 0,"+NumberViewSort.NUMBER_VIEW);
+            userList = this.userDAO.getAllUser("select * from  user where user_name like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit 0,"+NumberViewSort.NUMBER_VIEW);
             setListUser(request,userList);
-            request.setAttribute("page",1);
-            request.setAttribute("querySearch",querySearch);
-            request.setAttribute("totalList",userDAO.getAllUser("select * from  user where user_name like '%"+querySearch+"%'").size());
+            setResponeManagerUser(request,querySearch,1);
             return "manager-user";
         }
 
-        userList = userDAO.getAllUser("select * from user  where user_name like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit "+(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW+","+NumberViewSort.NUMBER_VIEW);
+        userList = this.userDAO.getAllUser("select * from user  where user_name like '%"+querySearch+"%'  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit "+(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW+","+NumberViewSort.NUMBER_VIEW);
         setListUser(request,userList);
-        request.setAttribute("page", Integer.valueOf(page));
-        request.setAttribute("querySearch",querySearch);
-        request.setAttribute("totalList",userDAO.getAllUser("select * from  user where user_name like '%"+querySearch+"%'").size());
+        setResponeManagerUser(request,querySearch,Integer.valueOf(page));
         return "manager-user";
     }
+
+    private void  setResponeManagerUser(HttpServletRequest request,String querySearch,int page)
+    {
+        request.setAttribute("page",page);
+        request.setAttribute("querySearch",querySearch);
+        request.setAttribute("totalList",this.userDAO.getAllUser("select * from  user where user_name like '%"+querySearch+"%'").size());
+
+    }
+
     private boolean checkUserUpdate(HttpServletRequest request,User user,String[] arr) {
         if(user.getUserName() == null || user.getUserName().trim().equals("")) {
             request.setAttribute("error"," user name not null!");

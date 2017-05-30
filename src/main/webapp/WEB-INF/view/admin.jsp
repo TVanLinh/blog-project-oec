@@ -10,9 +10,9 @@
         <div class="row">
                 <div class="col-md-12">
                     <ul class="list-group menu-admin">
-                        <li class="list-inline btn btn-danger mgl-10 mgr-10  mgb-15" ><a href="/manager-post"><img src="<s:url value="public/asserts/images/post1.png" />" class="mgr-10">${messageSource.getMessage("managerPost",null,locale)}</a></li>
-                        <li class="list-inline btn btn-success mgr-10  mgb-15"><a href="/configuration"><span class="glyphicon glyphicon-cog mgr-5"></span>${messageSource.getMessage("configSystem",null,locale)}</a></li>
-                        <li class="list-inline btn btn-warning mgl-10  mgb-15"> <a href="/manager-user"><i class="glyphicon glyphicon-user mgr-10"></i>${messageSource.getMessage("managerUser",null,locale)}</a></li>
+                        <li class="list-inline btn btn-danger mgl-10 mgr-10  mgb-15" ><a href="<s:url value="/manager-post"/>"><img src="<s:url value="public/asserts/images/post1.png" />" class="mgr-10">${messageSource.getMessage("managerPost",null,locale)}</a></li>
+                        <li class="list-inline btn btn-success mgr-10  mgb-15"><a href="<s:url value="/configuration"/>"><span class="glyphicon glyphicon-cog mgr-5"></span>${messageSource.getMessage("configSystem",null,locale)}</a></li>
+                        <li class="list-inline btn btn-warning mgl-10  mgb-15"> <a href="<s:url value="/manager-user"/>"><i class="glyphicon glyphicon-user mgr-10"></i>${messageSource.getMessage("managerUser",null,locale)}</a></li>
                     </ul>
 
                     <!---------------list table -------------------------->

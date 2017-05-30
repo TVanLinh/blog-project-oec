@@ -16,7 +16,7 @@
 
         <!-- Blog Post Content Column -->
         <div class="col-lg-12">
-        <form:form action="/write-post"  commandName="post" >
+        <form:form action="${pageContext.request.contextPath}/write-post"  commandName="post" >
                 <label class="fs-20 text-center">${messageSource.getMessage("title",null,locale)}:</label>
                 <%--<form:errors path="title"/>--%>
                 <input name="title" id="idTitle" type="text" class="input-xs mgb-40 title" style="margin-bottom: 30px"><br>

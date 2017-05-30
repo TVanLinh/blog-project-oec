@@ -14,7 +14,8 @@
     <!-- Blog Entries Column -->
     <div class="row">
         <div class="col-md-8">
-            <form:form ACTION="/action-update-user" METHOD="post"  >
+            <s:url value="/action-update-user" var="formAction"/>
+            <form:form ACTION="${formAction}" METHOD="post"  >
                 <div class="form-group">
                     <label for="userName">${messageSource.getMessage("name",null,locale)}:</label>
                     <input type="text" class="form-control userName " name="userName" id="userName" value="${requestScope.user.userName}">

@@ -1,6 +1,6 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <div class="well" >
-    <form action="${param.urlTarget}" onsubmit="return checkFormValid()">
+    <form action="<s:url value="${param.urlTarget}"/>" onsubmit="return checkFormValid()">
         <div class="input-group">
             <input type="text" class="form-control"  id="search" name="title" onkeyup="${param.action}"  onsubmit="checkFormValid()">
             <span class="input-group-btn">

@@ -28,7 +28,7 @@
 
             <c:forEach var="post" items="${postList}">
                 <!-- First Blog Post -->
-                <h2><a href="/post?id=${post.id}" target="_self">${post.title} </a></h2> <!--button>${post.id}</button-->
+                <h2><a href="<s:url value="/post?id=${post.id}"/>" target="_self">${post.title} </a></h2> <!--button>${post.id}</button-->
 
                 <span class="lead">
                             <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span> <a href="#" class="fs-15">${post.user.userName}</a>

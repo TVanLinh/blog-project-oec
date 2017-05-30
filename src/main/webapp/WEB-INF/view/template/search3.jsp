@@ -1,8 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Blog Search class="well" Well -->
 <div >
     <%--<h4>Blog Search</h4>--%>
-        <form method="get" action="${param.action}" onsubmit="return checkFormValid()">
+        <form method="get" action="<s:url value="${param.action}"/> " onsubmit="return checkFormValid()">
             <div class="input-group">
                 <input type="text" class="form-control"  id="search" name="query_search" onsubmit="return checkFormValid()" value="${requestScope.querySearch}">
                 <span class="input-group-btn">
