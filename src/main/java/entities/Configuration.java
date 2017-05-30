@@ -1,14 +1,14 @@
 package entities;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "configuration")
-public class Configuration {
+public class Configuration extends AbstractEntity{
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
 
   @Basic
   @Column(name = "web_title")
@@ -20,13 +20,6 @@ public class Configuration {
   @Column(name = "number_view_post")
   private int numberViewPost;
 
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
 
   public String getWebTitle() {
     return webTitle;

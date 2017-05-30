@@ -9,12 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "post")
-public class Post  implements Serializable{
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
-  @JsonView(Views.Public.class)
-  private int id;
+public class Post  extends AbstractEntity implements Serializable{
 
 //  @NotEmpty
 //  @Size(min = 10,max = 100,message = "Min length 10.!")
@@ -74,14 +69,6 @@ public class Post  implements Serializable{
   private Image image;
 
   public Post() {
-  }
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
   }
 
   public String getTitle() {

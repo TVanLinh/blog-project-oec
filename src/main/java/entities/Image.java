@@ -11,12 +11,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "postimage")
-public class Image {
+public class Image extends AbstractEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private  int id;
 
     @Basic
     @Column(name = "link")
@@ -39,14 +35,6 @@ public class Image {
     public Image(String link, String alt) {
         this.link = link;
         this.alt = alt;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getLink() {

@@ -9,12 +9,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable {
+public class User  extends AbstractEntity implements Serializable{
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
-  private int id;
+//  @Id
+//  @GeneratedValue(strategy = GenerationType.IDENTITY)
+//  @Column(name = "id")
+//  private int id;
 
   @Basic
   @Column(name = "user_name",unique = true)
@@ -63,14 +63,6 @@ public class User implements Serializable {
     this.enabled = enabled;
     this.roleList = roleList;
     this.postList = postList;
-  }
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
   }
 
   public String getUserName() {
@@ -124,7 +116,7 @@ public class User implements Serializable {
   @Override
   public String toString() {
     return "User{" +
-            "id=" + id +
+            "id=" + this.getId() +
             ", name='" + userName + '\'' +
             ", passWord='" + passWord + '\'' +
             '}';
