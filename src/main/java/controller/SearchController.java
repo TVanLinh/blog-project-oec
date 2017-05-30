@@ -24,6 +24,7 @@ public class SearchController {
 
     @Autowired
     PostDAO  postDAO;
+
     @Autowired
     DefaultPage defaultPage;
 
