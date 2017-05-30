@@ -3,10 +3,13 @@ package service;
 import entities.Post;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,6 +76,18 @@ public class PostService {
         Session session = sessionFactory.getCurrentSession();
         String str = "select * from post where id_user=" + idUser + "  order by time_post desc";
         List<Post> list = session.createNativeQuery(str, Post.class).getResultList();
+        return list;
+    }
+    public  List<BigInteger> getStatisticByMonth()
+    {
+        List<BigInteger> list= new ArrayList<BigInteger>();
+        Session session =sessionFactory.getCurrentSession();
+        Query query;
+        for(int i=1;i<13;i++)
+        {
+            query=session.createNativeQuery("select count(*) from post where MONTH(time_post) = "+i);
+            list.add((BigInteger) query.getSingleResult());
+        }
         return list;
     }
 }

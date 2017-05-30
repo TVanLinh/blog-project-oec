@@ -100,5 +100,12 @@ public class redirect {
         return "/home";
     }
 
+    @RequestMapping(value = "/tanso")
+    public String tanso(HttpServletRequest request)
+    {
+        defaultPage.setDaultPage(request);
+        System.out.println(postService.getStatisticByMonth());
+        return "tanso";
+    }
 
 }

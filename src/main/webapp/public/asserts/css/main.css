@@ -75,3 +75,8 @@ img
 {
     color: #fff !important;
 }
+.chart1
+{
+    min-height: 380px;
+    max-height: 500px;
+}
