@@ -20,12 +20,6 @@ public class UserDAOIML implements UserDAO {
 
     @Autowired
     UserService userService;
-    @Transactional
-    public void insert(User user) {
-        Session session = sessionFactory.getCurrentSession();
-        session.persist(user);
-        System.out.println(" insert User success");
-    }
 
     @Transactional
     public void delete(int idAuthor) {

@@ -19,7 +19,7 @@
                 <li class="list-inline btn btn-success mgr-10  mgb-15"><a href="/configuration"><span class="glyphicon glyphicon-cog mgr-5"></span>${messageSource.getMessage("configSystem",null,locale)}</a></li>
                 <li class="list-inline btn btn-warning mgl-10  mgb-15"> <a href="/manager-user"><i class="glyphicon glyphicon-user mgr-10"></i>${messageSource.getMessage("managerUser",null,locale)}</a></li>
             </ul>
-            <form ACTION="/processConfigurarion" METHOD="post">
+            <form ACTION="<s:url value="/processConfigurarion"/>" METHOD="post">
                 <div class="form-group">
                     <label for="titleBlog">${messageSource.getMessage("titleBlog",null,locale)}:</label>
                     <input type="text" class="form-control " name="titleBlog" id="titleBlog" value="${requestScope.conf.webTitle}">
@@ -47,10 +47,7 @@
     </div>
     <!-- /.row -->
     <hr>
-    <jsp:include page="template/footer.jsp"/>
-
 </div>
-<script src="<s:url value="/public/asserts/js/main.js"/>"></script>
-</body>
-</html>
+<jsp:include page="template/footer.jsp"/>
 
+<script src="<s:url value="/public/asserts/js/main.js"/>"></script>

@@ -2,10 +2,8 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
+
 <jsp:include page="template/head.jsp"/>
-<body>
 
 <!-- Navigation -->
 <jsp:include page="template/navbar.jsp"/>
@@ -55,9 +53,9 @@
                     <p>${post.content.replaceAll(str,"")}...</p>
                 </c:if>
                 <%--<p>${ Jsoup.parse(post.content).text()}</p>--%>
-                <a class="btn btn-primary" href="/post?id=${post.id}" target="_self"> ${messageSource.getMessage("read",null,locale)} <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a class="btn btn-primary" href="<s:url value="/post?id=${post.id}"/>" target="_self"> ${messageSource.getMessage("read",null,locale)} <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <c:if test="${sessionScope.username!=null}">
-                    <a id="action-update" href="/update?action=update&id=${post.id}"><img src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a> <a id="action-" onclick="return window.confirm('Are you sure you want to delete this post?')" href="/delete-post?id=${post.id}">${messageSource.getMessage("delete",null,locale)}</a>
+                    <a id="action-update" href="<s:url value="/update?action=update&id=${post.id}"/>"><img src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a> <a id="action-" onclick="return window.confirm('Are you sure you want to delete this post?')" href="<s:url value="/delete-post?id=${post.id}"/>">${messageSource.getMessage("delete",null,locale)}</a>
                 </c:if>
                 <hr>
             </c:forEach>
@@ -66,13 +64,13 @@
             <ul class="pager">
                 <c:if test="${requestScope.page>=2}">
                     <li class="previous">
-                        <a href="/view-search?page=${requestScope.page-1}&title=${requestScope.title}">&larr; ${messageSource.getMessage("back",null,locale)}</a>
+                        <a href="<s:url value="/view-search?page=${requestScope.page-1}&title=${requestScope.title}"/>">&larr; ${messageSource.getMessage("back",null,locale)}</a>
                     </li>
                 </c:if>
                 <c:if test="${requestScope.totalList/requestScope.limit>=requestScope.page}">
                     <li class="next">
                         <c:if test="${postList.size()!=0}">
-                            <a href="/view-search?page=${requestScope.page+1}&title=${requestScope.title}">${messageSource.getMessage("next",null,locale)} &rarr;</a>
+                            <a href="<s:url value="/view-search?page=${requestScope.page+1}&title=${requestScope.title}"/>">${messageSource.getMessage("next",null,locale)} &rarr;</a>
                         </c:if>
                     </li>
                 </c:if>
@@ -103,14 +101,10 @@
 </div>
 
 
-<div class="container">
-    <jsp:include page="template/footer.jsp"/>
-</div>
+
+
 
 <script src="<s:url value="public/asserts/js/search.js"/>">
 
 </script>
-
-</body>
-
-</html>
+<jsp:include page="template/footer.jsp"/>

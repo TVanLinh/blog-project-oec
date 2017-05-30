@@ -7,7 +7,7 @@ import entities.Configuration;
  */
 
 public interface ConfigurationDAO {
-    boolean insert(Configuration configuration);
-    boolean update(Configuration configuration);
-    boolean delete(int idConf);
+
+    void update(Configuration configuration);
+    void delete(int idConf);
 }

@@ -1,5 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <jsp:include page="import_libary.jsp"/>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,3 +34,5 @@
     <script src="<s:url value="public/ckeditor/ckeditor.js"/>" type="text/javascript"></script>
 
 </head>
+<body>
+

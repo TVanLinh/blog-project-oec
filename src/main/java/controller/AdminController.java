@@ -184,7 +184,7 @@ public class AdminController
            configuration.setDateFormat(formatTime);
 
            if(result==0) {
-               configDAO.insert(configuration);
+               configDAO.update(configuration);
            }
            if(result==1) {
                configDAO.update(configuration);
@@ -387,7 +387,7 @@ public class AdminController
             roles.add(new Role(arr[i],user));
         }
         user.setRoleList(roles);
-        userDAO.insert(user);
+        userDAO.update(user);
         return "redirect:manager-user";
     }
 

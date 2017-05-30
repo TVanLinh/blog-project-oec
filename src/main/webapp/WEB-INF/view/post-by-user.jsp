@@ -17,7 +17,7 @@
         <div class="col-md-8">
             <c:forEach var="post" items="${postList}">
                 <!-- First Blog Post -->
-                <h2><a href="/post?id=${post.id}" target="_self">${post.title} </a></h2> <!--button>${post.id}</button-->
+                <h2><a href="<s:url value="/post?id=${post.id}"/>" target="_self">${post.title} </a></h2> <!--button>${post.id}</button-->
 
                 <span class="lead">
                             <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span> <a href="/list-post-by-user?username=${post.user.userName}" class="fs-15">${post.user.userName}</a>
@@ -53,13 +53,13 @@
             <ul class="pager">
                 <c:if test="${requestScope.page>=2}">
                     <li class="previous">
-                        <a href="/list-post-by-user?username=${post.user.userName}&page=${requestScope.page-1}">&larr; ${messageSource.getMessage("back",null,locale)}</a>
+                        <a href="<s:url value="/list-post-by-user?username=${post.user.userName}&page=${requestScope.page-1}"/>">&larr; ${messageSource.getMessage("back",null,locale)}</a>
                     </li>
                 </c:if>
                 <c:if test="${requestScope.totalList/requestScope.limit>=requestScope.page}">
                     <li class="next">
                         <c:if test="${postList.size()!=0}">
-                            <a href="/list-post-by-user?username=${postList.get(0).user.userName}&page=${requestScope.page+1}">${messageSource.getMessage("next",null,locale)} &rarr;</a>
+                            <a href="<s:url value="/list-post-by-user?username=${postList.get(0).user.userName}&page=${requestScope.page+1}"/>">${messageSource.getMessage("next",null,locale)} &rarr;</a>
                         </c:if>
                     </li>
                 </c:if>
@@ -79,14 +79,10 @@
     <hr>
 </div>
 
-<div class="container">
-    <jsp:include page="template/footer.jsp"/>
-</div>
+
 
 <script src="<s:url value="public/asserts/js/search.js"/>">
 
 </script>
 
-</body>
-
-</html>
+    <jsp:include page="template/footer.jsp"/>

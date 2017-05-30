@@ -6,9 +6,9 @@
         <thead>
             <tr>
                 <th data-th="Driver details"><span>STT</span></th>
-                <th data-th="Driver details"><a href="/admin?orderBy=id_user"><img src="<s:url value="public/asserts/images/sort.png" />"> <span class="dp-inline">${messageSource.getMessage("td.author",null,locale)}</span></a></th>
-                <th class="text-center"><a href="/admin?orderBy=title"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("td.title",null,locale)}</a></th>
-                <th><a href="/admin?orderBy=time_post"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("td.timePost",null,locale)}</a></th>
+                <th data-th="Driver details"><a href="<s:url value="/admin?orderBy=id_user"/>"><img src="<s:url value="public/asserts/images/sort.png" />"> <span class="dp-inline">${messageSource.getMessage("td.author",null,locale)}</span></a></th>
+                <th class="text-center"><a href="<s:url value="/admin?orderBy=title"/>"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("td.title",null,locale)}</a></th>
+                <th><a href="<s:url value="/admin?orderBy=time_post"/>"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("td.timePost",null,locale)}</a></th>
                 <th>${messageSource.getMessage("td.action",null,locale)}</th>
             </tr>
         </thead>
@@ -17,14 +17,14 @@
             <tr >
                 <td>${loop.index+1}</td>
                 <td>${post.user.userName}</td>
-                <td><a href="/post?id=${post.id}">${post.title}</a></td>
+                <td><a href="<s:url value="/post?id=${post.id}"/>">${post.title}</a></td>
                 <td>${post.timePost}</td>
                 <td>
                     <%--<a href="javascript:void(0)" onclick="A.getPostImprove('/admin-post-approve?action=approve&id='+${post.id},null)"> <span class="glyphicon glyphicon-ok mgr-10"></span></a>--%>
                     <%--<a href="javascript:void(0)" onclick="A.getPostImprove('/admin-post-approve?action=delete&id='+${post.id},null)"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>--%>
-                    <a href="/admin?page=${requestScope.page}&action=approve&id=${post.id}" > <span class="glyphicon glyphicon-ok mgr-10"></span></a>
-                    <a href="/admin?page=${requestScope.page}&action=delete&id=${post.id}" onclick="return window.confirm('Are you sure you want to delete this post?')"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
-                    <a href="/update?action=update&id=${post.id}"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a>
+                    <a href="<s:url value="/admin?page=${requestScope.page}&action=approve&id=${post.id}"/>" > <span class="glyphicon glyphicon-ok mgr-10"></span></a>
+                    <a href="<s:url value="/admin?page=${requestScope.page}&action=delete&id=${post.id}"/>" onclick="return window.confirm('Are you sure you want to delete this post?')"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
+                    <a href="<s:url value="/update?action=update&id=${post.id}"/>"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a>
 
                 </td>
             </tr>
@@ -39,14 +39,14 @@
             <c:if test="${requestScope.querySearch==null}">
                 <c:if test="${requestScope.page>=2}">
                     <li class="previous">
-                        <a href="/admin?page=${requestScope.page-1}">&larr; ${messageSource.getMessage("back",null,locale)}</a>
+                        <a href="<s:url value="/admin?page=${requestScope.page-1}"/>">&larr; ${messageSource.getMessage("back",null,locale)}</a>
                     </li>
                 </c:if>
 
                 <c:if test="${requestScope.page<=requestScope.totalPost/numberView.getNumberView()}">
                     <li class="next">
                         <c:if test="${postList.size()!=0}">
-                            <a href="/admin?page=${requestScope.page+1}">${messageSource.getMessage("next",null,locale)} &rarr;</a>
+                            <a href="<s:url value="/admin?page=${requestScope.page+1}"/>">${messageSource.getMessage("next",null,locale)} &rarr;</a>
                         </c:if>
                     </li>
                 </c:if>
@@ -55,14 +55,14 @@
             <c:if test="${requestScope.querySearch!=null}">
                 <c:if test="${requestScope.page>=2}">
                     <li class="previous">
-                        <a href="/admin-search-post-approve?page=${requestScope.page-1}&query_search=${requestScope.querySearch}">&larr; ${messageSource.getMessage("back",null,locale)}</a>
+                        <a href="<s:url value="/admin-search-post-approve?page=${requestScope.page-1}&query_search=${requestScope.querySearch}"/>">&larr; ${messageSource.getMessage("back",null,locale)}</a>
                     </li>
                 </c:if>
 
                 <c:if test="${requestScope.page<=requestScope.totalPost/numberView.getNumberView()}">
                     <li class="next">
                         <c:if test="${postList.size()!=0}">
-                            <a href="/admin-search-post-approve?page=${requestScope.page+1}&query_search=${requestScope.querySearch}">${messageSource.getMessage("next",null,locale)} &rarr;</a>
+                            <a href="<s:url value="/admin-search-post-approve?page=${requestScope.page+1}&query_search=${requestScope.querySearch}"/>">${messageSource.getMessage("next",null,locale)} &rarr;</a>
                         </c:if>
                     </li>
                 </c:if>

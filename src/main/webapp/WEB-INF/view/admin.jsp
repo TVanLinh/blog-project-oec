@@ -1,15 +1,11 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html lang="en">
 <jsp:include page="template/head.jsp"/>
-<body>
-
 <!-- Navigation -->
     <jsp:include page="template/navbar.jsp"/>
 
-    <div class="container">
+<div class="container">
         <!-- Blog Entries Column -->
         <div class="row">
                 <div class="col-md-12">
@@ -43,10 +39,8 @@
         </div>
     <!-- /.row -->
      <hr>
-        <jsp:include page="template/footer.jsp"/>
 
-    </div>
+</div>
 <script src="<s:url value="/public/asserts/js/main.js"/>"></script>
 <script src="<s:url value="/public/asserts/js/search.js"/>"></script>
-</body>
-</html>
+<jsp:include page="template/footer.jsp"/>

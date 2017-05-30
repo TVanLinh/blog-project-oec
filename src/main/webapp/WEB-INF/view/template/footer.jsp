@@ -20,3 +20,5 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="public/bootstrap/js/bootstrap.min.js"></script>
 <script src="<s:url value="public/asserts/js/top.js"/>"></script>
+</body>
+</html>

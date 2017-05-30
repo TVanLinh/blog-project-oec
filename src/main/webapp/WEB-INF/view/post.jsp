@@ -1,11 +1,9 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
 
 <jsp:include page="template/head.jsp"/>
 
-<body>
+
     <script src="<s:url value="public/jquery/jquery-3.2.1.min.js"/>" type="text/javascript"></script>
     <!-- Navigation -->
    <jsp:include page="template/navbar.jsp"/>
@@ -20,7 +18,7 @@
 
                 <!-- Blog Post -->
                 <!-- Title -->
-                <h2><a href="/post?id=${post.id}" target="_self">${post.title}</a></h2>
+                <h2><a href="<s:url value="/post?id=${post.id}"/>" target="_self">${post.title}</a></h2>
 
                 <span class="lead">
                         <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span> <a href="index.php" class="fs-15">${post.user.userName}</a>
@@ -47,7 +45,7 @@
                 ${messageSource.getMessage("view",null,locale)}: <button class="btn-sm btn-xs">${post.numberView} </button>
 
                <c:if test="${sessionScope.username!=null}">
-                    <a id="action-update" href="/update?action=update&id=${post.id}"><img src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a> <a id="action-" onclick="return window.confirm('Are you sure you want to delete this post?')" href="/delete-post?id=${post.id}">${messageSource.getMessage("delete",null,locale)}</a>
+                    <a id="action-update" href="<s:url value="/update?action=update&id=${post.id}"/>"><img src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a> <a id="action-" onclick="return window.confirm('Are you sure you want to delete this post?')" href="/delete-post?id=${post.id}">${messageSource.getMessage("delete",null,locale)}</a>
                 </c:if>
                 <hr>
                 <div id="comment">
@@ -73,10 +71,8 @@
 
         <hr>
 
-        <jsp:include page="template/footer.jsp"/>
+
 
     </div>
     <script src="<s:url value="/public/asserts/js/main.js"/>"></script>
-</body>
-
-</html>
+<jsp:include page="template/footer.jsp"/>

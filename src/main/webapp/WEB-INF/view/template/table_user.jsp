@@ -6,9 +6,9 @@
         <thead>
             <tr>
                 <th data-th="Driver details"><span>STT</span></th>
-                <th data-th="Driver details"><a href="/manager-user?orderBy=user_name"><img src="<s:url value="public/asserts/images/sort.png" />"> <span class="dp-inline">${messageSource.getMessage("name",null,locale)}</span></a></th>
-                <th class="text-center"><a href="/manager-user?orderBy=pass_word"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("passWord",null,locale)}</a></th>
-                <th><a href="/manager-user?orderBy=role"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("role",null,locale)}</a></th>
+                <th data-th="Driver details"><a href="<s:url value="/manager-user?orderBy=user_name"/>"><img src="<s:url value="public/asserts/images/sort.png" />"> <span class="dp-inline">${messageSource.getMessage("name",null,locale)}</span></a></th>
+                <th class="text-center"><a href="<s:url value="/manager-user?orderBy=pass_word"/>"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("passWord",null,locale)}</a></th>
+                <th><a href="<s:url value="/manager-user?orderBy=role"/>"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("role",null,locale)}</a></th>
                 <th>${messageSource.getMessage("td.action",null,locale)}</th>
             </tr>
         </thead>
@@ -21,8 +21,8 @@
                 <td>${user.passWord}</td>
                 <td>${roleService.getStringFromListRole(user.roleList)}</td>
                 <td>
-                    <a href="/manager-user?action=delete&id=${user.id}" onclick="return window.confirm('Are you sure you want to delete this post?')"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
-                    <a href="/update-user?id=${user.id}"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a>
+                    <a href="<s:url value="/manager-user?action=delete&id=${user.id}"/>" onclick="return window.confirm('Are you sure you want to delete this post?')"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
+                    <a href="<s:url value="/update-user?id=${user.id}"/>"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a>
                 </td>
             </tr>
         </c:forEach>
@@ -35,13 +35,13 @@
             <c:if test="${requestScope.querySearch==null}">
                 <c:if test="${requestScope.page>=2}">
                     <li class="previous">
-                        <a href="/manager-user?page=${requestScope.page-1}">&larr; ${messageSource.getMessage("back",null,locale)}</a>
+                        <a href="<s:url value="/manager-user?page=${requestScope.page-1}"/>">&larr; ${messageSource.getMessage("back",null,locale)}</a>
                     </li>
                 </c:if>
                 <c:if test="${requestScope.page<=requestScope.totalList/numberView.getNumberView()}">
                     <li class="next">
                         <c:if test="${userList.size()!=0}">
-                            <a href="/manager-user?page=${requestScope.page+1}">${messageSource.getMessage("next",null,locale)} &rarr;</a>
+                            <a href="<s:url value="/manager-user?page=${requestScope.page+1}"/>">${messageSource.getMessage("next",null,locale)} &rarr;</a>
                         </c:if>
                     </li>
                 </c:if>
@@ -50,14 +50,14 @@
             <c:if test="${requestScope.querySearch!=null}">
                 <c:if test="${requestScope.page>=2}">
                     <li class="previous">
-                        <a href="/manager-user-search?page=${requestScope.page-1}&query_search=${requestScope.querySearch}">&larr; ${messageSource.getMessage("back",null,locale)}</a>
+                        <a href="<s:url value="/manager-user-search?page=${requestScope.page-1}&query_search=${requestScope.querySearch}"/>">&larr; ${messageSource.getMessage("back",null,locale)}</a>
                     </li>
                 </c:if>
 
                 <c:if test="${requestScope.page<=requestScope.totalList/numberView.getNumberView()}">
                     <li class="next">
                         <c:if test="${userList.size()!=0}">
-                            <a href="/manager-user-search?page=${requestScope.page+1}&query_search=${requestScope.querySearch}">${messageSource.getMessage("next",null,locale)} &rarr;</a>
+                            <a href="<s:url value="/manager-user-search?page=${requestScope.page+1}&query_search=${requestScope.querySearch}"/>">${messageSource.getMessage("next",null,locale)} &rarr;</a>
                         </c:if>
                     </li>
                 </c:if>

@@ -3,11 +3,9 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@page language="java" pageEncoding="UTF-8" %>
 <%@ page isELIgnored="false" %>
-<!DOCTYPE html>
-<html lang="en">
+
 
 <jsp:include page="template/head.jsp"/>
-<body>
 
 <jsp:include page="template/navbar.jsp"/>
 <!-- Navigation -->
@@ -21,7 +19,7 @@
             <%--<!-- Blog Post -->--%>
                <%--link image:  ${linkImage}--%>
             <%--<!-- Title -->--%>
-                <h2><a href="/post?id=${post.id}" target="_blank">${post.title} </a></h2>
+                <h2><a href="<s:url value="/post?id=${post.id}"/>" target="_blank">${post.title} </a></h2>
 
                 <span class="lead">
                         <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span> <a href="#" class="fs-15">${post.user.userName}</a>
@@ -46,7 +44,7 @@
             </button><button class="btn-sm btn-xs" id="number-like">${post.numberLike}</button>
 
                 ${messageSource.getMessage("view",null,locale)}: <button class="btn-sm btn-xs">${post.numberView} </button>
-            <a id="action-update" href="/update?action=update&id=${post.id}"><img src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a> <a id="action-" onclick="return window.confirm('Are you sure you want to delete this post?')" href="/delete-post?id=${post.id}">${messageSource.getMessage("delete",null,locale)}</a>
+            <a id="action-update" href="<s:url value="/update?action=update&id=${post.id}"/>"><img src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a> <a id="action-" onclick="return window.confirm('Are you sure you want to delete this post?')" href="<s:url value="/delete-post?id=${post.id}"/>">${messageSource.getMessage("delete",null,locale)}</a>
             <hr>
 
             <!-- Blog Comments -->
@@ -67,13 +65,11 @@
 
     <hr>
     <!-- Footer -->
-    <jsp:include page="template/footer.jsp"/>
 
 </div>
 <!-- /.container -->
 
 
 <script src="<s:url value="/public/asserts/js/main.js"/>"></script>
-</body>
 
-</html>
+<jsp:include page="template/footer.jsp"/>

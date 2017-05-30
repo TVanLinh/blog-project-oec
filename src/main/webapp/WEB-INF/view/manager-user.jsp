@@ -1,7 +1,6 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
+
 <jsp:include page="template/head.jsp"/>
 <body>
 
@@ -33,9 +32,9 @@
     </div>
     <!-- /.row -->
     <hr>
-    <jsp:include page="template/footer.jsp"/>
+
 </div>
 <script src="<s:url value="/public/asserts/js/main.js"/>"></script>
 <script src="<s:url value="/public/asserts/js/search.js"/>"></script>
-</body>
-</html>
+
+<jsp:include page="template/footer.jsp"/>

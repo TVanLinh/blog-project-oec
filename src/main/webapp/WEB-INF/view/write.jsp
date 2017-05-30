@@ -2,10 +2,9 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@page language="java" pageEncoding="UTF-8" %>
 
-<!DOCTYPE html>
-<html lang="en">
+
 <jsp:include page="template/head.jsp"/>
-<body>
+
 
 <!-- Navigation -->
 <jsp:include page="template/navbar.jsp"/>
@@ -44,12 +43,11 @@
     <hr>
 
     <!-- Footer -->
-    <jsp:include page="template/footer.jsp"/>
+
 </div>
 <!-- /.container -->
 
-</body>
 <script type="text/javascript" src="<s:url value="public/asserts/js/check_valid_form.js" />">
 </script>
 
-</html>
+<jsp:include page="template/footer.jsp"/>
