@@ -17,7 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import service.RoleService;
-import utils.*;
+import utils.number.NumberViewSort;
+import utils.page.DefaultPage;
+import utils.sort.PortSort;
+import utils.sort.SortType;
+import utils.sort.UserSort;
+import utils.string.StringSessionUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -79,7 +84,7 @@ public class AdminController
 
         deletePost(request);
         aprrovePost(request);
-        postList=postDAO.getAllPost(portSort.getQuerySortAllPostAprrove(request,(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW,true));
+        postList=postDAO.getAllPost(portSort.getQuerySortAllPostAprrove(request,(Integer.valueOf(page)-1)* NumberViewSort.NUMBER_VIEW,true));
         setListPost(request,postList);
         request.setAttribute("page", Integer.valueOf(page));
         model.setViewName("admin");

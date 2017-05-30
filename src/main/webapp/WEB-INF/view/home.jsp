@@ -2,11 +2,8 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
-<jsp:include page="template/head.jsp"/>
-<body>
 
+<jsp:include page="template/head.jsp"/>
     <!-- Navigation -->
    <jsp:include page="template/navbar.jsp"/>
     <!-- Page Content -->
@@ -22,7 +19,7 @@
                         <span class="lead">
                             <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span> <a href="/list-post-by-user?username=${post.user.userName}" class="fs-15">${post.user.userName}</a>
                         </span>
-                             <jsp:useBean id="dateUtil" class="utils.DateFormatUtil" scope="session"/>
+                             <jsp:useBean id="dateUtil" class="utils.date.DateFormatUtil" scope="session"/>
                         <p><span class="glyphicon glyphicon-time"></span><span class="margin-left-3">${messageSource.getMessage("postTime",null,locale)}</span>
                                 ${dateUtil.format(post.timePost,sessionScope.dateFormat)}
                         </p>
@@ -77,9 +74,5 @@
 
         <hr>
     </div>
-
-
-
-    <script src="<s:url value="public/asserts/js/search.js"/>">
-</script>
+    <script src="<s:url value="public/asserts/js/search.js"/>"></script>
 <jsp:include page="template/footer.jsp"/>

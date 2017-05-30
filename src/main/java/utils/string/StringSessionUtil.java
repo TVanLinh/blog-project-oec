@@ -1,4 +1,4 @@
-package utils;
+package utils.string;
 
 /**
  * Created by linhtran on 27/05/2017.

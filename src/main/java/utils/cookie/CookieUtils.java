@@ -1,4 +1,4 @@
-package utils;
+package utils.cookie;
 
 import java.util.HashSet;
 import java.util.Set;

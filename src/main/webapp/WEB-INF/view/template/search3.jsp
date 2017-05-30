@@ -15,7 +15,7 @@
 </div>
 
 <div>
-    <jsp:useBean id="numberView" class="utils.NumberViewSort"/>
+    <jsp:useBean id="numberView" class="utils.number.NumberViewSort"/>
     <c:if test="${requestScope.postList.size()>0}">
 
         <H3>

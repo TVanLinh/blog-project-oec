@@ -29,7 +29,7 @@
 
         </tbody>
     </table>
-    <jsp:useBean id="numberView" class="utils.NumberViewSort"/>
+    <jsp:useBean id="numberView" class="utils.number.NumberViewSort"/>
     <div>
         <ul class="pager">
             <c:if test="${requestScope.querySearch==null}">

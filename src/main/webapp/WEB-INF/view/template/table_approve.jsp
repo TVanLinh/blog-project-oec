@@ -35,7 +35,7 @@
     <div>
 
         <ul class="pager">
-            <jsp:useBean id="numberView" class="utils.NumberViewSort"/>
+            <jsp:useBean id="numberView" class="utils.number.NumberViewSort"/>
             <c:if test="${requestScope.querySearch==null}">
                 <c:if test="${requestScope.page>=2}">
                     <li class="previous">

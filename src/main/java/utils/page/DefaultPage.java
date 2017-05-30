@@ -1,4 +1,4 @@
-package utils;
+package utils.page;
 
 import dao.ConfigurationDAO;
 import entities.Configuration;

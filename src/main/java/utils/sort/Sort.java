@@ -1,4 +1,4 @@
-package utils;
+package utils.sort;
 
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 public class   Sort {
-    public   SortType getSortType(String name, List<SortType> list) {
+    public SortType getSortType(String name, List<SortType> list) {
         for (SortType sort : list) {
             if (sort.orderBy.trim().equals(name)) {
                 return sort;

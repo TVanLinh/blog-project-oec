@@ -1,4 +1,4 @@
-package utils;
+package utils.sort;
 
 import org.springframework.stereotype.Component;
 
