@@ -1,7 +1,9 @@
 package controller;
 
+import dao.ConfigurationDAO;
 import dao.ImageDAO;
 import dao.PostDAO;
+import dao.UserDAO;
 import entities.Image;
 import entities.Post;
 import entities.User;
@@ -13,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import service.ConfigurationService;
-import service.PostService;
-import service.UserService;
 import utils.DefaultPage;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,13 +33,11 @@ import java.util.List;
 public class ProcessPost {
 
     @Autowired
-    UserService userService;
+    UserDAO userDAO;
 
     @Autowired
     PostDAO postDAO;
 
-    @Autowired
-    PostService postService;
 
     @Autowired
     ImageDAO imageDAO;
@@ -49,15 +46,16 @@ public class ProcessPost {
     @Autowired
     DefaultPage  defaultPage;
 
+
     @Autowired
-    ConfigurationService configurationService;
+    ConfigurationDAO configDAO;
 
     @RequestMapping(value = "/write-post", method = RequestMethod.POST)
     public ModelAndView processWritePost(@ModelAttribute(value = "post") Post post, HttpServletRequest httpServletRequest, Principal principal) {
         defaultPage.setDaultPage(httpServletRequest);
         HttpSession session = httpServletRequest.getSession();
 
-        User user = userService.getUserByName(principal.getName());
+        User user = userDAO.getUserByName(principal.getName());
         post.setUser(user);
 
         Calendar calendar = Calendar.getInstance();
@@ -79,7 +77,7 @@ public class ProcessPost {
             }
             post.setImage(image);
         }
-        postDAO.insert(post);
+        postDAO.update(post);
         httpServletRequest.setAttribute("post", post);
         session.setAttribute("post-id", post.getId());
         return new ModelAndView("redirect:/view-post");
@@ -100,7 +98,7 @@ public class ProcessPost {
         Integer postId = (Integer) session.getAttribute("post-id");
         try {
             System.out.println("nuber: " + postId);
-            Post post = postService.find(postId);
+            Post post = postDAO.find(postId);
             if (post != null) {
                 request.setAttribute("post", post);
             }
@@ -118,7 +116,7 @@ public class ProcessPost {
         String postId = request.getParameter("id");
 
         if(action != null && action.trim().equals("update") && postId != null && !postId.trim().equals("")) {
-            session.setAttribute("postUpdate", postService.find(Integer.valueOf(postId)));
+            session.setAttribute("postUpdate", postDAO.find(Integer.valueOf(postId)));
         }
         return "update";
     }
@@ -131,7 +129,7 @@ public class ProcessPost {
         Post postUpdate = (Post) session.getAttribute("postUpdate");
         Date date = Calendar.getInstance().getTime();
 
-        Post  post1 = postService.find(postUpdate.getId());
+        Post  post1 = postDAO.find(postUpdate.getId());
         post1.setUpdateTime(date);
         post1.setUserUpdated((String)session.getAttribute("username"));
         post1.setTitle(post.getTitle());
@@ -167,7 +165,7 @@ public class ProcessPost {
     public String deletePost(@RequestParam(value = "id") int id,HttpServletRequest request) {
         request.setAttribute("page",0);
         System.out.println();
-        if(postService.find(id)!=null) {
+        if(postDAO.find(id)!=null) {
             postDAO.delete(id);
         }
         return "redirect:/user";
@@ -180,18 +178,18 @@ public class ProcessPost {
 
         List<Post> posts;
         User user;
-        int limit = configurationService.getAllConfiguration().get(0).getNumberViewPost();
+        int limit = configDAO.getAllConfiguration().get(0).getNumberViewPost();
         if(page == null || page.trim().equals("")|| !StringUtils.isNumeric(page)) {
             if(username==null) {
                 return "redirect:/home";
             }
 
-            user = userService.getUserByName(username);
+            user = userDAO.getUserByName(username);
             if(user!=null) {
-                posts=postService.getAllPost("select * from post where status = 1 and id_user = "+user.getId()+" order by time_post desc limit 0,"+limit);
+                posts=postDAO.getAllPost("select * from post where status = 1 and id_user = "+user.getId()+" order by time_post desc limit 0,"+limit);
                 setPostList(request,posts);
                 request.setAttribute("page",1);
-                request.setAttribute("totalList", postService.getAllPost("select * from post where status = 1 and id_user = "+user.getId()).size());
+                request.setAttribute("totalList", postDAO.getAllPost("select * from post where status = 1 and id_user = "+user.getId()).size());
                 return  "post-by-user";
             }else{
                 return "redirect:/home";
@@ -199,12 +197,12 @@ public class ProcessPost {
 
         }
 
-        user = userService.getUserByName(username);
+        user = userDAO.getUserByName(username);
         if(user != null) {
-            posts = postService.getAllPost("select * from post where status = 1 and id_user = "+user.getId()+" order by time_post desc limit "+(Integer.valueOf(page)-1)*limit +"," +limit);
+            posts = postDAO.getAllPost("select * from post where status = 1 and id_user = "+user.getId()+" order by time_post desc limit "+(Integer.valueOf(page)-1)*limit +"," +limit);
             setPostList(request,posts);
             request.setAttribute("page",Integer.valueOf(page));
-            request.setAttribute("totalList",postService.getAllPost("select * from post where status = 1 and id_user = "+user.getId()).size());
+            request.setAttribute("totalList",postDAO.getAllPost("select * from post where status = 1 and id_user = "+user.getId()).size());
             return  "post-by-user";
         }
 

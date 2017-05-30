@@ -7,21 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by linhtran on 06/05/2017.
  */
 
 @Repository
+@Transactional
 public class ImageDAOIML implements ImageDAO {
 
     @Autowired
     SessionFactory sessionFactory;
-    @Transactional
-    public void insert(Image image) {
-        Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(image);
-        System.out.println(" insert image success");
-    }
 
     @Transactional
     public void delete(int idAuthor) {
@@ -41,8 +38,31 @@ public class ImageDAOIML implements ImageDAO {
     @Transactional
     public void update(Image image) {
         Session session = sessionFactory.getCurrentSession();
-        session.merge(image);
+        session.saveOrUpdate(image);
         System.out.println(" update image success");
+    }
+
+    public Image find(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Image usr = session.find(Image.class,id);
+        return  usr;
+    }
+
+    public List<Image> getAllImage() {
+        Session session = sessionFactory.getCurrentSession();
+        List<Image> list = session.createNativeQuery("select * from postimage",Image.class).getResultList();
+        return list;
+    }
+
+
+    public Image getImageByName(String name) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Image> list =  session.createNativeQuery("select * from user where user_name = '"+name+"'",Image.class).getResultList();
+        if(list == null)
+        {
+            return  null;
+        }
+        return list.get(0);
     }
 
 }

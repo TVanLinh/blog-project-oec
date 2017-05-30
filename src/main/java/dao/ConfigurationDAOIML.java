@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by linhtran on 08/05/2017.
  */
 
 @Repository
+@Transactional
 public class ConfigurationDAOIML  implements ConfigurationDAO{
     @Autowired
     SessionFactory sessionFactory;
@@ -31,5 +34,19 @@ public class ConfigurationDAOIML  implements ConfigurationDAO{
         System.out.println(" update Configuration success");
     }
 
+    public Configuration find(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Configuration conf = session.find(Configuration.class,id);
+        if(conf == null) {
+            return getAllConfiguration().get(0);
+        }
+        return  conf;
+    }
 
+    public List<Configuration> getAllConfiguration() {
+        Session session = sessionFactory.getCurrentSession();
+
+        List<Configuration> list = session.createNativeQuery("select * from configuration",Configuration.class).getResultList();
+        return list;
+    }
 }

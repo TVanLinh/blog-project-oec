@@ -1,15 +1,15 @@
 package controller;
 
+import dao.ConfigurationDAO;
 import dao.PostDAO;
 import dao.RoleDAO;
+import dao.UserDAO;
 import entities.Post;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import service.ConfigurationService;
-import service.PostService;
 import service.UserService;
 import utils.DefaultPage;
 
@@ -28,16 +28,16 @@ public class redirect {
     UserService userService;
 
     @Autowired
-    RoleDAO roleDAO;
+    UserDAO userDAO;
 
     @Autowired
-    PostService postService;
+    RoleDAO roleDAO;
 
     @Autowired
     PostDAO postDAO;
 
     @Autowired
-    ConfigurationService configurationService;
+    ConfigurationDAO configDAO;
 
     @Autowired
     DefaultPage defaultPage;
@@ -55,23 +55,23 @@ public class redirect {
         String page=request.getParameter("page");
         List<Post> postList;
 
-        int limit = configurationService.find(1).getNumberViewPost();
-        request.setAttribute("userSerVice",userService);
+        int limit = configDAO.getAllConfiguration().get(0).getNumberViewPost();
+        request.setAttribute("userDAO",userDAO);
         if(page == null|| !StringUtils.isNumeric(page) || page.trim().equals("")) {
-            postList = postService.getPost(0,limit);
+            postList = postDAO.getPost(0,limit);
             request.setAttribute("page",1);
             request.setAttribute("postList",postList);
-            request.setAttribute("totalList",postService.getAllPostPublic().size());
-            request.setAttribute("limit",configurationService.getAllConfiguration().get(0).getNumberViewPost());
+            request.setAttribute("totalList",postDAO.getAllPostPublic().size());
+            request.setAttribute("limit",configDAO.getAllConfiguration().get(0).getNumberViewPost());
             request.setAttribute("active","home");
             return "home";
         }
 
-        postList = postService.getPost((Integer.valueOf(page)-1)*limit,limit);
+        postList = postDAO.getPost((Integer.valueOf(page)-1)*limit,limit);
         request.setAttribute("page",Integer.valueOf(page));
         request.setAttribute("postList",postList);
-        request.setAttribute("totalList",postService.getAllPostPublic().size());
-        request.setAttribute("limit",configurationService.getAllConfiguration().get(0).getNumberViewPost());
+        request.setAttribute("totalList",postDAO.getAllPostPublic().size());
+        request.setAttribute("limit",configDAO.getAllConfiguration().get(0).getNumberViewPost());
         request.setAttribute("active","home");
         return "home";
     }
@@ -80,11 +80,11 @@ public class redirect {
         defaultPage.setDaultPage(request);
 
         String id = request.getParameter("id");
-        List<Post> postSlideBar = postService.getAllPost("select * from post  where status=1 and approve=1 order by time_post desc limit 0,5");
+        List<Post> postSlideBar = postDAO.getAllPost("select * from post  where status=1 and approve=1 order by time_post desc limit 0,5");
         request.setAttribute("postSlideBar",postSlideBar);
         if(id != null) {
             try {
-                Post post=postService.find(Integer.valueOf(id));
+                Post post=postDAO.find(Integer.valueOf(id));
                 if(post != null) {
                     post.setNumberView(post.getNumberView()+1);
                     postDAO.update(post);
@@ -104,7 +104,7 @@ public class redirect {
     public String tanso(HttpServletRequest request)
     {
         defaultPage.setDaultPage(request);
-        System.out.println(postService.getStatisticByMonth());
+        System.out.println(postDAO.getStatisticByMonth());
         return "tanso";
     }
 

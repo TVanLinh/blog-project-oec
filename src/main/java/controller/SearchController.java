@@ -1,14 +1,14 @@
 package controller;
 
+import dao.ConfigurationDAO;
+import dao.PostDAO;
+import dao.UserDAO;
 import entities.Post;
 import entities.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import service.ConfigurationService;
-import service.PostService;
-import service.UserService;
 import utils.DefaultPage;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,23 +21,24 @@ import java.util.List;
 
 @Controller
 public class SearchController {
-    @Autowired
-    PostService postService;
 
+    @Autowired
+    PostDAO postDAO;
     @Autowired
     DefaultPage defaultPage;
 
-    @Autowired
-    ConfigurationService configurationService;
 
     @Autowired
-    UserService userService;
+    ConfigurationDAO configDAO;
+
+    @Autowired
+    UserDAO userDAO;
 
 
     @RequestMapping(value = "/view-search")
     public  String  processSearchAll(HttpServletRequest request) {
         defaultPage.setDaultPage(request);
-        int limit = configurationService.getAllConfiguration().get(0).getNumberViewPost();
+        int limit = configDAO.getAllConfiguration().get(0).getNumberViewPost();
         String title = request.getParameter("title");
         String page = request.getParameter("page");
 
@@ -55,19 +56,19 @@ public class SearchController {
 
     public void setPostListClient(HttpServletRequest request,String searchBy,int offset) {
         List<Post> list;
-        int limit = configurationService.getAllConfiguration().get(0).getNumberViewPost();
-        list=postService.getAllPost("select * from post  where status=1 and  approve=1 and UPPER(title) like '%"+searchBy.toUpperCase()+"%' order by time_post desc limit "+offset+","+limit);
+        int limit = configDAO.getAllConfiguration().get(0).getNumberViewPost();
+        list=postDAO.getAllPost("select * from post  where status=1 and  approve=1 and UPPER(title) like '%"+searchBy.toUpperCase()+"%' order by time_post desc limit "+offset+","+limit);
         if(list == null) {
             list = new ArrayList<Post>();
         }
         request.setAttribute("postList",list);
         request.setAttribute("title",searchBy);
-        request.setAttribute("totalList",postService.getAllPost("select * from post  where status=1 and  approve=1 and UPPER(title) like '%"+searchBy.toUpperCase()+"%' ").size());
+        request.setAttribute("totalList",postDAO.getAllPost("select * from post  where status=1 and  approve=1 and UPPER(title) like '%"+searchBy.toUpperCase()+"%' ").size());
     }
 
     public  boolean defaultSearch(HttpServletRequest request,String page,String searchBy) {
-        request.setAttribute("userSerVice",userService);
-        int limit = configurationService.getAllConfiguration().get(0).getNumberViewPost();
+        request.setAttribute("userSerVice",userDAO);
+        int limit = configDAO.getAllConfiguration().get(0).getNumberViewPost();
 
         if(searchBy == null) {
             return false;
@@ -84,7 +85,7 @@ public class SearchController {
     @RequestMapping(value = "/user-search")
     public  String  processUserSearch(HttpServletRequest request) {
         defaultPage.setDaultPage(request);
-        int limit = configurationService.getAllConfiguration().get(0).getNumberViewPost();
+        int limit = configDAO.getAllConfiguration().get(0).getNumberViewPost();
         String title = request.getParameter("title");
         String page = request.getParameter("page");
 
@@ -102,15 +103,15 @@ public class SearchController {
     }
     public void setPostListUser(HttpServletRequest request,String searchBy,int offset) {
         List<Post> list;
-        int limit = configurationService.getAllConfiguration().get(0).getNumberViewPost();
+        int limit = configDAO.getAllConfiguration().get(0).getNumberViewPost();
         String name = (String) request.getSession().getAttribute("username");
-        User user =  userService.getUserByName(name);
-        list = postService.getAllPost("select * from post where (status = 1 or id_user =  "+user.getId()+") and UPPER(title) like '%"+searchBy.toUpperCase()+"%' limit "+offset+","+limit);
+        User user =  userDAO.getUserByName(name);
+        list = postDAO.getAllPost("select * from post where (status = 1 or id_user =  "+user.getId()+") and UPPER(title) like '%"+searchBy.toUpperCase()+"%' limit "+offset+","+limit);
         if(list == null) {
             list = new ArrayList<Post>();
         }
         request.setAttribute("postList",list);
         request.setAttribute("title",searchBy);
-        request.setAttribute("totalList",postService.getAllPost("select * from post  where (status = 1 or id_user =  "+user.getId()+") and UPPER(title) like'%"+searchBy.toUpperCase()+"%' ").size());
+        request.setAttribute("totalList",postDAO.getAllPost("select * from post  where (status = 1 or id_user =  "+user.getId()+") and UPPER(title) like'%"+searchBy.toUpperCase()+"%' ").size());
     }
 }
