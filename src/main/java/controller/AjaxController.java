@@ -30,7 +30,6 @@ public class AjaxController {
     @RequestMapping("/getStatisticPost")
     public StatisticPost statisticPost(@RequestBody StatisticPost statisticPost)
     {
-        System.out.println("okkkkkkkkkkkkkkkkkkkkkk---------------------------------------------------------------");
         System.out.println(statisticPost.getMsg());
         statisticPost.setStatisticPostByMonth(postDAO.getStatisticByMonth());
         return statisticPost;
