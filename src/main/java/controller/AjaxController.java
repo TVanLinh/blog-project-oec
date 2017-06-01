@@ -22,9 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class AjaxController {
+
     @Autowired
     PostDAO postDAO;
-
 
     @JsonView(Views.Public.class)
     @RequestMapping("/getStatisticPost")
@@ -35,20 +35,17 @@ public class AjaxController {
         return statisticPost;
     }
 
-
-
-
     @RequestMapping(value = "/like")
     @JsonView(Views.Public.class)
     public synchronized UserRestBody like(@RequestBody UserRestBody userRestBody, HttpServletRequest request, HttpServletResponse response) {
 
-        Cookie cookie[] = request.getCookies();
-        Cookie cookieLike = null;
-        for(int i = 0;i<cookie.length;i++)
+        Cookie cookie[]=request.getCookies();
+        Cookie cookieLike=null;
+        for(int i=0;i<cookie.length;i++)
         {
             if (cookie[i].getName().equals("status_like_post"))
             {
-                cookieLike = cookie[i];
+                cookieLike =cookie[i];
                 break;
             }
         }
@@ -62,9 +59,9 @@ public class AjaxController {
             return userRestBody;
         }
 
-        if (cookieLike == null)
+        if (cookieLike==null)
         {
-            cookieLike = new Cookie("status_like_post",userRestBody.getId()+",");
+            cookieLike=new Cookie("status_like_post",userRestBody.getId()+",");
 
             post.setNumberLike(post.getNumberLike()+1);
             postDAO.update(post);
@@ -75,6 +72,9 @@ public class AjaxController {
             userRestBody.setStatusImg("public/asserts/images/like.png");
             cookieLike.setMaxAge(365*360*24);
             response.addCookie(cookieLike);
+            System.out.println(cookieLike.getValue());
+            System.out.println("------------------cookies---nulll---------------------------------");
+            return  userRestBody;
         }
 
         if( (cookieLike!=null&& !CookieUtils.isLike(post.getId(), cookieLike.getValue())))
@@ -90,9 +90,11 @@ public class AjaxController {
             cookieLike.setValue(cookieLike.getValue()+post.getId()+",");
             cookieLike.setMaxAge(365*360*24);
             response.addCookie(cookieLike);
+            System.out.println(cookieLike.getValue());
+            System.out.println("------------------cookies---#not---------------------------------");
             return  userRestBody;
         }
-        String str = CookieUtils.remove(cookieLike.getValue(),post.getId());
+        String str=CookieUtils.remove(cookieLike.getValue(),post.getId());
         cookieLike.setValue(str);
 
         post.setNumberLike(post.getNumberLike()-1);
@@ -101,6 +103,8 @@ public class AjaxController {
         response.addCookie(cookieLike);
         cookieLike.setMaxAge(365*360*24);
 
+        System.out.println("dislike like ");
+        System.out.println("cooke"+cookieLike.getValue());
         userRestBody.setStatusImg("public/asserts/images/notlike.png");
         userRestBody.setNumberLike(post.getNumberLike());
         userRestBody.setCode("200");

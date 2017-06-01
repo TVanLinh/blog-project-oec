@@ -1,9 +1,9 @@
 var A;
 jQuery(document).ready(function($) {
     A={
-        like:function(id,msg,$this,target)
+        like:function(url,id,msg,$this,target)
         {
-            actionLike(id,msg);
+            actionLike(url,id,msg);
             console.log(target);
         },
         getPost:function (msg,page) {
@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
     }
 });
 
-function actionLike(id,msg) {
+function actionLike(url,id,msg) {
 
     var data = {};
     data['id']=id;
@@ -25,7 +25,7 @@ function actionLike(id,msg) {
     $.ajax({
         type : "POST",
         contentType : "application/json",
-        url : "/like",
+        url : url,
         data : JSON.stringify(data),
         dataType : 'json',
         timeout : 1000,

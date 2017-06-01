@@ -13,7 +13,6 @@ import javax.persistence.*;
 @Table(name = "postimage")
 public class Image extends AbstractEntity{
 
-
     @Basic
     @Column(name = "link")
     @JsonView(Views.Public.class)
@@ -35,6 +34,14 @@ public class Image extends AbstractEntity{
     public Image(String link, String alt) {
         this.link = link;
         this.alt = alt;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLink() {

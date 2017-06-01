@@ -9,7 +9,6 @@ import javax.persistence.Table;
 @Table(name = "configuration")
 public class Configuration extends AbstractEntity{
 
-
   @Basic
   @Column(name = "web_title")
   private String webTitle;
@@ -20,6 +19,13 @@ public class Configuration extends AbstractEntity{
   @Column(name = "number_view_post")
   private int numberViewPost;
 
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
 
   public String getWebTitle() {
     return webTitle;
