@@ -57,7 +57,7 @@
                         <a href="<s:url value="/list-post-by-user?username=${post.user.userName}&page=${requestScope.page-1}"/>">&larr; ${messageSource.getMessage("back",null,locale)}</a>
                     </li>
                 </c:if>
-                ${totalList} ${requestScope.limit}
+
                 <c:if test="${requestScope.totalList/requestScope.limit>=(requestScope.page)}">
                     <li class="next">
                         <c:if test="${postList.size()!=0}">
