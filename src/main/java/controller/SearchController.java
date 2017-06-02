@@ -125,7 +125,6 @@ public class SearchController {
         User user;
         int limit = this.configDAO.getAllConfiguration().get(0).getNumberViewPost();
         request.setAttribute("userDAO",this.userDAO);
-
         if(page == null || page.trim().equals("")|| !StringUtils.isNumeric(page)) {
             if(username==null) {
                 return "redirect:/home";
@@ -137,6 +136,7 @@ public class SearchController {
                 setPostList(request,posts);
                 request.setAttribute("page",1);
                 request.setAttribute("totalList", this.postDAO.getAllPost("select * from post where status = 1 and id_user = "+user.getId()).size());
+                request.setAttribute("limit",limit);
                 return  "post-by-user";
             }else{
                 return "redirect:/home";
@@ -150,6 +150,7 @@ public class SearchController {
             setPostList(request,posts);
             request.setAttribute("page",Integer.valueOf(page));
             request.setAttribute("totalList",this.postDAO.getAllPost("select * from post where status = 1 and id_user = "+user.getId()).size());
+            request.setAttribute("limit",limit);
             return  "post-by-user";
         }
 

@@ -37,6 +37,7 @@
 
         <security:logout logout-url="/logout" logout-success-url="/"/>
         <security:csrf disabled="true"/>
+        
     </security:http>
 
     <!-- Select users and user_roles fliquibasebase -->
