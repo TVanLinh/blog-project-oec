@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import service.UserService;
 import utils.page.DefaultPage;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,10 +21,6 @@ import java.util.List;
 public class redirect {
     final static Logger logger = Logger.getLogger(ProcessPost.class);
 
-
-    @Autowired
-    UserService userService;
-
     @Autowired
     UserDAO userDAO;
 
@@ -34,26 +29,26 @@ public class redirect {
     PostDAO postDAO;
 
     @Autowired
-    ConfigurationDAO configDAO;
+    ConfigurationDAO  configDAO;
 
     @Autowired
     DefaultPage defaultPage;
 
     @RequestMapping(value = "/write")
     public  String viewWriter(HttpServletRequest request) {
-        defaultPage.setDaultPage(request);
+        this.defaultPage.setDaultPage(request);
         request.setAttribute("active","write");
         return "write";
     }
 
     @RequestMapping(value={"/","/home"})
     public String homePage(HttpServletRequest request) {
-        defaultPage.setDaultPage(request);
+        this.defaultPage.setDaultPage(request);
         String page=request.getParameter("page");
         List<Post> postList;
 
-        int limit = configDAO.getAllConfiguration().get(0).getNumberViewPost();
-        request.setAttribute("userDAO",userDAO);
+        int limit = this.configDAO.getAllConfiguration().get(0).getNumberViewPost();
+        request.setAttribute("userDAO",this.userDAO);
         if(page == null|| !StringUtils.isNumeric(page) || page.trim().equals("")) {
             postList = this.postDAO.getPost(0,limit);
             setResponeHome(request,postList,1);
@@ -71,13 +66,13 @@ public class redirect {
         request.setAttribute("page",page);
         request.setAttribute("postList",postList);
         request.setAttribute("totalList",this.postDAO.getAllPostPublic().size());
-        request.setAttribute("limit",configDAO.getAllConfiguration().get(0).getNumberViewPost());
+        request.setAttribute("limit",this.configDAO.getAllConfiguration().get(0).getNumberViewPost());
         request.setAttribute("active","home");
     }
 
     @RequestMapping(value = "/post")
     public  String viewPost(HttpServletRequest request) {
-        defaultPage.setDaultPage(request);
+        this.defaultPage.setDaultPage(request);
 
         String id = request.getParameter("id");
         List<Post> postSlideBar = this.postDAO.getAllPost("select * from post  where status=1 and approve=1 order by time_post desc limit 0,5");
@@ -103,7 +98,7 @@ public class redirect {
     @RequestMapping(value = "/tanso")
     public String tanso(HttpServletRequest request)
     {
-        defaultPage.setDaultPage(request);
+        this.defaultPage.setDaultPage(request);
         System.out.println(this.postDAO.getStatisticByMonth());
         return "tanso";
     }

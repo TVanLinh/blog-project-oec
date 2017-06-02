@@ -68,7 +68,7 @@ public class SearchController {
     }
 
     public  boolean defaultSearch(HttpServletRequest request,String page,String searchBy) {
-        request.setAttribute("userSerVice",this.userDAO);
+        request.setAttribute("userDAO",this.userDAO);
         int limit = this.configDAO.getAllConfiguration().get(0).getNumberViewPost();
 
         if(searchBy == null) {
