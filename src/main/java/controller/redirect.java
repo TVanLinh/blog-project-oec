@@ -75,11 +75,16 @@ public class redirect {
         this.defaultPage.setDaultPage(request);
 
         String id = request.getParameter("id");
-        List<Post> postSlideBar = this.postDAO.getAllPost("select * from post  where status=1 and approve=1 order by time_post desc limit 0,5");
+        List<Post> postSlideBar = this.postDAO.getAllPost("select * from post  where status=1 and approve=1 order by time_post desc limit 0," + this.configDAO.getAllConfiguration().get(0).getNumberViewPost());
         request.setAttribute("postSlideBar",postSlideBar);
+        if(id == null ||  !StringUtils.isNumeric(id))
+        {
+            return "redirect:/home";
+        }
+
         if(id != null) {
             try {
-                Post post=this.postDAO.find(Integer.valueOf(id));
+                Post post = this.postDAO.find(Integer.valueOf(id));
                 if(post != null) {
                     post.setNumberView(post.getNumberView()+1);
                     this.postDAO.update(post);
