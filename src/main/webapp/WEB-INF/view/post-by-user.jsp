@@ -42,10 +42,11 @@
                     <p>${post.content.replaceAll(str,"")}...</p>
                 </c:if>
                 <%--<p>${ Jsoup.parse(post.content).text()}</p>--%>
-                <a class="btn btn-primary" href="/post?id=${post.id}" target="_self"> ${messageSource.getMessage("read",null,locale)} <span class="glyphicon glyphicon-chevron-right"></span></a>
-                <c:if test="${sessionScope.username!=null && requestScope.userSerVice.find(post.user.id).userName==sessionScope.username}">
-                    <a id="action-update" href="/update?action=update&id=${post.id}"><img src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a> <a id="action-" onclick="return window.confirm('Are you sure you want to delete this post?')" href="/delete-post?id=${post.id}">${messageSource.getMessage("delete",null,locale)}</a>
+                <a class="btn btn-primary" href="<s:url value="/post?id=${post.id}"/>" target="_self"> ${messageSource.getMessage("read",null,locale)} <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <c:if test="${sessionScope.username!=null && requestScope.userDAO.find(post.user.id).userName==sessionScope.username}">
+                    <a id="action-update" href="<s:url value="/update?action=update&id=${post.id}"/>"><img src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a> <a id="action-" onclick="return window.confirm('Are you sure you want to delete this post?')" href="<s:url value="/delete-post?id=${post.id}"/>">${messageSource.getMessage("delete",null,locale)}</a>
                 </c:if>
+                <hr>
                 <hr>
             </c:forEach>
 

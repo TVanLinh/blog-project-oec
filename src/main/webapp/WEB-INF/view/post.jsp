@@ -21,8 +21,10 @@
                 <h2><a href="<s:url value="/post?id=${post.id}"/>" target="_self">${post.title}</a></h2>
 
                 <span class="lead">
-                        <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span> <a href="index.php" class="fs-15">${post.user.userName}</a>
-                    </span>
+                    <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span>
+                    <a href="<s:url value="/list-post-by-user?username=${post.user.userName}"/>" class="fs-15">${post.user.userName}</a>
+                </span>
+
                 <jsp:useBean id="dateUtil" class="utils.date.DateFormatUtil" scope="session"/>
                 <p><span class="glyphicon glyphicon-time"></span><span class="margin-left-3">${messageSource.getMessage("postTime",null,locale)}</span> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</p>
                 <hr>

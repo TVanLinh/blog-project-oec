@@ -47,6 +47,7 @@ public class AccountController {
     public  String userInfor(Principal principal,HttpServletRequest request) {
             defaultPage.setDaultPage(request);
             String page = request.getParameter("page");
+            request.setAttribute("userDAO",this.userDAO);
             if(request.getSession().getAttribute("username") == null) {
                 System.out.println(principal.getName());
                 System.out.println("Create Session");
