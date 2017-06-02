@@ -3,11 +3,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page isELIgnored="false" %>
 
-<jsp:include page="template/head.jsp"/>
+<jsp:include page="templates/headers/head.jsp"/>
 
 
 <!-- Navigation -->
-<jsp:include page="template/navbar.jsp"/>
+<jsp:include page="templates/navbars/navbar.jsp"/>
 <%--<%@page session="true"%>--%>
 <!-- Page Content -->
 <div class="container">
@@ -39,7 +39,7 @@
         </div>
         <!-- Blog Sidebar Widgets Column -->
         <div>
-            <jsp:include page="template/slidebar.jsp"/>
+            <jsp:include page="templates/slidebar/slidebar.jsp"/>
         </div>
     </div>
     <!-- /.row -->
@@ -48,4 +48,4 @@
 
 
 <script src="<s:url value="/public/asserts/js/main.js"/>"></script>
-    <jsp:include page="template/footer.jsp"/>
+    <jsp:include page="templates/footers/footer.jsp"/>

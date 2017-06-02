@@ -3,12 +3,12 @@
 <%@page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
-<jsp:include page="template/head.jsp"/>
+<jsp:include page="templates/headers/head.jsp"/>
 
 <body>
 
 <!-- Navigation -->
-<jsp:include page="template/navbar.jsp"/>
+<jsp:include page="templates/navbars/navbar.jsp"/>
 
 <div class="container">
     <!-- Blog Entries Column -->
@@ -25,7 +25,7 @@
         <div id="chart1"  class="mgb-30"></div>
 
     <hr>
-    <jsp:include page="template/footer.jsp"/>
+    <jsp:include page="templates/footers/footer.jsp"/>
     </div>
 </div>
 

@@ -1,4 +1,4 @@
-<%@include file="import_libary.jsp"%>
+<%@include file="../components/import_libary.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>

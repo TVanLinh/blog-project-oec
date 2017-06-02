@@ -20,11 +20,11 @@ public class LanguageController {
     public String changeLanguage(HttpServletRequest request, @RequestParam String language) {
 
         if(language == null) {
-            setResource(request,"blog_vn_VN",new Locale("vn","VN"));
+            setResource(request,"i18n/blog_vn_VN",new Locale("vn","VN"));
         }else if(language.trim().equalsIgnoreCase("en")) {
-            setResource(request,"blog_en_US",new Locale("en","US"));
+            setResource(request,"i18n/blog_en_US",new Locale("en","US"));
         }else {
-            setResource(request,"blog_vn_VN",new Locale("vn","VN"));
+            setResource(request,"i18n/blog_vn_VN",new Locale("vn","VN"));
         }
 
         return "redirect:/";

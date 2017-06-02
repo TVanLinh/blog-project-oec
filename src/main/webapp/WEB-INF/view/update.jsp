@@ -3,11 +3,11 @@
 <%@page language="java" pageEncoding="UTF-8" %>
 
 
-<jsp:include page="template/head.jsp"/>
+<jsp:include page="templates/headers/head.jsp"/>
 
 
 <!-- Navigation -->
-<jsp:include page="template/navbar.jsp"/>
+<jsp:include page="templates/navbars/navbar.jsp"/>
 
 <!-- Page Content -->
 <div class="container">
@@ -42,7 +42,7 @@
 
         <!-- Blog Sidebar Widgets Column -->
         <%--<div>--%>
-            <%--<jsp:include page="template/slidebar-post.jsp"/>--%>
+            <%--<jsp:include page="templates/slidebar-post.jsp"/>--%>
         <%--</div>--%>
 
     </div>
@@ -57,4 +57,4 @@
 <%--<button onclick="getImages()">ok</button>--%>
 </body>
 <script type="text/javascript" src="<s:url value="public/asserts/js/check_valid_form.js" />"></script>
-<jsp:include page="template/footer.jsp"/>
+<jsp:include page="templates/footers/footer.jsp"/>

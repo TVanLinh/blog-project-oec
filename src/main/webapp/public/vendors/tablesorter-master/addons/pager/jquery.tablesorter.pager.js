@@ -1116,7 +1116,7 @@
 
 				enablePager(table, p, false);
 				if ( typeof p.ajaxUrl === 'string' ) {
-					// ajax pager; interact with database
+					// ajax pager; interact with liquibase
 					p.ajax = true;
 					// When filtering with ajax, allow only custom filtering function, disable default
 					// filtering since it will be done server side.

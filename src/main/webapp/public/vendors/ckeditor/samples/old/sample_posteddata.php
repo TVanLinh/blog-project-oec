@@ -7,7 +7,7 @@
 
   Please note that CKEditor can be used with any other server-side language than just PHP.
   To save the content created with CKEditor you need to read the POST data on the server
-  side and write it to a file or the database.
+  side and write it to a file or the liquibase.
 
   Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
   For licensing, see LICENSE.md or http://ckeditor.com/license

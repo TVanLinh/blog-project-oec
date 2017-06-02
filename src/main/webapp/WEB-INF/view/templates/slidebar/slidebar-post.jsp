@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
    <div class="hidden-md hidden-xs hidden-sm">
-       <jsp:include page="search2.jsp"   />
+       <jsp:include page="search/search2.jsp"   />
    </div>
     <ul class="media-list main-list" id="content-slidebar">
         <c:forEach var="post" items="${postSlideBar}">

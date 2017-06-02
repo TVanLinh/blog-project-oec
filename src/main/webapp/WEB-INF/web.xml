@@ -87,8 +87,9 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:bean.xml,classpath:spring-security.xml</param-value>
+    <param-value>classpath:config/bean.xml,classpath:config/spring-security.xml</param-value>
   </context-param>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

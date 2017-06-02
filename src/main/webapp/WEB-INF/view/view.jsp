@@ -5,9 +5,9 @@
 <%@ page isELIgnored="false" %>
 
 
-<jsp:include page="template/head.jsp"/>
+<jsp:include page="templates/headers/head.jsp"/>
 
-<jsp:include page="template/navbar.jsp"/>
+<jsp:include page="templates/navbars/navbar.jsp"/>
 <!-- Navigation -->
 <!-- Page Content -->
 <div class="container">
@@ -50,14 +50,14 @@
             <!-- Blog Comments -->
 
             <div id="comment">
-                <jsp:include page="template/comment.jsp"/>
+                <jsp:include page="templates/components/comment.jsp"/>
             </div>
 
         </div>
 
         <!-- Blog Sidebar Widgets Column -->
         <div>
-            <jsp:include page="template/slidebar-post.jsp"/>
+            <jsp:include page="templates/slidebar/slidebar-post.jsp"/>
         </div>
 
     </div>
@@ -72,4 +72,4 @@
 
 <script src="<s:url value="/public/asserts/js/main.js"/>"></script>
 
-<jsp:include page="template/footer.jsp"/>
+<jsp:include page="templates/footers/footer.jsp"/>

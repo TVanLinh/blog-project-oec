@@ -30,7 +30,7 @@ public class FilterLanguage implements Filter{
     public  void setReSource(HttpServletRequest request)
     {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("blog_vn_VN");
+        messageSource.setBasename("i18n/blog_vn_VN");
         messageSource.setDefaultEncoding("UTF-8");
         request.getSession().setAttribute("messageSource",messageSource);
         request.getSession().setAttribute("locale",new Locale("vn","VN"));

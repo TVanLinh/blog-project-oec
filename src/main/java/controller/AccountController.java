@@ -133,7 +133,7 @@ public class AccountController {
             model.addObject("username", userDetail.getUsername());
         }
 
-        model.setViewName("403");
+        model.setViewName("redirect:/home");
         return model;
 
     }

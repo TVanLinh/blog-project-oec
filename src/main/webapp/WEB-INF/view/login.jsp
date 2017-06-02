@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
-<jsp:include page="template/head.jsp"/>
+<jsp:include page="templates/headers/head.jsp"/>
 
 <head>
     <link href="public/asserts/css/form-sigin.css" type="text/css" rel="stylesheet">

@@ -3,22 +3,20 @@
 <%@page isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en">
-<jsp:include page="template/head.jsp"/>
+<jsp:include page="templates/headers/head.jsp"/>
 <body>
 
 <!-- Navigation -->
-<jsp:include page="template/navbar.jsp"/>
+<jsp:include page="templates/navbars/navbar.jsp"/>
 <%--<%@page session="true"%>--%>
 <!-- Page Content -->
 <div class="container">
     <!-- Blog Entries Column -->
     <div class="row">
         <div class="col-md-12">
-            <ul class="list-group menu-admin">
-                <li class="list-inline btn btn-danger mgl-10 mgr-10  mgb-15" ><a href="<s:url value="/manager-post" />"><img src="<s:url value="public/asserts/images/post1.png" />" class="mgr-10">${messageSource.getMessage("managerPost",null,locale)}</a></li>
-                <li class="list-inline btn btn-success mgr-10  mgb-15"><a href="<s:url value="/configuration"/>"><span class="glyphicon glyphicon-cog mgr-5"></span>${messageSource.getMessage("configSystem",null,locale)}</a></li>
-                <li class="list-inline btn btn-warning mgl-10  mgb-15"> <a href="<s:url value="/manager-user"/>"><i class="glyphicon glyphicon-user mgr-10"></i>${messageSource.getMessage("managerUser",null,locale)}</a></li>
-            </ul>
+
+            <jsp:include page="templates/menus/menu-admin.jsp"/>
+
             <form ACTION="<s:url value="/processConfigurarion"/>" METHOD="post">
                 <div class="form-group">
                     <label for="titleBlog">${messageSource.getMessage("titleBlog",null,locale)}:</label>
@@ -48,6 +46,6 @@
     <!-- /.row -->
     <hr>
 </div>
-<jsp:include page="template/footer.jsp"/>
+<jsp:include page="templates/footers/footer.jsp"/>
 
 <script src="<s:url value="/public/asserts/js/main.js"/>"></script>

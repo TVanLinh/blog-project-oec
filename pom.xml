@@ -167,7 +167,7 @@
           <version>3.4.2</version>
           <configuration>
             <propertyFile>src/main/resources/liquibase.properties</propertyFile>
-            <changeLogFile>src/main/resources/database/create_database.xml</changeLogFile>
+            <changeLogFile>src/main/resources/liquibase/create_database.xml</changeLogFile>
           </configuration>
           <executions>
             <execution>
