@@ -1,15 +1,14 @@
 package controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import dao.PostDAO;
 import entities.Post;
 import jsonviews.Views;
-import model.StatisticPost;
 import model.UserRestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import service.PostService;
 import utils.cookie.CookieUtils;
 
 import javax.servlet.http.Cookie;
@@ -24,16 +23,16 @@ import javax.servlet.http.HttpServletResponse;
 public class AjaxController {
 
     @Autowired
-    PostDAO postDAO;
+    PostService postService;
 
-    @JsonView(Views.Public.class)
-    @RequestMapping("/getStatisticPost")
-    public StatisticPost statisticPost(@RequestBody StatisticPost statisticPost)
-    {
-        System.out.println(statisticPost.getMsg());
-        statisticPost.setStatisticPostByMonth(postDAO.getStatisticByMonth());
-        return statisticPost;
-    }
+//    @JsonView(Views.Public.class)
+//    @RequestMapping("/getStatisticPost")
+//    public StatisticPost statisticPost(@RequestBody StatisticPost statisticPost)
+//    {
+//        System.out.println(statisticPost.getMsg());
+//        statisticPost.setStatisticPostByMonth(this.postService.getStatisticByMonth());
+//        return statisticPost;
+//    }
 
     @RequestMapping(value = "/like")
     @JsonView(Views.Public.class)
@@ -53,7 +52,7 @@ public class AjaxController {
         Post post;
         try
         {
-            post = postDAO.find(Integer.valueOf(userRestBody.getId()));
+            post = this.postService.find(Integer.valueOf(userRestBody.getId()));
         }catch (Exception e)
         {
             return userRestBody;
@@ -64,7 +63,7 @@ public class AjaxController {
             cookieLike=new Cookie("status_like_post",userRestBody.getId()+",");
 
             post.setNumberLike(post.getNumberLike()+1);
-            postDAO.update(post);
+            this.postService.save(post);
 
             userRestBody.setNumberLike(post.getNumberLike());
             userRestBody.setCode("200");
@@ -78,7 +77,7 @@ public class AjaxController {
         if( (cookieLike!=null&& !CookieUtils.isLike(post.getId(), cookieLike.getValue())))
         {
             post.setNumberLike(post.getNumberLike()+1);
-            postDAO.update(post);
+            this.postService.save(post);
 
             userRestBody.setNumberLike(post.getNumberLike());
             userRestBody.setCode("200");
@@ -94,13 +93,11 @@ public class AjaxController {
         cookieLike.setValue(str);
 
         post.setNumberLike(post.getNumberLike()-1);
-        postDAO.update(post);
+        this.postService.save(post);
 
         response.addCookie(cookieLike);
         cookieLike.setMaxAge(365*360*24);
 
-        System.out.println("dislike like ");
-        System.out.println("cooke"+cookieLike.getValue());
         userRestBody.setStatusImg("public/asserts/images/notlike.png");
         userRestBody.setNumberLike(post.getNumberLike());
         userRestBody.setCode("200");

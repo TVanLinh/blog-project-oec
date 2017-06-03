@@ -1,7 +1,5 @@
 package controller;
 
-import dao.RoleDAO;
-import dao.UserDAO;
 import entities.Role;
 import entities.User;
 import org.apache.commons.lang3.StringUtils;
@@ -33,16 +31,10 @@ import java.util.List;
 public class ManagerUser {
 
     @Autowired
-    UserDAO userDAO;
-
-    @Autowired
     UserService userService;
 
     @Autowired
     DefaultPage defaultPage;
-
-    @Autowired
-    RoleDAO roleDAO;
 
     @Autowired
     RoleService roleService;
@@ -71,7 +63,7 @@ public class ManagerUser {
         modelMap.addAttribute("roleList",this.userService.findAll(User.class,"user"));
         String []listRoles = request.getParameterValues("listRole");
 
-        if(!userService.checkUserValidUpdate(modelMap,user)||listRoles==null) {
+        if(!this.userService.checkUserValidUpdate(modelMap,user)||listRoles==null) {
             request.setAttribute("error","Not valid!");
             return "update-user";
         }else {
@@ -81,7 +73,7 @@ public class ManagerUser {
                 User user1 = this.userService.getUserByName(user.getUserName());
                 if(user != null)
                 {
-                    this.roleDAO.delete(user1.getUserName());
+                    this.roleService.delete(user1.getUserName());
                 }
                 user1.setRoleList(this.roleService.getListRole(listRoles));
                 user1.setPassWord(user.getPassWord());
