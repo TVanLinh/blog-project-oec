@@ -1,5 +1,9 @@
 package service;
 
+import dao.AbstractDAO;
+import dao.ImageDAO;
+import entities.Image;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,9 +13,31 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class ImageService {
+public class ImageService extends AbstractDAO<Image> {
+
+    @Autowired
+    ImageDAO imageDAO;
 
     public ImageService() {
     }
 
+    public void delete(int id)
+    {
+        this.imageDAO.delete(id);
+    }
+
+    public  Image find(int id)
+    {
+        return  this.imageDAO.find(id);
+    }
+
+    public  void save(Image image)
+    {
+        this.imageDAO.update(image);
+    }
+
+    public  void deleteByIdPost(int id)
+    {
+        this.imageDAO.deleteByIdPost(id);
+    }
 }

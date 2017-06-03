@@ -1,6 +1,5 @@
 package controller;
 
-import dao.ImageDAO;
 import dao.PostDAO;
 import entities.Image;
 import entities.Post;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import service.ImageService;
 import service.UserService;
 import utils.page.DefaultPage;
 
@@ -36,8 +36,7 @@ public class ProcessPost {
     UserService userService;
 
     @Autowired
-    ImageDAO imageDAO;
-
+    ImageService imageService;
 
     @Autowired
     DefaultPage  defaultPage;
@@ -142,7 +141,7 @@ public class ProcessPost {
         }
 
         if(post1.getImage() != null) {
-            this.imageDAO.deleteByIdPost(post1.getId());
+            this.imageService.deleteByIdPost(post1.getId());
             post1.setImage(image);
         }else {
             post1.setImage(image);
