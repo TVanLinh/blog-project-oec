@@ -88,6 +88,14 @@ public class PostService extends AbstractDAO<Post> {
         return query.getResultList().size();
 
     }
+    public  List<Post> getPostByIdUser(int id)
+    {
+        return  this.postDAO.getPostByIdUser(id);
+    }
+    public  List<Post> getPostByIdUser(int id,int offset,int limit)
+    {
+        return  this.postDAO.getPostByIdUser(id,offset,limit);
+    }
     public List<Post> finAll(String query)
     {
         return  this.postDAO.getAllPost(query);

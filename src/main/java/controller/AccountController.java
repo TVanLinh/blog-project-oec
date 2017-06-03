@@ -1,6 +1,5 @@
 package controller;
 
-import dao.PostDAO;
 import entities.Configuration;
 import entities.Post;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import service.ConfigurationService;
+import service.PostService;
 import service.UserService;
 import utils.page.DefaultPage;
 
@@ -31,14 +31,15 @@ import java.util.List;
 @Controller
 public class AccountController {
 
-    @Autowired
-    PostDAO postDAO;
 
     @Autowired
     ConfigurationService   configurationService;
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PostService postService;
 
     @Autowired
     DefaultPage defaultPage;
@@ -53,7 +54,7 @@ public class AccountController {
                 System.out.println(principal.getName());
                 System.out.println("Create Session");
                 HttpSession session=request.getSession();
-                request.setAttribute("postList",postDAO.getPostByIdUser(this.userService.getUserByName(principal.getName()).getId()));
+                request.setAttribute("postList",this.postService.getPostByIdUser(this.userService.getUserByName(principal.getName()).getId()));
                 session.setAttribute("username",principal.getName());
 
                 Configuration configuration = this.configurationService.getAllConfiguration().get(0);
@@ -69,16 +70,16 @@ public class AccountController {
             int limit =   this.configurationService.find(1).getNumberViewPost();
 
             if(page == null) {
-                postList = postDAO.getPostByIdUser(this.userService.getUserByName(principal.getName()).getId(),0,limit);
+                postList = this.postService.getPostByIdUser(this.userService.getUserByName(principal.getName()).getId(),0,limit);
                 setReponseUserInfor(modelMap,postList,1,"author");
                 return "author";
             }
             try {
-                postList = postDAO.getPostByIdUser(this.userService.getUserByName(principal.getName()).getId(),(Integer.valueOf(page)-1)*limit,limit);
+                postList = this.postService.getPostByIdUser(this.userService.getUserByName(principal.getName()).getId(),(Integer.valueOf(page)-1)*limit,limit);
                 setReponseUserInfor(modelMap,postList,Integer.valueOf(page),"author");
 
             }catch (Exception e) {
-                postList = postDAO.getPostByIdUser(this.userService.getUserByName(principal.getName()).getId(),0,limit);
+                postList = this.postService.getPostByIdUser(this.userService.getUserByName(principal.getName()).getId(),0,limit);
                 setReponseUserInfor(modelMap,postList,1,"author");
                 return "author";
             }
