@@ -6,8 +6,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,13 +15,12 @@ import java.util.List;
  */
 
 @Repository
-@Transactional
-public class UserDAOIML implements UserDAO {
+public class UserDAOIML implements  UserDAO ,Serializable{
 
     @Autowired
     SessionFactory sessionFactory;
 
-    @Transactional
+
     public void delete(int idAuthor) {
         Session session = sessionFactory.getCurrentSession();
         User user  = this.find(idAuthor);
@@ -29,14 +28,14 @@ public class UserDAOIML implements UserDAO {
         System.out.println(" delete User success");
     }
 
-    @Transactional
+
     public void update(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(user);
         System.out.println(" update User success");
     }
 
-    @Transactional
+
     public User find(int id) {
         Session session = sessionFactory.getCurrentSession();
         Query query  =  session.createNativeQuery("select * from user where user.id  =  :id",User.class);
@@ -44,7 +43,6 @@ public class UserDAOIML implements UserDAO {
         return (User) query.getSingleResult();
     }
 
-    @Transactional
     public List<User> getAllUser() {
         Session session = sessionFactory.getCurrentSession();
         List<User> list = session.createNativeQuery("select * from user",User.class).getResultList();

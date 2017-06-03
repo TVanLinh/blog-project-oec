@@ -929,7 +929,7 @@ CREATE TABLE `user_roles` (
 -- Dumping data for table `user_roles`
 --
 
-INSERT INTO `user_roles` (`id_user_roles`, `user_name`, `role`) VALUES
+INSERT INTO `user_roles` (id, `user_name`, `role`) VALUES
 (1, 'tvlinh', 'ROLE_USER'),
 (2, 'admin', 'ROLE_ADMIN'),
 (24, 'myuser', 'ROLE_USER'),
@@ -983,7 +983,7 @@ ALTER TABLE `user`
 -- Indexes for table `user_roles`
 --
 ALTER TABLE `user_roles`
-  ADD PRIMARY KEY (`id_user_roles`),
+  ADD PRIMARY KEY (id),
   ADD KEY `fk_user_user_roles` (`user_name`);
 
 --

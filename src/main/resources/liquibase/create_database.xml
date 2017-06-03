@@ -24,7 +24,7 @@
 
      <changeSet id="2" author="Tran Van Linh">
          <createTable tableName="user_roles">
-             <column name="id_user_roles" autoIncrement="true" type="int" >
+             <column name="id" autoIncrement="true" type="int" >
                  <constraints primaryKey="true"/>
              </column>
              <column name="user_name" type="varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci">

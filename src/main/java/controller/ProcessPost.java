@@ -2,7 +2,6 @@ package controller;
 
 import dao.ImageDAO;
 import dao.PostDAO;
-import dao.UserDAO;
 import entities.Image;
 import entities.Post;
 import entities.User;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import service.UserService;
 import utils.page.DefaultPage;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,12 +28,12 @@ import java.util.Date;
 @Controller
 public class ProcessPost {
 
-    @Autowired
-    UserDAO userDAO;
 
     @Autowired
     PostDAO postDAO;
 
+    @Autowired
+    UserService userService;
 
     @Autowired
     ImageDAO imageDAO;
@@ -48,7 +48,7 @@ public class ProcessPost {
         this.defaultPage.setDaultPage(httpServletRequest);
         HttpSession session = httpServletRequest.getSession();
 
-        User user = this.userDAO.getUserByName(principal.getName());
+        User user = this.userService.getUserByName(principal.getName());
         post.setUser(user);
 
         Calendar calendar = Calendar.getInstance();

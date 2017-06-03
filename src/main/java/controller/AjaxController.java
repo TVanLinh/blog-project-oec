@@ -72,8 +72,6 @@ public class AjaxController {
             userRestBody.setStatusImg("public/asserts/images/like.png");
             cookieLike.setMaxAge(365*360*24);
             response.addCookie(cookieLike);
-            System.out.println(cookieLike.getValue());
-            System.out.println("------------------cookies---nulll---------------------------------");
             return  userRestBody;
         }
 
@@ -90,8 +88,6 @@ public class AjaxController {
             cookieLike.setValue(cookieLike.getValue()+post.getId()+",");
             cookieLike.setMaxAge(365*360*24);
             response.addCookie(cookieLike);
-            System.out.println(cookieLike.getValue());
-            System.out.println("------------------cookies---#not---------------------------------");
             return  userRestBody;
         }
         String str=CookieUtils.remove(cookieLike.getValue(),post.getId());

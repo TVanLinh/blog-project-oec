@@ -12,12 +12,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "user_roles")
-public class Role  implements Serializable{
-
-    @Id
-    @Column(name = "id_user_roles")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  int id;
+public class Role extends AbstractEntity  implements Serializable{
 
     @Basic
     @JsonView(Views.Public.class)
