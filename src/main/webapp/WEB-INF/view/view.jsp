@@ -21,9 +21,9 @@
             <%--<!-- Title -->--%>
                 <h2><a href="<s:url value="/post?id=${post.id}"/>" target="_blank">${post.title} </a></h2>
 
-                <span class="lead">
-                        <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span> <a href="#" class="fs-15">${post.user.userName}</a>
-                    </span>
+                <p><span>${messageSource.getMessage("postTime",null,locale)}</span>
+                    ${dateUtil.format(post.timePost,sessionScope.dateFormat)}
+                </p>
                 <jsp:useBean id="dateUtil" class="utils.date.DateFormatUtil" scope="session"/>
                 <p><span class="glyphicon glyphicon-time"></span><span class="margin-left-3">${messageSource.getMessage("postTime",null,locale)}</span> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</p>
                 <hr>

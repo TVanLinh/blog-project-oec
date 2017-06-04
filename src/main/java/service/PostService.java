@@ -37,7 +37,7 @@ public class PostService extends AbstractDAO<Post> {
 
     public List<Post> getAllPNotApprove() {
         String str = "select * from post where approve = 0";
-        return this.postDAO.getAllPost(str);
+        return  sessionFactory.getCurrentSession().createNativeQuery(str,Post.class).getResultList();
     }
 
     public int getCountNotApprove() {

@@ -15,14 +15,18 @@
     <div class="row">
         <div class="col-md-8">
             <s:url value="/action-update-user" var="formAction"/>
-            <form:form ACTION="${formAction}" METHOD="post"  >
+            <form:form ACTION="${formAction}" METHOD="post" onsubmit="return checkFormInsertUser()" >
                 <div class="form-group">
                     <label for="userName">${messageSource.getMessage("name",null,locale)}:</label>
                     <input type="text" class="form-control userName " name="userName" id="userName" value="${requestScope.user.userName}">
                 </div>
                 <div class="form-group">
                     <label for="passWord">${messageSource.getMessage("passWord",null,locale)}:</label>
-                    <input type="password" class="form-control  passWord" name="passWord" id="passWord" value="${requestScope.user.passWord}">
+                    <input type="password" class="form-control  passWord" name="passWord" id="passWord" >
+                </div>
+                <div class="form-group">
+                    <label for="passWord">${messageSource.getMessage("rePassWord",null,locale)}:</label>
+                    <input type="password" class="form-control " name="rePassWord" id="rePassWord">
                 </div>
                 <div class="form-group">
                     <label for="formatTime" id="formatTime" >${messageSource.getMessage("role",null,locale)}:</label>
@@ -33,7 +37,7 @@
 
                         <%--<input type="text" class="form-control pd-0" name="formatTime" id="formatTime">--%>
                 </div>
-                <input type="submit" value="${messageSource.getMessage("save",null,locale)}">
+                <input type="submit" value="${messageSource.getMessage("save",null,locale)}" onclick="return checkFormInsertUser()" onsubmit="return checkFormInsertUser()">
                 <p class="pd-10 error">${requestScope.error}</p>
             </form:form>
         </div>

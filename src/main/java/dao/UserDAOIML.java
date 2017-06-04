@@ -40,7 +40,12 @@ public class UserDAOIML implements  UserDAO ,Serializable{
         Session session = sessionFactory.getCurrentSession();
         Query query  =  session.createNativeQuery("select * from user where user.id  =  :id",User.class);
         query.setParameter("id", id);
-        return (User) query.getSingleResult();
+        List<User> users=query.getResultList();
+        if(users.size()==0)
+        {
+            return  null;
+        }
+        return users.get(0);
     }
 
     public List<User> getAllUser() {

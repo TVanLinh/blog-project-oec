@@ -54,11 +54,10 @@ public class AdminController
             deletePost(request);
             aprrovePost(request);
             postList=this.postService.finAll(this.portSort.getQuerySortAllPostAprrove(request,0,true));
-            setListPost(modelMap,postList);
+            this.postService.setListPost(modelMap,postList,this.postService.getCountNotApprove());
             request.setAttribute("page",1);
             model.setViewName("admin");
             request.setAttribute("active","admin");
-            request.setAttribute("totalPost",this.postService.getCountNotApprove());
             return model;
         }
 
@@ -66,10 +65,10 @@ public class AdminController
         aprrovePost(request);
 
         postList=this.postService.finAll(this.portSort.getQuerySortAllPostAprrove(request,(Integer.valueOf(page)-1)* NumberViewSort.NUMBER_VIEW,true));
-        setListPost(modelMap,postList);
+        this.postService.setListPost(modelMap,postList,this.postService.getCountNotApprove());
         model.setViewName("admin");
+        request.setAttribute("page",Integer.valueOf(page));
         request.setAttribute("active","admin");
-        request.setAttribute("totalPost",this.postService.getCountNotApprove());
         return model;
     }
 
@@ -90,7 +89,7 @@ public class AdminController
         {
 
             postList=this.postService.getContainsTitle(sortType,querySearch,0,0);
-            setListPost(modelMap,postList);
+            this.setListPost(modelMap,postList);
             setResponseSeacchPostAdmin(modelMap,querySearch,"admin",1);
             return "admin";
         }
@@ -112,6 +111,11 @@ public class AdminController
     @RequestMapping(value = "/configuration")
     public  String configurarion(HttpServletRequest request) {
         this.defaultPage.setDaultPage(request);
+        if(request.getSession().getAttribute("error")!=null)
+        {
+            request.setAttribute("error",request.getSession().getAttribute("error"));
+            request.getSession().removeAttribute("error");
+        }
         request.setAttribute("conf",this.configurationService.getAllConfiguration().get(0));
         return "configuration";
     }
@@ -125,7 +129,7 @@ public class AdminController
         String numberPost =request.getParameter("numberPost");
         System.out.println(title+"  \t"+formatTime+"\t"+numberPost);
 
-        if(title == null || formatTime == null || numberPost == null) {
+        if(title == null || formatTime == null || numberPost == null || !utils.string.StringUtils.checkVid(title)) {
             this.setResultConfig(modelMap,"Not valid!");
             return "configuration";
         }
@@ -163,6 +167,7 @@ public class AdminController
                this.defaultPage.setDaultPage(request);
            }
             this.setResultConfig(modelMap,"Successfully !");
+            request.getSession().setAttribute("error","Successfully !");
        }catch (Exception e)
        {
            return "configuration";

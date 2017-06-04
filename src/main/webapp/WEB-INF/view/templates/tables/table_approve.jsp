@@ -13,18 +13,19 @@
             </tr>
         </thead>
         <tbody id="table-post-approve">
+        <jsp:useBean id="dateUtil" class="utils.date.DateFormatUtil" scope="session"/>
         <c:forEach var="post"   items="${postList}"  varStatus="loop">
             <tr >
                 <td>${loop.index+1}</td>
                 <td>${post.user.userName}</td>
                 <td><a href="<s:url value="/post?id=${post.id}"/>">${post.title}</a></td>
-                <td>${post.timePost}</td>
+                <td> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</td>
                 <td>
                     <%--<a href="javascript:void(0)" onclick="A.getPostImprove('/admin-post-approve?action=approve&id='+${post.id},null)"> <span class="glyphicon glyphicon-ok mgr-10"></span></a>--%>
                     <%--<a href="javascript:void(0)" onclick="A.getPostImprove('/admin-post-approve?action=delete&id='+${post.id},null)"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>--%>
-                    <a href="<s:url value="/admin?page=${requestScope.page}&action=approve&id=${post.id}"/>" > <span class="glyphicon glyphicon-ok mgr-10"></span></a>
-                    <a href="<s:url value="/admin?page=${requestScope.page}&action=delete&id=${post.id}"/>" onclick="return window.confirm('Are you sure you want to delete this post?')"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
-                    <a href="<s:url value="/update?action=update&id=${post.id}"/>"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a>
+                    <a href="<s:url value="/admin?page=${requestScope.page}&action=approve&id=${post.id}"/>" title="${messageSource.getMessage("approve",null,locale)} ">  <span class="glyphicon glyphicon-ok mgr-10"></span></a>
+                    <a href="<s:url value="/admin?page=${requestScope.page}&action=delete&id=${post.id}"/>" title="${messageSource.getMessage("delete",null,locale)} " onclick="return window.confirm('Are you sure you want to delete this post?')"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
+                    <a href="<s:url value="/update?action=update&id=${post.id}"/>" title="${messageSource.getMessage("edit",null,locale)}"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a>
 
                 </td>
             </tr>

@@ -26,7 +26,9 @@
                 </span>
 
                 <jsp:useBean id="dateUtil" class="utils.date.DateFormatUtil" scope="session"/>
-                <p><span class="glyphicon glyphicon-time"></span><span class="margin-left-3">${messageSource.getMessage("postTime",null,locale)}</span> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</p>
+                <p><span>${messageSource.getMessage("postTime",null,locale)}</span>
+                    ${dateUtil.format(post.timePost,sessionScope.dateFormat)}
+                </p>
                 <hr>
 
                 <!-- Post Content -->
@@ -51,7 +53,7 @@
                 </c:if>
                 <hr>
                 <div id="comment">
-                   <jsp:include page="templates/components/comment.jsp"/>
+                   <%--<jsp:include page="templates/components/comment.jsp"/>--%>
                </div>
 
             </div>

@@ -25,8 +25,8 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]-z-->
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" type="text/javascript"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" type="text/javascript"></script>
+    <script src="<s:url value="/public/vendors/jshtml5-3.7.0/html5shiv.js"/>" type="text/javascript"></script>
+    <script src="<s:url value="/public/vendors/jshtml5-3.7.0/respond.min.js"/>" type="text/javascript"></script>
     <!--[endif]-->
     <script src="<s:url value="/public/vendors/jquery/jquery-3.2.1.min.js"/>" type="text/javascript"></script>
     <script src="<s:url value="/public/vendors/ckeditor/ckeditor.js"/>" type="text/javascript"></script>

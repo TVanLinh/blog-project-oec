@@ -20,16 +20,21 @@
                         <h1 class="text-center">${messageSource.getMessage("table.Aprrove",null,locale)}</h1>
                     </c:if>
 
-
-                    <!-------form search-------------->
+                </div>
+            <!-------form search-------------->
+            <div class="col-xs-12 col-sm-6 col-sm-push-3">
+                <div class="text-center">
                     <jsp:include page="templates/forms/search3.jsp">
+                        <jsp:param name="searchBy" value="${messageSource.getMessage('searchBy',null,locale)} ${messageSource.getMessage('title',null,locale)}"/>
                         <jsp:param name="action" value="/admin-search-post-approve"/>
                     </jsp:include>
-
-
-                    <jsp:include page="templates/tables/table_approve.jsp"/>
-
                 </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="col-xs-12">
+                <jsp:include page="templates/tables/table_approve.jsp"/>
+            </div>
 
         </div>
     <!-- /.row -->

@@ -13,7 +13,7 @@
 <div class="container">
     <!-- Blog Entries Column -->
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-xs-12">
             <form method="post" action="<s:url value="/action-insert-user"/> "  onsubmit="return checkFormInsertUser()">
                 <div class="form-group">
                     <label for="userName">${messageSource.getMessage("name",null,locale)}:</label>

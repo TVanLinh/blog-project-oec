@@ -17,7 +17,7 @@
         <!-- Blog Post Content Column -->
         <div class="col-lg-12">
         <form:form action="${pageContext.request.contextPath}/write-post"  commandName="post" >
-                <label class="fs-20 text-center">${messageSource.getMessage("title",null,locale)}:</label>
+                <label class="fs-20 text-center capitalize">${messageSource.getMessage("title",null,locale)}:</label>
                 <%--<form:errors path="title"/>--%>
                 <input name="title" id="idTitle" type="text" class="input-xs mgb-40 title" style="margin-bottom: 30px"><br>
                     <textarea class="ckeditor" cols="80" id="content" name="content" rows="30">
@@ -31,9 +31,6 @@
                     <input class="hide" name="alt-image" id="alt-image" type="text" >
                    <input type="submit"  value="${messageSource.getMessage("save",null,locale)}" class="mgt-25 btn-md" onclick="return getImages()" onsubmit="return getImages()">
         </form:form>
-
-            <hr>
-
 
         </div>
 

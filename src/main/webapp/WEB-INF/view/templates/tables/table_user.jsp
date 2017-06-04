@@ -21,8 +21,8 @@
                 <td>${user.passWord}</td>
                 <td>${roleService.getStringFromListRole(user.roleList)}</td>
                 <td>
-                    <a href="<s:url value="/manager-user?action=delete&id=${user.id}"/>" onclick="return window.confirm('Are you sure you want to delete this post?')"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
-                    <a href="<s:url value="/update-user?id=${user.id}"/>"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a>
+                    <a href="<s:url value="/manager-user?action=delete&id=${user.id}"/>" title="${messageSource.getMessage("delete",null,locale)}" onclick="return window.confirm('Are you sure you want to delete this post?')"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
+                    <a href="<s:url value="/update-user?id=${user.id}"/>" title="${messageSource.getMessage("edit",null,locale)}"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a>
                 </td>
             </tr>
         </c:forEach>

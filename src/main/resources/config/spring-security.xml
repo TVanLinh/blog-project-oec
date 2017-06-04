@@ -25,6 +25,7 @@
         <security:intercept-url pattern="/login" access="permitAll()" />
         <!--<security:intercept-url pattern="/logout" access="permitAll()" />-->
         <!-- access denied page -->
+        
         <security:access-denied-handler error-page="/403" />
         <security:form-login
                 login-page="/login"
@@ -46,8 +47,10 @@
             <security:jdbc-user-service data-source-ref="dataSource"
                                users-by-username-query="select user_name,pass_word,enabled from user where user_name=?"
 
-                               authorities-by-username-query="select user_name, role from user_roles where user_name =?  " />
+                               authorities-by-username-query="select user_name, role from user_roles where user_name =?  "
+                />
+             <!--<security:password-encoder ref="encoder"/>-->
             </security:authentication-provider>
     </security:authentication-manager>
-
+    <!--<beans:bean id="encoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>-->
 </beans:beans>

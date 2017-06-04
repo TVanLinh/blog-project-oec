@@ -1,6 +1,5 @@
 package controller;
 
-import dao.PostDAO;
 import entities.Image;
 import entities.Post;
 import entities.User;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import service.ImageService;
+import service.PostService;
 import service.UserService;
 import utils.page.DefaultPage;
 
@@ -28,10 +28,6 @@ import java.util.Date;
 @Controller
 public class ProcessPost {
 
-
-    @Autowired
-    PostDAO postDAO;
-
     @Autowired
     UserService userService;
 
@@ -41,7 +37,8 @@ public class ProcessPost {
     @Autowired
     DefaultPage  defaultPage;
 
-
+    @Autowired
+    PostService postService;
     @RequestMapping(value = "/write-post", method = RequestMethod.POST)
     public ModelAndView processWritePost(@ModelAttribute(value = "post") Post post, HttpServletRequest httpServletRequest, Principal principal) {
         this.defaultPage.setDaultPage(httpServletRequest);
@@ -69,7 +66,7 @@ public class ProcessPost {
             }
             post.setImage(image);
         }
-        this.postDAO.update(post);
+        this.postService.save(post);
         httpServletRequest.setAttribute("post", post);
         session.setAttribute("post-id", post.getId());
         return new ModelAndView("redirect:/view-post");
@@ -90,7 +87,7 @@ public class ProcessPost {
         Integer postId = (Integer) session.getAttribute("post-id");
         try {
             System.out.println("nuber: " + postId);
-            Post post = this.postDAO.find(postId);
+            Post post = this.postService.find(postId);
             if (post != null) {
                 request.setAttribute("post", post);
             }
@@ -108,7 +105,7 @@ public class ProcessPost {
         String postId = request.getParameter("id");
 
         if(action != null && action.trim().equals("update") && postId != null && !postId.trim().equals("")) {
-            session.setAttribute("postUpdate", this.postDAO.find(Integer.valueOf(postId)));
+            session.setAttribute("postUpdate", this.postService.find(Integer.valueOf(postId)));
         }
         return "update";
     }
@@ -121,7 +118,7 @@ public class ProcessPost {
         Post postUpdate = (Post) session.getAttribute("postUpdate");
         Date date = Calendar.getInstance().getTime();
 
-        Post  post1 = this.postDAO.find(postUpdate.getId());
+        Post  post1 = this.postService.find(postUpdate.getId());
         post1.setUpdateTime(date);
         post1.setUserUpdated((String)session.getAttribute("username"));
         post1.setTitle(post.getTitle());
@@ -140,14 +137,25 @@ public class ProcessPost {
             image.setAlt(altImage);
         }
 
-        if(post1.getImage() != null) {
+//        if(post1.getImage() != null) {
+//            this.imageService.deleteByIdPost(post1.getId());
+//            post1.setImage(image);
+//        }else {
+//            post1.setImage(image);
+//        }
+//
+        if(image.getLink()!=null && post1.getImage()!=null)
+        {
             this.imageService.deleteByIdPost(post1.getId());
-            post1.setImage(image);
-        }else {
             post1.setImage(image);
         }
 
-        this.postDAO.update(post1);
+        if(image.getLink()!=null && post1.getImage()==null)
+        {
+            post1.setImage(image);
+        }
+
+        this.postService.save(post1);
         session.setAttribute("post-id",post1.getId());
         session.removeAttribute("postUpdate");
         return "redirect:/view-post";
@@ -157,8 +165,8 @@ public class ProcessPost {
     public String deletePost(@RequestParam(value = "id") int id,HttpServletRequest request) {
         request.setAttribute("page",0);
         System.out.println();
-        if(this.postDAO.find(id) != null) {
-            this.postDAO.delete(id);
+        if(this.postService.find(id) != null) {
+            this.postService.delete(id);
         }
         return "redirect:/user";
     }

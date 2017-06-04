@@ -141,6 +141,7 @@ public class SearchController {
                 modelMap.addAttribute("page",1);
                 modelMap.addAttribute("totalList", this.postService.getCounByIdAndStatus(1,user.getId()));
                 modelMap.addAttribute("limit",limit);
+                modelMap.addAttribute("userName",username);
                 return  "post-by-user";
             }else{
                 return "redirect:/home";
@@ -155,6 +156,7 @@ public class SearchController {
             modelMap.addAttribute("page",Integer.valueOf(page));
             modelMap.addAttribute("totalList", this.postService.getCounByIdAndStatus(1,user.getId()));
             modelMap.addAttribute("limit",limit);
+            modelMap.addAttribute("userName",username);
             return  "post-by-user";
         }
 

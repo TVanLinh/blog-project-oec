@@ -32,12 +32,19 @@ public class UserService  extends AbstractDAO<User> {
     public UserService() {
     }
 
-    public boolean checkUserValidUpdate(ModelMap modelMap, User user) {
-        if (user.getUserName() == null || user.getUserName().trim().equals("")) {
-            modelMap.addAttribute("error", " user name not null!");
+    public boolean checkUserValidUpdate(ModelMap modelMap,User userNew) {
+        if (userNew.getUserName() == null || userNew.getUserName().trim().equals("")) {
+            modelMap.addAttribute("error", " User name not null!");
             return false;
         }
-        if (user.getPassWord() == null || user.getPassWord().trim().equals("")) {
+
+       // User usr = this.userDAO.getUserByName(userNew.getUserName());
+//        if(!userCurrent.getUserName().equalsIgnoreCase(userNew.getUserName()) && usr!=null)
+//        {
+//            modelMap.addAttribute("error","User name available!");
+//            return false;
+//        }
+        if (userNew.getPassWord() == null || userNew.getPassWord().trim().equals("")) {
             modelMap.addAttribute("error", " pass word not nulll!");
             return false;
         }
@@ -97,7 +104,7 @@ public class UserService  extends AbstractDAO<User> {
     }
     public  User find(int id)
     {
-        return  this.find(User.class,"user",id);
+        return  this.userDAO.find(id);
     }
 
     public  User getUserByName(String name)

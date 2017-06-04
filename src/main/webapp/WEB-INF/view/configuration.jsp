@@ -39,7 +39,6 @@
                 </div>
                 <input type="submit" value="${messageSource.getMessage("save",null,locale)}">
                 <p class="pd-10 error">${requestScope.error}</p>
-                <span class="pd-10 error"><%=request.getParameter("error")%></span>
             </form>
         </div>
 

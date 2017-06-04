@@ -16,7 +16,7 @@
         <!-- Blog Post Content Column -->
         <div class="col-lg-12">
             <form:form action="${pageContext.request.contextPath}/write-update"  commandName="post">
-                <label class="fs-20">${messageSource.getMessage("title",null,locale)}:</label>
+                <label class="fs-20 capitalize">${messageSource.getMessage("title",null,locale)}:</label>
                 <%--<form:errors path="title"/>--%>
                 <input name="title" id="idTitle" type="text" class="input-xs mgb-40 title" style=";margin-bottom: 30px" value="${sessionScope.postUpdate.title}"><br>
                 <textarea class="ckeditor" cols="80" id="content" name="content" rows="50">

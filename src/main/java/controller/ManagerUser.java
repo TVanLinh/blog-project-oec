@@ -9,7 +9,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import service.RoleService;
 import service.UserService;
 import utils.number.NumberViewSort;
@@ -20,6 +19,7 @@ import utils.string.StringSessionUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,9 +43,18 @@ public class ManagerUser {
     UserSort userSort;
 
     @RequestMapping(value = "/update-user")
-    public  String pageUpdateUser( HttpServletRequest request, @RequestParam(value = "id") int id) {
+    public  String pageUpdateUser( HttpServletRequest request) {
         this.defaultPage.setDaultPage(request);
-        request.setAttribute("user",this.userService.find(id));
+        String id = request.getParameter("id");
+        if(!StringUtils.isNumeric(id)) {
+            return  "redirect:/manager-user";
+        }
+
+        User user = this.userService.find(Integer.valueOf(id));
+        if(user == null || user.getUserName() == null) {
+            return  "redirect:/manager-user";
+        }
+        request.setAttribute("user",user);
         request.getSession().setAttribute("idUser",id);
         return "update-user";
     }
@@ -103,7 +112,12 @@ public class ManagerUser {
 
         modelMap.addAttribute("roleList",this.userService.findAll(User.class,"user"));
         String []listRoles = request.getParameterValues("listRole");
-
+        String rePassWord=request.getParameter("rePassWord");
+        if(!user.getPassWord().equals(rePassWord))
+        {
+            request.setAttribute("error","Pass word not overlap !");
+            return  pageError ;
+        }
         if(!this.userService.checkUserValidUpdate(modelMap,user)||listRoles==null || !utils.string.StringUtils.checkVid(user.getUserName())) {
             request.setAttribute("error","Not valid!");
             return  pageError ;
@@ -135,10 +149,11 @@ public class ManagerUser {
             }
         }
         request.getSession().setAttribute("errorInsertUser","Update successful .!");
+        request.getSession().removeAttribute("idUser");
         return pageSucssess;
     }
     @RequestMapping("/manager-user")
-    public  String managerUser(HttpServletRequest request,ModelMap modelMap)
+    public  String managerUser(HttpServletRequest request,ModelMap modelMap,Principal principal)
     {
         this.defaultPage.setDaultPage(request);
         List<User> userList;
@@ -159,7 +174,7 @@ public class ManagerUser {
                 return "manager-user";
             }
 
-            deleteUser(request);
+            deleteUser(request,principal);
 
             userList = this.userService.findAll(this.userSort.getQuerySort(request,0));
             setListUser(modelMap,userList);
@@ -167,7 +182,7 @@ public class ManagerUser {
             return "manager-user";
         }
 
-        deleteUser(request);
+        deleteUser(request,principal);
 
         if(this.userSort.getQueryUserByRole(request,0) != null) {
             userList = this.userService.findAll(this.userSort.getQueryUserByRole(request,(Integer.valueOf(page)-1)* NumberViewSort.NUMBER_VIEW));
@@ -189,7 +204,7 @@ public class ManagerUser {
     }
 
 
-    private void deleteUser(HttpServletRequest request)
+    private void deleteUser(HttpServletRequest request, Principal principal)
     {
         String action = request.getParameter("action");
         String id=request.getParameter("id");
@@ -197,10 +212,9 @@ public class ManagerUser {
         if(action != null && action.equals("delete")) {
             if(id != null && StringUtils.isNumeric(id)) {
                 User user = this.userService.find(Integer.valueOf(id));
-                if(user != null) {
+                if(user != null && ! user.getUserName().equalsIgnoreCase(principal.getName())) {
                     this.userService.delete(user.getId());
                 }
-
             }
         }
     }
@@ -229,7 +243,12 @@ public class ManagerUser {
         this.defaultPage.setDaultPage(request);
 
         String[] arr = request.getParameterValues("listRole");
-        if(!this.userService.checkUserInsert(modelMap,user,arr))
+        if(!utils.string.StringUtils.checkVid(user.getUserName()))
+        {
+             modelMap.addAttribute("error","User name not valid");
+            return "insert-user";
+        }
+        if(!this.userService.checkUserInsert(modelMap,user,arr) )
         {
             return "insert-user";
         }
@@ -279,15 +298,15 @@ public class ManagerUser {
     }
 
 
-    @RequestMapping(value = "/client-update-user")
-    public  String  updateClientUser(ModelMap modelMap,HttpServletRequest request,@ModelAttribute User user) {
-        this.defaultPage.setDaultPage(request);
-        if(updateUser(modelMap,request,user,"redirect:/user","update-user").equals("redirect:/user"))
-        {
-            request.getSession().setAttribute("username",user.getUserName());
-        }
-        return updateUser(modelMap,request,user,"redirect:/user","update-user");
-    }
+//    @RequestMapping(value = "/client-update-user")
+//    public  String  updateClientUser(ModelMap modelMap,HttpServletRequest request,@ModelAttribute User user) {
+//        this.defaultPage.setDaultPage(request);
+//        if(updateUser(modelMap,request,user,"redirect:/user","update-user").equals("redirect:/user"))
+//        {
+//            request.getSession().setAttribute("username",user.getUserName());
+//        }
+//        return updateUser(modelMap,request,user,"redirect:/user","update-user");
+//    }
 
 
 }

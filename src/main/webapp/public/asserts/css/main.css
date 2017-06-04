@@ -80,3 +80,15 @@ img
     min-height: 380px;
     max-height: 500px;
 }
+.capitalize
+{
+    text-transform: capitalize;
+}
+.upper-case
+{
+    text-transform: uppercase;
+}
+.lower-case
+{
+    text-transform: lowercase;
+}

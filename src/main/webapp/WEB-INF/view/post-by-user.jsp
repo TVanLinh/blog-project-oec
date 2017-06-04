@@ -15,15 +15,17 @@
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-md-8">
+            <h3>
+                ${messageSource.getMessage("postOf",null,locale)} <span class="color-main2">${requestScope.userName}</span>
+            </h3>
             <c:forEach var="post" items="${postList}">
                 <!-- First Blog Post -->
                 <h2><a href="<s:url value="/post?id=${post.id}"/>" target="_self">${post.title} </a></h2> <!--button>${post.id}</button-->
-
                 <span class="lead">
                             <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span> <a href="/list-post-by-user?username=${post.user.userName}" class="fs-15">${post.user.userName}</a>
-                        </span>
+                </span>
                 <jsp:useBean id="dateUtil" class="utils.date.DateFormatUtil" scope="session"/>
-                <p><span class="glyphicon glyphicon-time"></span><span class="margin-left-3">${messageSource.getMessage("postTime",null,locale)}</span>
+                <p><span>${messageSource.getMessage("postTime",null,locale)}</span>
                         ${dateUtil.format(post.timePost,sessionScope.dateFormat)}
                 </p>
                 <hr>
@@ -46,7 +48,6 @@
                 <c:if test="${sessionScope.username!=null && requestScope.userDAO.find(post.user.id).userName==sessionScope.username}">
                     <a id="action-update" href="<s:url value="/update?action=update&id=${post.id}"/>"><img src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a> <a id="action-" onclick="return window.confirm('Are you sure you want to delete this post?')" href="<s:url value="/delete-post?id=${post.id}"/>">${messageSource.getMessage("delete",null,locale)}</a>
                 </c:if>
-                <hr>
                 <hr>
             </c:forEach>
 
