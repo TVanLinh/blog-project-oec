@@ -167,7 +167,7 @@ public class AdminController
        {
            return "configuration";
        }
-        return "configuration";
+        return "redirect:/configuration";
     }
 
     private void  setResultConfig(ModelMap modelMap,String err)

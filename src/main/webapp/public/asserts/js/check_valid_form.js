@@ -97,3 +97,25 @@ function  checkFormInsertUser() {
     }
     return true;
 }
+
+function  checkFormValidPassWord() {
+    var passWord=document.getElementById("passWord").value;
+    var rePassWord=document.getElementById("rePassWord").value;
+    var oldPassWord=document.getElementById("oldPassWord").value;
+    if(oldPassWord.trim()==="")
+    {
+        window.alert("Enter old word !");
+        return false;
+    }
+    if(passWord.trim()==="")
+    {
+        window.alert("Enter pass word !");
+        return false;
+    }
+    if(passWord.trim()!==""&&passWord.trim()!=rePassWord.trim())
+    {
+        window.alert("The two passwords do not overlap !");
+        return false;
+    }
+    return true;
+}

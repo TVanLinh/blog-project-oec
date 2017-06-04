@@ -16,7 +16,9 @@
             <jsp:include page="templates/menus/menu-admin.jsp"/>
 
             <a class="btn btn-default mgb-15" href="<s:url value="/insert-user"/>"><img src="<s:url value="public/asserts/images/add_user.png"/> " class="mgr-10">${messageSource.getMessage("insertUser",null,locale)}</a>
-
+           <c:if  test="${requestScope.errorInsertUser!=null}">
+               <span class="error">${requestScope.errorInsertUser}</span>
+           </c:if>
             <jsp:include page="templates/forms/search3.jsp">
                   <jsp:param name="action" value="/manager-user-search"/>
             </jsp:include>

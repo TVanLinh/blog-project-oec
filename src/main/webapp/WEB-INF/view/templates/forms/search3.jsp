@@ -46,4 +46,4 @@
 </div>
 
 
-<script src="<s:url value="public/asserts/js/search.js"/> "></script>
+<script src="<s:url value="/public/asserts/js/search.js"/> "></script>

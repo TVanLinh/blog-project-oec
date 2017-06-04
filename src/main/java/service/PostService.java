@@ -3,14 +3,18 @@ package service;
 import dao.AbstractDAO;
 import dao.PostDAO;
 import entities.Post;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 import utils.number.NumberViewSort;
 import utils.sort.SortType;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -92,10 +96,29 @@ public class PostService extends AbstractDAO<Post> {
     {
         return  this.postDAO.getPostByIdUser(id);
     }
+
     public  List<Post> getPostByIdUser(int id,int offset,int limit)
     {
         return  this.postDAO.getPostByIdUser(id,offset,limit);
     }
+
+    public  List<Post> getPostByIdUser(SortType sortType, String querySearch,int userId, int offset) {
+        String string = "  select * from  post where id_user = :id_user and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + NumberViewSort.NUMBER_VIEW;
+        Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
+        query.setParameter("querySearch", "%" + querySearch + "%");
+        query.setParameter("id_user", userId);
+        return query.getResultList();
+    }
+
+    public int getCountByUserContainsTitle(String querySearch,int idUser)
+    {
+        String string = "  select * from  post where id_user = :id_user and title like :querySearch";
+        Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
+        query.setParameter("querySearch", "%" + querySearch + "%");
+        query.setParameter("id_user", idUser);
+        return query.getResultList().size();
+    }
+
     public List<Post> finAll(String query)
     {
         return  this.postDAO.getAllPost(query);
@@ -128,5 +151,33 @@ public class PostService extends AbstractDAO<Post> {
     public  int getCountPublic()
     {
         return this.postDAO.getAllPostPublic().size();
+    }
+
+    public void deletePost(HttpServletRequest request) {
+        String action = request.getParameter("action");
+        String id  = request.getParameter("id");
+
+        if(action != null &&action.equals("delete")) {
+            if(id != null && StringUtils.isNumeric(id)) {
+                if(this.find(Integer.valueOf(id)) != null) {
+                    this.delete(Integer.valueOf(id));
+                }
+            }
+        }
+    }
+
+    public  void setListPost(ModelMap modelMap, List<Post> postList,int total) {
+        if (postList == null) {
+            postList = new ArrayList<Post>();
+        }
+        modelMap.addAttribute("postList", postList);
+        modelMap.addAttribute("totalPost", total);
+    }
+
+    public void setResultQuerySearch(ModelMap modelMap,String querySearch,int page,int totalPost)
+    {
+        modelMap.addAttribute("page",page);
+        modelMap.addAttribute("querySearch",querySearch);
+        modelMap.addAttribute("totalPost",totalPost);
     }
 }

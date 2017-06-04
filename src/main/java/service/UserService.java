@@ -108,4 +108,5 @@ public class UserService  extends AbstractDAO<User> {
     {
         return this.userDAO.getAllUser(query);
     }
+
 }

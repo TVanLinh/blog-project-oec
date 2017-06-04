@@ -16,5 +16,7 @@ public class StringSessionUtil {
 //    public  static final  String CurrentUserSort ="current_sort";
     public  static final  String CURRENT_USER_SORT = "current_sort";
 
+    public  static final  String POST_ALL_TYPE_SORT_BY_USER = "POST_ALL_TYPE_SORT_BY_USER";
 
+    public  static  final String CURRENT_POST_ALL_TYPE_SORT_BY_USER = "CURRENT_POST_ALL_TYPE_SORT_BY_USER";
 }

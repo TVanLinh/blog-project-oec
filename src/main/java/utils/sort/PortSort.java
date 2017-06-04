@@ -1,5 +1,6 @@
 package utils.sort;
 
+import entities.User;
 import org.springframework.stereotype.Component;
 import utils.number.NumberViewSort;
 import utils.string.StringSessionUtil;
@@ -160,5 +161,54 @@ public class PortSort {
         return  false;
     }
 
+    public String getQuerySortAllPostByUserName(HttpServletRequest request, int ofset, User user) {
+
+        HttpSession session = request.getSession();
+        String orderBy = request.getParameter("orderBy");
+        List<SortType> orderList = (List<SortType>) session.getAttribute(StringSessionUtil.POST_ALL_TYPE_SORT_BY_USER);
+        SortType sortItem;
+
+        if(orderBy != null) {
+            if(!checkOrderBy(orderBy))
+            {
+                orderBy="title";
+            }
+            session.setAttribute(StringSessionUtil.CURRENT_POST_ALL_TYPE_SORT_BY_USER,orderBy);
+        } else {
+            orderBy = (String) session.getAttribute(StringSessionUtil.CURRENT_POST_ALL_TYPE_SORT_BY_USER);
+            if(orderBy == null) {
+                session.setAttribute(StringSessionUtil.CURRENT_POST_ALL_TYPE_SORT_BY_USER,"title");
+            }
+        }
+
+        if (orderList == null) {
+            orderList = new ArrayList<SortType>();
+            sortItem = new SortType();
+            if (orderBy == null || orderBy.trim().equals("")) {
+                sortItem.orderBy = "title";
+            } else {
+                sortItem.orderBy = orderBy;
+            }
+            orderList.add(sortItem);
+            session.setAttribute(StringSessionUtil.POST_ALL_TYPE_SORT_BY_USER, orderList);
+            return "select * from post where id_user = "+user.getId() +" order by  " + sortItem.orderBy + " " + sortItem.typeOrder + " limit " + ofset+ "," + NumberViewSort.NUMBER_VIEW;
+        }
+
+        sortItem = this.getSortType(orderBy, orderList);
+
+        if (sortItem == null) {
+            sortItem = new SortType();
+            sortItem.orderBy = orderBy;
+            sortItem.typeOrder = "desc";
+            orderList.add(sortItem);
+        } else {
+            if(request.getParameter("page") == null)
+            {
+                sortItem.toggleTypeOrder();
+            }
+        }
+        session.setAttribute(StringSessionUtil.POST_ALL_TYPE_SORT_BY_USER, orderList);
+        return "select * from post where id_user = "+user.getId() +" order by  " + sortItem.orderBy + " " + sortItem.typeOrder + " limit " +ofset + "," + NumberViewSort.NUMBER_VIEW;
+    }
 }
 
