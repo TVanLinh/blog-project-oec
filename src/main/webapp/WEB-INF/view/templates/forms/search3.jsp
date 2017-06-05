@@ -3,11 +3,11 @@
 <!-- Blog Search class="well" Well -->
 <div >
     <%--<h4>Blog Search</h4>--%>
-        <form method="get" action="<s:url value="${param.action}"/> " onsubmit="return checkFormValid()">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="${param.searchBy}" id="search" name="query_search" onsubmit="return checkFormValid()" value="${requestScope.querySearch}">
+        <form method="get" action="<s:url value="${param.action}"/> " onsubmit="return mySearch.checkFormSearchValid('#search')">
+            <div class="input-group search">
+                <input type="text" class="form-control " placeholder="${param.searchBy}" id="search" name="query_search" onsubmit="return mySearch.checkFormSearchValid('#search')" value="${requestScope.querySearch}">
                 <span class="input-group-btn">
-                <button class="btn btn-default" type="submit"  onclick="return checkFormValid()" onsubmit="return checkFormValid()" >
+                <button class="btn btn-default" type="submit"  onclick="return mySearch.checkFormSearchValid('#search')" onsubmit="return mySearch.checkFormSearchValid('#search')" >
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
                 </span>

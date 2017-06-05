@@ -1,16 +1,16 @@
 <%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="search-home" class="search-hide">
-    <form action="<s:url value="/view-search"/> " onsubmit="return checkFormValid()">
+    <form action="<s:url value="/view-search"/>" onsubmit="return mySearch.checkFormSearchValid('#search')">
         <div class="input-group">
-            <input type="text" name="title" id="search" class="form-control" placeholder="${messageSource.getMessage('searchBy',null,locale)} ${messageSource.getMessage('title',null,locale)}" >
+            <input type="text" name="title" id="search1" class="form-control" onsubmit="return mySearch.checkFormSearchValid('#search')" placeholder="${messageSource.getMessage('searchBy',null,locale)} ${messageSource.getMessage('title',null,locale)}" >
             <div class="input-group-btn">
-                <button class="btn btn-default" type="submit" onsubmit="return checkFormValid()" onclick="return checkFormValid()">
+                <button class="btn btn-default" type="submit" onclick="return mySearch.checkFormSearchValid('#search1')" onsubmit="return mySearch.checkFormSearchValid('#search')">
                     <i class="glyphicon glyphicon-search"></i>
                 </button>
             </div>
         </div>
     </form>
 </div>
-<div id="place-holder" class="mgb-30">
+<div id="place-holder" class="">
 
 </div>

@@ -7,15 +7,19 @@
 <jsp:include page="templates/navbars/navbar.jsp"/>
 <%--<%@page session="true"%>--%>
 <!-- Page Content -->
-<div class="container">
+<div class="container-fluid">
     <!-- Blog Entries Column -->
     <div class="row">
-        <div class="col-xs-12">
-
+        <div class="col-md-2 col-xs-12">
             <jsp:include page="templates/menus/menu-admin.jsp"/>
-            <!----------------end list-table ------------------------->
         </div>
-        <div class="col-xs-12 col-sm-6 col-sm-push-3">
+        <c:if test="${postList.size()!=0}">
+            <h1 class="text-center">${messageSource.getMessage("listpost",null,locale)}</h1>
+        </c:if>
+        <c:if test="${postList.size()==0}">
+            <h1 class="text-center">${messageSource.getMessage("notpost",null,locale)}</h1>
+        </c:if>
+        <div class="col-md-10 col-xs-12 ">
             <div class="text-center">
                 <jsp:include page="templates/forms/search3.jsp">
                     <jsp:param name="searchBy" value="${messageSource.getMessage('searchBy',null,locale)} ${messageSource.getMessage('title',null,locale)}"/>

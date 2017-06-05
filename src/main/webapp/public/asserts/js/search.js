@@ -13,6 +13,9 @@ jQuery(document).ready(function($) {
         },
         checkSearch:function (id) {
             cheackSearch(id);
+        },
+        checkFormSearchValid:function (taget) {
+           return checkFormSearchValid(taget);
         }
     };
 
@@ -138,6 +141,16 @@ function  checkFormValid() {
     if(value.trim()==="")
     {
         window.alert("Enter key word to search..!")
+        return false;
+    }
+    return true;
+}
+
+function  checkFormSearchValid(taget) {
+    var value=$(taget).val();
+    if(value.trim()===""||$(taget).length<0)
+    {
+        window.alert("Enter key word to search. .!")
         return false;
     }
     return true;
