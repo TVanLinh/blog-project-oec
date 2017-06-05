@@ -51,6 +51,13 @@ public class PostService extends AbstractDAO<Post> {
         query.setParameter("approve", approve);
         return query.getResultList();
     }
+    public List<Post> getContainsTitle(SortType sortType, String querySearch, int approve, int offset,int limit) {
+        String string = "  select * from  post where approve = :approve and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
+        Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
+        query.setParameter("querySearch", "%" + querySearch + "%");
+        query.setParameter("approve", approve);
+        return query.getResultList();
+    }
 
     public int getCountContainsTitle(String querySearch, int approve) {
         String string = "  select * from  post where approve = :approve and title like :querySearch";
@@ -66,6 +73,7 @@ public class PostService extends AbstractDAO<Post> {
         query.setParameter("querySearch", "%" + querySearch + "%");
         return query.getResultList();
     }
+
 
     public int getCountAllByTitle(String querySearch) {
         String str = "select * from  post where title like :querySearch";
@@ -110,6 +118,18 @@ public class PostService extends AbstractDAO<Post> {
         return query.getResultList();
     }
 
+    public  List<Post> getPostPublicByTitle(SortType sortType, String querySearch, int offset,int limit) {
+        String string = "  select * from  post where approve = 1 and status = 1 and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
+        Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
+        query.setParameter("querySearch", "%" + querySearch + "%");
+        return query.getResultList();
+    }
+    public  List<Post> getPostPublicByTitle(SortType sortType, String querySearch) {
+        String string = "  select * from  post where approve = 1 and status = 1 and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder ;
+        Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
+        query.setParameter("querySearch", "%" + querySearch + "%");
+        return query.getResultList();
+    }
     public int getCountByUserContainsTitle(String querySearch,int idUser)
     {
         String string = "  select * from  post where id_user = :id_user and title like :querySearch";
@@ -171,13 +191,13 @@ public class PostService extends AbstractDAO<Post> {
             postList = new ArrayList<Post>();
         }
         modelMap.addAttribute("postList", postList);
-        modelMap.addAttribute("totalPost", total);
+        modelMap.addAttribute("totalList", total);
     }
 
     public void setResultQuerySearch(ModelMap modelMap,String querySearch,int page,int totalPost)
     {
         modelMap.addAttribute("page",page);
         modelMap.addAttribute("querySearch",querySearch);
-        modelMap.addAttribute("totalPost",totalPost);
+        modelMap.addAttribute("totalList",totalPost);
     }
 }

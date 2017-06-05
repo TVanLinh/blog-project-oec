@@ -104,26 +104,35 @@ public class ProcessPost {
         String action = request.getParameter("action");
         String postId = request.getParameter("id");
 
-        if(action != null && action.trim().equals("update") && postId != null && !postId.trim().equals("")) {
-            session.setAttribute("postUpdate", this.postService.find(Integer.valueOf(postId)));
+        if(!org.apache.commons.lang3.StringUtils.isNumeric(postId) || !"update".equals(action)) {
+            return "redirect:/home";
         }
+        if(this.postService.find(Integer.valueOf(postId))==null)
+        {
+            return "redirect:/home";
+        }
+        session.setAttribute("postUpdate", this.postService.find(Integer.valueOf(postId)));
         return "update";
     }
 
     @RequestMapping(value = "/write-update",method = RequestMethod.POST)
-    public  String viewUpdatePost(@ModelAttribute(value = "post")Post post, HttpServletRequest request) {
+    public  String viewUpdatePost(@ModelAttribute(value = "post")Post post, HttpServletRequest request,Principal principal) {
         this.defaultPage.setDaultPage(request);
         HttpSession session = request.getSession();
 
         Post postUpdate = (Post) session.getAttribute("postUpdate");
+        if(!postUpdate.getUser().getUserName().equals(principal.getName()) || !this.userService.isRoleAdmin(this.userService.getUserByName(principal.getName())))
+        {
+            return "redirect:/home";
+        }
+
         Date date = Calendar.getInstance().getTime();
 
-        Post  post1 = this.postService.find(postUpdate.getId());
-        post1.setUpdateTime(date);
-        post1.setUserUpdated((String)session.getAttribute("username"));
-        post1.setTitle(post.getTitle());
-        post1.setContent(post.getContent());
-        post1.setStatus(post.getStatus());
+        postUpdate.setUpdateTime(date);
+        postUpdate.setUserUpdated((String)session.getAttribute("username"));
+        postUpdate.setTitle(post.getTitle());
+        postUpdate.setContent(post.getContent());
+        postUpdate.setStatus(post.getStatus());
 
         String linkImage = request.getParameter("link-image");
         String altImage = request.getParameter("alt-image");
@@ -137,38 +146,33 @@ public class ProcessPost {
             image.setAlt(altImage);
         }
 
-//        if(post1.getImage() != null) {
-//            this.imageService.deleteByIdPost(post1.getId());
-//            post1.setImage(image);
-//        }else {
-//            post1.setImage(image);
-//        }
-//
-        if(image.getLink()!=null && post1.getImage()!=null)
+        if(image.getLink()!=null && postUpdate.getImage()!=null)
         {
-            this.imageService.deleteByIdPost(post1.getId());
-            post1.setImage(image);
+            this.imageService.deleteByIdPost(postUpdate.getId());
+            postUpdate.setImage(image);
         }
 
-        if(image.getLink()!=null && post1.getImage()==null)
+        if(image.getLink()!=null && postUpdate.getImage()==null)
         {
-            post1.setImage(image);
+            postUpdate.setImage(image);
         }
 
-        this.postService.save(post1);
-        session.setAttribute("post-id",post1.getId());
+        this.postService.save(postUpdate);
+        session.setAttribute("post-id",postUpdate.getId());
         session.removeAttribute("postUpdate");
         return "redirect:/view-post";
     }
 
     @RequestMapping(value = "/delete-post")
-    public String deletePost(@RequestParam(value = "id") int id,HttpServletRequest request) {
-        request.setAttribute("page",0);
-        System.out.println();
-        if(this.postService.find(id) != null) {
-            this.postService.delete(id);
+    public String deletePost(@RequestParam(value = "id") int id,Principal principal) {
+        Post post = this.postService.find(id);
+        if( post != null) {
+            if(post.getUser().getUserName().equals(principal.getName()) || this.userService.isRoleAdmin(this.userService.getUserByName(principal.getName())))
+            {
+                this.postService.delete(id);
+            }
         }
-        return "redirect:/user";
+        return "redirect:/home";
     }
 
 }

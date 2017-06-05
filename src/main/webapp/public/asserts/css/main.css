@@ -1,5 +1,6 @@
 a,a:active,a:hover,a:focus{
     text-decoration: none;
+    word-wrap: break-word;
 }
 /*a:active*/
 /*{*/
@@ -91,4 +92,57 @@ img
 .lower-case
 {
     text-transform: lowercase;
+}
+
+#search-home{
+    position: absolute;
+    margin-left: auto;
+    max-width: 500px !important;
+    width: 100%;
+    right: 30px;
+    transition: 0.5s ease-in-out;
+    top:56px;
+    margin-bottom:30px;
+    z-index: 455;
+    overflow: hidden;
+}
+
+.navbar
+{
+    z-index: 9999;
+}
+.search-hide
+{
+    transform:translateY(-400px);
+    overflow: hidden;
+}
+
+.search-show{
+    transform:translateY(0px);
+}
+#search-home .btn
+{
+
+}
+#search-home #search
+{
+    padding: 20px;
+}
+#search-home .btn
+{
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+@media (max-width: 767px) {
+    #search-home
+    {
+        top:auto;
+        right: auto;
+        margin-right: auto;
+    }
+}
+#status
+{
+    width: auto;
 }

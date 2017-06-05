@@ -104,7 +104,7 @@ public class AdminController
     {
         modelMap.addAttribute("page",page);
         modelMap.addAttribute("querySearch",querySearch);
-        modelMap.addAttribute("totalPost",this.postService.getCountContainsTitle(querySearch,0));
+        modelMap.addAttribute("totalList",this.postService.getCountContainsTitle(querySearch,0));
         modelMap.addAttribute("active",pageActive);
     }
 
@@ -233,7 +233,7 @@ public class AdminController
     {
         modelMap.addAttribute("page",page);
         modelMap.addAttribute("querySearch",querySearch);
-        modelMap.addAttribute("totalPost",this.postService.getCountAllByTitle(querySearch));
+        modelMap.addAttribute("totalList",this.postService.getCountAllByTitle(querySearch));
     }
 
     private void setListPost(ModelMap modelMap,List<Post> postList) {
@@ -241,7 +241,7 @@ public class AdminController
             postList = new ArrayList<Post>();
         }
         modelMap.addAttribute("postList",postList);
-        modelMap.addAttribute("totalPost",this.postService.getCount());
+        modelMap.addAttribute("totalList",this.postService.getCount());
     }
 
     private void deletePost(HttpServletRequest request) {

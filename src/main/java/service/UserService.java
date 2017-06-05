@@ -2,6 +2,7 @@ package service;
 
 import dao.AbstractDAO;
 import dao.UserDAO;
+import entities.Role;
 import entities.User;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.SessionFactory;
@@ -116,4 +117,18 @@ public class UserService  extends AbstractDAO<User> {
         return this.userDAO.getAllUser(query);
     }
 
+    public  boolean isRoleAdmin(User user)
+    {
+        List<Role> role=user.getRoleList();
+        if(role == null && role.size()  == 0) {
+            return false;
+        }
+        for (Role role1:role)
+        {
+            if(role1.getRole().equals("ROLE_ADMIN")) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

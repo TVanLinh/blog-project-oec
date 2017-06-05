@@ -27,7 +27,7 @@
                     <label for="passWord">${messageSource.getMessage("rePassWord",null,locale)}:</label>
                     <input type="password" class="form-control " name="rePassWord" id="rePassWord">
                 </div>
-                <input type="submit" value="${messageSource.getMessage("save",null,locale)}" onsubmit="return checkFormValidPassWord()" onclick="return checkFormInsertUser()">
+                <input type="submit" class="btn btn-default" value="${messageSource.getMessage("save",null,locale)}" onsubmit="return checkFormValidPassWord()" onclick="return checkFormInsertUser()">
                 <p class="pd-10 error">${requestScope.error}</p>
             </form>
         </div>

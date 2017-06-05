@@ -24,10 +24,10 @@
         </div>
         <!-- Blog Sidebar Widgets Column -->
         <div>
-            <%--<jsp:include page="templates/slidebar/slidebar.jsp">--%>
-                <%--<jsp:param name="action" value="mySearch.formSearch('/user-search?title=','#search')"/>--%>
-                <%--<jsp:param name="urlTarget" value="/user-search"/>--%>
-            <%--</jsp:include>--%>
+            <jsp:include page="templates/slidebar/slidebar.jsp">
+                <jsp:param name="action" value="mySearch.formSearch('/user-search?title=','#search')"/>
+                <jsp:param name="urlTarget" value="/user-search"/>
+            </jsp:include>
         </div>
 
     </div>

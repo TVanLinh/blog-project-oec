@@ -15,29 +15,10 @@
 
         <!-- Blog Post Content Column -->
         <div class="col-lg-12">
-            <form:form action="${pageContext.request.contextPath}/write-update"  commandName="post">
-                <label class="fs-20 capitalize">${messageSource.getMessage("title",null,locale)}:</label>
-                <%--<form:errors path="title"/>--%>
-                <input name="title" id="idTitle" type="text" class="input-xs mgb-40 title" style=";margin-bottom: 30px" value="${sessionScope.postUpdate.title}"><br>
-                <textarea class="ckeditor" cols="80" id="content" name="content" rows="50">
-                     ${sessionScope.postUpdate.content}
-                    </textarea>
-                <select name="status" >
-                    <option value="1" >${messageSource.getMessage("public",null,locale)}</option>
-                    <option value="0">${messageSource.getMessage("private",null,locale)}</option>
-                </select>
-                <input class="hide" name="link-image" id="link-image" type="text" >
-                <input class="hide" name="alt-image" id="alt-image" type="text" >
-                <input type="submit" value="${messageSource.getMessage("save",null,locale)}" class="mgt-25 btn-md" onclick="return getImages()" onsubmit="return getImages()">
-            </form:form>
-
-            <hr>
-
-            <!-- Blog Comments -->
-            <%--<div id="comment">--%>
-            <%--<jsp:include page="comment.jsp"/>--%>
-            <%--</div>--%>
-
+           <jsp:include page="templates/forms/write-post.jsp">
+               <jsp:param name="title" value="${sessionScope.postUpdate.title}"/>
+               <jsp:param name="content" value="${sessionScope.postUpdate.content}"/>
+           </jsp:include>
         </div>
 
         <!-- Blog Sidebar Widgets Column -->

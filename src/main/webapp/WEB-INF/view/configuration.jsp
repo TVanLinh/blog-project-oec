@@ -37,7 +37,7 @@
                     <label for="numberPost">${messageSource.getMessage("numberView",null,locale)}:</label>
                     <input type="number" min="1"  value="${requestScope.conf.numberViewPost}" class="form-control pd-0" name="numberPost" id="numberPost">
                 </div>
-                <input type="submit" value="${messageSource.getMessage("save",null,locale)}">
+                <input type="submit" class="btn btn-default" value="${messageSource.getMessage("save",null,locale)}">
                 <p class="pd-10 error">${requestScope.error}</p>
             </form>
         </div>

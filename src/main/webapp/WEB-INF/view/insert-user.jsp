@@ -36,7 +36,7 @@
 
                     <%--<input type="text" class="form-control pd-0" name="formatTime" id="formatTime">--%>
                 </div>
-                <input type="submit" value="${messageSource.getMessage("save",null,locale)}" onsubmit="return checkFormInsertUser()" onclick="return checkFormInsertUser()">
+                <input type="submit" class="btn btn-default" value="${messageSource.getMessage("save",null,locale)}" onsubmit="return checkFormInsertUser()" onclick="return checkFormInsertUser()">
                 <p class="pd-10 error">${requestScope.error}</p>
             </form>
         </div>

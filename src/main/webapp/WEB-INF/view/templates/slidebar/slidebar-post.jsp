@@ -1,8 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-   <div class="hidden-md hidden-xs hidden-sm">
-       <jsp:include page="../forms/search2.jsp"   />
-   </div>
+   <%--<div class="hidden-md hidden-xs hidden-sm">--%>
+       <%--<jsp:include page="../forms/search2.jsp"   />--%>
+   <%--</div>--%>
+       <H3 class="color-red bgc-color-gray fs-25  pd-15 mgb-25" >Bai viet moi nhat</H3>
     <ul class="media-list main-list" id="content-slidebar">
         <c:forEach var="post" items="${postSlideBar}">
             <li class="media" >
