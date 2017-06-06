@@ -68,14 +68,14 @@ public class PostDAOIML implements PostDAO {
 
     public List<Post> getPostByIdUser(int idUser, int from, int limit) {
         Session session = sessionFactory.getCurrentSession();
-        String str = "select * from post where id_user=" + idUser + "  order by time_post desc limit " + from + "," + limit + "";
+        String str = "select * from post where id_user = " + idUser + "  order by time_post desc limit " + from + "," + limit + "";
         List<Post> list = session.createNativeQuery(str, Post.class).getResultList();
         return list;
     }
 
     public List<Post> getPostByIdUser(int idUser) {
         Session session = sessionFactory.getCurrentSession();
-        String str = "select * from post where id_user=" + idUser + "  order by time_post desc";
+        String str = "select * from post where id_user = " + idUser + "  order by time_post desc";
         List<Post> list = session.createNativeQuery(str, Post.class).getResultList();
         return list;
     }

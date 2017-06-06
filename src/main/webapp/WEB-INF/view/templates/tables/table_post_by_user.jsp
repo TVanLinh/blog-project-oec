@@ -41,7 +41,7 @@
                 <td>${post.numberLike}</td>
                 <td>${post.numberView}</td>
                 <td>
-                   <a href="<s:url value="/manager-post?page=${requestScope.page}&&action=delete&&id=${post.id}"/>" title="${messageSource.getMessage("delete",null,locale)}" onclick="return window.confirm('Are you sure you want to delete this post?')"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
+                   <a href="<s:url value="/user?page=${requestScope.page}&&action=delete&&id=${post.id}"/>" title="${messageSource.getMessage("delete",null,locale)}" onclick="return window.confirm('Are you sure you want to delete this post?')"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
                     <a href="<s:url value="/update?action=update&id=${post.id}"/>" title="${messageSource.getMessage("edit",null,locale)}"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a>
                 </td>
             </tr>

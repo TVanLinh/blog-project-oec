@@ -23,10 +23,9 @@
             <jsp:include page="templates/components/content.jsp"/>
 
             <!-- Pager -->
-
             <jsp:include page="templates/paginations/pagi_2.jsp">
                 <jsp:param name="page" value="/list-post-by-user"/>
-                <jsp:param name="query" value="username=${postList.get(0).user.userName}"/>
+                <jsp:param name="query" value="username=${requestScope.userName}"/>
             </jsp:include>
 
         </div>

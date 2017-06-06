@@ -8,13 +8,22 @@
             </li>
         </c:if>
 
-        <c:if test="${requestScope.page<=requestScope.totalList/numberView.getNumberView()}">
+        <c:if test="${(requestScope.totalList/numberView.getNumberView()>=(requestScope.page)) && (requestScope.totalList % numberView.getNumberView())!=0}">
+            <c:if test="${requestScope.postList.size()!=0}">
+                <li class="next">
+                    <a href="<s:url value="${param.page}?page=${requestScope.page+1}"/>">${messageSource.getMessage("next",null,locale)} &rarr;</a>
+                </li>
+            </c:if>
+        </c:if>
+
+        <c:if test="${(requestScope.totalList/numberView.getNumberView()>(requestScope.page)) && (requestScope.totalList % numberView.getNumberView())==0}">
             <li class="next">
-                <c:if test="${postList.size()!=0}">
+                <c:if test="${requestScope.postList.size()!=0}">
                     <a href="<s:url value="${param.page}?page=${requestScope.page+1}"/>">${messageSource.getMessage("next",null,locale)} &rarr;</a>
                 </c:if>
             </li>
         </c:if>
+
     </c:if>
 
     <c:if test="${requestScope.querySearch!=null}">
@@ -24,9 +33,17 @@
             </li>
         </c:if>
 
-        <c:if test="${requestScope.page<=requestScope.totalList/numberView.getNumberView()}">
+        <c:if test="${(requestScope.totalList/numberView.getNumberView()>=(requestScope.page)) && (requestScope.totalList % numberView.getNumberView())!=0}">
+            <c:if test="${requestScope.postList.size()!=0}">
+                <li class="next">
+                    <a href="<s:url value="${param.pageSearch}?page=${requestScope.page+1}&query_search=${requestScope.querySearch}"/>">${messageSource.getMessage("next",null,locale)} &rarr;</a>
+                </li>
+            </c:if>
+        </c:if>
+
+        <c:if test="${(requestScope.totalList/numberView.getNumberView()>(requestScope.page)) && (requestScope.totalList % numberView.getNumberView())==0}">
             <li class="next">
-                <c:if test="${postList.size()!=0}">
+                <c:if test="${requestScope.postList.size()!=0}">
                     <a href="<s:url value="${param.pageSearch}?page=${requestScope.page+1}&query_search=${requestScope.querySearch}"/>">${messageSource.getMessage("next",null,locale)} &rarr;</a>
                 </c:if>
             </li>
