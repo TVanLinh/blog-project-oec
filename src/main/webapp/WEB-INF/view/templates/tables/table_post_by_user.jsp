@@ -1,6 +1,5 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <c:if test="${postList.size()>0}">
     <table class="responstable  " id="">
 

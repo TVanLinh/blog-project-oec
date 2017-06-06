@@ -21,6 +21,7 @@
         <security:intercept-url pattern="/manager-user" access="hasRole('ROLE_ADMIN')" />
         <security:intercept-url pattern="/insert-user" access="hasRole('ROLE_ADMIN')" />
         <security:intercept-url pattern="/update-user" access="hasRole('ROLE_ADMIN')" />
+        <security:intercept-url pattern="/action-update-user" access="hasRole('ROLE_ADMIN')" />
         <!--<security:intercept-url pattern="/user**" access="hasRole('ROLE_ADMIN')"/>-->
         <security:intercept-url pattern="/write-post**" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')"/>
         <security:intercept-url pattern="/write**" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')"/>

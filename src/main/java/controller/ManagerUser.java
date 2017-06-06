@@ -55,7 +55,7 @@ public class ManagerUser {
             return  "redirect:/manager-user";
         }
         request.setAttribute("user",user);
-        request.getSession().setAttribute("idUser",id);
+        request.getSession().setAttribute("idUser",Integer.valueOf(id));
         return "update-user";
     }
 
@@ -69,43 +69,8 @@ public class ManagerUser {
     @RequestMapping(value = "/action-update-user",method = RequestMethod.POST)
     public String actionUpdateUser(ModelMap modelMap,HttpServletRequest request,@ModelAttribute User user) {
         this.defaultPage.setDaultPage(request);
-//        modelMap.addAttribute("roleList",this.userService.findAll(User.class,"user"));
-//        String []listRoles = request.getParameterValues("listRole");
-//
-//        if(!this.userService.checkUserValidUpdate(modelMap,user)||listRoles==null) {
-//            request.setAttribute("error","Not valid!");
-//            return "update-user";
-//        }else {
-//            HttpSession session = request.getSession();
-//            User userUpdate = this.userService.find((Integer) session.getAttribute("idUser"));
-//            if(userUpdate.getUserName().equalsIgnoreCase(user.getUserName())) {
-//                User user1 = this.userService.getUserByName(user.getUserName());
-//                if(user != null)
-//                {
-//                    this.roleService.delete(user1.getUserName());
-//                }
-//                user1.setRoleList(this.roleService.getListRole(listRoles));
-//                user1.setPassWord(user.getPassWord());
-//                this.userService.save(user1);
-//                return "redirect:manager-user";
-//            }else if(this.userService.getUserByName(user.getUserName()) !=  null) {
-//                modelMap.addAttribute("error"," user name exits available !");
-//                return "update-user";
-//            }else {
-//                User user1 = this.userService.find((Integer) session.getAttribute("idUser"));
-//                if(user1!=null)
-//                {
-//                    this.userService.delete(user1.getId());
-//                }
-//                user.setRoleList(this.roleService.getListRole(listRoles));
-//
-//                this.userService.save(user);
-//            }
-//        }
-//        request.getSession().setAttribute("errorInsertUser","Update successful .!");
-//        //return "redirect:manager-user";
 
-        return updateUser(modelMap,request,user,"redirect:manager-user","update-user");
+         return updateUser(modelMap,request,user,"redirect:manager-user","update-user");
     }
 
     private  String  updateUser(ModelMap modelMap,HttpServletRequest request, User user,String pageSucssess,String pageError) {
@@ -133,6 +98,8 @@ public class ManagerUser {
                 user1.setRoleList(this.roleService.getListRole(listRoles));
                 user1.setPassWord(user.getPassWord());
                 this.userService.save(user1);
+                request.getSession().setAttribute("errorInsertUser","Update successful .!");
+                request.getSession().removeAttribute("idUser");
                 return pageSucssess;
             }else if(this.userService.getUserByName(user.getUserName()) !=  null) {
                 modelMap.addAttribute("error"," user name exits available !");
@@ -152,6 +119,8 @@ public class ManagerUser {
         request.getSession().removeAttribute("idUser");
         return pageSucssess;
     }
+
+
     @RequestMapping("/manager-user")
     public  String managerUser(HttpServletRequest request,ModelMap modelMap,Principal principal)
     {
@@ -296,17 +265,6 @@ public class ManagerUser {
         modelMap.addAttribute("querySearch",querySearch);
         modelMap.addAttribute("totalList",this.userService.getCountBeginUserName(querySearch));
     }
-
-
-//    @RequestMapping(value = "/client-update-user")
-//    public  String  updateClientUser(ModelMap modelMap,HttpServletRequest request,@ModelAttribute User user) {
-//        this.defaultPage.setDaultPage(request);
-//        if(updateUser(modelMap,request,user,"redirect:/user","update-user").equals("redirect:/user"))
-//        {
-//            request.getSession().setAttribute("username",user.getUserName());
-//        }
-//        return updateUser(modelMap,request,user,"redirect:/user","update-user");
-//    }
 
 
 }

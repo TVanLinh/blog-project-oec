@@ -14,7 +14,7 @@
     <%--<div ><i class="fa fa-hand-o-up"></i> </div>--%>
     <div class="row">
         <!-- Blog Entries Column -->
-        <div class="col-md-8">
+        <div class="col-xs-12">
 
             <h3>
                 ${messageSource.getMessage("postOf",null,locale)} <span class="color-main2">${requestScope.userName}</span>
@@ -31,12 +31,12 @@
 
         </div>
         <!-- Blog Sidebar Widgets Column -->
-        <div>
-            <jsp:include page="templates/slidebar/slidebar.jsp">
-                <jsp:param name="action" value="mySearch.formSearch('/view-search?title=','#search')"/>
-                <jsp:param name="urlTarget" value="/view-search"/>
-            </jsp:include>
-        </div>
+        <%--<div>--%>
+            <%--<jsp:include page="templates/slidebar/slidebar.jsp">--%>
+                <%--<jsp:param name="action" value="mySearch.formSearch('/view-search?title=','#search')"/>--%>
+                <%--<jsp:param name="urlTarget" value="/view-search"/>--%>
+            <%--</jsp:include>--%>
+        <%--</div>--%>
 
     </div>
     <!-- /.row -->

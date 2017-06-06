@@ -10,6 +10,9 @@
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-xs-12 col-sm-6 col-sm-push-3">
+            <c:if test="${postList.size()==0}">
+                <h1 class="text-center">${messageSource.getMessage("notpost",null,locale)}</h1>
+            </c:if>
            <div class="text-center">
                <jsp:include page="templates/forms/search3.jsp">
                    <jsp:param name="searchBy" value="${messageSource.getMessage('searchBy',null,locale)} ${messageSource.getMessage('title',null,locale)}"/>
@@ -23,12 +26,12 @@
             <jsp:include page="templates/tables/table_post_by_user.jsp"/>
         </div>
         <!-- Blog Sidebar Widgets Column -->
-        <div>
-            <jsp:include page="templates/slidebar/slidebar.jsp">
-                <jsp:param name="action" value="mySearch.formSearch('/user-search?title=','#search')"/>
-                <jsp:param name="urlTarget" value="/user-search"/>
-            </jsp:include>
-        </div>
+        <%--<div>--%>
+            <%--<jsp:include page="templates/slidebar/slidebar.jsp">--%>
+                <%--<jsp:param name="action" value="mySearch.formSearch('/user-search?title=','#search')"/>--%>
+                <%--<jsp:param name="urlTarget" value="/user-search"/>--%>
+            <%--</jsp:include>--%>
+        <%--</div>--%>
 
     </div>
     <!-- /.row -->

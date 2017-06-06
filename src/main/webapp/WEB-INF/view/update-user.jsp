@@ -13,7 +13,7 @@
 <div class="container">
     <!-- Blog Entries Column -->
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-xs-12">
             <s:url value="/action-update-user" var="formAction"/>
             <form:form ACTION="${formAction}" METHOD="post" onsubmit="return checkFormInsertUser()" >
                 <div class="form-group">
@@ -37,14 +37,14 @@
 
                         <%--<input type="text" class="form-control pd-0" name="formatTime" id="formatTime">--%>
                 </div>
-                <input type="submit" value="${messageSource.getMessage("save",null,locale)}" onclick="return checkFormInsertUser()" onsubmit="return checkFormInsertUser()">
+                <input type="submit" class="btn btn-default" value="${messageSource.getMessage("save",null,locale)}" onclick="return checkFormInsertUser()" onsubmit="return checkFormInsertUser()">
                 <p class="pd-10 error">${requestScope.error}</p>
             </form:form>
         </div>
         <!-- Blog Sidebar Widgets Column -->
-        <div>
-            <jsp:include page="templates/slidebar/slidebar.jsp"/>
-        </div>
+        <%--<div>--%>
+            <%--<jsp:include page="templates/slidebar/slidebar.jsp"/>--%>
+        <%--</div>--%>
     </div>
     <!-- /.row -->
     <hr>
