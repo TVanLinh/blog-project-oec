@@ -12,5 +12,6 @@ public class Test {
         System.out.println(passwordEncoder.encode("123456"));
         System.out.println(passwordEncoder.encode("123456"));
         System.out.println(passwordEncoder.matches("123456",passwordEncoder.encode("123456")));
+//        Collections.sort();
     }
 }

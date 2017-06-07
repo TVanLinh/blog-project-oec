@@ -7,8 +7,8 @@
             <tr>
                 <th data-th="Driver details"><span>STT</span></th>
                 <th data-th="Driver details"><a href="<s:url value="/manager-user?orderBy=user_name"/>"><img src="<s:url value="public/asserts/images/sort.png" />"> <span class="dp-inline">${messageSource.getMessage("name",null,locale)}</span></a></th>
-                <th class="text-center"><a href="<s:url value="/manager-user?orderBy=pass_word"/>"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("passWord",null,locale)}</a></th>
-                <th><a href="<s:url value="/manager-user?orderBy=role"/>"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("role",null,locale)}</a></th>
+                <%--<th class="text-center"><a href="<s:url value="/manager-user?orderBy=pass_word"/>"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("passWord",null,locale)}</a></th>--%>
+                <th><a href="<s:url value="/manager-user?orderBy=role"/>"><!--img src="<s :url value="public/asserts/images/sort.png" />" class="mgr-5"-->${messageSource.getMessage("role",null,locale)}</a></th>
                 <th>${messageSource.getMessage("td.action",null,locale)}</th>
             </tr>
         </thead>
@@ -18,7 +18,7 @@
             <tr >
                 <td>${loop.index+1}</td>
                 <td>${user.userName}</td>
-                <td>${user.passWord}</td>
+                <%--<td>${user.passWord}</td>--%>
                 <td>${roleService.getStringFromListRole(user.roleList)}</td>
                 <td>
                     <a href="<s:url value="/manager-user?action=delete&id=${user.id}"/>" title="${messageSource.getMessage("delete",null,locale)}" onclick="return window.confirm('Are you sure you want to delete this post?')"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
