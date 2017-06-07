@@ -31,7 +31,7 @@ public class ImageDAOIML implements ImageDAO {
     @Transactional
     public void deleteByIdPost(int id) {
         Session session = sessionFactory.getCurrentSession();
-        session.createNativeQuery("DELETE  from  postimage where id_post = "+id).executeUpdate();
+        session.createNativeQuery("DELETE  from  postimage where id_post = :id").setParameter("id",id).executeUpdate();
         System.out.println("delete image  deleteByIdPosts");
     }
 
@@ -57,7 +57,7 @@ public class ImageDAOIML implements ImageDAO {
 
     public Image getImageByName(String name) {
         Session session = sessionFactory.getCurrentSession();
-        List<Image> list =  session.createNativeQuery("select * from user where user_name = '"+name+"'",Image.class).getResultList();
+        List<Image> list =  session.createNativeQuery("select * from user where user_name = :name",Image.class).setParameter("name",name).getResultList();
         if(list == null)
         {
             return  null;

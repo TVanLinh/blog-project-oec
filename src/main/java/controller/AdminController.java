@@ -2,14 +2,17 @@ package controller;
 
 import entities.Post;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import service.ConfigurationService;
 import service.PostService;
+import service.RequestService;
 import utils.number.NumberViewSort;
 import utils.page.DefaultPage;
 import utils.sort.PortSort;
@@ -42,72 +45,41 @@ public class AdminController
     @Autowired
     PostService postService;
 
+    @Autowired
+    RequestService requestService;
+
     @RequestMapping(value = "/admin**", method = RequestMethod.GET)
-    public ModelAndView adminPage(HttpServletRequest request,ModelMap modelMap) {
+    public ModelAndView adminPage(HttpServletRequest request, ModelMap modelMap, @RequestParam(value = "page",required = false) String pageRequest) {
         this.defaultPage.setDaultPage(request);
+
         ModelAndView model = new ModelAndView();
         List<Post> postList;
-        String page=request.getParameter("page");
-
-        if(page == null || page.trim().equals("") || !StringUtils.isNumeric(page) || Integer.valueOf(page) == 0) {
-            deletePost(request);
-            aprrovePost(request);
-            postList=this.postService.finAll(this.portSort.getQuerySortAllPostAprrove(request,0,true));
-            this.postService.setListPost(modelMap,postList,this.postService.getCountNotApprove());
-            request.setAttribute("page",1);
-            model.setViewName("admin");
-            request.setAttribute("active","admin");
-            return model;
-        }
+        int  page= NumberUtils.toInt(pageRequest,1);
 
         deletePost(request);
         aprrovePost(request);
 
-        postList=this.postService.finAll(this.portSort.getQuerySortAllPostAprrove(request,(Integer.valueOf(page)-1)* NumberViewSort.NUMBER_VIEW,true));
-        this.postService.setListPost(modelMap,postList,this.postService.getCountNotApprove());
+        postList=this.postService.finAll(this.portSort.getQuerySortAllPostAprrove(request,(page-1)*NumberViewSort.getNumberView(),true));
+        this.requestService.setPostList(modelMap,postList,this.postService.getCountNotApprove(),page,"admin",null);
         model.setViewName("admin");
-        request.setAttribute("page",Integer.valueOf(page));
-        request.setAttribute("active","admin");
         return model;
     }
 
 
     @RequestMapping(value = "/admin-search-post-approve",method = RequestMethod.GET)
-    public  String searchTableApprovePost(HttpServletRequest request,ModelMap modelMap) {
+    public  String searchTableApprovePost(HttpServletRequest request, ModelMap modelMap, @RequestParam(value = "page",required = false) String pageRequest,
+                                          @RequestParam(value = "query_search",required = false)String querySearch) {
         this.defaultPage.setDaultPage(request);
-        String page=request.getParameter("page");
-        String querySearch=request.getParameter("query_search");
+
         SortType sortType=this.portSort.getCurrentSortType(request, StringSessionUtil.POST_APPROVE_TYPE_SORT,StringSessionUtil.CURRENT_APPROVE_POST);
         List<Post> postList;
 
-        if(sortType == null)
-        {
-            sortType = new SortType();
-        }
-        if(page == null || page.trim().equals("") || !StringUtils.isNumeric(page) || Integer.valueOf(page) == 0 || querySearch == null || querySearch.trim().equals("'") || querySearch.trim().equals(""))
-        {
+        int page = NumberUtils.toInt(pageRequest,1);
+        postList=this.postService.getContainsTitle(sortType,querySearch,0,(page-1)*NumberViewSort.getNumberView());
 
-            postList=this.postService.getContainsTitle(sortType,querySearch,0,0);
-            this.setListPost(modelMap,postList);
-            setResponseSeacchPostAdmin(modelMap,querySearch,"admin",1);
-            return "admin";
-        }
-
-        postList=this.postService.getContainsTitle(sortType,querySearch,0,(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW);
-        setListPost(modelMap,postList);
-        setResponseSeacchPostAdmin(modelMap,querySearch,"admin",Integer.valueOf(page));
+        this.requestService.setPostList(modelMap,postList,this.postService.getCountContainsTitle(querySearch,0),page,"admin",null,querySearch);
         return "admin";
     }
-
-    public  void setResponseSeacchPostAdmin(ModelMap modelMap,String querySearch,String pageActive,int page)
-    {
-        modelMap.addAttribute("page",page);
-        modelMap.addAttribute("querySearch",querySearch);
-        modelMap.addAttribute("totalList",this.postService.getCountContainsTitle(querySearch,0));
-        modelMap.addAttribute("active",pageActive);
-    }
-
-
 
     protected void  setResultConfig(ModelMap modelMap,String err)
     {

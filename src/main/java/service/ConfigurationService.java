@@ -1,6 +1,5 @@
 package service;
 
-import dao.AbstractDAO;
 import dao.ConfigurationDAO;
 import entities.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;

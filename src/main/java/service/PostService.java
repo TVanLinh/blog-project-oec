@@ -1,6 +1,5 @@
 package service;
 
-import dao.AbstractDAO;
 import dao.PostDAO;
 import entities.Post;
 import org.apache.commons.lang3.StringUtils;
@@ -45,17 +44,15 @@ public class PostService extends AbstractDAO<Post> {
     }
 
     public List<Post> getContainsTitle(SortType sortType, String querySearch, int approve, int offset) {
-        String string = "  select * from  post where approve = :approve and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + NumberViewSort.NUMBER_VIEW;
+        String string = "  select * from  post where approve = :approve and title like :querySearch  order by :orderBy :typeOrder  limit  :offset , :limit";
         Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
-        query.setParameter("querySearch", "%" + querySearch + "%");
-        query.setParameter("approve", approve);
-        return query.getResultList();
-    }
-    public List<Post> getContainsTitle(SortType sortType, String querySearch, int approve, int offset,int limit) {
-        String string = "  select * from  post where approve = :approve and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
-        Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
-        query.setParameter("querySearch", "%" + querySearch + "%");
-        query.setParameter("approve", approve);
+        query.setParameter("querySearch", "%" + querySearch + "%")
+            .setParameter("approve", approve)
+            .setParameter("orderBy", sortType.orderBy)
+            .setParameter("typeOrder", sortType.typeOrder)
+            .setParameter("offset", offset)
+            .setParameter("limit", NumberViewSort.getNumberView());
+
         return query.getResultList();
     }
 
@@ -68,9 +65,13 @@ public class PostService extends AbstractDAO<Post> {
     }
 
     public List<Post> getAllByTitle(SortType sortType, String querySearch, int offset) {
-        String string = "  select * from  post where  title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + NumberViewSort.NUMBER_VIEW;
+        String string = "  select * from  post where  title like :querySearch  order by :orderBy :typeOrder  limit  :offset , :limit";
         Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
-        query.setParameter("querySearch", "%" + querySearch + "%");
+        query.setParameter("querySearch", "%" + querySearch + "%")
+                .setParameter("orderBy", sortType.orderBy)
+                .setParameter("typeOrder", sortType.typeOrder)
+                .setParameter("offset", offset)
+                .setParameter("limit", NumberViewSort.getNumberView());
         return query.getResultList();
     }
 
@@ -82,24 +83,6 @@ public class PostService extends AbstractDAO<Post> {
         return query.getResultList().size();
     }
 
-    public List<Post> getByIdUserAndStatus(int status,int iduser,int offset,int limit)
-    {
-        String str = "select * from post where status = :status and id_user = :id_user  order by time_post desc limit "+offset +"," +limit;
-        Query query =this.sessionFactory.getCurrentSession().createNativeQuery(str,Post.class);
-        query.setParameter("status",status);
-        query.setParameter("id_user",iduser);
-        return query.getResultList();
-    }
-
-    public  int getCounByIdAndStatus(int status,int iduser)
-    {
-        String str = "select * from post where status = :status and id_user = :id_user";
-        Query query =this.sessionFactory.getCurrentSession().createNativeQuery(str,Post.class);
-        query.setParameter("status",status);
-        query.setParameter("id_user",iduser);
-        return query.getResultList().size();
-
-    }
     public  List<Post> getPostByIdUser(int id)
     {
         return  this.postDAO.getPostByIdUser(id);
@@ -111,23 +94,35 @@ public class PostService extends AbstractDAO<Post> {
     }
 
     public  List<Post> getPostByIdUser(SortType sortType, String querySearch,int userId, int offset) {
-        String string = "  select * from  post where id_user = :id_user and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + NumberViewSort.NUMBER_VIEW;
-        Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
-        query.setParameter("querySearch", "%" + querySearch + "%");
-        query.setParameter("id_user", userId);
+        String string = "  select * from  post where id_user = :id_user and title like :querySearch   order by :orderBy :typeOrder  limit  :offset , :limit";
+        Query<Post> query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
+        query.setParameter("id_user", userId).
+                setParameter("querySearch", "%" + querySearch + "%")
+                .setParameter("orderBy", sortType.orderBy)
+                .setParameter("typeOrder", sortType.typeOrder)
+                .setParameter("offset", offset)
+                .setParameter("limit", NumberViewSort.getNumberView());
+
         return query.getResultList();
     }
 
     public  List<Post> getPostPublicByTitle(SortType sortType, String querySearch, int offset,int limit) {
-        String string = "  select * from  post where approve = 1 and status = 1 and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
-        Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
-        query.setParameter("querySearch", "%" + querySearch + "%");
+        String string = "  select * from  post where approve = 1 and status = 1 and title like :querySearch  order by :orderBy :typeOrder  limit  :offset , :limit";
+        Query<Post> query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
+        query.setParameter("querySearch", "%" + querySearch + "%")
+                .setParameter("orderBy", sortType.orderBy)
+                .setParameter("typeOrder", sortType.typeOrder)
+                .setParameter("offset", offset)
+                .setParameter("limit", limit);
+
         return query.getResultList();
     }
     public  List<Post> getPostPublicByTitle(SortType sortType, String querySearch) {
-        String string = "  select * from  post where approve = 1 and status = 1 and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder ;
-        Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
-        query.setParameter("querySearch", "%" + querySearch + "%");
+        String string = "  select * from  post where approve = 1 and status = 1 and title like :querySearch order by :orderBy :typeOrder";
+        Query<Post> query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
+        query.setParameter("querySearch", "%" + querySearch + "%")
+                .setParameter("orderBy", sortType.orderBy)
+                .setParameter("typeOrder", sortType.typeOrder);
         return query.getResultList();
     }
     public int getCountByUserContainsTitle(String querySearch,int idUser)
@@ -232,5 +227,6 @@ public class PostService extends AbstractDAO<Post> {
     {
         return this.getPost(idUser,status,approve,new SortType()).size();
     }
+
 
 }

@@ -61,23 +61,29 @@ public class PostDAOIML implements PostDAO {
 
     public List<Post> getPost(int from, int limit) {
         Session session = sessionFactory.getCurrentSession();
-        String str = "select * from post where approve=1 and status=1  order by time_post desc limit " + from + "," + limit + "";
-        List<Post> list = session.createNativeQuery(str, Post.class).getResultList();
-        return list;
+        String str = "select * from post where approve=1 and status=1  order by time_post desc limit :from , :limit ";
+        Query<Post> query=session.createNativeQuery(str,Post.class)
+                .setParameter("from",from)
+                .setParameter("limit",limit);
+        return query.getResultList();
     }
 
     public List<Post> getPostByIdUser(int idUser, int from, int limit) {
         Session session = sessionFactory.getCurrentSession();
-        String str = "select * from post where id_user = " + idUser + "  order by time_post desc limit " + from + "," + limit + "";
-        List<Post> list = session.createNativeQuery(str, Post.class).getResultList();
-        return list;
+        String str = "select * from post where id_user = :idUser  order by time_post desc limit :from , :limit ";
+        Query<Post> query=session.createNativeQuery(str,Post.class)
+                .setParameter("idUser",idUser)
+                .setParameter("from",from)
+                .setParameter("limit",limit);
+        return query.getResultList();
     }
 
     public List<Post> getPostByIdUser(int idUser) {
         Session session = sessionFactory.getCurrentSession();
-        String str = "select * from post where id_user = " + idUser + "  order by time_post desc";
-        List<Post> list = session.createNativeQuery(str, Post.class).getResultList();
-        return list;
+        String str = "select * from post where id_user =  :idUser   order by time_post desc";
+        Query<Post> query=session.createNativeQuery(str,Post.class)
+                .setParameter("idUser",idUser);
+        return query.getResultList();
     }
     public  List<BigInteger> getStatisticByMonth()
     {
@@ -86,7 +92,7 @@ public class PostDAOIML implements PostDAO {
         Query query;
         for(int i=1;i<13;i++)
         {
-            query=session.createNativeQuery("select count(*) from post where MONTH(time_post) = "+i);
+            query=session.createNativeQuery("select count(*) from post where MONTH(time_post) = :i").setParameter("i",i);
             list.add((BigInteger) query.getSingleResult());
         }
         return list;

@@ -75,7 +75,7 @@ public class PortSort {
                 return sort;
             }
         }
-        return null;
+        return new SortType();
     }
 
     public SortType getCurrentSortType(HttpServletRequest request,String nameListCurrent,String orderByCurrent) {

@@ -1,6 +1,5 @@
 package service;
 
-import dao.AbstractDAO;
 import dao.ImageDAO;
 import entities.Image;
 import org.springframework.beans.factory.annotation.Autowired;
