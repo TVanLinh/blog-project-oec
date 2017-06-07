@@ -39,12 +39,12 @@ public class UserService  extends AbstractDAO<User> {
             return false;
         }
 
-       // User usr = this.userDAO.getUserByName(userNew.getUserName());
-//        if(!userCurrent.getUserName().equalsIgnoreCase(userNew.getUserName()) && usr!=null)
-//        {
-//            modelMap.addAttribute("error","User name available!");
-//            return false;
-//        }
+        if(userNew.getUserName().length()>50)
+        {
+            modelMap.addAttribute("error", " user name too length,max 30 !");
+            return  false;
+        }
+
         if (userNew.getPassWord() == null || userNew.getPassWord().trim().equals("")) {
             modelMap.addAttribute("error", " pass word not nulll!");
             return false;
@@ -59,7 +59,11 @@ public class UserService  extends AbstractDAO<User> {
             modelMap.addAttribute("error", " user name not null!");
             return false;
         }
-
+        if(user.getUserName().length()>50)
+        {
+            modelMap.addAttribute("error", " user name too length,max 30 !");
+            return  false;
+        }
         if (this.userDAO.getUserByName(user.getUserName().trim()) != null) {
             modelMap.addAttribute("error", " user name exits available !");
             return false;
