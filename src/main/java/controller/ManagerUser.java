@@ -4,6 +4,7 @@ import entities.Role;
 import entities.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,6 +43,9 @@ public class ManagerUser {
     @Autowired
     UserSort userSort;
 
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
+
     @RequestMapping(value = "/update-user")
     public  String pageUpdateUser( HttpServletRequest request) {
         this.defaultPage.setDaultPage(request);
@@ -78,7 +82,7 @@ public class ManagerUser {
         modelMap.addAttribute("roleList",this.userService.findAll(User.class,"user"));
         String []listRoles = request.getParameterValues("listRole");
         String rePassWord=request.getParameter("rePassWord");
-        if(!user.getPassWord().equals(rePassWord))
+        if(!rePassWord.trim().equals(user.getPassWord().trim()))
         {
             request.setAttribute("error","Pass word not overlap !");
             return  pageError ;
@@ -89,34 +93,48 @@ public class ManagerUser {
         }else {
             HttpSession session = request.getSession();
             User userUpdate = this.userService.find((Integer) session.getAttribute("idUser"));
+
             if(userUpdate.getUserName().equalsIgnoreCase(user.getUserName())) {
                 User user1 = this.userService.getUserByName(user.getUserName());
+
                 if(user != null)
                 {
                     this.roleService.delete(user1.getUserName());
                 }
+
                 user1.setRoleList(this.roleService.getListRole(listRoles));
-                user1.setPassWord(user.getPassWord());
+                user1.setPassWord(passwordEncoder.encode(user.getPassWord()));
+
                 this.userService.save(user1);
-                request.getSession().setAttribute("errorInsertUser","Update successful .!");
-                request.getSession().removeAttribute("idUser");
+
+                session.setAttribute("errorInsertUser","Update successful .!");
+                session.removeAttribute("idUser");
+
                 return pageSucssess;
+
             }else if(this.userService.getUserByName(user.getUserName()) !=  null) {
                 modelMap.addAttribute("error"," user name exits available !");
+
                 return pageError;
             }else {
                 User user1 = this.userService.find((Integer) session.getAttribute("idUser"));
                 if(user1!=null)
                 {
+                    if(user1.getUserName().equals(session.getAttribute("username")))
+                    {
+                        session.setAttribute("username",user.getUserName());
+                    }
                     this.userService.delete(user1.getId());
                 }
-                user.setRoleList(this.roleService.getListRole(listRoles));
 
+                user.setRoleList(this.roleService.getListRole(listRoles));
+                user.setPassWord(passwordEncoder.encode(user.getPassWord()));
                 this.userService.save(user);
             }
         }
         request.getSession().setAttribute("errorInsertUser","Update successful .!");
         request.getSession().removeAttribute("idUser");
+
         return pageSucssess;
     }
 
@@ -228,6 +246,9 @@ public class ManagerUser {
             roles.add(new Role(arr[i],user));
         }
         user.setRoleList(roles);
+
+        user.setPassWord(passwordEncoder.encode(user.getPassWord()));
+
         this.userService.save(user);
         request.getSession().setAttribute("errorInsertUser","Insert Successful .!");
         return "redirect:manager-user";

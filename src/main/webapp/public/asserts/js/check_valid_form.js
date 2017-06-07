@@ -4,6 +4,9 @@ jQuery(document).ready(function ($) {
    checkForm={
        checkLogin:function () {
            login();
+       },
+       getImages:function () {
+          return getImages2();
        }
    };
 });
@@ -34,41 +37,56 @@ function checkTitle(tagret)
     return true;
 }
 
-function getImages()
-{
-    var input=document.getElementById('cke_122_textInput');
-    var outPut=document.getElementById('link-image');
+function getImages2() {
+    var linkInput=$('#cke_123_textInput');
+    var altInput=$('#cke_130_textInput');
+    if(linkInput.length>0||altInput.length>0)
+    {
+        $('#link-image').val(linkInput.val());
+        $('#alt-image').val(altInput.val());
+    }
 
-    var altInput=document.getElementById('cke_129_textInput');
-    var atlOutPut=document.getElementById('alt-image');
-    if(input!=null)
-    {
-        outPut.value=input.value;
-    }
-    if(altInput!=null)
-    {
-        atlOutPut.value=altInput.value;
-    }
-    // alert(altInput);
-    var title=document.getElementById("idTitle").value;
-    if(title.trim()==="")
+    var title=$('#idTitle');
+    var cont=$("#content");
+
+    if(title.val().trim()==="")
     {
         alert("Title not null..!");
         return false;
     }
-    if(title.length>200)
+    if(title.val().length>200)
     {
         alert("Max length 200..!");
         return false;
     }
-    var content=document.getElementById("content").value;
-    if(content.trim()==="")
-    {
-        alert("Content not null..!");
-        return false;
-    }
+    // if(cont.val().trim()==="")
+    // {
+    //     alert("Content not null..!");
+    //     return false;
+    // }
     return true;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function  checkFormInsertUser() {
     var userName=document.getElementById("userName").value;

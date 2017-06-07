@@ -23,12 +23,12 @@
     </filter-mapping>
 
     <filter>
-        <filter-name>user-fileter</filter-name>
+        <filter-name>user-filter</filter-name>
         <filter-class>filter.UserFilter</filter-class>
     </filter>
 
     <filter-mapping>
-        <filter-name>user-fileter</filter-name>
+        <filter-name>user-filter</filter-name>
         <url-pattern>/user</url-pattern>
     </filter-mapping>
 

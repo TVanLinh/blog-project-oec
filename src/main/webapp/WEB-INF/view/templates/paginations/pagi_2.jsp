@@ -24,5 +24,3 @@
     </c:if>
 
 </ul>
-
-${requestScope.postList.size()!=0}

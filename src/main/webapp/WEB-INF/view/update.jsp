@@ -16,6 +16,7 @@
         <!-- Blog Post Content Column -->
         <div class="col-lg-12">
            <jsp:include page="templates/forms/write-post.jsp">
+               <jsp:param name="action" value="/write-update"/>
                <jsp:param name="title" value="${sessionScope.postUpdate.title}"/>
                <jsp:param name="content" value="${sessionScope.postUpdate.content}"/>
            </jsp:include>
@@ -37,5 +38,7 @@
 <!-- /.container -->
 <%--<button onclick="getImages()">ok</button>--%>
 </body>
-<script type="text/javascript" src="<s:url value="public/asserts/js/check_valid_form.js" />"></script>
+<script type="text/javascript" src="<s:url value="public/asserts/js/check_valid_form.js" />"></script>\
+<script src="<s:url value="/public/asserts/js/main.js"/>"></script>
+<script src="<s:url value="/public/asserts/js/search.js"/>"></script>
 <jsp:include page="templates/footers/footer.jsp"/>

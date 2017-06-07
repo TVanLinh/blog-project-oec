@@ -20,7 +20,7 @@
                 ${messageSource.getMessage("postOf",null,locale)} <span class="color-main2">${requestScope.userName}</span>
             </h3>
 
-            <jsp:include page="templates/components/content.jsp"/>
+            <jsp:include page="templates/components/content2.jsp"/>
 
             <!-- Pager -->
             <jsp:include page="templates/paginations/pagi_2.jsp">

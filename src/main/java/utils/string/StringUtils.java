@@ -9,8 +9,9 @@ public class StringUtils {
 
     public static  boolean checkVid(String str)
     {
-        if(str.contains("/")||str.contains(";")||str.contains("'")||str.contains("\\")||str.contains("#")||str.contains("$")||str.contains(";")||str.contains("|")||str.contains("?")||str.contains(":"))
+        if(str.contains("/")||str.contains("%")||str.contains("^")||str.contains(";")||str.contains("'")||str.contains("\\")||str.contains("#")||str.contains("$")||str.contains(";")||str.contains("|")||str.contains("?")||str.contains("&"))
         {
+            str.replaceAll("//;%\\\\,#&&@$|:?^","");
             return false;
         }
         return true;

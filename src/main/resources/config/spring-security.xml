@@ -52,8 +52,8 @@
 
                                authorities-by-username-query="select user_name, role from user_roles where user_name =?  "
                 />
-             <!--<security:password-encoder ref="encoder"/>-->
+             <security:password-encoder ref="encoder"/>
             </security:authentication-provider>
     </security:authentication-manager>
-    <!--<beans:bean id="encoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>-->
+    <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 </beans:beans>

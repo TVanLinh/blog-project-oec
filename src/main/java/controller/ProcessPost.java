@@ -5,21 +5,25 @@ import entities.Post;
 import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import service.ConfigurationService;
 import service.ImageService;
 import service.PostService;
 import service.UserService;
 import utils.page.DefaultPage;
+import utils.string.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by linhtran on 06/05/2017.
@@ -39,11 +43,23 @@ public class ProcessPost {
 
     @Autowired
     PostService postService;
-    @RequestMapping(value = "/write-post", method = RequestMethod.POST)
-    public ModelAndView processWritePost(@ModelAttribute(value = "post") Post post, HttpServletRequest httpServletRequest, Principal principal) {
-        this.defaultPage.setDaultPage(httpServletRequest);
-        HttpSession session = httpServletRequest.getSession();
 
+    @Autowired
+    ConfigurationService configurationService;
+
+
+    @RequestMapping(value = "/write-post", method = RequestMethod.POST)
+    public ModelAndView processWritePost(@ModelAttribute(value = "post") Post post, HttpServletRequest request, Principal principal,ModelMap modelMap) {
+        this.defaultPage.setDaultPage(request);
+        this.setPostSliderbar(modelMap);
+
+        if(post.getTitle().trim().equals("")|| !StringUtils.checkVid(post.getTitle()))
+        {
+            request.setAttribute("error","Title not valid ");
+            request.getSession().setAttribute("postUpdate", post);
+            return new ModelAndView("write");
+        }
+        HttpSession session = request.getSession();
         User user = this.userService.getUserByName(principal.getName());
         post.setUser(user);
 
@@ -56,8 +72,8 @@ public class ProcessPost {
         post.setUserUpdated(principal.getName());
         post.setUpdateTime(date);
 
-        String linkImage = httpServletRequest.getParameter("link-image");
-        String altImage=httpServletRequest.getParameter("alt-image");
+        String linkImage = request.getParameter("link-image");
+        String altImage=request.getParameter("alt-image");
         if(linkImage != null && !linkImage.trim().equals("")) {
             Image image = new Image();
             image.setLink(linkImage);
@@ -67,12 +83,17 @@ public class ProcessPost {
             post.setImage(image);
         }
         this.postService.save(post);
-        httpServletRequest.setAttribute("post", post);
+        request.setAttribute("post", post);
         session.setAttribute("post-id", post.getId());
         return new ModelAndView("redirect:/view-post");
 
     }
 
+    private  void setPostSliderbar(ModelMap modelMap)
+    {
+        List<Post> postSlideBar = this.postService.getPublic(0, this.configurationService.getAllConfiguration().get(0).getNumberViewPost());
+        modelMap.addAttribute("postSlideBar",postSlideBar);
+    }
     @RequestMapping(value = "/write-post", method = RequestMethod.GET)
     public String processWritePost(HttpServletRequest request) {
         this.defaultPage.setDaultPage(request);
@@ -125,7 +146,12 @@ public class ProcessPost {
         {
             return "redirect:/home";
         }
-
+        if(post.getTitle().trim().equals("")|| !StringUtils.checkVid(post.getTitle()))
+        {
+            request.setAttribute("error","Title not valid ");
+            session.setAttribute("postUpdate", postUpdate);
+            return "update";
+        }
         Date date = Calendar.getInstance().getTime();
 
         postUpdate.setUpdateTime(date);

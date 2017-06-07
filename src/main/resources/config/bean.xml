@@ -38,16 +38,27 @@
         </property>
      </bean>
 
+    <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+        <property name="dataSource" ref="dataSource" />
+        <property name="changeLog" value="classpath:liquibase/create_database.xml" />
+        <!--<property name="contexts" value="test, production" />-->
+    </bean>
+
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+
+
     <context:annotation-config/>
     <context:component-scan base-package="dao"/>
     <context:component-scan base-package="service"/>
     <context:component-scan base-package="utils"/>
     <context:component-scan base-package="filter"/>
+
    <bean class="org.springframework.context.support.ResourceBundleMessageSource">
        <property name="defaultEncoding" value="UTF-8"/>
    </bean>
+
+
 </beans>

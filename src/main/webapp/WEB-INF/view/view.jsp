@@ -13,7 +13,7 @@
 <div class="container">
 
     <div class="row" >
-        <div class="col-xs-12 col-sm-12 col-md-8">
+        <div class="col-xs-12 col-sm-12 ">
 
             <!--content--->
             <jsp:include page="templates/components/content-view-post-page.jsp"/>
@@ -24,18 +24,19 @@
 
         </div>
 
-        <!-- Blog Sidebar Widgets Column -->
-            <jsp:include page="templates/slidebar/slidebar-post.jsp"/>
+        <%--<!-- Blog Sidebar Widgets Column -->--%>
+            <%--<jsp:include page="templates/slidebar/slidebar-post.jsp"/>--%>
+
     </div>
     <!-- /.row -->
 
-    <hr>
     <!-- Footer -->
 
 </div>
 <!-- /.container -->
 
-
+<script src="<s:url value="/public/asserts/js/main.js"/>"></script>
+<script src="<s:url value="/public/asserts/js/search.js"/>"></script>
 <script src="<s:url value="/public/asserts/js/main.js"/>"></script>
 
 <jsp:include page="templates/footers/footer.jsp"/>

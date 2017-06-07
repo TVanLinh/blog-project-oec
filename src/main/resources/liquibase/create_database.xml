@@ -113,12 +113,12 @@
     <changeSet id="insert_user" author="Tran Van Linh">
         <insert tableName="user">
             <column name="user_name">tvlinh</column>
-            <column name="pass_word">123456</column>
+            <column name="pass_word">$2a$10$CPK4hxZj48n4Tqm9o0Bn2uXY04jEh7MDlcPXe96d15H88lzsyJaKO</column>
             <column name="enabled">1</column>
         </insert>
         <insert tableName="user">
             <column name="user_name">admin</column>
-            <column name="pass_word">123456</column>
+            <column name="pass_word">$2a$10$CPK4hxZj48n4Tqm9o0Bn2uXY04jEh7MDlcPXe96d15H88lzsyJaKO</column>
             <column name="enabled">1</column>
         </insert>
     </changeSet>

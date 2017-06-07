@@ -2,6 +2,7 @@ package entities;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import jsonviews.Views;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -39,8 +40,9 @@ public class User extends AbstractEntity implements Serializable {
   }
 
   public User(String userName, String passWord, int enabled) {
+    BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
     this.userName = userName;
-    this.passWord = passWord;
+    this.passWord = passwordEncoder.encode(passWord);
     this.enabled = enabled;
   }
 
@@ -82,7 +84,7 @@ public class User extends AbstractEntity implements Serializable {
   }
 
   public void setPassWord(String password) {
-    this.passWord = password;
+     this.passWord=password;
   }
 
   public int getEnabled() {

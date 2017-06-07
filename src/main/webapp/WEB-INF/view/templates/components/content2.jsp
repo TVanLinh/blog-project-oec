@@ -1,8 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
-<c:if test="${postList.size()==0}">
-    <h1 class="text-center">${messageSource.getMessage("notpost",null,locale)}</h1>
-</c:if>
 <c:forEach var="post" items="${postList}">
     <!-- First Blog Post -->
     <h2><a href="<s:url value="/post?id=${post.id}"/>" target="_self">${post.title} </a></h2> <!--button>${post.id}</button-->
@@ -13,6 +10,18 @@
     <jsp:useBean id="dateUtil" class="utils.date.DateFormatUtil" scope="session"/>
     <p><span>${messageSource.getMessage("postTime",null,locale)}</span>
             ${dateUtil.format(post.timePost,sessionScope.dateFormat)}
+
+        <c:if test="${sessionScope.username!=null}">
+            <span class="mgl-20 fs-15 color-red">
+                <c:if test="${post.status==0}">
+                    private
+                </c:if>
+                <c:if test="${post.status!=0}">
+                    public
+                </c:if>
+            </span>
+        </c:if>
+
     </p>
     <hr>
     <c:if test="${post.image.link!=null}">
@@ -37,7 +46,7 @@
             <img src="<s:url value="public/asserts/images/edit.gif"/>" alt="">
         </a>
         <a id="action-" onclick="return window.confirm('Are you sure you want to delete this post?')" title=" ${messageSource.getMessage("delete",null,locale)}" href="<s:url value="/delete-post?id=${post.id}"/>">
-                <span class="glyphicon glyphicon-remove mgl-10"></span>
+            <span class="glyphicon glyphicon-remove mgl-10"></span>
         </a>
     </c:if>
 </c:forEach>

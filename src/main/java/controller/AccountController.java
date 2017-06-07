@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -52,6 +53,9 @@ public class AccountController {
 
     @Autowired
     PortSort portSort;
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/user")
     public  String userInfor(Principal principal,HttpServletRequest request,ModelMap modelMap) {
@@ -189,9 +193,8 @@ public class AccountController {
     {
         defaultPage.setDaultPage(request);
         ModelAndView modelAndView=new ModelAndView();
-        System.out.println(passWord+"\t"+rePassWord);
         User user=userService.getUserByName(principal.getName());
-        if(user!=null && !user.getPassWord().equals(oldPassWord)) {
+        if(user!=null && !passwordEncoder.matches(oldPassWord,user.getPassWord())) {
             modelAndView.addObject("error", "pass word not right !");
             modelAndView.setViewName("change-pass-word");
             return modelAndView;
@@ -202,7 +205,7 @@ public class AccountController {
             return  modelAndView;
         }
 
-        user.setPassWord(passWord);
+        user.setPassWord(passwordEncoder.encode(passWord));
         userService.save(user);
         modelAndView.addObject("error","Change password successful .!");
         modelAndView.setViewName("change-pass-word");
