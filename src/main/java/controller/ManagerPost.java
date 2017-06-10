@@ -1,6 +1,8 @@
 package controller;
 
 import entities.Post;
+import exceptions.AccessDenieException;
+import exceptions.NotFindException;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import service.PostService;
 import service.PostSortService;
 import service.RequestService;
+import service.UserService;
 import utils.number.NumberViewSort;
 import utils.page.DefaultPages;
 import utils.sort.PortSort;
@@ -44,8 +47,12 @@ public class ManagerPost {
     @Autowired
     private     RequestService requestService;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping("/manager-post")
-    public  String managerPost(HttpServletRequest request, ModelMap modelMap, @RequestParam(value = "page",required = false) String pageRequest) {
+    public  String managerPost(HttpServletRequest request, ModelMap modelMap,
+                               @RequestParam(value = "page",required = false) String pageRequest) {
         this.defaultPage.setDaultPage(request);
         List<Post> postList;
 
@@ -57,6 +64,22 @@ public class ManagerPost {
         this.requestService.setResponse(modelMap,postList,this.postService.findAll(Post.class,"post").size(),page);
         return "manager-post";
     }
+
+
+    @RequestMapping("/manager-post-delete")
+    public  String managerPostDelete(HttpServletRequest request,@RequestParam(value = "page",required = false) String pageRequest,ModelMap modelMap,
+                                     @RequestParam(value = "id",required = false)String id) throws NotFindException, AccessDenieException {
+
+        this.userService.checkRole(id, (String) request.getSession().getAttribute("username"));
+
+        int page = NumberUtils.toInt(pageRequest,1);
+        this.postService.delete(Integer.valueOf(id));
+        List<Post> postList = this.postSortService.getAllPost(request,(page-1)* NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
+        this.requestService.setResponse(modelMap,postList,this.postService.findAll(Post.class,"post").size(),page);
+        return "manager-post";
+    }
+
+
 
     @RequestMapping(value = "/manager-post-search",method = RequestMethod.GET)
     public  String searchTableAllPost(HttpServletRequest request,ModelMap modelMap,
@@ -71,7 +94,6 @@ public class ManagerPost {
 
 
         postList=this.postService.getAllByTitle(sortType,querySearch,(page-1)*NumberViewSort.getNumberView());
-
         this.requestService.setResponse(modelMap,postList,this.postService.getCountAllByTitle(querySearch),page,null,null,querySearch);
         return "manager-post";
     }

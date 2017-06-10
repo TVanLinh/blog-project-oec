@@ -17,7 +17,7 @@
         <p><input type="submit" value="${messageSource.getMessage("login",null,locale)}" onclick="return checkForm.checkLogin()"></p>
         <center><span class="login-error">
             <c:if test="${not empty error}">
-                <div class="error">${error}</div>
+                <div class="error">${messageSource.getMessage(requestScope.error,null,locale)}</div>
             </c:if>
         </span></center>
         <span class="login-success">

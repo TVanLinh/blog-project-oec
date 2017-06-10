@@ -1,8 +1,8 @@
 package controller;
 
 import entities.Post;
-import entities.User;
 import exceptions.AccessDenieException;
+import exceptions.NotFindException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,6 @@ import utils.sort.SortType;
 import utils.string.StringSessionUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,28 +53,48 @@ public class AdminController
 
     @RequestMapping(value = "/admin**", method = RequestMethod.GET)
     public ModelAndView adminPage(HttpServletRequest request, ModelMap modelMap,
-                                  @RequestParam(value = "page",required = false) String pageRequest,
-                                  @RequestParam(value = "action",required = false)String action,
-                                  @RequestParam(value = "id",required = false) String id) throws AccessDenieException {
+                                  @RequestParam(value = "page",required = false) String pageRequest)
+                                    throws AccessDenieException, NotFindException {
+
         this.defaultPage.setDaultPage(request);
 
         ModelAndView model = new ModelAndView();
         List<Post> postList;
         int  page= NumberUtils.toInt(pageRequest,1);
-        User user = this.userService.getUserByName((String) request.getSession().getAttribute("username"));
 
-        if(StringUtils.isNumeric(id) && !this.userService.isEditPostAdmin(user,this.postService.find(Integer.valueOf(Integer.valueOf(id)))))
-        {
-            throw new AccessDenieException("access.notrole_post");
-        }
-
-        this.postService.deletePost(action,id);
-        aprrovePost(request);
-
-         postList  = this.postSortSerVice.getAllPostNotApprove(request, (page-1)*NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
+        postList  = this.postSortSerVice.getAllPostNotApprove(request, (page-1)*NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
         this.requestService.setResponse(modelMap,postList,this.postService.getCountNotApprove(),page,"admin",null);
         model.setViewName("admin");
         return model;
+    }
+
+
+    @RequestMapping(value = "/admin-delete-post")
+    public  String deletePost(HttpServletRequest request,@RequestParam(value = "page",required = false) String pageRequest,ModelMap modelMap,
+                              @RequestParam(value = "id",required = false)String id) throws NotFindException, AccessDenieException {
+
+        this.userService.checkRole(id, (String) request.getSession().getAttribute("username"));
+
+        int page = NumberUtils.toInt(pageRequest,1);
+        this.postService.delete(Integer.valueOf(id));
+        List<Post> postList  = this.postSortSerVice.getAllPostNotApprove(request, (page-1)*NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
+        this.requestService.setResponse(modelMap,postList,this.postService.getCountNotApprove(),page,"admin",null);
+        return "admin";
+    }
+
+
+
+    @RequestMapping(value = "/admin-approve-post")
+    public  String approvePost(HttpServletRequest request,@RequestParam(value = "page",required = false) String pageRequest,ModelMap modelMap,
+                              @RequestParam(value = "id",required = false)String id) throws NotFindException, AccessDenieException {
+
+        this.userService.checkRole(id, (String) request.getSession().getAttribute("username"));
+
+        int page = NumberUtils.toInt(pageRequest,1);
+        this.postService.approvePost(Integer.valueOf(id));
+        List<Post> postList  = this.postSortSerVice.getAllPostNotApprove(request, (page-1)*NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
+        this.requestService.setResponse(modelMap,postList,this.postService.getCountNotApprove(),page,"admin",null);
+        return "admin";
     }
 
 
@@ -107,25 +125,5 @@ public class AdminController
             }
         }
     }
-
-    protected  void aprrovePost(HttpServletRequest request)
-    {
-        String action = request.getParameter("action");
-        String id = request.getParameter("id");
-        if(action != null && action.equals("approve")) {
-            Date date;
-            Calendar calendar=Calendar.getInstance();
-            Post post;
-            date = calendar.getTime();
-            post = this.postService.find(Integer.valueOf(id));
-            if(post != null) {
-
-                post.setApprovedTime(date);
-                post.setApprove(1);
-                this.postService.save(post);
-            }
-        }
-    }
-
 
 }

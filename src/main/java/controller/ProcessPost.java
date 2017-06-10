@@ -124,14 +124,14 @@ public class ProcessPost {
         HttpSession session = request.getSession();
 
         if(!org.apache.commons.lang3.StringUtils.isNumeric(postId) || this.postService.find(Integer.valueOf(postId)) == null) {
-            throw new NotFindException("access.post.not.found");
+            throw new NotFindException(NotFindException.POST_NOT_FOUND);
         }
         Post post = this.postService.find(Integer.valueOf(postId));
 
         User user = this.userService.getUserByName((String) request.getSession().getAttribute("username"));
 
         if(!this.userService.isEditPost(user,post)) {
-            throw new AccessDenieException("access.notrole_post");
+            throw new AccessDenieException(AccessDenieException.ACCESS_NOT_ROLE_POST);
         }
 
         session.setAttribute("postUpdate", this.postService.find(Integer.valueOf(postId)));
@@ -148,10 +148,6 @@ public class ProcessPost {
         HttpSession session = request.getSession();
 
         Post postUpdate = (Post) session.getAttribute("postUpdate");
-        if(!postUpdate.getUser().getUserName().equals(principal.getName()) || !this.userService.isRoleAdmin(this.userService.getUserByName(principal.getName())))
-        {
-            return "redirect:/home";
-        }
 
         if(org.apache.commons.lang3.StringUtils.isBlank(post.getTitle())|| !StringUtils.checkVid(post.getTitle()))
         {
@@ -199,13 +195,13 @@ public class ProcessPost {
     public String deletePost(@RequestParam(value = "id",required = false) String  id,Principal principal,HttpServletRequest request) throws NotFindException, AccessDenieException {
         if(!org.apache.commons.lang3.StringUtils.isNumeric(id) || this.postService.find(Integer.valueOf(id))== null)
         {
-            throw new NotFindException("access.post.not.found");
+            throw new NotFindException(NotFindException.POST_NOT_FOUND);
         }
 
         User user = this.userService.getUserByName((String) request.getSession().getAttribute("username"));
         Post post = this.postService.find(Integer.valueOf(id));
         if(!this.userService.isEditPost(user,post)) {
-            throw new AccessDenieException("access.notrole_post");
+            throw new AccessDenieException(AccessDenieException.ACCESS_NOT_ROLE_POST);
         }
         return "redirect:/home";
     }

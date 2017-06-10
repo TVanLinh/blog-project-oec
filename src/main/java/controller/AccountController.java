@@ -7,10 +7,6 @@ import exceptions.AccessDenieException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,15 +71,15 @@ public class AccountController {
                              @RequestParam(value = "action",required = false)String action,
                              @RequestParam(value = "id",required = false) String id) throws AccessDenieException {
         defaultPage.setDaultPage(request);
-        setDefaultUser(principal,request);
+        setDefaultUser(principal,request,modelMap);
         modelMap.addAttribute("userDAO",this.userService);
 
         List<Post> postList;
         User user = userService.getUserByName(principal.getName());
 
-        if(StringUtils.isNumeric(id) && !this.userService.isEditPost(user,this.postService.find(Integer.valueOf(Integer.valueOf(id)))))
+        if(StringUtils.isNumeric(id) && !this.userService.isEditPost(user,this.postService.find(Integer.valueOf(id))))
         {
-            throw new AccessDenieException("access.notrole_post");
+            throw new AccessDenieException(AccessDenieException.ACCESS_NOT_ROLE_POST);
         }
 
         this.postService.deletePost(action,id);
@@ -95,12 +91,12 @@ public class AccountController {
     }
 
 
-    private  void setDefaultUser(Principal principal,HttpServletRequest request)
+    private  void setDefaultUser(Principal principal,HttpServletRequest request,ModelMap modelMap)
     {
 
         if(request.getSession().getAttribute("username") == null) {
             HttpSession session=request.getSession();
-            request.setAttribute("postList",this.postService.getPostByIdUser(this.userService.getUserByName(principal.getName()).getId()));
+            modelMap.addAttribute("postList",this.postService.getPostByIdUser(this.userService.getUserByName(principal.getName()).getId()));
             session.setAttribute("username",principal.getName());
 
             Configuration configuration = this.configurationService.getAllConfiguration().get(0);
@@ -131,13 +127,11 @@ public class AccountController {
     public ModelAndView login(@RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout) {
         ModelAndView model = new ModelAndView();
         if (error != null) {
-            model.addObject("error", "Invalid username or password!");
+            model.addObject("error", "validation.field.not.right.pass.user");
         }
-
-        if (logout != null) {
-            model.addObject("msg", "You've been logged out successfully.");
-        }
-
+//        if (logout != null) {
+//            model.addObject("msg", "You've been logged out successfully.");
+//        }
         model.setViewName("login");
 
         return model;
@@ -160,20 +154,17 @@ public class AccountController {
 
     //for 403 access denied page
     @RequestMapping(value = "/403", method = RequestMethod.GET)
-    public ModelAndView accessDenied() {
+    public String  accessDenied() throws AccessDenieException {
 
-        ModelAndView model = new ModelAndView();
+//        ModelAndView model = new ModelAndView();
 
-        //check if user is login
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            model.addObject("username", userDetail.getUsername());
-        }
-
-        model.setViewName("redirect:/home");
-        return model;
-
+//        //check if user is login
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        if (!(auth instanceof AnonymousAuthenticationToken)) {
+//            UserDetails userDetail = (UserDetails) auth.getPrincipal();
+//            model.addObject("username", userDetail.getUsername());
+//        }
+       throw new AccessDenieException(AccessDenieException.ACESS_NOT_ROLE_PAGE);
     }
 
     @RequestMapping(value = "/change-pass-word",method = RequestMethod.GET)

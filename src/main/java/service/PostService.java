@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import utils.number.NumberViewSort;
 import utils.sort.SortType;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -163,7 +165,19 @@ public class PostService extends AbstractService<Post> {
         }
     }
 
-
+    public   void approvePost(int  id)
+    {
+            Date date;
+            Calendar calendar=Calendar.getInstance();
+            Post post;
+            date = calendar.getTime();
+            post = this.find(Integer.valueOf(id));
+            if(post != null) {
+                post.setApprovedTime(date);
+                post.setApprove(1);
+                this.save(post);
+            }
+    }
     public List<Post> getPost(int idUser, int status, int approve, SortType sortType) {
         String str = "select * from post where id_user =:id_user and status =:status and approve =:approve order by :orderBy :typeOrder ";
         Query query = sessionFactory.getCurrentSession().createNativeQuery(str, Post.class);
@@ -192,5 +206,7 @@ public class PostService extends AbstractService<Post> {
     public int getCount(int idUser, int status, int approve) {
         return this.getPost(idUser, status, approve, new SortType()).size();
     }
+
+
 }
 

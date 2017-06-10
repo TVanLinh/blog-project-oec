@@ -4,6 +4,8 @@ import dao.UserDAO;
 import entities.Post;
 import entities.Role;
 import entities.User;
+import exceptions.AccessDenieException;
+import exceptions.NotFindException;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -29,6 +31,9 @@ public class UserService  extends AbstractService<User> {
 
     @Autowired
     UserDAO userDAO;
+
+    @Autowired
+    PostService postService;
 
     public UserService() {
     }
@@ -167,5 +172,15 @@ public class UserService  extends AbstractService<User> {
             return false;
         }
         return true;
+    }
+
+    public    void checkRole(String id,String username) throws NotFindException, AccessDenieException {
+        if(!StringUtils.isNumeric(id) || StringUtils.isNumeric(id) && this.postService.find(Integer.valueOf(id)) == null) {
+            throw new NotFindException(NotFindException.POST_NOT_FOUND);
+        }
+        User user = this.getUserByName(username);
+        if(StringUtils.isNumeric(id) && !this.isEditPostAdmin(user,this.postService.find(Integer.valueOf(id)))) {
+            throw  new AccessDenieException(AccessDenieException.ACCESS_NOT_ROLE_POST);
+        }
     }
 }
