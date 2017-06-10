@@ -12,9 +12,10 @@
         <div class="row">
             <!-- Blog Entries Column -->
                 <div class="col-xs-12 ">
-
                     <jsp:useBean id="dateUtil" class="utils.date.DateFormatUtil" scope="session"/>
-
+                    <c:if test="${requestScope.error != null}">
+                        ${requestScope.error}
+                    </c:if>
                  <!--------------content-->
                  <jsp:include page="templates/components/content.jsp"/>
 
@@ -25,12 +26,6 @@
                 </jsp:include>
 
                 </div>
-            <!-- Blog Sidebar Widgets Column -->
-            <%--<jsp:include page="templates/slidebar/slidebar.jsp">--%>
-                <%--<jsp:param name="action" value="mySearch.formSearch('/view-search?title=','#search')"/>--%>
-                <%--<jsp:param name="urlTarget" value="/view-search"/>--%>
-            <%--</jsp:include>--%>
-
         </div>
         <!-- /.row -->
 

@@ -1,6 +1,7 @@
 package service;
 
 import dao.UserDAO;
+import entities.Post;
 import entities.Role;
 import entities.User;
 import org.apache.commons.lang3.StringUtils;
@@ -148,5 +149,23 @@ public class UserService  extends AbstractService<User> {
             }
         }
         return false;
+    }
+
+   public boolean isEditPost(User user, Post post)
+    {
+        if(user == null ||post == null || !this.isRoleAdmin(user) || user.getId() != post.getUser().getId() )
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isEditPostAdmin(User user, Post post)
+    {
+        if(user == null ||post == null || !this.isRoleAdmin(user) )
+        {
+            return false;
+        }
+        return true;
     }
 }

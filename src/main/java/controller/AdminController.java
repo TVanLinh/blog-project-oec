@@ -1,6 +1,8 @@
 package controller;
 
 import entities.Post;
+import entities.User;
+import exceptions.AccessDenieException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import service.ConfigurationService;
 import service.PostService;
 import service.PostSortService;
 import service.RequestService;
+import service.UserService;
 import utils.number.NumberViewSort;
 import utils.page.DefaultPages;
 import utils.sort.PortSort;
@@ -34,9 +36,6 @@ public class AdminController
 {
 
     @Autowired
-    private     ConfigurationService configurationService;
-
-    @Autowired
     private     DefaultPages defaultPage;
 
     @Autowired
@@ -51,16 +50,27 @@ public class AdminController
     @Autowired
     private     PostSortService postSortSerVice;
 
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/admin**", method = RequestMethod.GET)
-    public ModelAndView adminPage(HttpServletRequest request, ModelMap modelMap, @RequestParam(value = "page",required = false) String pageRequest) {
+    public ModelAndView adminPage(HttpServletRequest request, ModelMap modelMap,
+                                  @RequestParam(value = "page",required = false) String pageRequest,
+                                  @RequestParam(value = "action",required = false)String action,
+                                  @RequestParam(value = "id",required = false) String id) throws AccessDenieException {
         this.defaultPage.setDaultPage(request);
 
         ModelAndView model = new ModelAndView();
         List<Post> postList;
         int  page= NumberUtils.toInt(pageRequest,1);
+        User user = this.userService.getUserByName((String) request.getSession().getAttribute("username"));
 
-        deletePost(request);
+        if(StringUtils.isNumeric(id) && !this.userService.isEditPostAdmin(user,this.postService.find(Integer.valueOf(Integer.valueOf(id)))))
+        {
+            throw new AccessDenieException("access.notrole_post");
+        }
+
+        this.postService.deletePost(action,id);
         aprrovePost(request);
 
          postList  = this.postSortSerVice.getAllPostNotApprove(request, (page-1)*NumberViewSort.getNumberView(),NumberViewSort.getNumberView());

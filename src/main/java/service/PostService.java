@@ -8,12 +8,9 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ModelMap;
 import utils.number.NumberViewSort;
 import utils.sort.SortType;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -156,10 +153,7 @@ public class PostService extends AbstractService<Post> {
         return this.postDAO.getAllPostPublic().size();
     }
 
-    public void deletePost(HttpServletRequest request) {
-        String action = request.getParameter("action");
-        String id = request.getParameter("id");
-
+    public void deletePost(String action,String id) {
         if (action != null && action.equals("delete")) {
             if (id != null && StringUtils.isNumeric(id)) {
                 if (this.find(Integer.valueOf(id)) != null) {
@@ -169,19 +163,6 @@ public class PostService extends AbstractService<Post> {
         }
     }
 
-    public void setListPost(ModelMap modelMap, List<Post> postList, int total) {
-        if (postList == null) {
-            postList = new ArrayList<Post>();
-        }
-        modelMap.addAttribute("postList", postList);
-        modelMap.addAttribute("totalList", total);
-    }
-
-    public void setResultQuerySearch(ModelMap modelMap, String querySearch, int page, int totalPost) {
-        modelMap.addAttribute("page", page);
-        modelMap.addAttribute("querySearch", querySearch);
-        modelMap.addAttribute("totalList", totalPost);
-    }
 
     public List<Post> getPost(int idUser, int status, int approve, SortType sortType) {
         String str = "select * from post where id_user =:id_user and status =:status and approve =:approve order by :orderBy :typeOrder ";

@@ -3,6 +3,8 @@ package controller;
 import entities.Image;
 import entities.Post;
 import entities.User;
+import exceptions.AccessDenieException;
+import exceptions.NotFindException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -46,7 +48,6 @@ public class ProcessPost {
 
     @Autowired
     private ConfigurationService configurationService;
-
 
     @RequestMapping(value = "/write-post", method = RequestMethod.POST)
     public ModelAndView processWritePost(@ModelAttribute(value = "post") Post post,
@@ -117,22 +118,26 @@ public class ProcessPost {
     }
 
     @RequestMapping(value = "/update",method = RequestMethod.GET)
-    public  String updatePost(HttpServletRequest request) {
+    public  String updatePost(HttpServletRequest request,
+                                        @RequestParam(value = "id",required = false)String postId) throws NotFindException, AccessDenieException {
         this.defaultPage.setDaultPage(request);
         HttpSession session = request.getSession();
-        String action = request.getParameter("action");
-        String postId = request.getParameter("id");
 
-        if(!org.apache.commons.lang3.StringUtils.isNumeric(postId) || !"update".equals(action)) {
-            return "redirect:/home";
+        if(!org.apache.commons.lang3.StringUtils.isNumeric(postId) || this.postService.find(Integer.valueOf(postId)) == null) {
+            throw new NotFindException("access.post.not.found");
         }
-        if(this.postService.find(Integer.valueOf(postId))==null)
-        {
-            return "redirect:/home";
+        Post post = this.postService.find(Integer.valueOf(postId));
+
+        User user = this.userService.getUserByName((String) request.getSession().getAttribute("username"));
+
+        if(!this.userService.isEditPost(user,post)) {
+            throw new AccessDenieException("access.notrole_post");
         }
+
         session.setAttribute("postUpdate", this.postService.find(Integer.valueOf(postId)));
         return "update";
     }
+
 
     @RequestMapping(value = "/write-update",method = RequestMethod.POST)
     public  String viewUpdatePost(@ModelAttribute(value = "post")Post post,
@@ -191,12 +196,16 @@ public class ProcessPost {
     }
 
     @RequestMapping(value = "/delete-post")
-    public String deletePost(@RequestParam(value = "id") int id,Principal principal) {
-        Post post = this.postService.find(id);
-        if( post != null) {
-            if(post.getUser().getUserName().equals(principal.getName()) || this.userService.isRoleAdmin(this.userService.getUserByName(principal.getName()))) {
-                this.postService.delete(id);
-            }
+    public String deletePost(@RequestParam(value = "id",required = false) String  id,Principal principal,HttpServletRequest request) throws NotFindException, AccessDenieException {
+        if(!org.apache.commons.lang3.StringUtils.isNumeric(id) || this.postService.find(Integer.valueOf(id))== null)
+        {
+            throw new NotFindException("access.post.not.found");
+        }
+
+        User user = this.userService.getUserByName((String) request.getSession().getAttribute("username"));
+        Post post = this.postService.find(Integer.valueOf(id));
+        if(!this.userService.isEditPost(user,post)) {
+            throw new AccessDenieException("access.notrole_post");
         }
         return "redirect:/home";
     }

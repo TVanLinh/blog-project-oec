@@ -3,6 +3,8 @@ package controller;
 import entities.Configuration;
 import entities.Post;
 import entities.User;
+import exceptions.AccessDenieException;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -69,14 +71,22 @@ public class AccountController {
     @RequestMapping(value = "/user")
     public  String userInfor(Principal principal,HttpServletRequest request,
                              ModelMap modelMap,
-                             @RequestParam(value = "page",required = false) String pageRequest) {
+                             @RequestParam(value = "page",required = false) String pageRequest,
+                             @RequestParam(value = "action",required = false)String action,
+                             @RequestParam(value = "id",required = false) String id) throws AccessDenieException {
         defaultPage.setDaultPage(request);
         setDefaultUser(principal,request);
         modelMap.addAttribute("userDAO",this.userService);
 
         List<Post> postList;
         User user = userService.getUserByName(principal.getName());
-        this.postService.deletePost(request);
+
+        if(StringUtils.isNumeric(id) && !this.userService.isEditPost(user,this.postService.find(Integer.valueOf(Integer.valueOf(id)))))
+        {
+            throw new AccessDenieException("access.notrole_post");
+        }
+
+        this.postService.deletePost(action,id);
         int page = NumberUtils.toInt(pageRequest,1);
 
         postList = postSortSerVice.getAllPostByUser(request,user,(page-1)* NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
@@ -150,7 +160,7 @@ public class AccountController {
 
     //for 403 access denied page
     @RequestMapping(value = "/403", method = RequestMethod.GET)
-    public ModelAndView accesssDenied() {
+    public ModelAndView accessDenied() {
 
         ModelAndView model = new ModelAndView();
 
