@@ -9,9 +9,8 @@
         <security:intercept-url pattern="/configuration" access="hasRole('ROLE_ADMIN')"/>
         <security:intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
         <security:intercept-url pattern="/manager-post" access="hasRole('ROLE_ADMIN')" />
+        <security:intercept-url pattern="/processConfiguration" access="hasRole('ROLE_ADMIN')" />
         <security:intercept-url pattern="/" access="permitAll()" />
-        <security:intercept-url pattern="/public/vendors/Highcharts-5.0.12/examples/bar-negative-stack" access="permitAll()" />
-
 
         <security:intercept-url pattern="/user**" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')"/>
         <security:intercept-url pattern="/delete-post" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')"/>

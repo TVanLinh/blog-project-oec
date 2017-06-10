@@ -39,9 +39,11 @@
                 </div>
                 <input type="submit" class="btn btn-default" value="${messageSource.getMessage("save",null,locale)}" onsubmit="return checkFormInsertUser()" onclick="return checkFormInsertUser()">
                 <p class="pd-10 error">
-                    <c:forEach var="item" items="${requestScope.errors}">
-                        ${messageSource.getMessage(item,null,locale)}
-                    </c:forEach>
+                    <c:if test="${requestScope.errors != null}">
+                        <c:forEach var="item" items="${requestScope.errors}">
+                            ${messageSource.getMessage(item,null,locale)}
+                        </c:forEach>
+                    </c:if>
                 </p>
             </form:form>
         </div>

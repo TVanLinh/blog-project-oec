@@ -1,15 +1,17 @@
 package controller;
 
 import entities.Configuration;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
+import exceptions.NotFindException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import service.ConfigurationService;
+import service.RequestService;
 import utils.page.DefaultPages;
+import vadilator.ConfigFormValidator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,60 +27,56 @@ public class ConfigurationController {
     @Autowired
     ConfigurationService configurationService;
 
+    @Autowired
+    ConfigFormValidator configFormValidator;
+
+    @Autowired
+    RequestService requestService;
+
+    @ModelAttribute
+    public Configuration initConfig()
+    {
+        return new Configuration();
+    }
+
     @RequestMapping(value = "/configuration")
     public  String configurarion(HttpServletRequest request,ModelMap modelMap) {
         this.defaultPage.setDaultPage(request);
-        if(request.getSession().getAttribute("error")!=null)
+        if(request.getSession().getAttribute(requestService.SUCCESS)!=null)
         {
-            modelMap.addAttribute("error",request.getSession().getAttribute("error"));
-            request.getSession().removeAttribute("error");
+            modelMap.addAttribute(requestService.SUCCESS,request.getSession().getAttribute(requestService.SUCCESS));
+            request.getSession().removeAttribute(requestService.SUCCESS);
         }
         modelMap.addAttribute("conf",this.configurationService.getAllConfiguration().get(0));
         return "configuration";
     }
 
-    @RequestMapping("/processConfigurarion")
-    public  String processConfigurarion(HttpServletRequest request, ModelMap modelMap, @RequestParam(value = "titleBlog" ,required=false) String title,
-                                        @RequestParam(value = "formatTime",required = false) String formatTime,
-                                        @RequestParam(value = "numberPost",required = false) String numberPost) {
-        int numberView = NumberUtils.toInt(numberPost,this.configurationService.getAllConfiguration().get(0).getNumberViewPost());
+    @RequestMapping("/processConfiguration")
+    public  String processConfiguration(HttpServletRequest request,
+                                        ModelMap modelMap,@ModelAttribute(value = "configuration")Configuration conf,
+                                        BindingResult bindingResult
+                                        ) throws NotFindException {
+        this.configFormValidator.validate(conf, bindingResult);
 
-        if(!utils.string.StringUtils.checkVid(title)) {
-            this.setResultConfig(modelMap,"Not valid!");
-            return "configuration";
-        }
-
-        if(StringUtils.isEmpty(title) ||StringUtils.isBlank(title)|| StringUtils.isEmpty(formatTime) ||StringUtils.isBlank(formatTime ) || !utils.string.StringUtils.checkVid(title)){
-            this.setResultConfig(modelMap,"Title or format time  not valid!");
+        if (bindingResult.hasErrors()) {
+            modelMap.addAttribute("errors", this.configFormValidator.getCodeErrors(bindingResult));
             return "configuration";
         }
 
         Configuration configuration = this.configurationService.getAllConfiguration().get(0);
 
-        try {
-            if(configuration == null) {
-                configuration = new Configuration();
-            }
-            configuration.setNumberViewPost(numberView);
-            configuration.setWebTitle(title);
-            configuration.setDateFormat(formatTime);
-            this.configurationService.save(configuration);
-
-            this.setResultConfig(modelMap,"Successfully !");
-            request.getSession().setAttribute("error","Successfully !");
-        }catch (IndexOutOfBoundsException e)
-        {
-            return "configuration";
+        if (configuration == null){
+            throw  new NotFindException("Have not config");
         }
 
+        configuration.setNumberViewPost(conf.getNumberViewPost());
+        configuration.setWebTitle(conf.getWebTitle());
+        configuration.setDateFormat(conf.getDateFormat());
+        this.configurationService.save(configuration);
+
+        request.getSession().setAttribute(requestService.SUCCESS,"request.update_success");
         this.defaultPage.setDaultPage(request);
         return "redirect:/configuration";
-    }
-
-    protected void  setResultConfig(ModelMap modelMap,String err)
-    {
-        modelMap.addAttribute("error",err);
-        modelMap.addAttribute("conf",this.configurationService.getAllConfiguration().get(0));
     }
 
 }

@@ -39,4 +39,13 @@ public class ConfigurationService extends AbstractService<Configuration>{
         return this.findAll(Configuration.class,"configuration");
     }
 
+    public  boolean isHaveFormatTime(Configuration config,String str)
+    {
+        if(config.getDateFormat().trim().equalsIgnoreCase(str.trim()))
+        {
+            return true;
+        }
+        return false;
+    }
+
 }

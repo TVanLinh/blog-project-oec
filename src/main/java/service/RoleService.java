@@ -19,10 +19,10 @@ import java.util.List;
 public class RoleService  extends AbstractService<Role>{
 
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     @Autowired
-    RoleDAO roleDAO;
+    private  RoleDAO roleDAO;
 
     public  String getStringFromListRole(List<Role> list) {
         StringBuilder builder = new StringBuilder("");

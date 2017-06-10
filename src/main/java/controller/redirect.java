@@ -1,14 +1,18 @@
 package controller;
 
 import entities.Post;
+import exceptions.NotFindException;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import service.ConfigurationService;
 import service.PostService;
+import service.RequestService;
 import service.UserService;
 import utils.page.DefaultPages;
 
@@ -24,16 +28,19 @@ public class redirect {
 
 
     @Autowired
-    UserService userService;
+    private    UserService userService;
 
     @Autowired
-    PostService postService;
+    private    PostService postService;
 
     @Autowired
-    ConfigurationService configurationService;
+    private    ConfigurationService configurationService;
 
     @Autowired
-    DefaultPages defaultPage;
+    private    DefaultPages defaultPage;
+
+    @Autowired
+    private RequestService<Post> requestService;
 
     @RequestMapping(value = "/write")
     public  String viewWriter(HttpServletRequest request) {
@@ -43,70 +50,42 @@ public class redirect {
     }
 
     @RequestMapping(value={"/","/home"})
-    public String homePage(HttpServletRequest request, ModelMap modelMap) {
+    public String homePage(HttpServletRequest request, ModelMap modelMap, @RequestParam(value = "page",required = false)String pageRequest) {
         this.defaultPage.setDaultPage(request);
-        String page=request.getParameter("page");
+        int  page = NumberUtils.toInt(pageRequest,1);
         List<Post> postList;
 
         int limit = this.configurationService.getAllConfiguration().get(0).getNumberViewPost();
-        request.setAttribute("userDAO",this.userService);
-        if(page == null|| !StringUtils.isNumeric(page) || page.trim().equals("")) {
-            postList = this.postService.getPublic(0,limit);
-            setResponeHome(modelMap,postList,1);
-            return "home";
-        }
+        modelMap.addAttribute("userDAO",this.userService);
 
-        postList = this.postService.getPublic((Integer.valueOf(page)-1)*limit,limit);
-        setResponeHome(modelMap,postList,Integer.valueOf(page));
-        request.setAttribute("page",Integer.valueOf(page));
+        postList = this.postService.getPublic((page-1)*limit,limit);
+        this.requestService.setResponse(modelMap,postList,
+                                        this.postService.getCountPublic(),
+                                        page,"home",null);
+        modelMap.addAttribute("limit",limit);
         return "home";
     }
 
-    private void setResponeHome(ModelMap modelMap,List<Post> postList,int page)
-    {
-        modelMap.addAttribute("page",page);
-        modelMap.addAttribute("postList",postList);
-        modelMap.addAttribute("totalList",this.postService.getCountPublic());
-        modelMap.addAttribute("limit",this.configurationService.getAllConfiguration().get(0).getNumberViewPost());
-        modelMap.addAttribute("active","home");
-    }
 
     @RequestMapping(value = "/post")
-    public  String viewPost(HttpServletRequest request,ModelMap modelMap) {
+    public  String viewPost(HttpServletRequest request,ModelMap modelMap,@RequestParam(value = "id",required = false) String id) throws NotFindException {
         this.defaultPage.setDaultPage(request);
 
-        String id = request.getParameter("id");
+
         List<Post> postSlideBar = this.postService.getPublic(0, this.configurationService.getAllConfiguration().get(0).getNumberViewPost());
         modelMap.addAttribute("postSlideBar",postSlideBar);
-        if(id == null ||  !StringUtils.isNumeric(id))
+
+        if(!StringUtils.isNumeric(id) || this.postService.find(Integer.valueOf(id)) == null)
         {
-            return "redirect:/home";
+            throw new NotFindException("Not find post " +id);
         }
 
-        if(id != null) {
-            try {
-                Post post = this.postService.find(Integer.valueOf(id));
-                if(post != null) {
-                    post.setNumberView(post.getNumberView()+1);
-                    this.postService.save(post);
-                    modelMap.addAttribute("post",post);
-                }
-                modelMap.addAttribute("active","post");
-                return "post";
-            }catch (Exception e) {
-                return "/home";
-            }
-        }
-        modelMap.addAttribute("active","home");
-        return "/home";
+        Post post = this.postService.find(Integer.valueOf(id));
+        post.setNumberView(post.getNumberView()+1);
+        this.postService.save(post);
+        modelMap.addAttribute("post",post);
+        modelMap.addAttribute("active","post");
+        return "post";
     }
-
-//    @RequestMapping(value = "/tanso")
-//    public String tanso(HttpServletRequest request)
-//    {
-//        this.defaultPage.setDaultPage(request);
-//        System.out.println(this.postDAO.getStatisticByMonth());
-//        return "tanso";
-//    }
 
 }

@@ -1,15 +1,21 @@
 package controller;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
+import exceptions.NotFindException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by linhtran on 09/06/2017.
  */
-//@ControllerAdvice
+@ControllerAdvice
 public class MyExceptionHandler {
-//    @ExceptionHandler(RuntimeException.class)
-//    @ResponseBody
-    public String handleIOException(RuntimeException ex) {
-        return "Error: " + ExceptionUtils.getStackTrace(ex);
+
+    @ExceptionHandler(NotFindException.class)
+    public ModelAndView  handleIOException(NotFindException ex) {
+        System.out.println(ex.getMessage());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/home");
+        return  modelAndView;
     }
 }

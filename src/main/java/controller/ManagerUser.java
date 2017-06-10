@@ -22,7 +22,6 @@ import utils.number.NumberViewSort;
 import utils.page.DefaultPages;
 import utils.sort.Sort;
 import utils.sort.SortType;
-import utils.sort.UserSort;
 import utils.string.StringSessionUtil;
 import vadilator.UserFormInsertUserValidator;
 import vadilator.UserFormUpdateValidator;
@@ -39,35 +38,34 @@ import java.util.List;
 public class ManagerUser {
 
     @Autowired
-    UserService userService;
+    private   UserService userService;
 
     @Autowired
-    DefaultPages defaultPage;
+    private    DefaultPages defaultPage;
 
     @Autowired
-    RoleService roleService;
-
-    @Autowired
-    UserSort userSort;
-
-    @Autowired
-    BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    Sort sort;
-
-    @Autowired
-    RequestService<User> requestService;
-
-    @Autowired
-    UserSortService userSortService;
+    private    RoleService roleService;
 
 
     @Autowired
-    UserFormUpdateValidator updateUserValidator;
+    private    BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    UserFormInsertUserValidator insertUserValidator;
+    private    Sort sort;
+
+    @Autowired
+    private    RequestService<User> requestService;
+
+    @Autowired
+    private    UserSortService userSortService;
+
+
+    @Autowired
+    private    UserFormUpdateValidator updateUserValidator;
+
+    @Autowired
+    private    UserFormInsertUserValidator insertUserValidator;
+
     @ModelAttribute
     public UserForm initUserForm() {
         return new UserForm();
@@ -82,6 +80,7 @@ public class ManagerUser {
         this.defaultPage.setDaultPage(request);
 
         List<User> userList;
+
         int  page = NumberUtils.toInt(pageRequest,1);
 
         if (request.getSession().getAttribute("errorInsertUser") != null) {
@@ -136,7 +135,7 @@ public class ManagerUser {
 
         userForm.getUser().setPassWord(passwordEncoder.encode(userForm.getUser().getPassWord()));
         this.userService.save(userForm.getUser());
-        request.getSession().setAttribute("errorInsertUser", "Insert Successful .!");
+        request.getSession().setAttribute("errorInsertUser", "request.insert_success");
         return "redirect:manager-user";
     }
 
@@ -204,7 +203,7 @@ public class ManagerUser {
         userCurrent.setRoleList(userForm.getUser().getRoleList());
 
         this.userService.save(userCurrent);
-        request.getSession().setAttribute("errorInsertUser", "Update successful .!");
+        request.getSession().setAttribute("errorInsertUser", "request.update_success");
         return  "redirect:manager-user";
     }
 

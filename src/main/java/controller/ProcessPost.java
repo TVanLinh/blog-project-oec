@@ -33,32 +33,37 @@ import java.util.List;
 public class ProcessPost {
 
     @Autowired
-    UserService userService;
+   private UserService userService;
 
     @Autowired
-    ImageService imageService;
+    private ImageService imageService;
 
     @Autowired
-    DefaultPages defaultPage;
+    private  DefaultPages defaultPage;
 
     @Autowired
-    PostService postService;
+    private PostService postService;
 
     @Autowired
-    ConfigurationService configurationService;
+    private ConfigurationService configurationService;
 
 
     @RequestMapping(value = "/write-post", method = RequestMethod.POST)
-    public ModelAndView processWritePost(@ModelAttribute(value = "post") Post post, HttpServletRequest request, Principal principal,ModelMap modelMap) {
+    public ModelAndView processWritePost(@ModelAttribute(value = "post") Post post,
+                                         HttpServletRequest request,
+                                         Principal principal, ModelMap modelMap,
+                                         @RequestParam(value = "link-image",required = false)String linkImage,
+                                         @RequestParam(value = "alt-image",required = false)String altImage ) {
         this.defaultPage.setDaultPage(request);
         this.setPostSliderbar(modelMap);
 
-        if(post.getTitle().trim().equals("")|| !StringUtils.checkVid(post.getTitle()))
+        if(org.apache.commons.lang3.StringUtils.isBlank(post.getTitle())|| !StringUtils.checkVid(post.getTitle()))
         {
-            request.setAttribute("error","Title not valid ");
+            request.setAttribute("error","validation.field.post_title_not_blank");
             request.getSession().setAttribute("postUpdate", post);
             return new ModelAndView("write");
         }
+
         HttpSession session = request.getSession();
         User user = this.userService.getUserByName(principal.getName());
         post.setUser(user);
@@ -72,18 +77,16 @@ public class ProcessPost {
         post.setUserUpdated(principal.getName());
         post.setUpdateTime(date);
 
-        String linkImage = request.getParameter("link-image");
-        String altImage=request.getParameter("alt-image");
-        if(linkImage != null && !linkImage.trim().equals("")) {
+        if(org.apache.commons.lang3.StringUtils.isNotBlank(linkImage)) {
             Image image = new Image();
             image.setLink(linkImage);
-            if(altImage != null && !altImage.trim().equals("")) {
+            if(org.apache.commons.lang3.StringUtils.isNotBlank(altImage)) {
                 image.setAlt(altImage);
             }
             post.setImage(image);
         }
         this.postService.save(post);
-        request.setAttribute("post", post);
+        modelMap.addAttribute("post", post);
         session.setAttribute("post-id", post.getId());
         return new ModelAndView("redirect:/view-post");
 
@@ -106,16 +109,11 @@ public class ProcessPost {
 
         HttpSession session = request.getSession();
         Integer postId = (Integer) session.getAttribute("post-id");
-        try {
-            System.out.println("nuber: " + postId);
-            Post post = this.postService.find(postId);
-            if (post != null) {
-                request.setAttribute("post", post);
-            }
-            return "view";
-        } catch (Exception e) {
-            return "view";
+        Post post = this.postService.find(postId);
+        if (post != null) {
+            request.setAttribute("post", post);
         }
+        return "view";
     }
 
     @RequestMapping(value = "/update",method = RequestMethod.GET)
@@ -137,7 +135,10 @@ public class ProcessPost {
     }
 
     @RequestMapping(value = "/write-update",method = RequestMethod.POST)
-    public  String viewUpdatePost(@ModelAttribute(value = "post")Post post, HttpServletRequest request,Principal principal) {
+    public  String viewUpdatePost(@ModelAttribute(value = "post")Post post,
+                                  HttpServletRequest request,Principal principal,
+                                  @RequestParam(value = "link-image",required = false)String linkImage,
+                                  @RequestParam(value = "alt-image",required = false)String altImage ) {
         this.defaultPage.setDaultPage(request);
         HttpSession session = request.getSession();
 
@@ -146,12 +147,14 @@ public class ProcessPost {
         {
             return "redirect:/home";
         }
-        if(post.getTitle().trim().equals("")|| !StringUtils.checkVid(post.getTitle()))
+
+        if(org.apache.commons.lang3.StringUtils.isBlank(post.getTitle())|| !StringUtils.checkVid(post.getTitle()))
         {
-            request.setAttribute("error","Title not valid ");
-            session.setAttribute("postUpdate", postUpdate);
+            request.setAttribute("error","validation.field.post_title_not_blank");
+            request.getSession().setAttribute("postUpdate", post);
             return "update";
         }
+
         Date date = Calendar.getInstance().getTime();
 
         postUpdate.setUpdateTime(date);
@@ -160,25 +163,23 @@ public class ProcessPost {
         postUpdate.setContent(post.getContent());
         postUpdate.setStatus(post.getStatus());
 
-        String linkImage = request.getParameter("link-image");
-        String altImage = request.getParameter("alt-image");
-
         Image image = new  Image();
 
-        if(linkImage != null && !linkImage.trim().equals("")) {
+        if(org.apache.commons.lang3.StringUtils.isNotBlank(linkImage)) {
             image.setLink(linkImage);
         }
-        if(altImage != null && !altImage.trim().equals("")) {
-            image.setAlt(altImage);
+
+        if(org.apache.commons.lang3.StringUtils.isNotBlank(altImage)) {
+            image.setLink(altImage);
         }
 
-        if(image.getLink()!=null && postUpdate.getImage()!=null)
+        if(image.getLink()!= null && postUpdate.getImage() != null)
         {
             this.imageService.deleteByIdPost(postUpdate.getId());
             postUpdate.setImage(image);
         }
 
-        if(image.getLink()!=null && postUpdate.getImage()==null)
+        if(image.getLink() != null && postUpdate.getImage() == null)
         {
             postUpdate.setImage(image);
         }
@@ -193,8 +194,7 @@ public class ProcessPost {
     public String deletePost(@RequestParam(value = "id") int id,Principal principal) {
         Post post = this.postService.find(id);
         if( post != null) {
-            if(post.getUser().getUserName().equals(principal.getName()) || this.userService.isRoleAdmin(this.userService.getUserByName(principal.getName())))
-            {
+            if(post.getUser().getUserName().equals(principal.getName()) || this.userService.isRoleAdmin(this.userService.getUserByName(principal.getName()))) {
                 this.postService.delete(id);
             }
         }

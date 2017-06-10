@@ -4,18 +4,15 @@ import entities.Role;
 import forms.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import service.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by linhtran on 09/06/2017.
  */
 @Component
-public class UserFormValidator {
+public class UserFormValidator extends AbstractVadidator {
 
     @Autowired
     protected UserService userService;
@@ -51,14 +48,5 @@ public class UserFormValidator {
         return clazz.equals(UserForm.class);
     }
 
-    public List<String> getCodeErrors(BindingResult br)
-    {
-        List<String> list = new ArrayList<String>();
-        if(br.hasErrors()) {
-            for (FieldError f:br.getFieldErrors()) {
-                list.add(f.getCode());
-            }
-        }
-        return list;
-    }
+
 }
