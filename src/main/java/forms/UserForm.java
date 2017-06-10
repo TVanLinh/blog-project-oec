@@ -8,6 +8,7 @@ import entities.User;
 public class UserForm {
     private User user;
     private String rePassWord;
+    private  String newPassWord;
 
     public UserForm() {
         this.user = new User();
@@ -27,5 +28,13 @@ public class UserForm {
 
     public void setRePassWord(String rePassWord) {
         this.rePassWord = rePassWord;
+    }
+
+    public String getNewPassWord() {
+        return newPassWord;
+    }
+
+    public void setNewPassWord(String newPassWord) {
+        this.newPassWord = newPassWord;
     }
 }

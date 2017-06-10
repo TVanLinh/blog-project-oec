@@ -28,7 +28,11 @@
                     <input type="password" class="form-control " name="rePassWord" id="rePassWord">
                 </div>
                 <input type="submit" class="btn btn-default" value="${messageSource.getMessage("save",null,locale)}" onsubmit="return checkFormValidPassWord()" onclick="return checkFormInsertUser()">
-                <p class="pd-10 error">${requestScope.error}</p>
+                <p class="pd-10 error">
+                    <c:if test="${requestScope.error != null}">
+                        ${messageSource.getMessage(requestScope.error,null,locale)}
+                    </c:if>
+                </p>
             </form>
         </div>
         <!-- Blog Sidebar Widgets Column -->
@@ -42,8 +46,6 @@
 
 </div>
 <script src="<s:url value="/public/asserts/js/main.js"/>"></script>
-<script src="<s:url value="public/asserts/js/check_valid_form.js"/>"></script>
+<%--<script src="<s:url value="public/asserts/js/check_valid_form.js"/>"></script>--%>
 <jsp:include page="templates/footers/footer.jsp"/>
-<script>
-    var
-</script>
+

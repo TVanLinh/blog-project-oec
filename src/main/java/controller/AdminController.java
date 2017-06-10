@@ -34,22 +34,22 @@ public class AdminController
 {
 
     @Autowired
-    ConfigurationService configurationService;
+    private     ConfigurationService configurationService;
 
     @Autowired
-    DefaultPages defaultPage;
+    private     DefaultPages defaultPage;
 
     @Autowired
-    PortSort portSort;
+    private     PortSort portSort;
 
     @Autowired
-    PostService postService;
+    private     PostService postService;
 
     @Autowired
-    RequestService requestService;
+    private     RequestService requestService;
 
     @Autowired
-    PostSortService postSortSerVice;
+    private     PostSortService postSortSerVice;
 
 
     @RequestMapping(value = "/admin**", method = RequestMethod.GET)

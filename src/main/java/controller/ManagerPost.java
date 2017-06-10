@@ -27,22 +27,22 @@ import java.util.List;
 public class ManagerPost {
 
     @Autowired
-    DefaultPages defaultPage;
+    private     DefaultPages defaultPage;
 
     @Autowired
-    PortSort portSort;
+    private     PortSort portSort;
 
     @Autowired
-    PostService postService;
+    private     PostService postService;
 
     @Autowired
-    AdminController adminController;
+    private     AdminController adminController;
 
     @Autowired
-    PostSortService postSortService;
+    private     PostSortService postSortService;
 
     @Autowired
-    RequestService requestService;
+    private     RequestService requestService;
 
     @RequestMapping("/manager-post")
     public  String managerPost(HttpServletRequest request, ModelMap modelMap, @RequestParam(value = "page",required = false) String pageRequest) {

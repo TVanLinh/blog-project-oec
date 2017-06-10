@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AjaxController {
 
     @Autowired
-    PostService postService;
+    private PostService postService;
     public  static  final String  STATUS_LIKE  = "status_like_post";
     public static  final  String IMAGE_LIKE = "public/asserts/images/like.png";
     public static final String IMAGE_DISLIKE = "public/asserts/images/notlike.png";
@@ -32,11 +32,11 @@ public class AjaxController {
     @JsonView(Views.Public.class)
     public synchronized UserRestBody like(@RequestBody UserRestBody userRestBody, HttpServletRequest request, HttpServletResponse response) {
 
-        Cookie cookie[] = request.getCookies();
+        Cookie cookies[] = request.getCookies();
         Cookie cookieLike = null;
-        for (int i = 0; i < cookie.length; i++) {
-            if (cookie[i].getName().equals(STATUS_LIKE)) {
-                cookieLike = cookie[i];
+        for (Cookie cookie:cookies) {
+            if (cookie.getName().equals(STATUS_LIKE)) {
+                cookieLike = cookie;
                 break;
             }
         }

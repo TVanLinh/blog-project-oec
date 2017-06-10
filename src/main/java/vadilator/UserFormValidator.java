@@ -14,6 +14,10 @@ import java.util.List;
 @Component
 public class UserFormValidator extends AbstractVadidator {
 
+    public  static  final  String  VALIDATION_FIELD_PASS_NOT_RIGHT = "validation.field.password_not_right";
+    public  static  final  String  VALIDATION_PASS_NOT_OVERLAP= "validation.field.overlap_password";
+    public  static  final  String  VALIDATION_PASS_BLANK= "validation.field.password_not_blank";
+
     @Autowired
     protected UserService userService;
 
@@ -48,5 +52,24 @@ public class UserFormValidator extends AbstractVadidator {
         return clazz.equals(UserForm.class);
     }
 
+
+    public  static  boolean checkOverlapPassWord(String pass1,String pass2) {
+        if(!pass1.equals(pass2)) {
+            return false;
+        }
+        return true;
+    }
+
+    public static  boolean checkPassWordBlank(String pass1,String pass2)
+    {
+        if (pass1 == null || pass2 == null) {
+            return false;
+        }
+
+        if (org.apache.commons.lang3.StringUtils.isBlank(pass1) && org.apache.commons.lang3.StringUtils.isBlank(pass2)) {
+            return false;
+        }
+        return true;
+    }
 
 }
