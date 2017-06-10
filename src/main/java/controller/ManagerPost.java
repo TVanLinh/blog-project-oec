@@ -1,15 +1,18 @@
 package controller;
 
 import entities.Post;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import service.PostService;
+import service.PostSortService;
+import service.RequestService;
 import utils.number.NumberViewSort;
-import utils.page.DefaultPage;
+import utils.page.DefaultPages;
 import utils.sort.PortSort;
 import utils.sort.SortType;
 import utils.string.StringSessionUtil;
@@ -24,7 +27,7 @@ import java.util.List;
 public class ManagerPost {
 
     @Autowired
-    DefaultPage defaultPage;
+    DefaultPages defaultPage;
 
     @Autowired
     PortSort portSort;
@@ -35,58 +38,42 @@ public class ManagerPost {
     @Autowired
     AdminController adminController;
 
+    @Autowired
+    PostSortService postSortService;
+
+    @Autowired
+    RequestService requestService;
+
     @RequestMapping("/manager-post")
-    public  String managerPost(HttpServletRequest request, ModelMap modelMap) {
+    public  String managerPost(HttpServletRequest request, ModelMap modelMap, @RequestParam(value = "page",required = false) String pageRequest) {
         this.defaultPage.setDaultPage(request);
         List<Post> postList;
 
-        String page = request.getParameter("page");
-
-        if(page == null||page.trim().equals("") || !StringUtils.isNumeric(page)||Integer.valueOf(page )== 0) {
-            this.adminController.deletePost(request);
-            postList=this.postService.finAll(this.portSort.getQuerySortAllPost(request,0));
-            this.adminController.setListPost(modelMap,postList);
-            request.setAttribute("page",1);
-            return "manager-post";
-        }
+        int page = NumberUtils.toInt(pageRequest,1);
 
         this.adminController.deletePost(request);
-        postList = this.postService.finAll(this.portSort.getQuerySortAllPost(request,(Integer.valueOf(page)-1)* NumberViewSort.NUMBER_VIEW));
-        this.adminController.setListPost(modelMap,postList);
-        request.setAttribute("page", Integer.valueOf(page));
+        postList = this.postSortService.getAllPost(request,(page-1)* NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
+
+        this.requestService.setResponse(modelMap,postList,this.postService.findAll(Post.class,"post").size(),page);
         return "manager-post";
     }
 
     @RequestMapping(value = "/manager-post-search",method = RequestMethod.GET)
-    public  String searchTableAllPost(HttpServletRequest request,ModelMap modelMap) {
+    public  String searchTableAllPost(HttpServletRequest request,ModelMap modelMap,
+                                      @RequestParam(value = "page",required = false)String pageRequest,
+                                      @RequestParam(value ="query_search",required = false) String querySearch) {
         this.defaultPage.setDaultPage(request);
-        String page=request.getParameter("page");
-        String querySearch=request.getParameter("query_search");
-        SortType sortType=this.portSort.getCurrentSortType(request, StringSessionUtil.POST_ALL_TYPE_SORT,StringSessionUtil.CURRENT_ALL_POST);
+
+        int page = NumberUtils.toInt(pageRequest,1);
+
+        SortType sortType=this.portSort.getCurrentSortType(request,StringSessionUtil.CURRENT_ALL_POST);
         List<Post> postList;
 
-        if(sortType == null) {
-            sortType=new SortType();
-        }
 
-        if(page == null||page.trim().equals("") || !StringUtils.isNumeric(page) || Integer.valueOf(page)==0 || querySearch == null || querySearch.trim().equals("'") || querySearch.trim().equals("")) {
+        postList=this.postService.getAllByTitle(sortType,querySearch,(page-1)*NumberViewSort.getNumberView());
 
-            postList=this.postService.getAllByTitle(sortType,querySearch,0);
-            this.adminController.setListPost(modelMap,postList);
-            setResultManagerPost(modelMap,querySearch,1);
-            return "manager-post";
-        }
-
-        postList=this.postService.getAllByTitle(sortType,querySearch, (Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW);
-        this.adminController.setListPost(modelMap,postList);
-        setResultManagerPost(modelMap,querySearch,Integer.valueOf(page));
+        this.requestService.setResponse(modelMap,postList,this.postService.getCountAllByTitle(querySearch),page,null,null,querySearch);
         return "manager-post";
     }
 
-    private void setResultManagerPost(ModelMap modelMap,String querySearch,int page)
-    {
-        modelMap.addAttribute("page",page);
-        modelMap.addAttribute("querySearch",querySearch);
-        modelMap.addAttribute("totalList",this.postService.getCountAllByTitle(querySearch));
-    }
 }

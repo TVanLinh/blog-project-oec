@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import service.ConfigurationService;
 import service.PostService;
 import service.UserService;
-import utils.page.DefaultPage;
+import utils.page.DefaultPages;
 import utils.sort.SortType;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class SearchController {
     PostService postService;
 
     @Autowired
-    DefaultPage defaultPage;
+    DefaultPages defaultPage;
 
 
     @Autowired
@@ -67,52 +66,8 @@ public class SearchController {
     }
 
 
-//    @RequestMapping(value = "/list-post-by-user")
-//    public  String  getPostByUser(HttpServletRequest request,ModelMap modelMap, @RequestParam(value = "username") String username, @RequestParam(required = false) String page )
-//    {
-//        defaultPage.setDaultPage(request);
-//        List<Post> posts;
-//        User user;
-//        int limit = this.configurationService.getAllConfiguration().get(0).getNumberViewPost();
-//        request.setAttribute("userDAO",this.userService);
-//        if(page == null || page.trim().equals("")|| !StringUtils.isNumeric(page)) {
-//            if(username==null) {
-//                return "redirect:/home";
-//            }
-//
-//            user = this.userService.getUserByName(username);
-//            if(user != null) {
-//                posts=this.postService.getByIdUserAndStatus(1,user.getId(),0,limit);
-//                setPostList(request,posts);
-//                modelMap.addAttribute("page",1);
-//                modelMap.addAttribute("totalList", this.postService.getCounByIdAndStatus(1,user.getId()));
-//                modelMap.addAttribute("limit",limit);
-//                modelMap.addAttribute("userName",username);
-//                return  "post-by-user";
-//            }else{
-//                return "redirect:/home";
-//            }
-//
-//        }
-//
-//        user = this.userService.getUserByName(username);
-//        if(user != null) {
-//            posts=this.postService.getByIdUserAndStatus(1,user.getId(),(Integer.valueOf(page)-1)*limit,limit);
-//            setPostList(request,posts);
-//            modelMap.addAttribute("page",Integer.valueOf(page));
-//            modelMap.addAttribute("totalList", this.postService.getCounByIdAndStatus(1,user.getId()));
-//            modelMap.addAttribute("limit",limit);
-//            modelMap.addAttribute("userName",username);
-//            return  "post-by-user";
-//        }
-//
-//        return "redirect:/home";
-//
-//    }
-//
-
     @RequestMapping(value = "/list-post-by-user")
-    public  String  getPostByUser(Principal principal,HttpServletRequest request, ModelMap modelMap, @RequestParam(value = "username") String username, @RequestParam(required = false) String page )
+    public  String  getPostByUser(HttpServletRequest request, ModelMap modelMap, @RequestParam(value = "username") String username, @RequestParam(required = false) String page )
     {
         defaultPage.setDaultPage(request);
         List<Post> posts;
@@ -169,16 +124,6 @@ public class SearchController {
 
     }
 
-
-    private  void setPostList(HttpServletRequest request,List<Post> list)
-    {
-        if(list == null)
-        {
-            request.setAttribute("postList", new ArrayList<Post>());
-        }else {
-            request.setAttribute("postList",list);
-        }
-    }
     private  void setResult(ModelMap modelMap,List<Post> list,String username,int page,int totalList,int limit)
     {
         if(list == null)

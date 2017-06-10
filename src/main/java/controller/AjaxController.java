@@ -24,84 +24,47 @@ public class AjaxController {
 
     @Autowired
     PostService postService;
-
-//    @JsonView(Views.Public.class)
-//    @RequestMapping("/getStatisticPost")
-//    public StatisticPost statisticPost(@RequestBody StatisticPost statisticPost)
-//    {
-//        System.out.println(statisticPost.getMsg());
-//        statisticPost.setStatisticPostByMonth(this.postService.getStatisticByMonth());
-//        return statisticPost;
-//    }
+    public  static  final String  STATUS_LIKE  = "status_like_post";
+    public static  final  String IMAGE_LIKE = "public/asserts/images/like.png";
+    public static final String IMAGE_DISLIKE = "public/asserts/images/notlike.png";
 
     @RequestMapping(value = "/like")
     @JsonView(Views.Public.class)
     public synchronized UserRestBody like(@RequestBody UserRestBody userRestBody, HttpServletRequest request, HttpServletResponse response) {
 
-        Cookie cookie[]=request.getCookies();
-        Cookie cookieLike=null;
-        for(int i=0;i<cookie.length;i++)
-        {
-            if (cookie[i].getName().equals("status_like_post"))
-            {
-                cookieLike =cookie[i];
+        Cookie cookie[] = request.getCookies();
+        Cookie cookieLike = null;
+        for (int i = 0; i < cookie.length; i++) {
+            if (cookie[i].getName().equals(STATUS_LIKE)) {
+                cookieLike = cookie[i];
                 break;
             }
         }
 
         Post post;
-        try
-        {
-            post = this.postService.find(Integer.valueOf(userRestBody.getId()));
-        }catch (Exception e)
-        {
-            return userRestBody;
-        }
-
-        if (cookieLike==null)
-        {
-            cookieLike=new Cookie("status_like_post",userRestBody.getId()+",");
-
-            post.setNumberLike(post.getNumberLike()+1);
-            this.postService.save(post);
-
-            userRestBody.setNumberLike(post.getNumberLike());
-            userRestBody.setCode("200");
-            userRestBody.setMsg("Thanh cong");
-            userRestBody.setStatusImg("public/asserts/images/like.png");
-            cookieLike.setMaxAge(365*360*24);
-            response.addCookie(cookieLike);
-            return  userRestBody;
-        }
-
-        if( (cookieLike!=null&& !CookieUtils.isLike(post.getId(), cookieLike.getValue())))
-        {
-            post.setNumberLike(post.getNumberLike()+1);
-            this.postService.save(post);
-
-            userRestBody.setNumberLike(post.getNumberLike());
-            userRestBody.setCode("200");
-            userRestBody.setMsg("Thanh cong");
-            userRestBody.setStatusImg("public/asserts/images/like.png");
-
+        post = this.postService.find(userRestBody.getId());
+        userRestBody.setStatusImg(IMAGE_LIKE);
+        if (cookieLike == null) {
+            cookieLike = new Cookie(STATUS_LIKE, userRestBody.getId() + ",");
+            post.setNumberLike(post.getNumberLike() + 1);
+        } else if (!CookieUtils.isLike(post.getId(), cookieLike.getValue())) {
+            post.setNumberLike(post.getNumberLike() + 1);
             cookieLike.setValue(cookieLike.getValue()+post.getId()+",");
-            cookieLike.setMaxAge(365*360*24);
-            response.addCookie(cookieLike);
-            return  userRestBody;
+        } else
+        {
+            cookieLike.setValue(CookieUtils.remove(cookieLike.getValue(),post.getId()));
+            post.setNumberLike(post.getNumberLike() - 1);
+            userRestBody.setStatusImg(IMAGE_DISLIKE);
         }
-        String str=CookieUtils.remove(cookieLike.getValue(),post.getId());
-        cookieLike.setValue(str);
 
-        post.setNumberLike(post.getNumberLike()-1);
         this.postService.save(post);
 
-        response.addCookie(cookieLike);
-        cookieLike.setMaxAge(365*360*24);
-
-        userRestBody.setStatusImg("public/asserts/images/notlike.png");
-        userRestBody.setNumberLike(post.getNumberLike());
         userRestBody.setCode("200");
         userRestBody.setMsg("Thanh cong");
+        cookieLike.setMaxAge(365*360*24);
+        response.addCookie(cookieLike);
+        userRestBody.setNumberLike(post.getNumberLike());
+
         return userRestBody;
     }
 

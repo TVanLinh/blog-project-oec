@@ -10,15 +10,13 @@ import utils.string.StringSessionUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by linhtran on 27/05/2017.
  */
 @Component
-public class UserSort {
+public class UserSort extends Sort {
 
     @Autowired
     Sort sort;
@@ -106,18 +104,5 @@ public class UserSort {
             return  "select * from user,user_roles order by  user_roles.role  " + sortItem.typeOrder + " limit " +offset + "," + NumberViewSort.NUMBER_VIEW ;
         }
         return null;
-    }
-
-    private   boolean checkOrderBy(String orderBy) {
-        Set<String> set = new HashSet<String>();
-        set.add("role");
-        set.add("id");
-        set.add("pass_word");
-        set.add("user_name");
-
-        if(set.contains(orderBy)) {
-            return true;
-        }
-        return  false;
     }
 }

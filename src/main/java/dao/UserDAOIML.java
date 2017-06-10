@@ -25,14 +25,12 @@ public class UserDAOIML implements  UserDAO ,Serializable{
         Session session = sessionFactory.getCurrentSession();
         User user  = this.find(idAuthor);
         session.remove(user);
-        System.out.println(" delete User success");
     }
 
 
     public void update(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(user);
-        System.out.println(" update User success");
     }
 
 
@@ -62,8 +60,10 @@ public class UserDAOIML implements  UserDAO ,Serializable{
 
     public User getUserByName(String name) {
         Session session = sessionFactory.getCurrentSession();
-        List<User> list = session.createNativeQuery("select * from user where user_name='"+name+"' limit 0,1",User.class).getResultList();
-        if(list.size() == 0) {
+        Query<User> query = session.createNativeQuery("select * from user where user_name =:name limit 0,1",User.class);
+        query.setParameter("name",name);
+        List<User> list = query.getResultList();
+       if(list.size() == 0) {
             return null;
         }
         return  list.get(0);

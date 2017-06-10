@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -96,6 +97,10 @@ public class User extends AbstractEntity implements Serializable {
   }
 
   public List<Role> getRoleList() {
+    if(roleList == null)
+    {
+      roleList = new ArrayList<Role>();
+    }
     return roleList;
   }
 

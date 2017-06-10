@@ -1,6 +1,5 @@
 package service;
 
-import dao.AbstractDAO;
 import dao.RoleDAO;
 import entities.Role;
 import org.hibernate.SessionFactory;
@@ -17,7 +16,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class RoleService  extends AbstractDAO<Role>{
+public class RoleService  extends AbstractService<Role>{
 
     @Autowired
     SessionFactory sessionFactory;
@@ -56,5 +55,18 @@ public class RoleService  extends AbstractDAO<Role>{
     public   void delete(String userName)
     {
         this.roleDAO.delete(userName);
+        this.flushSession();
     }
+
+    public  void deleteByUserId(int id)
+    {
+        this.roleDAO.deleteByUserId(id);
+    }
+    public List<Role> getRoleByUsername(String username) {
+        return this.roleDAO.getRoleByUsername(username);
+    }
+    public List<Role> getRoleByUserId(int idUser) {
+        return  this.roleDAO.getRoleByUserId(idUser);
+    }
+
 }

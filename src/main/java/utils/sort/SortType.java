@@ -8,11 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SortType {
-//    public static enum PostSortByName{
-//        title,id_user,time_post,status,approve,number_view,number_like
-//    };
-
-    public  String orderBy = "id_user";
+    public  String orderBy = "id";
     public  String  typeOrder = "desc"; //0 asc,1 desc
 
     public  void toggleTypeOrder() {
@@ -23,4 +19,11 @@ public class SortType {
         }
     }
 
+    @Override
+    public String toString() {
+        return "SortType{" +
+                "orderBy='" + orderBy + '\'' +
+                ", typeOrder='" + typeOrder + '\'' +
+                '}';
+    }
 }

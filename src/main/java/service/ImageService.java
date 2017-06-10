@@ -1,6 +1,5 @@
 package service;
 
-import dao.AbstractDAO;
 import dao.ImageDAO;
 import entities.Image;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class ImageService extends AbstractDAO<Image> {
+public class ImageService extends AbstractService<Image> {
 
     @Autowired
     ImageDAO imageDAO;

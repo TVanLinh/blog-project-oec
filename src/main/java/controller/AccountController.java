@@ -3,7 +3,7 @@ package controller;
 import entities.Configuration;
 import entities.Post;
 import entities.User;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,11 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import service.ConfigurationService;
-import service.PostService;
-import service.UserService;
+import service.*;
 import utils.number.NumberViewSort;
-import utils.page.DefaultPage;
+import utils.page.DefaultPages;
 import utils.sort.PortSort;
 import utils.sort.SortType;
 import utils.string.StringSessionUtil;
@@ -48,8 +46,9 @@ public class AccountController {
     @Autowired
     PostService postService;
 
+
     @Autowired
-    DefaultPage defaultPage;
+    DefaultPages defaultPage;
 
     @Autowired
     PortSort portSort;
@@ -57,31 +56,31 @@ public class AccountController {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    RequestService requestService;
+
+    @Autowired
+    PostSortService postSortSerVice;
+
     @RequestMapping(value = "/user")
-    public  String userInfor(Principal principal,HttpServletRequest request,ModelMap modelMap) {
+    public  String userInfor(Principal principal,HttpServletRequest request,ModelMap modelMap,@RequestParam(value = "page",required = false) String pageRequest) {
         defaultPage.setDaultPage(request);
         setDefaultUser(principal,request);
 
-        String page = request.getParameter("page");
-        request.setAttribute("userDAO",this.userService);
+
+        modelMap.addAttribute("userDAO",this.userService);
+
         List<Post> postList;
-
-        User user= userService.getUserByName(principal.getName());
-        if(page == null||page.trim().equals("") || !StringUtils.isNumeric(page)||Integer.valueOf(page )== 0) {
-            this.postService.deletePost(request);
-            postList=this.postService.finAll(this.portSort.getQuerySortAllPostByUserName(request,0,user));
-            this.postService.setListPost(modelMap,postList,this.postService.getPostByIdUser(user.getId()).size());
-            request.setAttribute("page",1);
-            return "author";
-        }
-
+        User user = userService.getUserByName(principal.getName());
         this.postService.deletePost(request);
-        postList = this.postService.finAll(this.portSort.getQuerySortAllPostByUserName(request,(Integer.valueOf(page)-1)* NumberViewSort.NUMBER_VIEW,user));
-        this.postService.setListPost(modelMap,postList,this.postService.getPostByIdUser(user.getId()).size());
+        int page = NumberUtils.toInt(pageRequest,1);
 
-        request.setAttribute("page", Integer.valueOf(page));
+//        postList = this.postService.finAll(this.portSort.getQuerySortAllPostByUserName(request,);
+        postList = postSortSerVice.getAllPostByUser(request,user,(page-1)* NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
+        this.requestService.setResponse(modelMap,postList,this.postService.getPostByIdUser(user.getId()).size(),page);
         return "author";
     }
+
 
     private  void setDefaultUser(Principal principal,HttpServletRequest request)
     {
@@ -103,31 +102,16 @@ public class AccountController {
         }
     }
 
+
     @RequestMapping(value = "/user-post-search",method = RequestMethod.GET)
-    public  String searchTableAllPost(HttpServletRequest request,ModelMap modelMap,Principal principal) {
+    public  String searchTableAllPost(HttpServletRequest request,ModelMap modelMap,@RequestParam(value = "page",required = false)String pageRequest,@RequestParam(value = "query_search",required = false)String querySearch, Principal principal) {
         this.defaultPage.setDaultPage(request);
-        String page=request.getParameter("page");
-        String querySearch=request.getParameter("query_search");
-        SortType sortType=this.portSort.getCurrentSortType(request, StringSessionUtil.POST_ALL_TYPE_SORT_BY_USER,StringSessionUtil.CURRENT_POST_ALL_TYPE_SORT_BY_USER);
-        List<Post> postList;
+
+        SortType sortType=this.portSort.getCurrentSortType(request,StringSessionUtil.CURRENT_POST_ALL_TYPE_SORT_BY_USER);
         User user=this.userService.getUserByName(principal.getName());
-        if(sortType == null) {
-            sortType=new SortType();
-        }
+        int page = NumberUtils.toInt(pageRequest,1);
+        this.requestService.setResponse(modelMap,this.postService.getPostByIdUser(sortType,querySearch,user.getId(),(page-1)*NumberViewSort.getNumberView()),this.postService.getCountByUserContainsTitle(querySearch,user.getId()),page,null,null,querySearch);
 
-        if(page == null||page.trim().equals("") || !StringUtils.isNumeric(page) || Integer.valueOf(page)==0 || querySearch == null || querySearch.trim().equals("'") || querySearch.trim().equals("")) {
-
-            postList=this.postService.getPostByIdUser(sortType,querySearch,user.getId(),0);
-            this.postService.setListPost(modelMap,postList,this.postService.getCountByUserContainsTitle(querySearch,user.getId()));
-            this.postService.setResultQuerySearch(modelMap,querySearch,1,this.postService.getCountByUserContainsTitle(querySearch,user.getId()));
-            return "author";
-        }
-
-      //  postList=this.postService.getAllByTitle(sortType,querySearch, (Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW);
-        postList=this.postService.getPostByIdUser(sortType,querySearch,user.getId(),(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW);
-        this.postService.setListPost(modelMap,postList,user.getId());
-      //  setResultManagerPost(modelMap,querySearch,Integer.valueOf(page));
-        this.postService.setResultQuerySearch(modelMap,querySearch,Integer.valueOf(page),this.postService.getCountByUserContainsTitle(querySearch,user.getId()));
         return "author";
     }
 
@@ -194,21 +178,19 @@ public class AccountController {
         defaultPage.setDaultPage(request);
         ModelAndView modelAndView=new ModelAndView();
         User user=userService.getUserByName(principal.getName());
+        modelAndView.setViewName("change-pass-word");
+
         if(user!=null && !passwordEncoder.matches(oldPassWord,user.getPassWord())) {
             modelAndView.addObject("error", "pass word not right !");
-            modelAndView.setViewName("change-pass-word");
-            return modelAndView;
-        }
-
-        if(!utils.string.StringUtils.checkVidPassWord(modelAndView,passWord,rePassWord)) {
-            modelAndView.setViewName("change-pass-word");
+        }else if(!utils.string.StringUtils.checkVidPassWord(modelAndView,passWord,rePassWord)) {
             return  modelAndView;
+        }else
+        {
+            user.setPassWord(passwordEncoder.encode(passWord));
+            userService.save(user);
+            modelAndView.addObject("error","Change password successful .!");
         }
 
-        user.setPassWord(passwordEncoder.encode(passWord));
-        userService.save(user);
-        modelAndView.addObject("error","Change password successful .!");
-        modelAndView.setViewName("change-pass-word");
         return modelAndView;
     }
 }

@@ -1,0 +1,62 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:security="http://www.springframework.org/schema/security"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <!-- enable use-expressions -->
+    <security:http>
+       <security:intercept-url pattern="/configuration" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
+        <security:intercept-url pattern="/manager-post" access="hasRole('ROLE_ADMIN')" />
+        <security:intercept-url pattern="/" access="permitAll()" />
+        <security:intercept-url pattern="/public/vendors/Highcharts-5.0.12/examples/bar-negative-stack" access="permitAll()" />
+
+
+        <security:intercept-url pattern="/user**" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/delete-post" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/update" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/manager-post" access="hasRole('ROLE_ADMIN')" />
+        <security:intercept-url pattern="/manager-user" access="hasRole('ROLE_ADMIN')" />
+        <security:intercept-url pattern="/insert-user" access="hasRole('ROLE_ADMIN')" />
+        <security:intercept-url pattern="/update-user" access="hasRole('ROLE_ADMIN')" />
+        <security:intercept-url pattern="/action-update-user" access="hasRole('ROLE_ADMIN')" />
+        <!--<security:intercept-url pattern="/user**" access="hasRole('ROLE_ADMIN')"/>-->
+        <security:intercept-url pattern="/write-post**" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/write**" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/login" access="permitAll()" />
+        <!--<security:intercept-url pattern="/logout" access="permitAll()" />-->
+        <!-- access denied page -->
+        
+        <security:access-denied-handler error-page="/403" />
+        <security:form-login
+                login-page="/login"
+                default-target-url="/user"
+                authentication-failure-url="/login?error"
+                username-parameter="username"
+                password-parameter="password"
+                always-use-default-target="true"
+        />
+
+        <security:logout logout-url="/logout" logout-success-url="/"/>
+        <security:csrf disabled="true"/>
+        
+    </security:http>
+
+    <beans:bean class="config.MyUserDetailService" id="myUserDetailService"/>
+
+    <!-- Select users and user_roles fliquibasebase -->
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <!--<security:jdbc-user-service data-source-ref="dataSource"-->
+                               <!--users-by-username-query="select user_name,pass_word,enabled from user where user_name=?"-->
+
+                               <!--authorities-by-username-query="select user_name, role from user_roles where user_name =?  "-->
+                <!--/>-->
+            <security:user-service id="detailsManager"/>
+             <security:password-encoder ref="encoder"/>
+            </security:authentication-provider>
+    </security:authentication-manager>
+    <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+</beans:beans>

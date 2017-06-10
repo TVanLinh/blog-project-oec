@@ -175,4 +175,12 @@ public class Post extends AbstractEntity implements Serializable{
     this.image = image;
     this.image.setPost(this);
   }
+
+  @Override
+  public String toString() {
+    return "Post{" +
+            "title='" + title + '\'' +
+            ", id=" + id +
+            '}';
+  }
 }

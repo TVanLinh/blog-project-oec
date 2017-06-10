@@ -13,32 +13,37 @@
 <div class="container">
     <!-- Blog Entries Column -->
     <div class="row">
+        <s:url value="/action-insert-user" var="action"/>
         <div class="col-xs-12">
-            <form method="post" action="<s:url value="/action-insert-user"/> "  onsubmit="return checkFormInsertUser()">
+            <form:form method="post" action="${action}" modelAttribute="userForm" onsubmit="return checkFormInsertUser()">
                 <div class="form-group">
                     <label for="userName">${messageSource.getMessage("name",null,locale)}:</label>
-                    <input type="text" class="form-control " name="userName" id="userName">
+                    <form:input type="text" class="form-control" id="userName" path="user.userName"/>
                 </div>
                 <div class="form-group">
                     <label for="passWord">${messageSource.getMessage("passWord",null,locale)}:</label>
-                    <input type="password" class="form-control " name="passWord" id="passWord">
+                    <form:input type="password" class="form-control" name="passWord" id="passWord" path="user.passWord"/>
                 </div>
                 <div class="form-group">
-                    <label for="passWord">${messageSource.getMessage("rePassWord",null,locale)}:</label>
-                    <input type="password" class="form-control " name="rePassWord" id="rePassWord">
+                    <label for="rePassWord">${messageSource.getMessage("rePassWord",null,locale)}:</label>
+                    <form:input type="password" class="form-control"   id="rePassWord" path="rePassWord"/>
                 </div>
                 <div class="form-group">
                     <label for="formatTime" id="formatTime" >${messageSource.getMessage("role",null,locale)}:</label>
-                    <select class="form-control"  name="listRole" multiple="multiple" id="listRole">
+                    <form:select class="form-control"  multiple="multiple" id="listRole" path="user.roleList">
                         <option value="ROLE_USER"  >ROLE_USER</option>
                         <option value="ROLE_ADMIN">ROLE_ADMIN</option>
-                    </select>
+                    </form:select>
 
                     <%--<input type="text" class="form-control pd-0" name="formatTime" id="formatTime">--%>
                 </div>
                 <input type="submit" class="btn btn-default" value="${messageSource.getMessage("save",null,locale)}" onsubmit="return checkFormInsertUser()" onclick="return checkFormInsertUser()">
-                <p class="pd-10 error">${requestScope.error}</p>
-            </form>
+                <p class="pd-10 error">
+                    <c:forEach var="item" items="${requestScope.errors}">
+                        ${messageSource.getMessage(item,null,locale)}
+                    </c:forEach>
+                </p>
+            </form:form>
         </div>
         <!-- Blog Sidebar Widgets Column -->
         <div>
@@ -50,7 +55,7 @@
 
 
 </div>
-<script src="<s:url value="/public/asserts/js/main.js"/>"></script>
-<script src="<s:url value="public/asserts/js/check_valid_form.js"/>"></script>
-<jsp:include page="templates/footers/footer.jsp"/>
+<%--<script src="<s:url value="/public/asserts/js/main.js"/>"></script>--%>
+<%--<script src="<s:url value="public/asserts/js/check_valid_form.js"/>"></script>--%>
+<%--<jsp:include page="templates/footers/footer.jsp"/>--%>
 

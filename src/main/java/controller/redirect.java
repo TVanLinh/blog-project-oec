@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import service.ConfigurationService;
 import service.PostService;
 import service.UserService;
-import utils.page.DefaultPage;
+import utils.page.DefaultPages;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -33,7 +33,7 @@ public class redirect {
     ConfigurationService configurationService;
 
     @Autowired
-    DefaultPage defaultPage;
+    DefaultPages defaultPage;
 
     @RequestMapping(value = "/write")
     public  String viewWriter(HttpServletRequest request) {

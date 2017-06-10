@@ -27,7 +27,7 @@
              <column name="id" autoIncrement="true" type="int" >
                  <constraints primaryKey="true"/>
              </column>
-             <column name="user_name" type="varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci">
+             <column name="id_user" type="int">
                  <constraints nullable="false"/>
              </column>
              <column name="role" type="varchar(50)">
@@ -37,10 +37,10 @@
      </changeSet>
 
     <changeSet author="Tran Van Linh" id="addForeignKeyConstraint-user-role">
-        <addForeignKeyConstraint baseColumnNames="user_name"
+        <addForeignKeyConstraint baseColumnNames="id_user"
                                  baseTableName="user_roles"
                                  constraintName="fk_user_user_roles"
-                                 referencedColumnNames="user_name"
+                                 referencedColumnNames="id"
                                  referencedTableName="user"/>
     </changeSet>
 
@@ -125,11 +125,11 @@
 
     <changeSet id="insert_user_roles" author="Tran Van Linh">
         <insert tableName="user_roles">
-            <column name="user_name">tvlinh</column>
+            <column name="id_user">1</column>
             <column name="role">ROLE_USER</column>
         </insert>
         <insert tableName="user_roles">
-            <column name="user_name">admin</column>
+            <column name="id_user">2</column>
             <column name="role">ROLE_ADMIN</column>
         </insert>
     </changeSet>

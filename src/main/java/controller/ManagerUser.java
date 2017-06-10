@@ -1,27 +1,34 @@
 package controller;
 
-import entities.Role;
 import entities.User;
+import forms.UserForm;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import service.RequestService;
 import service.RoleService;
 import service.UserService;
+import service.UserSortService;
 import utils.number.NumberViewSort;
-import utils.page.DefaultPage;
+import utils.page.DefaultPages;
+import utils.sort.Sort;
 import utils.sort.SortType;
 import utils.sort.UserSort;
 import utils.string.StringSessionUtil;
+import vadilator.UserFormInsertUserValidator;
+import vadilator.UserFormUpdateValidator;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +42,7 @@ public class ManagerUser {
     UserService userService;
 
     @Autowired
-    DefaultPage defaultPage;
+    DefaultPages defaultPage;
 
     @Autowired
     RoleService roleService;
@@ -46,245 +53,178 @@ public class ManagerUser {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
-    @RequestMapping(value = "/update-user")
-    public  String pageUpdateUser( HttpServletRequest request) {
-        this.defaultPage.setDaultPage(request);
-        String id = request.getParameter("id");
-        if(!StringUtils.isNumeric(id)) {
-            return  "redirect:/manager-user";
-        }
+    @Autowired
+    Sort sort;
 
-        User user = this.userService.find(Integer.valueOf(id));
-        if(user == null || user.getUserName() == null) {
-            return  "redirect:/manager-user";
-        }
-        request.setAttribute("user",user);
-        request.getSession().setAttribute("idUser",Integer.valueOf(id));
-        return "update-user";
+    @Autowired
+    RequestService<User> requestService;
+
+    @Autowired
+    UserSortService userSortService;
+
+
+    @Autowired
+    UserFormUpdateValidator updateUserValidator;
+
+    @Autowired
+    UserFormInsertUserValidator insertUserValidator;
+    @ModelAttribute
+    public UserForm initUserForm() {
+        return new UserForm();
     }
-
-
-    @RequestMapping(value = "/action-update-user",method = RequestMethod.GET)
-    public String actionUpdateUser(HttpServletRequest request) {
-        this.defaultPage.setDaultPage(request);
-        return "redirect:manager-user";
-    }
-
-    @RequestMapping(value = "/action-update-user",method = RequestMethod.POST)
-    public String actionUpdateUser(ModelMap modelMap,HttpServletRequest request,@ModelAttribute User user) {
-        this.defaultPage.setDaultPage(request);
-
-         return updateUser(modelMap,request,user,"redirect:manager-user","update-user");
-    }
-
-    private  String  updateUser(ModelMap modelMap,HttpServletRequest request, User user,String pageSucssess,String pageError) {
-
-        modelMap.addAttribute("roleList",this.userService.findAll(User.class,"user"));
-        String []listRoles = request.getParameterValues("listRole");
-        String rePassWord=request.getParameter("rePassWord");
-        if(!rePassWord.trim().equals(user.getPassWord().trim()))
-        {
-            request.setAttribute("error","Pass word not overlap !");
-            return  pageError ;
-        }
-        if(!this.userService.checkUserValidUpdate(modelMap,user)||listRoles==null || !utils.string.StringUtils.checkVid(user.getUserName())) {
-            request.setAttribute("error","Not valid!");
-            return  pageError ;
-        }else {
-            HttpSession session = request.getSession();
-            User userUpdate = this.userService.find((Integer) session.getAttribute("idUser"));
-
-            if(userUpdate.getUserName().equalsIgnoreCase(user.getUserName())) {
-                User user1 = this.userService.getUserByName(user.getUserName());
-
-                if(user != null)
-                {
-                    this.roleService.delete(user1.getUserName());
-                }
-
-                user1.setRoleList(this.roleService.getListRole(listRoles));
-                user1.setPassWord(passwordEncoder.encode(user.getPassWord()));
-
-                this.userService.save(user1);
-
-                session.setAttribute("errorInsertUser","Update successful .!");
-                session.removeAttribute("idUser");
-
-                return pageSucssess;
-
-            }else if(this.userService.getUserByName(user.getUserName()) !=  null) {
-                modelMap.addAttribute("error"," user name exits available !");
-
-                return pageError;
-            }else {
-                User user1 = this.userService.find((Integer) session.getAttribute("idUser"));
-                if(user1!=null)
-                {
-                    if(user1.getUserName().equals(session.getAttribute("username")))
-                    {
-                        session.setAttribute("username",user.getUserName());
-                    }
-                    this.userService.delete(user1.getId());
-                }
-
-                user.setRoleList(this.roleService.getListRole(listRoles));
-                user.setPassWord(passwordEncoder.encode(user.getPassWord()));
-                this.userService.save(user);
-            }
-        }
-        request.getSession().setAttribute("errorInsertUser","Update successful .!");
-        request.getSession().removeAttribute("idUser");
-
-        return pageSucssess;
-    }
-
 
     @RequestMapping("/manager-user")
-    public  String managerUser(HttpServletRequest request,ModelMap modelMap,Principal principal)
-    {
-        this.defaultPage.setDaultPage(request);
-        List<User> userList;
-        String page=request.getParameter("page");
+    public String managerUser(HttpServletRequest request,
+                              ModelMap modelMap,
+                              Principal principal,
+                              @RequestParam(value = "page", required = false) String pageRequest) {
 
-        if(request.getSession().getAttribute("errorInsertUser")!=null)
-        {
-            request.setAttribute("errorInsertUser",request.getSession().getAttribute("errorInsertUser"));
+        this.defaultPage.setDaultPage(request);
+
+        List<User> userList;
+        int  page = NumberUtils.toInt(pageRequest,1);
+
+        if (request.getSession().getAttribute("errorInsertUser") != null) {
+            request.setAttribute("errorInsertUser", request.getSession().getAttribute("errorInsertUser"));
             request.getSession().removeAttribute("errorInsertUser");
         }
 
+        deleteUser(request, principal);
 
-        if(page == null || page.trim().equals("") || !StringUtils.isNumeric(page) || Integer.valueOf(page) == 0) {
-            if(this.userSort.getQueryUserByRole(request,0)!=null) {
-                userList=this.userService.findAll(this.userSort.getQueryUserByRole(request,0));
-                setListUser(modelMap,userList);
-                setResultManagerUser(modelMap,1);
-                return "manager-user";
-            }
-
-            deleteUser(request,principal);
-
-            userList = this.userService.findAll(this.userSort.getQuerySort(request,0));
-            setListUser(modelMap,userList);
-            setResultManagerUser(modelMap,1);
-            return "manager-user";
-        }
-
-        deleteUser(request,principal);
-
-        if(this.userSort.getQueryUserByRole(request,0) != null) {
-            userList = this.userService.findAll(this.userSort.getQueryUserByRole(request,(Integer.valueOf(page)-1)* NumberViewSort.NUMBER_VIEW));
-            setListUser(modelMap,userList);
-            setResultManagerUser(modelMap,Integer.valueOf(page));
-            return "manager-user";
-        }
-
-        userList = this.userService.findAll(this.userSort.getQuerySort(request,(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW));
-        setListUser(modelMap,userList);
-        setResultManagerUser(modelMap,Integer.valueOf(page));
+        userList = this.userSortService.getUser(request, (page - 1) * NumberViewSort.NUMBER_VIEW,NumberViewSort.getNumberView());
+        this.requestService.setResponse(modelMap,userList, this.userService.findAll(User.class, "user").size(),page);
         return "manager-user";
     }
 
-    private void setResultManagerUser(ModelMap modelMap,int page)
-    {
-        modelMap.addAttribute("page",page);
-        modelMap.addAttribute("totalList",this.userService.findAll(User.class,"user").size());
-    }
-
-
-    private void deleteUser(HttpServletRequest request, Principal principal)
-    {
+    private void deleteUser(HttpServletRequest request, Principal principal) {
         String action = request.getParameter("action");
-        String id=request.getParameter("id");
+        String id = request.getParameter("id");
 
-        if(action != null && action.equals("delete")) {
-            if(id != null && StringUtils.isNumeric(id)) {
+        if (action != null && action.equals("delete")) {
+            if (id != null && StringUtils.isNumeric(id)) {
                 User user = this.userService.find(Integer.valueOf(id));
-                if(user != null && ! user.getUserName().equalsIgnoreCase(principal.getName())) {
+                if (user != null && !user.getUserName().equalsIgnoreCase(principal.getName())) {
                     this.userService.delete(user.getId());
                 }
             }
         }
     }
-    private void setListUser(ModelMap modelMap,  List<User> users)
-    {
-        if(users == null) {
-            users = new ArrayList<User>();
-        }
-        modelMap.addAttribute("userList",users);
-    }
+
 
     @RequestMapping(value = "/insert-user")
-    public  String pageInsertUser(HttpServletRequest request) {
+    public String pageInsertUser(HttpServletRequest request) {
         this.defaultPage.setDaultPage(request);
         return "insert-user";
     }
 
-    @RequestMapping(value = "/action-insert-user",method = RequestMethod.GET)
-    public String actionInsertUser(HttpServletRequest request)
+    @RequestMapping(value = "/action-insert-user", method = RequestMethod.GET)
+    public String actionInsertUser(HttpServletRequest request) {
+        this.defaultPage.setDaultPage(request);
+        return "redirect:manager-user";
+    }
+
+    @RequestMapping(value = "/action-insert-user", method = RequestMethod.POST)
+    public String actionInsertUser(HttpServletRequest request, @ModelAttribute UserForm userForm, ModelMap modelMap, BindingResult bindingResult) {
+        this.defaultPage.setDaultPage(request);
+
+        this.insertUserValidator.validate(userForm,bindingResult);
+
+        if(bindingResult.hasErrors()) {
+            modelMap.addAttribute("errors",this.insertUserValidator.getCodeErrors(bindingResult));
+            return  "insert-user";
+        }
+
+        userForm.getUser().setPassWord(passwordEncoder.encode(userForm.getUser().getPassWord()));
+        this.userService.save(userForm.getUser());
+        request.getSession().setAttribute("errorInsertUser", "Insert Successful .!");
+        return "redirect:manager-user";
+    }
+
+    ///---------------update----------------------------------
+    @RequestMapping(value = "/update-user")
+    public String pageUpdateUser(HttpServletRequest request,ModelMap modelMap) {
+        this.defaultPage.setDaultPage(request);
+        String id = request.getParameter("id");
+        if (!StringUtils.isNumeric(id)) {
+            return "redirect:/manager-user";
+        }
+
+        User user = this.userService.find(Integer.valueOf(id));
+        if (user == null || user.getUserName() == null) {
+            return "redirect:/manager-user";
+        }
+        setDefaultUpdateUser(user,modelMap);
+        return "update-user";
+    }
+
+    private   void setDefaultUpdateUser(User user,ModelMap modelMap)
     {
+        modelMap.addAttribute("user", user);
+        modelMap.addAttribute("userService",this.userService);
+    }
+
+    @RequestMapping(value = "/action-update-user", method = RequestMethod.GET)
+    public String actionUpdateUser(HttpServletRequest request) {
         this.defaultPage.setDaultPage(request);
         return "redirect:manager-user";
     }
-    @RequestMapping(value = "/action-insert-user",method = RequestMethod.POST)
-    public  String actionInsertUser(HttpServletRequest request,@ModelAttribute User user,ModelMap modelMap) {
+
+    @RequestMapping(value = "/action-update-user", method = RequestMethod.POST)
+    @Transactional
+    public String actionUpdateUser(ModelMap modelMap,
+                                   HttpServletRequest request,
+                                   @ModelAttribute(value = "userForm") UserForm  userForm,
+                                   BindingResult bs,Principal principal) {
         this.defaultPage.setDaultPage(request);
 
-        String[] arr = request.getParameterValues("listRole");
-        if(!utils.string.StringUtils.checkVid(user.getUserName()))
-        {
-             modelMap.addAttribute("error","User name not valid");
-            return "insert-user";
-        }
-        if(!this.userService.checkUserInsert(modelMap,user,arr) )
-        {
-            return "insert-user";
+        updateUserValidator.validate(userForm, bs);
+
+        User userCurrent = this.userService.find(userForm.getUser().getId());
+
+        //th doi chinh minh
+
+        if(bs.hasErrors()) {
+            modelMap.addAttribute("errors",updateUserValidator.getCodeErrors(bs));
+            return "update-user";
         }
 
-        List<Role> roles = new ArrayList<Role>();
-        for(int i = 0 ; i < arr.length ; i++)
-        {
-            roles.add(new Role(arr[i],user));
+
+        //th doi chinh nguoi dang dang nhap
+        if(principal.getName().equals(userCurrent.getUserName())) {
+            request.getSession().setAttribute("username",userForm.getUser().getUserName());
         }
-        user.setRoleList(roles);
 
-        user.setPassWord(passwordEncoder.encode(user.getPassWord()));
+        this.roleService.deleteByUserId(userForm.getUser().getId());
 
-        this.userService.save(user);
-        request.getSession().setAttribute("errorInsertUser","Insert Successful .!");
-        return "redirect:manager-user";
+        if(!StringUtils.isBlank(userForm.getUser().getPassWord())) {
+            userCurrent.setPassWord(this.passwordEncoder.encode(userForm.getRePassWord()));
+        }
+
+        userCurrent.setUserName(userForm.getUser().getUserName());
+        userCurrent.setRoleList(userForm.getUser().getRoleList());
+
+        this.userService.save(userCurrent);
+        request.getSession().setAttribute("errorInsertUser", "Update successful .!");
+        return  "redirect:manager-user";
     }
 
-    @RequestMapping(value = "/manager-user-search",method = RequestMethod.GET)
-    public  String searchUser(HttpServletRequest request,ModelMap modelMap) {
+
+    //-----------------------end update
+
+
+    @RequestMapping(value = "/manager-user-search", method = RequestMethod.GET)
+    public String searchUser(HttpServletRequest request, ModelMap modelMap,
+                             @RequestParam(value = "page", required = false) String pageReques,
+                             @RequestParam(value = "query_search", required = false) String querySearch) {
         this.defaultPage.setDaultPage(request);
-        String page = request.getParameter("page");
-        String querySearch = request.getParameter("query_search");
-        SortType sortType = this.userSort.getSort().getCurrentSortType(request, StringSessionUtil.USER_TYPE_SORT,StringSessionUtil.CURRENT_USER_SORT);
+        int page = NumberUtils.toInt(pageReques, 1);
+        SortType sortType = this.sort.getCurrentSortType(request, StringSessionUtil.CURRENT_USER_SORT);
+
         List<User> userList;
+        userList = this.userService.getUserBeginByUserName(querySearch, sortType, (page - 1) * NumberViewSort.getNumberView());
 
-        if(sortType == null) {
-            sortType=new SortType();
-        }
-
-        if(page == null || page.trim().equals("") || !StringUtils.isNumeric(page)||Integer.valueOf(page) == 0 || querySearch == null || querySearch.trim().equals("'") || querySearch.trim().equals("")) {
-
-            userList = this.userService.getUserBeginByUserName(querySearch,sortType,0);
-            setListUser(modelMap,userList);
-            setResponeManagerUser(modelMap,querySearch,1);
-            return "manager-user";
-        }
-
-        userList = this.userService.getUserBeginByUserName(querySearch,sortType,(Integer.valueOf(page)-1)*NumberViewSort.NUMBER_VIEW);
-        setListUser(modelMap,userList);
-        setResponeManagerUser(modelMap,querySearch,Integer.valueOf(page));
+        this.requestService.setResponse(modelMap, userList, this.userService.getCountBeginUserName(querySearch), page, null, null, querySearch);
         return "manager-user";
-    }
-
-    private void  setResponeManagerUser(ModelMap modelMap,String querySearch,int page)
-    {
-        modelMap.addAttribute("page",page);
-        modelMap.addAttribute("querySearch",querySearch);
-        modelMap.addAttribute("totalList",this.userService.getCountBeginUserName(querySearch));
     }
 
 

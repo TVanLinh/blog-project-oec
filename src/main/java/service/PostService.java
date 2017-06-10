@@ -1,6 +1,5 @@
 package service;
 
-import dao.AbstractDAO;
 import dao.PostDAO;
 import entities.Post;
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +22,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class PostService extends AbstractDAO<Post> {
+public class PostService extends AbstractService<Post> {
 
     @Autowired
     SessionFactory sessionFactory;
@@ -37,7 +36,7 @@ public class PostService extends AbstractDAO<Post> {
 
     public List<Post> getAllPNotApprove() {
         String str = "select * from post where approve = 0";
-        return  sessionFactory.getCurrentSession().createNativeQuery(str,Post.class).getResultList();
+        return sessionFactory.getCurrentSession().createNativeQuery(str, Post.class).getResultList();
     }
 
     public int getCountNotApprove() {
@@ -51,7 +50,8 @@ public class PostService extends AbstractDAO<Post> {
         query.setParameter("approve", approve);
         return query.getResultList();
     }
-    public List<Post> getContainsTitle(SortType sortType, String querySearch, int approve, int offset,int limit) {
+
+    public List<Post> getContainsTitle(SortType sortType, String querySearch, int approve, int offset, int limit) {
         String string = "  select * from  post where approve = :approve and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
         Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
         query.setParameter("querySearch", "%" + querySearch + "%");
@@ -82,35 +82,23 @@ public class PostService extends AbstractDAO<Post> {
         return query.getResultList().size();
     }
 
-    public List<Post> getByIdUserAndStatus(int status,int iduser,int offset,int limit)
-    {
-        String str = "select * from post where status = :status and id_user = :id_user  order by time_post desc limit "+offset +"," +limit;
-        Query query =this.sessionFactory.getCurrentSession().createNativeQuery(str,Post.class);
-        query.setParameter("status",status);
-        query.setParameter("id_user",iduser);
+    public List<Post> getByIdUserAndStatus(int status, int iduser, int offset, int limit) {
+        String str = "select * from post where status = :status and id_user = :id_user  order by time_post desc limit " + offset + "," + limit;
+        Query query = this.sessionFactory.getCurrentSession().createNativeQuery(str, Post.class);
+        query.setParameter("status", status);
+        query.setParameter("id_user", iduser);
         return query.getResultList();
     }
 
-    public  int getCounByIdAndStatus(int status,int iduser)
-    {
-        String str = "select * from post where status = :status and id_user = :id_user";
-        Query query =this.sessionFactory.getCurrentSession().createNativeQuery(str,Post.class);
-        query.setParameter("status",status);
-        query.setParameter("id_user",iduser);
-        return query.getResultList().size();
-
-    }
-    public  List<Post> getPostByIdUser(int id)
-    {
-        return  this.postDAO.getPostByIdUser(id);
+    public List<Post> getPostByIdUser(int id) {
+        return this.postDAO.getPostByIdUser(id);
     }
 
-    public  List<Post> getPostByIdUser(int id,int offset,int limit)
-    {
-        return  this.postDAO.getPostByIdUser(id,offset,limit);
+    public List<Post> getPostByIdUser(int id, int offset, int limit) {
+        return this.postDAO.getPostByIdUser(id, offset, limit);
     }
 
-    public  List<Post> getPostByIdUser(SortType sortType, String querySearch,int userId, int offset) {
+    public List<Post> getPostByIdUser(SortType sortType, String querySearch, int userId, int offset) {
         String string = "  select * from  post where id_user = :id_user and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + NumberViewSort.NUMBER_VIEW;
         Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
         query.setParameter("querySearch", "%" + querySearch + "%");
@@ -118,20 +106,21 @@ public class PostService extends AbstractDAO<Post> {
         return query.getResultList();
     }
 
-    public  List<Post> getPostPublicByTitle(SortType sortType, String querySearch, int offset,int limit) {
+    public List<Post> getPostPublicByTitle(SortType sortType, String querySearch, int offset, int limit) {
         String string = "  select * from  post where approve = 1 and status = 1 and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
         Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
         query.setParameter("querySearch", "%" + querySearch + "%");
         return query.getResultList();
     }
-    public  List<Post> getPostPublicByTitle(SortType sortType, String querySearch) {
-        String string = "  select * from  post where approve = 1 and status = 1 and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder ;
+
+    public List<Post> getPostPublicByTitle(SortType sortType, String querySearch) {
+        String string = "  select * from  post where approve = 1 and status = 1 and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder;
         Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
         query.setParameter("querySearch", "%" + querySearch + "%");
         return query.getResultList();
     }
-    public int getCountByUserContainsTitle(String querySearch,int idUser)
-    {
+
+    public int getCountByUserContainsTitle(String querySearch, int idUser) {
         String string = "  select * from  post where id_user = :id_user and title like :querySearch";
         Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
         query.setParameter("querySearch", "%" + querySearch + "%");
@@ -139,54 +128,48 @@ public class PostService extends AbstractDAO<Post> {
         return query.getResultList().size();
     }
 
-    public List<Post> finAll(String query)
-    {
-        return  this.postDAO.getAllPost(query);
+    public List<Post> finAll(String query) {
+        return this.postDAO.getAllPost(query);
     }
 
-    public  int getCount()
-    {
-        return this.getCount(Post.class,"post");
+    public int getCount() {
+        return this.getCount(Post.class, "post");
     }
 
-    public  void delete(int id)
-    {
+    public void delete(int id) {
         this.postDAO.delete(id);
     }
 
-    public  Post find(int id)
-    {
-        return  this.postDAO.find(id);
+    public Post find(int id) {
+        return this.postDAO.find(id);
     }
 
-    public  void save(Post post)
-    {
+    public void save(Post post) {
         this.postDAO.update(post);
     }
-    public  List<Post> getPublic(int offset,int limit)
-    {
-        return  this.postDAO.getPost(offset,limit);
+
+    public List<Post> getPublic(int offset, int limit) {
+        return this.postDAO.getPost(offset, limit);
     }
 
-    public  int getCountPublic()
-    {
+    public int getCountPublic() {
         return this.postDAO.getAllPostPublic().size();
     }
 
     public void deletePost(HttpServletRequest request) {
         String action = request.getParameter("action");
-        String id  = request.getParameter("id");
+        String id = request.getParameter("id");
 
-        if(action != null &&action.equals("delete")) {
-            if(id != null && StringUtils.isNumeric(id)) {
-                if(this.find(Integer.valueOf(id)) != null) {
+        if (action != null && action.equals("delete")) {
+            if (id != null && StringUtils.isNumeric(id)) {
+                if (this.find(Integer.valueOf(id)) != null) {
                     this.delete(Integer.valueOf(id));
                 }
             }
         }
     }
 
-    public  void setListPost(ModelMap modelMap, List<Post> postList,int total) {
+    public void setListPost(ModelMap modelMap, List<Post> postList, int total) {
         if (postList == null) {
             postList = new ArrayList<Post>();
         }
@@ -194,43 +177,39 @@ public class PostService extends AbstractDAO<Post> {
         modelMap.addAttribute("totalList", total);
     }
 
-    public void setResultQuerySearch(ModelMap modelMap,String querySearch,int page,int totalPost)
-    {
-        modelMap.addAttribute("page",page);
-        modelMap.addAttribute("querySearch",querySearch);
-        modelMap.addAttribute("totalList",totalPost);
+    public void setResultQuerySearch(ModelMap modelMap, String querySearch, int page, int totalPost) {
+        modelMap.addAttribute("page", page);
+        modelMap.addAttribute("querySearch", querySearch);
+        modelMap.addAttribute("totalList", totalPost);
     }
 
-    public List<Post> getPost(int idUser,int status,int approve,SortType sortType)
-    {
-        String str="select * from post where id_user =:id_user and status =:status and approve =:approve order by :orderBy :typeOrder ";
-        Query  query=sessionFactory.getCurrentSession().createNativeQuery(str,Post.class);
-        query.setParameter("id_user",idUser);
-        query.setParameter("status",status);
-        query.setParameter("approve",approve);
-        query.setParameter("orderBy",sortType.orderBy);
-        query.setParameter("typeOrder",sortType.typeOrder);
+    public List<Post> getPost(int idUser, int status, int approve, SortType sortType) {
+        String str = "select * from post where id_user =:id_user and status =:status and approve =:approve order by :orderBy :typeOrder ";
+        Query query = sessionFactory.getCurrentSession().createNativeQuery(str, Post.class);
+        query.setParameter("id_user", idUser);
+        query.setParameter("status", status);
+        query.setParameter("approve", approve);
+        query.setParameter("orderBy", sortType.orderBy);
+        query.setParameter("typeOrder", sortType.typeOrder);
 
-        return  query.getResultList();
+        return query.getResultList();
     }
 
-    public List<Post> getPost(int idUser,int status,int approve,SortType sortType,int offset,int limit)
-    {
-        String str="select * from post where id_user =:id_user and status =:status and approve =:approve order by  :orderBy :typeOrder limit :offset,:limit";
-        Query  query=sessionFactory.getCurrentSession().createNativeQuery(str,Post.class);
-        query.setParameter("id_user",idUser);
-        query.setParameter("status",status);
-        query.setParameter("approve",approve);
-        query.setParameter("orderBy",sortType.orderBy);
-        query.setParameter("typeOrder",sortType.typeOrder);
-        query.setParameter("offset",offset);
-        query.setParameter("limit",limit);
-        return  query.getResultList();
+    public List<Post> getPost(int idUser, int status, int approve, SortType sortType, int offset, int limit) {
+        String str = "select * from post where id_user =:id_user and status =:status and approve =:approve order by  :orderBy :typeOrder limit :offset,:limit";
+        Query query = sessionFactory.getCurrentSession().createNativeQuery(str, Post.class);
+        query.setParameter("id_user", idUser);
+        query.setParameter("status", status);
+        query.setParameter("approve", approve);
+        query.setParameter("orderBy", sortType.orderBy);
+        query.setParameter("typeOrder", sortType.typeOrder);
+        query.setParameter("offset", offset);
+        query.setParameter("limit", limit);
+        return query.getResultList();
     }
 
-    public  int getCount(int idUser,int status,int approve)
-    {
-        return this.getPost(idUser,status,approve,new SortType()).size();
+    public int getCount(int idUser, int status, int approve) {
+        return this.getPost(idUser, status, approve, new SortType()).size();
     }
-
 }
+

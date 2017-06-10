@@ -1,7 +1,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${userList.size()>0}">
+<c:if test="${postList.size()>0}">
     <table class="responstable"  id="">
         <thead>
             <tr>
@@ -14,7 +14,7 @@
         </thead>
         <tbody id="table-all-user">
         <jsp:useBean id="roleService" scope="page" class="service.RoleService"/>
-        <c:forEach var="user"   items="${userList}"  varStatus="loop">
+        <c:forEach var="user"   items="${postList}"  varStatus="loop">
             <tr >
                 <td>${loop.index+1}</td>
                 <td>${user.userName}</td>

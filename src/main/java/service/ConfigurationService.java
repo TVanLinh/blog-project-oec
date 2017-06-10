@@ -1,6 +1,5 @@
 package service;
 
-import dao.AbstractDAO;
 import dao.ConfigurationDAO;
 import entities.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ConfigurationService extends AbstractDAO<Configuration>{
+public class ConfigurationService extends AbstractService<Configuration>{
 
     @Autowired
     ConfigurationDAO configurationDAO;

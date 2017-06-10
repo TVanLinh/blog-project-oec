@@ -15,7 +15,7 @@ import service.ConfigurationService;
 import service.ImageService;
 import service.PostService;
 import service.UserService;
-import utils.page.DefaultPage;
+import utils.page.DefaultPages;
 import utils.string.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +39,7 @@ public class ProcessPost {
     ImageService imageService;
 
     @Autowired
-    DefaultPage  defaultPage;
+    DefaultPages defaultPage;
 
     @Autowired
     PostService postService;

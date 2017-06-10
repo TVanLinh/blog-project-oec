@@ -1,12 +1,15 @@
 package controller;
 
 import entities.Configuration;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import service.ConfigurationService;
-import utils.page.DefaultPage;
+import utils.page.DefaultPages;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,80 +18,67 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 public class ConfigurationController {
-    @Autowired
-    AdminController adminController;
 
     @Autowired
-    DefaultPage defaultPage;
+    DefaultPages defaultPage;
 
     @Autowired
     ConfigurationService configurationService;
 
     @RequestMapping(value = "/configuration")
-    public  String configurarion(HttpServletRequest request) {
+    public  String configurarion(HttpServletRequest request,ModelMap modelMap) {
         this.defaultPage.setDaultPage(request);
         if(request.getSession().getAttribute("error")!=null)
         {
-            request.setAttribute("error",request.getSession().getAttribute("error"));
+            modelMap.addAttribute("error",request.getSession().getAttribute("error"));
             request.getSession().removeAttribute("error");
         }
-        request.setAttribute("conf",this.configurationService.getAllConfiguration().get(0));
+        modelMap.addAttribute("conf",this.configurationService.getAllConfiguration().get(0));
         return "configuration";
     }
 
     @RequestMapping("/processConfigurarion")
-    public  String processConfigurarion(HttpServletRequest request,ModelMap modelMap) {
-        this.defaultPage.setDaultPage(request);
+    public  String processConfigurarion(HttpServletRequest request, ModelMap modelMap, @RequestParam(value = "titleBlog" ,required=false) String title,
+                                        @RequestParam(value = "formatTime",required = false) String formatTime,
+                                        @RequestParam(value = "numberPost",required = false) String numberPost) {
+        int numberView = NumberUtils.toInt(numberPost,this.configurationService.getAllConfiguration().get(0).getNumberViewPost());
 
-        String title=request.getParameter("titleBlog");
-        String formatTime =request.getParameter("formatTime");
-        String numberPost =request.getParameter("numberPost");
-        System.out.println(title+"  \t"+formatTime+"\t"+numberPost);
-
-        if(title == null || formatTime == null || numberPost == null || !utils.string.StringUtils.checkVid(title)) {
-            this.adminController.setResultConfig(modelMap,"Not valid!");
+        if(!utils.string.StringUtils.checkVid(title)) {
+            this.setResultConfig(modelMap,"Not valid!");
             return "configuration";
         }
 
-        if(title.trim().equals("") || formatTime.trim().equals("") || numberPost.trim().equals("")) {
-            this.adminController.setResultConfig(modelMap,"Title ,format time not valid!");
-            return "configuration";
-        }
-
-        if(Integer.valueOf(numberPost)<0) {
-            this.adminController.setResultConfig(modelMap,"Number Post must great than 0.!");
+        if(StringUtils.isEmpty(title) ||StringUtils.isBlank(title)|| StringUtils.isEmpty(formatTime) ||StringUtils.isBlank(formatTime ) || !utils.string.StringUtils.checkVid(title)){
+            this.setResultConfig(modelMap,"Title or format time  not valid!");
             return "configuration";
         }
 
         Configuration configuration = this.configurationService.getAllConfiguration().get(0);
 
         try {
-            int result = 0;
-            if(configuration == null)
-            {
+            if(configuration == null) {
                 configuration = new Configuration();
-            }else {
-                result=1;
             }
-
-            configuration.setNumberViewPost(Integer.valueOf(numberPost));
+            configuration.setNumberViewPost(numberView);
             configuration.setWebTitle(title);
             configuration.setDateFormat(formatTime);
+            this.configurationService.save(configuration);
 
-            if(result == 0) {
-                this.configurationService.save(configuration);
-            }
-            if(result == 1) {
-                this.configurationService.save(configuration);
-                this.defaultPage.setDaultPage(request);
-            }
-            this.adminController.setResultConfig(modelMap,"Successfully !");
+            this.setResultConfig(modelMap,"Successfully !");
             request.getSession().setAttribute("error","Successfully !");
-        }catch (Exception e)
+        }catch (IndexOutOfBoundsException e)
         {
             return "configuration";
         }
+
+        this.defaultPage.setDaultPage(request);
         return "redirect:/configuration";
+    }
+
+    protected void  setResultConfig(ModelMap modelMap,String err)
+    {
+        modelMap.addAttribute("error",err);
+        modelMap.addAttribute("conf",this.configurationService.getAllConfiguration().get(0));
     }
 
 }

@@ -2,9 +2,9 @@ package entities;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import jsonviews.Views;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * Created by linhtran on 07/05/2017.
@@ -12,14 +12,14 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "user_roles")
-public class Role extends AbstractEntity  implements Serializable{
+public class Role extends AbstractEntity  implements GrantedAuthority {
 
     @Basic
     @JsonView(Views.Public.class)
     private String role;
 
-    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_name",referencedColumnName = "user_name")
+    @ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_user",referencedColumnName = "id")
     User user;
 
     public Role() {
@@ -59,4 +59,14 @@ public class Role extends AbstractEntity  implements Serializable{
         this.role = role;
     }
 
+    public String getAuthority() {
+        return this.getRole();
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "role='" + role + '\'' +
+                '}';
+    }
 }
