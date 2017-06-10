@@ -40,7 +40,7 @@ public class ConfigurationController {
     }
 
     @RequestMapping(value = "/configuration")
-    public  String configurarion(HttpServletRequest request,ModelMap modelMap) {
+    public  String configuration(HttpServletRequest request,ModelMap modelMap) {
         this.defaultPage.setDaultPage(request);
         if(request.getSession().getAttribute(requestService.SUCCESS)!=null)
         {
@@ -60,6 +60,7 @@ public class ConfigurationController {
 
         if (bindingResult.hasErrors()) {
             modelMap.addAttribute("errors", this.configFormValidator.getCodeErrors(bindingResult));
+            modelMap.addAttribute("conf",conf);
             return "configuration";
         }
 

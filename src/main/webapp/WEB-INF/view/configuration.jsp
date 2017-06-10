@@ -20,15 +20,16 @@
 
             <jsp:include page="templates/menus/menu-admin.jsp"/>
             <spring:url var="action" value="/processConfiguration"/>
+            <jsp:useBean id="confService" class="service.ConfigurationService" />
 
-            <form:form ACTION="${action}" METHOD="post" commandName="configuration">
+            <form:form ACTION="${action}" METHOD="post" commandName="configuration" >
                 <div class="form-group">
                     <label for="titleBlog">${messageSource.getMessage("titleBlog",null,locale)}:</label>
                     <input:input path="webTitle" type="text" class="form-control " name="titleBlog" id="titleBlog" value="${requestScope.conf.webTitle}"/>
                 </div>
                 <div class="form-group">
                     <label for="formatTime" id="formatTime" >${messageSource.getMessage("fomatDate",null,locale)}:</label>
-                    <jsp:useBean id="confService" class="service.ConfigurationService"/>
+
                     <form:select path="dateFormat" class="form-control"  name="formatTime" >
                         <c:if test="${confService.isHaveFormatTime(requestScope.conf,'HH:mm:ss dd/MM/yyyy')}">
                             <option value="HH:mm:ss dd/MM/yyyy" selected>HH:mm:ss dd/MM/yyyy</option>

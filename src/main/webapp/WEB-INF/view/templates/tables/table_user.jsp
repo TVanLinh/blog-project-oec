@@ -8,7 +8,7 @@
                 <th data-th="Driver details"><span>STT</span></th>
                 <th data-th="Driver details"><a href="<s:url value="/manager-user?orderBy=user_name"/>"><img src="<s:url value="public/asserts/images/sort.png" />"> <span class="dp-inline">${messageSource.getMessage("name",null,locale)}</span></a></th>
                 <%--<th class="text-center"><a href="<s:url value="/manager-user?orderBy=pass_word"/>"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("passWord",null,locale)}</a></th>--%>
-                <th><a href="<s:url value="/manager-user?orderBy=role"/>"><!--img src="<s :url value="public/asserts/images/sort.png" />" class="mgr-5"-->${messageSource.getMessage("role",null,locale)}</a></th>
+                <th><a href="<s:url value="/manager-user"/>"><!--img src="<s :url value="public/asserts/images/sort.png" />" class="mgr-5"-->${messageSource.getMessage("role",null,locale)}</a></th>
                 <th>${messageSource.getMessage("td.action",null,locale)}</th>
             </tr>
         </thead>
