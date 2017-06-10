@@ -16,18 +16,18 @@ import java.io.IOException;
 @Configuration
 public class DefaultPage implements Filter {
     @Autowired
-    ConfigurationService configurationService;
+    private ConfigurationService configurationService;
 
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        this.setDaultPage((HttpServletRequest)servletRequest);
+        this.setDefaultPage((HttpServletRequest)servletRequest);
         filterChain.doFilter(servletRequest,servletResponse);
     }
 
-    private void setDaultPage(HttpServletRequest request) {
+    private void setDefaultPage(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
 
         entities.Configuration configuration = configurationService.getAllConfiguration().get(0);

@@ -70,7 +70,6 @@ public class AccountController {
                              @RequestParam(value = "page",required = false) String pageRequest,
                              @RequestParam(value = "action",required = false)String action,
                              @RequestParam(value = "id",required = false) String id) throws AccessDenieException {
-        defaultPage.setDaultPage(request);
         setDefaultUser(principal,request,modelMap);
         modelMap.addAttribute("userDAO",this.userService);
 
@@ -112,8 +111,6 @@ public class AccountController {
 
     @RequestMapping(value = "/user-post-search",method = RequestMethod.GET)
     public  String searchTableAllPost(HttpServletRequest request,ModelMap modelMap,@RequestParam(value = "page",required = false)String pageRequest,@RequestParam(value = "query_search",required = false)String querySearch, Principal principal) {
-        this.defaultPage.setDaultPage(request);
-
         SortType sortType=this.portSort.getCurrentSortType(request,StringSessionUtil.CURRENT_POST_ALL_TYPE_SORT_BY_USER);
         User user=this.userService.getUserByName(principal.getName());
         int page = NumberUtils.toInt(pageRequest,1);
@@ -129,9 +126,9 @@ public class AccountController {
         if (error != null) {
             model.addObject("error", "validation.field.not.right.pass.user");
         }
-//        if (logout != null) {
-//            model.addObject("msg", "You've been logged out successfully.");
-//        }
+        if (logout != null) {
+            model.addObject("msg", "logout.success");
+        }
         model.setViewName("login");
 
         return model;
@@ -170,7 +167,6 @@ public class AccountController {
     @RequestMapping(value = "/change-pass-word",method = RequestMethod.GET)
     public String pageChangePassWord(HttpServletRequest request)
     {
-        defaultPage.setDaultPage(request);
         return "change-pass-word";
     }
 
@@ -179,7 +175,6 @@ public class AccountController {
                                              @RequestParam(value = "passWord")String passWord,
                                              @RequestParam(value = "rePassWord")String rePassWord,
                                              @RequestParam(value = "oldPassWord")String oldPassWord) {
-        defaultPage.setDaultPage(request);
         ModelAndView modelAndView = new ModelAndView();
         User user = userService.getUserByName(principal.getName());
         modelAndView.setViewName("change-pass-word");

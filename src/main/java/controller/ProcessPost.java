@@ -55,7 +55,6 @@ public class ProcessPost {
                                          Principal principal, ModelMap modelMap,
                                          @RequestParam(value = "link-image",required = false)String linkImage,
                                          @RequestParam(value = "alt-image",required = false)String altImage ) {
-        this.defaultPage.setDaultPage(request);
         this.setPostSliderbar(modelMap);
 
         if(org.apache.commons.lang3.StringUtils.isBlank(post.getTitle())|| !StringUtils.checkVid(post.getTitle()))
@@ -100,13 +99,11 @@ public class ProcessPost {
     }
     @RequestMapping(value = "/write-post", method = RequestMethod.GET)
     public String processWritePost(HttpServletRequest request) {
-        this.defaultPage.setDaultPage(request);
         return "home";
     }
 
     @RequestMapping(value = "/view-post", method = RequestMethod.GET)
     public String view(HttpServletRequest request) {
-        this.defaultPage.setDaultPage(request);
 
         HttpSession session = request.getSession();
         Integer postId = (Integer) session.getAttribute("post-id");
@@ -120,7 +117,6 @@ public class ProcessPost {
     @RequestMapping(value = "/update",method = RequestMethod.GET)
     public  String updatePost(HttpServletRequest request,
                                         @RequestParam(value = "id",required = false)String postId) throws NotFindException, AccessDenieException {
-        this.defaultPage.setDaultPage(request);
         HttpSession session = request.getSession();
 
         if(!org.apache.commons.lang3.StringUtils.isNumeric(postId) || this.postService.find(Integer.valueOf(postId)) == null) {
@@ -144,7 +140,6 @@ public class ProcessPost {
                                   HttpServletRequest request,Principal principal,
                                   @RequestParam(value = "link-image",required = false)String linkImage,
                                   @RequestParam(value = "alt-image",required = false)String altImage ) {
-        this.defaultPage.setDaultPage(request);
         HttpSession session = request.getSession();
 
         Post postUpdate = (Post) session.getAttribute("postUpdate");

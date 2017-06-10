@@ -164,7 +164,6 @@ public class ManagerUser {
 
     @RequestMapping(value = "/action-update-user", method = RequestMethod.GET)
     public String actionUpdateUser(HttpServletRequest request) {
-        this.defaultPage.setDaultPage(request);
         return "redirect:manager-user";
     }
 
@@ -174,8 +173,6 @@ public class ManagerUser {
                                    HttpServletRequest request,
                                    @ModelAttribute(value = "userForm") UserForm  userForm,
                                    BindingResult bs,Principal principal) {
-        this.defaultPage.setDaultPage(request);
-
         updateUserValidator.validate(userForm, bs);
 
         User userCurrent = this.userService.find(userForm.getUser().getId());
@@ -215,7 +212,6 @@ public class ManagerUser {
     public String searchUser(HttpServletRequest request, ModelMap modelMap,
                              @RequestParam(value = "page", required = false) String pageReques,
                              @RequestParam(value = "query_search", required = false) String querySearch) {
-        this.defaultPage.setDaultPage(request);
         int page = NumberUtils.toInt(pageReques, 1);
         SortType sortType = this.sort.getCurrentSortType(request, StringSessionUtil.CURRENT_USER_SORT);
 

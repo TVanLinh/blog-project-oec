@@ -41,7 +41,6 @@ public class ConfigurationController {
 
     @RequestMapping(value = "/configuration")
     public  String configuration(HttpServletRequest request,ModelMap modelMap) {
-        this.defaultPage.setDaultPage(request);
         if(request.getSession().getAttribute(requestService.SUCCESS)!=null)
         {
             modelMap.addAttribute(requestService.SUCCESS,request.getSession().getAttribute(requestService.SUCCESS));

@@ -22,7 +22,7 @@
         </span></center>
         <span class="login-success">
             <c:if test="${not empty msg}">
-                <div class="msg">${msg}</div>
+                <div class="msg"> ${messageSource.getMessage(requestScope.msg,null,locale)}</div>
             </c:if>
         </span>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

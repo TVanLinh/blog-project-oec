@@ -46,7 +46,6 @@ public class SearchController {
     public  String  processSearchAll(HttpServletRequest request, ModelMap modelMap,
                                      @RequestParam(value = "page",required = false) String pageRequest,
                                      @RequestParam(value = "title",required = false) String title){
-        this.defaultPage.setDaultPage(request);
         int limit = this.configurationService.getAllConfiguration().get(0).getNumberViewPost();
         int  page = NumberUtils.toInt(pageRequest,1);
 
@@ -60,10 +59,9 @@ public class SearchController {
 
 
     @RequestMapping(value = "/list-post-by-user")
-    public  String  getPostByUser(HttpServletRequest request, ModelMap modelMap,
+    public  String  getPostByUser( ModelMap modelMap,
                                   @RequestParam(value = "username",required = false) String username,
                                   @RequestParam(value = "page",required = false) String pageRequest ) throws NotFindException {
-        defaultPage.setDaultPage(request);
         List<Post> posts;
         User user;
         int limit = this.configurationService.getAllConfiguration().get(0).getNumberViewPost();

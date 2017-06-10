@@ -55,9 +55,6 @@ public class AdminController
     public ModelAndView adminPage(HttpServletRequest request, ModelMap modelMap,
                                   @RequestParam(value = "page",required = false) String pageRequest)
                                     throws AccessDenieException, NotFindException {
-
-        this.defaultPage.setDaultPage(request);
-
         ModelAndView model = new ModelAndView();
         List<Post> postList;
         int  page= NumberUtils.toInt(pageRequest,1);
@@ -101,8 +98,6 @@ public class AdminController
     @RequestMapping(value = "/admin-search-post-approve",method = RequestMethod.GET)
     public  String searchTableApprovePost(HttpServletRequest request, ModelMap modelMap, @RequestParam(value = "page",required = false) String pageRequest,
                                           @RequestParam(value = "query_search",required = false)String querySearch) {
-        this.defaultPage.setDaultPage(request);
-
         SortType sortType=this.portSort.getCurrentSortType(request,StringSessionUtil.CURRENT_APPROVE_POST);
         List<Post> postList;
 

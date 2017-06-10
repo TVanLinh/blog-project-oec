@@ -53,7 +53,6 @@ public class ManagerPost {
     @RequestMapping("/manager-post")
     public  String managerPost(HttpServletRequest request, ModelMap modelMap,
                                @RequestParam(value = "page",required = false) String pageRequest) {
-        this.defaultPage.setDaultPage(request);
         List<Post> postList;
 
         int page = NumberUtils.toInt(pageRequest,1);
@@ -85,7 +84,6 @@ public class ManagerPost {
     public  String searchTableAllPost(HttpServletRequest request,ModelMap modelMap,
                                       @RequestParam(value = "page",required = false)String pageRequest,
                                       @RequestParam(value ="query_search",required = false) String querySearch) {
-        this.defaultPage.setDaultPage(request);
 
         int page = NumberUtils.toInt(pageRequest,1);
 

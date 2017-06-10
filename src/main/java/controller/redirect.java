@@ -45,7 +45,7 @@ public class redirect {
 
     @RequestMapping(value = "/write")
     public  String viewWriter(HttpServletRequest request) {
-        this.defaultPage.setDaultPage(request);
+
         request.setAttribute("active","write");
         return "write";
     }
@@ -61,7 +61,6 @@ public class redirect {
             request.getSession().removeAttribute("error");
         }
 
-        this.defaultPage.setDaultPage(request);
         int  page = NumberUtils.toInt(pageRequest,1);
         List<Post> postList;
 
@@ -79,7 +78,7 @@ public class redirect {
 
     @RequestMapping(value = "/post")
     public  String viewPost(HttpServletRequest request,ModelMap modelMap,@RequestParam(value = "id",required = false) String id) throws NotFindException {
-        this.defaultPage.setDaultPage(request);
+
 
 
         List<Post> postSlideBar = this.postService.getPublic(0, this.configurationService.getAllConfiguration().get(0).getNumberViewPost());
