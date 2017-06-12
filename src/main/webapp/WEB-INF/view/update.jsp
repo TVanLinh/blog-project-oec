@@ -19,13 +19,10 @@
                <jsp:param name="action" value="/write-update"/>
                <jsp:param name="title" value="${sessionScope.postUpdate.title}"/>
                <jsp:param name="content" value="${sessionScope.postUpdate.content}"/>
+               <jsp:param name="status" value="${sessionScope.postUpdate.status}"/>
            </jsp:include>
         </div>
 
-        <!-- Blog Sidebar Widgets Column -->
-        <%--<div>--%>
-            <%--<jsp:include page="templates/slidebar-post.jsp"/>--%>
-        <%--</div>--%>
 
     </div>
     <!-- /.row -->

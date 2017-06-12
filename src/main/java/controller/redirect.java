@@ -15,7 +15,6 @@ import service.ConfigurationService;
 import service.PostService;
 import service.RequestService;
 import service.UserService;
-import utils.page.DefaultPages;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -38,9 +37,6 @@ public class redirect {
     private    ConfigurationService configurationService;
 
     @Autowired
-    private    DefaultPages defaultPage;
-
-    @Autowired
     private RequestService<Post> requestService;
 
     @RequestMapping(value = "/write")
@@ -54,11 +50,10 @@ public class redirect {
     public String homePage(HttpServletRequest request, ModelMap modelMap,
                            @RequestParam(value = "page",
                            required = false)String pageRequest) {
-        String error = (String) request.getSession().getAttribute("error");
-        if( error !=null)
-        {
-            modelMap.addAttribute("error",error);
-            request.getSession().removeAttribute("error");
+        String error = (String) request.getSession().getAttribute(requestService.MESSAGE);
+        if( error !=null) {
+            modelMap.addAttribute(requestService.MESSAGE,error);
+            request.getSession().removeAttribute(requestService.MESSAGE);
         }
 
         int  page = NumberUtils.toInt(pageRequest,1);
@@ -68,16 +63,14 @@ public class redirect {
         modelMap.addAttribute("userDAO",this.userService);
 
         postList = this.postService.getPublic((page-1)*limit,limit);
-        this.requestService.setResponse(modelMap,postList,
-                                        this.postService.getCountPublic(),
-                                        page,"home",null);
+        this.requestService.setResponse(modelMap,postList, this.postService.getCountPublic(), page,"home",null);
         modelMap.addAttribute("limit",limit);
         return "home";
     }
 
 
     @RequestMapping(value = "/post")
-    public  String viewPost(HttpServletRequest request,ModelMap modelMap,@RequestParam(value = "id",required = false) String id) throws NotFindException {
+    public  String viewPost(ModelMap modelMap,@RequestParam(value = "id",required = false) String id) throws NotFindException {
 
 
 

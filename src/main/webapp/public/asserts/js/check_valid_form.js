@@ -40,9 +40,12 @@ function checkTitle(tagret)
 function getImages2() {
     var linkInput=$('#cke_123_textInput');
     var altInput=$('#cke_130_textInput');
-    if(linkInput.length>0||altInput.length>0)
+    if(linkInput.length>0)
     {
         $('#link-image').val(linkInput.val());
+    }
+    if(altInput.length>0)
+    {
         $('#alt-image').val(altInput.val());
     }
 

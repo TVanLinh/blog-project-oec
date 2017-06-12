@@ -4,21 +4,26 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <%@page isELIgnored="false" %>
-<!DOCTYPE html>
-<html lang="en">
 <jsp:include page="templates/headers/head.jsp"/>
-<body>
-
+<style>
+    .menu-item:nth-child(3)
+    {
+        color: #ffff5d;
+    }
+</style>
 <!-- Navigation -->
 <jsp:include page="templates/navbars/navbar.jsp"/>
 <%--<%@page session="true"%>--%>
 <!-- Page Content -->
-<div class="container">
+<div class="container-fluid">
     <!-- Blog Entries Column -->
     <div class="row">
-        <div class="col-md-12">
-
+        <div class="col-md-3 col-xs-12">
             <jsp:include page="templates/menus/menu-admin.jsp"/>
+        </div>
+        <div class="col-md-8 col-xs-12">
+
+            <%--<jsp:include page="templates/menus/menu-admin.jsp"/>--%>
             <spring:url var="action" value="/processConfiguration"/>
             <jsp:useBean id="confService" class="service.ConfigurationService" />
 
@@ -81,7 +86,7 @@
                 </p>
             </form:form>
         </div>
-
+        <div class="clearfix"></div>
     </div>
     <!-- /.row -->
     <hr>

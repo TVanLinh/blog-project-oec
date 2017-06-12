@@ -5,6 +5,7 @@ package exceptions;
  */
 public class NotFindException extends Exception {
     public static  final String  POST_NOT_FOUND ="access.post.not.found";
+    public static  final String  USER_NOT_FOUND ="not.user";
     public NotFindException(String s) {
         super(s);
     }

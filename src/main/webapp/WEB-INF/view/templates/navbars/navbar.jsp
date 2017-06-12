@@ -28,20 +28,20 @@
             </c:if>
 
 
-            <c:if  test="${sessionScope.username !=null}">
-                <c:if test="${requestScope.active=='admin'}">
-                    <li><a href="<s:url value="/admin"/>" class="active">Admin</a></li>
-                </c:if>
-                <c:if test="${requestScope.active!='admin'}">
-                    <li><a href="<s:url value="/admin"/>">Admin</a></li>
-                </c:if>
+            <%--<c:if  test="${sessionScope.username !=null}">--%>
+                <%--<c:if test="${requestScope.active=='admin'}">--%>
+                    <%--<li><a href="<s:url value="/admin"/>" class="active">Admin</a></li>--%>
+                <%--</c:if>--%>
+                <%--<c:if test="${requestScope.active!='admin'}">--%>
+                    <%--<li><a href="<s:url value="/admin"/>">Admin</a></li>--%>
+                <%--</c:if>--%>
 
-            </c:if>
+            <%--</c:if>--%>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="javascript:void(0)" id="seachHomePage"><span class="glyphicon glyphicon-search"></span></a>
+                <a href="javascript:void(0)" id="seachHomePage"><i class="fa fa-search" aria-hidden="true"></i></a>
             </li>
             <c:if  test="${sessionScope.username !=null}">
                 <li class="dropdown">
@@ -50,13 +50,20 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>    <a href="<s:url value="/user"/>">${messageSource.getMessage("mypost",null,locale)}</a></li>
+                        <c:if test="${sessionScope.userService !=null && sessionScope.username != null}">
+                            <c:if test="${sessionScope.userService.isRoleAdmin(sessionScope.userService.getUserByName(sessionScope.username)) == true}">
+                                <c:if test="${requestScope.active!='admin'}">
+                                    <li><a href="<s:url value="/admin"/>">${messageSource.getMessage("admin",null,locale)}</a></li>
+                                </c:if>
+                            </c:if>
+                        </c:if>
                         <li>    <a href="/change-pass-word">${messageSource.getMessage("changepass",null,locale)}</a></li>
                         <li><a href="<s:url value="/logout"/>" >${messageSource.getMessage("logout",null,locale)}</a></li>
                     </ul>
                 </li>
 
             </c:if>
-            <c:if  test="${sessionScope.username ==null}">
+            <c:if  test="${sessionScope.username == null}">
                 <li><a href="<s:url value="/login"/>" ><span class="glyphicon glyphicon-log-in" ></span> ${messageSource.getMessage("login",null,locale)}</a></li>
             </c:if>
             <li><a href="<s:url value="/language?language=en"/>"><img src="<s:url value="public/asserts/images/US.gif"/>" alt="USA"></a></li>
@@ -74,6 +81,7 @@
             var target=$('#search-home')
                 seach.on('click',function () {
                     target.toggleClass("search-show",1000);
+                    seach.toggleClass('active');
                 });
         }
     });

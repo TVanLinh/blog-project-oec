@@ -128,6 +128,9 @@ public class UserService  extends AbstractService<User> {
 
     public  boolean isRoleAdmin(User user)
     {
+        if(user == null){
+            return false;
+        }
         List<Role> role=user.getRoleList();
         if(role == null || role.size()  == 0) {
             return false;
@@ -142,6 +145,9 @@ public class UserService  extends AbstractService<User> {
     }
     public  boolean isRoleUser(User user)
     {
+        if(user == null){
+             return false;
+        }
         List<Role> role=user.getRoleList();
         if(role == null || role.size()  == 0) {
             return false;
@@ -158,7 +164,10 @@ public class UserService  extends AbstractService<User> {
 
    public boolean isEditPost(User user, Post post)
     {
-        if(user == null ||post == null || !this.isRoleAdmin(user) || user.getId() != post.getUser().getId() )
+        boolean a =  !this.isRoleAdmin(user);
+        boolean b = user.getId() != post.getUser().getId();
+        boolean c = user.getId() != post.getUser().getId();
+        if(user == null ||post == null || (!this.isRoleAdmin(user) && user.getId() != post.getUser().getId()) || user.getId() != post.getUser().getId())
         {
             return false;
         }

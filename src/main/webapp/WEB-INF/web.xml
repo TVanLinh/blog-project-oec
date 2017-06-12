@@ -56,7 +56,7 @@
 
     <filter-mapping>
         <filter-name>defaultPage</filter-name>
-        <url-pattern>/home,/</url-pattern>
+        <url-pattern>/*</url-pattern>
         <!--<dispatcher>REQUEST</dispatcher>-->
         <!--<dispatcher>FORWARD</dispatcher>-->
     </filter-mapping>
@@ -84,15 +84,15 @@
     <servlet-name>dispatcher</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-  <!--<error-page>-->
-      <!--<error-code>404</error-code>-->
-      <!--<location>/home</location>-->
-  <!--</error-page>-->
-    <!--<error-page>-->
-        <!--<error-code>500</error-code>-->
-        <!--<location>/home</location>-->
-    <!--</error-page>-->
-  <!-- Spring Security -->
+
+  <error-page>
+      <error-code>404</error-code>
+      <location>/home</location>
+  </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/home</location>
+    </error-page>
 
   <context-param>
     <param-name>contextConfigLocation</param-name>

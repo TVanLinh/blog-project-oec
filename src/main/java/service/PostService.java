@@ -155,14 +155,16 @@ public class PostService extends AbstractService<Post> {
         return this.postDAO.getAllPostPublic().size();
     }
 
-    public void deletePost(String action,String id) {
+    public boolean deletePost(String action,String id) {
         if (action != null && action.equals("delete")) {
             if (id != null && StringUtils.isNumeric(id)) {
                 if (this.find(Integer.valueOf(id)) != null) {
                     this.delete(Integer.valueOf(id));
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     public   void approvePost(int  id)

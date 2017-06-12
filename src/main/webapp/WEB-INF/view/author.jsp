@@ -23,6 +23,9 @@
         <div class="clearfix"></div>
 
         <div class="col-xs-12">
+            <c:if  test="${requestScope.error != null}">
+                <span class="error">${messageSource.getMessage(requestScope.error,null,locale)}</span>
+            </c:if>
             <jsp:include page="templates/tables/table_post_by_user.jsp"/>
         </div>
         <!-- Blog Sidebar Widgets Column -->

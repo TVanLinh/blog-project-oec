@@ -22,8 +22,8 @@
                 <td> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</td>
                 <td>
                     <a href="<s:url value="/admin-approve-post?page=${requestScope.page}&id=${post.id}"/>" title="${messageSource.getMessage("approve",null,locale)} ">  <span class="glyphicon glyphicon-ok mgr-10"></span></a>
-                    <a href="<s:url value="/admin-delete-post?page=${requestScope.page}&id=${post.id}"/>" title="${messageSource.getMessage("delete",null,locale)} " onclick="return window.confirm('Are you sure you want to delete this post?')"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
-                    <a href="<s:url value="/update?action=update&id=${post.id}"/>" title="${messageSource.getMessage("edit",null,locale)}"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a>
+                    <a href="<s:url value="/admin-delete-post?page=${requestScope.page}&id=${post.id}"/>" title="${messageSource.getMessage("delete",null,locale)} " onclick="return window.confirm('${messageSource.getMessage("confirm.delete.post",null,locale)}')"><i class="fa fa-trash-o"></i></a>
+                    <a href="<s:url value="/update?action=update&id=${post.id}"/>" title="${messageSource.getMessage("edit",null,locale)}"><i class="fa fa-pencil-square-o mgl-15" aria-hidden="true"></i></a>
 
                 </td>
             </tr>
@@ -39,6 +39,7 @@
     </div>
 
 </c:if>
+<%--<li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>--%>
 <%--<script src="<s:url value="public/data-table-plugin/js/jquery.dataTables.min.js"/>" type="text/javascript"></script>--%>
 <%--<script src="<s:url value="public/Sortable-HTML-Tables-jQuery-sortable-js/sortable.js"/>" type="text/javascript"></script>--%>
 <%--<script src="<s:url value="public/asserts/js/sort.js"/>" type="text/javascript"></script>--%>

@@ -22,16 +22,16 @@ import javax.servlet.http.HttpServletRequest;
 public class ConfigurationController {
 
     @Autowired
-    DefaultPages defaultPage;
+    private     DefaultPages defaultPage;
 
     @Autowired
-    ConfigurationService configurationService;
+    private     ConfigurationService configurationService;
 
     @Autowired
-    ConfigFormValidator configFormValidator;
+    private     ConfigFormValidator configFormValidator;
 
     @Autowired
-    RequestService requestService;
+    private     RequestService requestService;
 
     @ModelAttribute
     public Configuration initConfig()

@@ -21,6 +21,10 @@ public class RequestService<E> {
 
     public  static  final String ERROR =  "error";
     public  static  final  String SUCCESS = "success";
+    public  static  final  String UPDATE_SUCCESS = "request.update_success";
+    public  static  final  String INSERT_SUCCESS = "request.insert.success";
+    public  static  final  String DELETE_SUCCESS = "delete.success";
+    public  static  final  String POST_APPROVE_SUCCESS = "post.approve.success";
 
     public void setResponse(ModelMap  modelMap, List<E> postList,int totalList,int page,String  pageActive,String error,String query)
     {

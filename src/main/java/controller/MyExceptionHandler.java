@@ -14,20 +14,21 @@ import org.springframework.web.servlet.ModelAndView;
 public class MyExceptionHandler {
 
     @ExceptionHandler(NotFindException.class)
-    public ModelAndView  handlerNotFindException(NotFindException ex, Model model) {
+    public ModelAndView handlerNotFindException(NotFindException ex, Model model) {
         System.out.println(ex.getMessage());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ProcessExceptions");
-        modelAndView.addObject("error",ex.getMessage());
-        return  modelAndView;
+        modelAndView.addObject("error", ex.getMessage());
+        return modelAndView;
     }
 
     @ExceptionHandler(AccessDenieException.class)
-    public ModelAndView  handlerAccessDeniesException(AccessDenieException ex) {
+    public ModelAndView handlerAccessDeniesException(AccessDenieException ex) {
         System.out.println(ex.getMessage());
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("error",ex.getMessage());
+        modelAndView.addObject("error", ex.getMessage());
         modelAndView.setViewName("ProcessExceptions");
-        return  modelAndView;
+        return modelAndView;
     }
+
 }

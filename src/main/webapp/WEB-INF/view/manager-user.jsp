@@ -2,8 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="templates/headers/head.jsp"/>
-<body>
-
+<style>
+    .menu-item:nth-child(4)
+    {
+        color: #ffff5d;
+    }
+</style>
 <!-- Navigation -->
 <jsp:include page="templates/navbars/navbar.jsp"/>
 <%--<%@page session="true"%>--%>
@@ -31,17 +35,18 @@
                 </jsp:include>
             </div>
             <div>
-                <a class="btn btn-default mgb-15" href="<s:url value="/insert-user"/>"><img src="<s:url value="public/asserts/images/add_user.png"/> " class="mgr-10">${messageSource.getMessage("insertUser",null,locale)}</a>
-                <c:if  test="${requestScope.errorInsertUser != null}">
-                    <span class="error">${messageSource.getMessage(requestScope.errorInsertUser,null,locale)}</span>
+                <a class="btn btn-default mgb-15 mgt-20" href="<s:url value="/insert-user"/>"><img src="<s:url value="public/asserts/images/add_user.png"/> " class="mgr-10">${messageSource.getMessage("insertUser",null,locale)}</a>
+                <c:if  test="${requestScope.error != null}">
+                    <span class="error">${messageSource.getMessage(requestScope.error,null,locale)}</span>
                 </c:if>
             </div>
-    </div>
-    <div class="col-xs-12">
+            <jsp:include page="templates/tables/table_user.jsp"/>
+         </div>
+    <%--<div class="col-xs-12">--%>
 
-        <jsp:include page="templates/tables/table_user.jsp"/>
+        <%--<jsp:include page="templates/tables/table_user.jsp"/>--%>
 
-    </div>
+    <%--</div>--%>
     <hr>
 </div>
 <script src="<s:url value="/public/asserts/js/main.js"/>"></script>

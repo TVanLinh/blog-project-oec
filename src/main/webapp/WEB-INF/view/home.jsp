@@ -12,9 +12,11 @@
             <!-- Blog Entries Column -->
                 <div class="col-xs-12 ">
                     <jsp:useBean id="dateUtil" class="utils.date.DateFormatUtil" scope="session"/>
-                    <c:if test="${requestScope.error != null}">
-                        ${requestScope.error}
-                    </c:if>
+                  <p class="error">
+                      <c:if test="${requestScope.error != null}">
+                          ${messageSource.getMessage(requestScope.error,null,locale)}
+                      </c:if>
+                  </p>
                  <!--------------content-->
                  <jsp:include page="templates/components/content.jsp"/>
 

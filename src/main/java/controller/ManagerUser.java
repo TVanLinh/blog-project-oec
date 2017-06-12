@@ -1,6 +1,8 @@
 package controller;
 
 import entities.User;
+import exceptions.AccessDenieException;
+import exceptions.NotFindException;
 import forms.UserForm;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -38,33 +40,33 @@ import java.util.List;
 public class ManagerUser {
 
     @Autowired
-    private   UserService userService;
+    private UserService userService;
 
     @Autowired
-    private    DefaultPages defaultPage;
+    private DefaultPages defaultPage;
 
     @Autowired
-    private    RoleService roleService;
-
-
-    @Autowired
-    private    BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    private    Sort sort;
-
-    @Autowired
-    private    RequestService<User> requestService;
-
-    @Autowired
-    private    UserSortService userSortService;
+    private RoleService roleService;
 
 
     @Autowired
-    private    UserFormUpdateValidator updateUserValidator;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    private    UserFormInsertUserValidator insertUserValidator;
+    private Sort sort;
+
+    @Autowired
+    private RequestService<User> requestService;
+
+    @Autowired
+    private UserSortService userSortService;
+
+
+    @Autowired
+    private UserFormUpdateValidator updateUserValidator;
+
+    @Autowired
+    private UserFormInsertUserValidator insertUserValidator;
 
     @ModelAttribute
     public UserForm initUserForm() {
@@ -76,37 +78,42 @@ public class ManagerUser {
                               ModelMap modelMap,
                               Principal principal,
                               @RequestParam(value = "page", required = false) String pageRequest) {
-
-        this.defaultPage.setDaultPage(request);
-
         List<User> userList;
 
-        int  page = NumberUtils.toInt(pageRequest,1);
+        int page = NumberUtils.toInt(pageRequest, 1);
 
-        if (request.getSession().getAttribute("errorInsertUser") != null) {
-            request.setAttribute("errorInsertUser", request.getSession().getAttribute("errorInsertUser"));
-            request.getSession().removeAttribute("errorInsertUser");
+        if (request.getSession().getAttribute(requestService.MESSAGE) != null) {
+            request.setAttribute(requestService.MESSAGE, request.getSession().getAttribute(requestService.MESSAGE));
+            request.getSession().removeAttribute(requestService.MESSAGE);
         }
 
-        deleteUser(request, principal);
+//        deleteUser(request, principal);
 
-        userList = this.userSortService.getUser(request, (page - 1) * NumberViewSort.NUMBER_VIEW,NumberViewSort.getNumberView());
-        this.requestService.setResponse(modelMap,userList, this.userService.findAll(User.class, "user").size(),page);
+        userList = this.userSortService.getUser(request, (page - 1) * NumberViewSort.NUMBER_VIEW, NumberViewSort.getNumberView());
+        this.requestService.setResponse(modelMap, userList, this.userService.findAll(User.class, "user").size(), page);
         return "manager-user";
     }
 
-    private void deleteUser(HttpServletRequest request, Principal principal) {
-        String action = request.getParameter("action");
-        String id = request.getParameter("id");
-
-        if (action != null && action.equals("delete")) {
-            if (id != null && StringUtils.isNumeric(id)) {
-                User user = this.userService.find(Integer.valueOf(id));
-                if (user != null && !user.getUserName().equalsIgnoreCase(principal.getName())) {
-                    this.userService.delete(user.getId());
-                }
-            }
+    @RequestMapping(value = "/delete-user")
+    public String deleteUser(HttpServletRequest request,ModelMap modelMap,@RequestParam(value = "id",required = false)String id,
+                             @RequestParam(value = "page", required = false) String pageRequest) throws AccessDenieException, NotFindException {
+        String userName= (String) request.getSession().getAttribute("username");
+        if(!userService.isRoleAdmin(this.userService.getUserByName(userName))){
+            throw new AccessDenieException(AccessDenieException.ACESS_NOT_ROLE_PAGE);
         }
+        if(!StringUtils.isNumeric(id) || this.userService.find(Integer.valueOf(id)) == null) {
+           throw new NotFindException(NotFindException.USER_NOT_FOUND);
+        }
+
+        this.userService.delete(Integer.valueOf(id));
+
+        int page = NumberUtils.toInt(pageRequest,1);
+        List<User> userList = this.userSortService.getUser(request, (page - 1) * NumberViewSort.NUMBER_VIEW, NumberViewSort.getNumberView());
+        this.requestService.setResponse(modelMap, userList, this.userService.findAll(User.class, "user").size(), page);
+
+        modelMap.addAttribute(requestService.MESSAGE,"delete.success");
+
+        return "manager-user";
     }
 
 
@@ -135,7 +142,7 @@ public class ManagerUser {
 
         userForm.getUser().setPassWord(passwordEncoder.encode(userForm.getUser().getPassWord()));
         this.userService.save(userForm.getUser());
-        request.getSession().setAttribute("errorInsertUser", "request.insert_success");
+        request.getSession().setAttribute(requestService.MESSAGE, requestService.INSERT_SUCCESS);
         return "redirect:manager-user";
     }
 
@@ -163,7 +170,7 @@ public class ManagerUser {
     }
 
     @RequestMapping(value = "/action-update-user", method = RequestMethod.GET)
-    public String actionUpdateUser(HttpServletRequest request) {
+    public String actionUpdateUser() {
         return "redirect:manager-user";
     }
 
@@ -200,7 +207,7 @@ public class ManagerUser {
         userCurrent.setRoleList(userForm.getUser().getRoleList());
 
         this.userService.save(userCurrent);
-        request.getSession().setAttribute("errorInsertUser", "request.update_success");
+        request.getSession().setAttribute(requestService.MESSAGE, "request.update_success");
         return  "redirect:manager-user";
     }
 

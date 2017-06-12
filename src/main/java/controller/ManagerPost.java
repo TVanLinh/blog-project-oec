@@ -15,7 +15,6 @@ import service.PostSortService;
 import service.RequestService;
 import service.UserService;
 import utils.number.NumberViewSort;
-import utils.page.DefaultPages;
 import utils.sort.PortSort;
 import utils.sort.SortType;
 import utils.string.StringSessionUtil;
@@ -30,16 +29,11 @@ import java.util.List;
 public class ManagerPost {
 
     @Autowired
-    private     DefaultPages defaultPage;
-
-    @Autowired
     private     PortSort portSort;
 
     @Autowired
     private     PostService postService;
 
-    @Autowired
-    private     AdminController adminController;
 
     @Autowired
     private     PostSortService postSortService;
@@ -57,7 +51,6 @@ public class ManagerPost {
 
         int page = NumberUtils.toInt(pageRequest,1);
 
-        this.adminController.deletePost(request);
         postList = this.postSortService.getAllPost(request,(page-1)* NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
 
         this.requestService.setResponse(modelMap,postList,this.postService.findAll(Post.class,"post").size(),page);
@@ -75,6 +68,7 @@ public class ManagerPost {
         this.postService.delete(Integer.valueOf(id));
         List<Post> postList = this.postSortService.getAllPost(request,(page-1)* NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
         this.requestService.setResponse(modelMap,postList,this.postService.findAll(Post.class,"post").size(),page);
+        modelMap.addAttribute("error",RequestService.DELETE_SUCCESS);
         return "manager-post";
     }
 

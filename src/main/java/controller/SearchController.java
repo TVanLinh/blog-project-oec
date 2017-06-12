@@ -73,7 +73,7 @@ public class SearchController {
         user = this.userService.getUserByName(username);
         if(user == null)
         {
-            throw new NotFindException("Not find user name "+username);
+            throw new NotFindException(NotFindException.USER_NOT_FOUND);
         }
 
         SortType sortType=new SortType();

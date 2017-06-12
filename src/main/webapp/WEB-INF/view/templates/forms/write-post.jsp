@@ -18,8 +18,18 @@
         </textarea>
    </div>
     <select name="status" class="form-control" id="status" >
-        <option value="1" >${messageSource.getMessage("public",null,locale)}</option>
-        <option value="0">${messageSource.getMessage("private",null,locale)}</option>
+        <c:if test="${param.status == 1 }">
+            <option value="1" selected>${messageSource.getMessage("public",null,locale)}</option>
+            <option value="0" >${messageSource.getMessage("private",null,locale)}</option>
+        </c:if>
+        <c:if test="${param.status == 0 }">
+            <option value="1" >${messageSource.getMessage("public",null,locale)}</option>
+            <option value="0" selected>${messageSource.getMessage("private",null,locale)}</option>
+        </c:if>
+        <c:if test="${param.status !=1 && param.status != 0 }">
+            <option value="1" >${messageSource.getMessage("public",null,locale)}</option>
+            <option value="0" >${messageSource.getMessage("private",null,locale)}</option>
+        </c:if>
     </select>
     <input class="hide" name="link-image" id="link-image" type="text" >
     <input class="hide" name="alt-image" id="alt-image" type="text" >

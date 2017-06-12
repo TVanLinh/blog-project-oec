@@ -17,6 +17,7 @@ public class UserFormValidator extends AbstractVadidator {
     public  static  final  String  VALIDATION_FIELD_PASS_NOT_RIGHT = "validation.field.password_not_right";
     public  static  final  String  VALIDATION_PASS_NOT_OVERLAP= "validation.field.overlap_password";
     public  static  final  String  VALIDATION_PASS_BLANK= "validation.field.password_not_blank";
+    public  static  final  String  VALIDATION_PASS_OR_USER= "validation.field.not.right.pass.user";
 
     @Autowired
     protected UserService userService;

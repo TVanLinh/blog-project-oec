@@ -2,7 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="templates/headers/head.jsp"/>
-
+<style>
+    .menu-item:nth-child(2)
+    {
+        color: #ffff5d;
+    }
+</style>
 <!-- Navigation -->
 <jsp:include page="templates/navbars/navbar.jsp"/>
 <%--<%@page session="true"%>--%>
@@ -26,12 +31,19 @@
                     <jsp:param name="action" value="/manager-post-search"/>
                 </jsp:include>
             </div>
+
+            <p class="error">
+                <c:if test="${requestScope.error != null}">
+                    ${messageSource.getMessage(requestScope.error,null,locale)}
+                </c:if>
+            </p>
+            <jsp:include page="templates/tables/table_post_all.jsp"/>
         </div>
         <div class="clearfix"></div>
 
-        <div class="col-xs-12">
-            <jsp:include page="templates/tables/table_post_all.jsp"/>
-        </div>
+        <%--<div class="col-xs-12">--%>
+            <%--<jsp:include page="templates/tables/table_post_all.jsp"/>--%>
+        <%--</div>--%>
 
 
 

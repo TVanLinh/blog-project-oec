@@ -46,8 +46,8 @@
                 <td>
                     <%--<a href="javascript:void(0)" onclick="A.getPostImprove('<s:urlmanager-get-all-post-delete?id='+${post.id},null)"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>--%>
                     <%--<a href="/update?action=update&id=${post.id}"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a> --%>
-                    <a href="<s:url value="/manager-post-delete?page=${requestScope.page}&id=${post.id}"/>" title="${messageSource.getMessage("delete",null,locale)}" onclick="return window.confirm('Are you sure you want to delete this post?')"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>
-                    <a href="<s:url value="/update?action=update&id=${post.id}"/>" title="${messageSource.getMessage("edit",null,locale)}"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a>
+                    <a href="<s:url value="/manager-post-delete?page=${requestScope.page}&id=${post.id}"/>" title="${messageSource.getMessage("delete",null,locale)}" onclick="return window.confirm('${messageSource.getMessage("confirm.delete.post",null,locale)}')"> <i class="fa fa-trash-o"></i></a>
+                        <a href="<s:url value="/update?action=update&id=${post.id}"/>" title="${messageSource.getMessage("edit",null,locale)}"><i class="fa fa-pencil-square-o mgl-15"></i></a>
                 </td>
             </tr>
         </c:forEach>

@@ -10,11 +10,14 @@
 <jsp:include page="templates/navbars/navbar.jsp"/>
 <%--<%@page session="true"%>--%>
 <!-- Page Content -->
-<div class="container">
+<div class="container-fluid">
     <!-- Blog Entries Column -->
     <div class="row">
+        <div class="col-md-3 col-xs-12">
+            <jsp:include page="templates/menus/menu-admin.jsp"/>
+        </div>
         <s:url value="/action-insert-user" var="action"/>
-        <div class="col-xs-12">
+        <div class=" col-md-8 col-xs-12">
             <form:form method="post" action="${action}" modelAttribute="userForm" onsubmit="return checkFormInsertUser()">
                 <div class="form-group">
                     <label for="userName">${messageSource.getMessage("name",null,locale)}:</label>
@@ -47,6 +50,7 @@
                 </p>
             </form:form>
         </div>
+        <div class="clearfix"></div>
         <!-- Blog Sidebar Widgets Column -->
         <div>
             <%--<jsp:include page="templates/slidebar.jsp"/>--%>
@@ -57,7 +61,7 @@
 
 
 </div>
-<%--<script src="<s:url value="/public/asserts/js/main.js"/>"></script>--%>
-<%--<script src="<s:url value="public/asserts/js/check_valid_form.js"/>"></script>--%>
-<%--<jsp:include page="templates/footers/footer.jsp"/>--%>
+<script src="<s:url value="/public/asserts/js/main.js"/>"></script>
+<script src="<s:url value="public/asserts/js/check_valid_form.js"/>"></script>
+<jsp:include page="templates/footers/footer.jsp"/>
 

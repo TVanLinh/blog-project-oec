@@ -46,6 +46,6 @@
 
 </div>
 <script src="<s:url value="/public/asserts/js/main.js"/>"></script>
-<%--<script src="<s:url value="public/asserts/js/check_valid_form.js"/>"></script>--%>
+<script src="<s:url value="public/asserts/js/check_valid_form.js"/>"></script>
 <jsp:include page="templates/footers/footer.jsp"/>
 

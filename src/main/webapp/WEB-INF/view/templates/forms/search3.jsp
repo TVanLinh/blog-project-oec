@@ -19,7 +19,7 @@
     <jsp:useBean id="numberView" class="utils.number.NumberViewSort"/>
     <c:if test="${requestScope.postList.size()>0}">
 
-        <H3>
+        <H3 class="pdt-10 pdb-10">
             <span class="pd-10">${messageSource.getMessage("recordFrom",null,locale)}</span>
             <span>${(requestScope.page-1)*numberView.getNumberView()+1} </span>
             <span class="pd-10">${messageSource.getMessage("to",null,locale)}</span>
@@ -27,22 +27,22 @@
             <span class="pd-10">
                     ${messageSource.getMessage("in",null,locale)}
             </span>
-            <span>${requestScope.totalPost}<span>${requestScope.totalList}</span>
+            <span>${requestScope.totalList}</span>
         </H3>
     </c:if>
 
-    <c:if test="${requestScope.userList.size()>0}">
-        <H3>
-            <span class="pd-10">${messageSource.getMessage("recordFrom",null,locale)}</span>
-            <span>${(requestScope.page-1)*numberView.getNumberView()+1} </span>
-            <span class="pd-10">${messageSource.getMessage("to",null,locale)}</span>
-            <span>${(requestScope.page-1)*numberView.getNumberView()+requestScope.userList.size()}</span>
-            <span class="pd-10">
-                    ${messageSource.getMessage("in",null,locale)}
-            </span>
-            <span>${requestScope.totalPost}<span>${requestScope.totalList}</span>
-        </H3>
-    </c:if>
+    <%--<c:if test="${requestScope.userList.size()>0}">--%>
+        <%--<H3>--%>
+            <%--<span class="pd-10">${messageSource.getMessage("recordFrom",null,locale)}</span>--%>
+            <%--<span>${(requestScope.page-1)*numberView.getNumberView()+1} </span>--%>
+            <%--<span class="pd-10">${messageSource.getMessage("to",null,locale)}</span>--%>
+            <%--<span>${(requestScope.page-1)*numberView.getNumberView()+requestScope.userList.size()}</span>--%>
+            <%--<span class="pd-10">--%>
+                    <%--${messageSource.getMessage("in",null,locale)}--%>
+            <%--</span>--%>
+            <%--<span>${requestScope.totalPost}<span>${requestScope.totalList}</span>--%>
+        <%--</H3>--%>
+    <%--</c:if>--%>
 </div>
 
 

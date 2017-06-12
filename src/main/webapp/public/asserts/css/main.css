@@ -1,5 +1,4 @@
-body
-{
+body {
     line-height: 30px;
     /*font-size: 20px;*/
 }
@@ -27,48 +26,41 @@ img
     /*max-width: 150px;*/
 /*}*/
 
-.error
-{
+.error {
     color: #9c1f2f;
     font-size: 16px;
     font-style: italic;
 }
-.menu-admin li a
-{
+.menu-admin li a {
     color: #fff;
 }
-#titleBlog,#numberPost,#passWord,#userName,input[type='text']
-{
+#titleBlog,#numberPost,#passWord,#userName,input[type='text'] {
     padding:0px;
     padding-left: 10px;
 }
-#formatTime select
-{
+#formatTime select {
     padding: 0;
     padding-left: 10px;
 }
-#formatTime option:focus
-{
+#formatTime option:focus {
     outline: none;
 }
-.title
-{
+.title{
     padding: 12px 30px !important;
 }
-#username,#password
-{
+#username,#password {
    padding: 15px 10px !important;
 }
-#top
-{
+#top {
     position: fixed;
     right: 10px;
     bottom: 10px;
     display: none;
     cursor: pointer;
 }
-#cke_1_contents
-{
+#cke_1_contents {
+    /*height: 100vh !important;*/
+    /*overflow: scroll;*/
     min-height: 600px;
 }
 @media (min-width: 768px) {
@@ -82,17 +74,14 @@ img
 {
     color: #fff !important;
 }
-.chart1
-{
+.chart1 {
     min-height: 380px;
     max-height: 500px;
 }
-.capitalize
-{
+.capitalize {
     text-transform: capitalize;
 }
-.upper-case
-{
+.upper-case {
     text-transform: uppercase;
 }
 .lower-case
@@ -113,12 +102,10 @@ img
     overflow: hidden;
 }
 
-.navbar
-{
+.navbar {
     z-index: 9999;
 }
-.search-hide
-{
+.search-hide {
     transform:translateY(-400px);
     overflow: hidden;
 }
@@ -126,16 +113,14 @@ img
 .search-show{
     transform:translateY(0px);
 }
-#search-home .btn
-{
+#search-home .btn {
 
 }
 #search-home #search1
 {
     padding: 20px;
 }
-#search-home .btn
-{
+#search-home .btn {
     padding-top:10px;
     padding-bottom:10px;
 }
@@ -148,14 +133,12 @@ img
         margin-right: auto;
     }
 }
-#status
-{
+#status {
     width: auto;
 }
 
 /*-----------menue nav*/
-.menu-item
-{
+.menu-item {
     margin-left: 10px ;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -163,10 +146,20 @@ img
     width: 200px;
     height: 45px;
 }
+.menu-item:nth-child(1){
+    padding-left:45px !important;
+}
 /**/
-.search
-{
+.search {
     width: 80% ;
     margin-left: auto;
     margin-right: auto;
+}
+
+#cke_156_uiElement,#cke_161_textInput,#cke_Link_170,#cke_advanced_202,.cke_dialog_ui_hbox_last
+{
+    display: none;
+}
+li a#seachHomePage:focus{
+    color:#9d9d9d ;
 }

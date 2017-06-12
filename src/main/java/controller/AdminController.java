@@ -3,7 +3,6 @@ package controller;
 import entities.Post;
 import exceptions.AccessDenieException;
 import exceptions.NotFindException;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,6 @@ import service.PostSortService;
 import service.RequestService;
 import service.UserService;
 import utils.number.NumberViewSort;
-import utils.page.DefaultPages;
 import utils.sort.PortSort;
 import utils.sort.SortType;
 import utils.string.StringSessionUtil;
@@ -32,9 +30,6 @@ import java.util.List;
 @Controller
 public class AdminController
 {
-
-    @Autowired
-    private     DefaultPages defaultPage;
 
     @Autowired
     private     PortSort portSort;
@@ -76,6 +71,7 @@ public class AdminController
         this.postService.delete(Integer.valueOf(id));
         List<Post> postList  = this.postSortSerVice.getAllPostNotApprove(request, (page-1)*NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
         this.requestService.setResponse(modelMap,postList,this.postService.getCountNotApprove(),page,"admin",null);
+        modelMap.addAttribute("error",RequestService.DELETE_SUCCESS);
         return "admin";
     }
 
@@ -91,6 +87,7 @@ public class AdminController
         this.postService.approvePost(Integer.valueOf(id));
         List<Post> postList  = this.postSortSerVice.getAllPostNotApprove(request, (page-1)*NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
         this.requestService.setResponse(modelMap,postList,this.postService.getCountNotApprove(),page,"admin",null);
+        modelMap.addAttribute(requestService.MESSAGE,requestService.POST_APPROVE_SUCCESS);
         return "admin";
     }
 
@@ -108,17 +105,5 @@ public class AdminController
         return "admin";
     }
 
-    protected  void deletePost(HttpServletRequest request) {
-        String action = request.getParameter("action");
-        String id  = request.getParameter("id");
-
-        if(action != null &&action.equals("delete")) {
-            if(id != null && StringUtils.isNumeric(id)) {
-                if(this.postService.find(Integer.valueOf(id)) != null) {
-                    this.postService.delete(Integer.valueOf(id));
-                }
-            }
-        }
-    }
 
 }

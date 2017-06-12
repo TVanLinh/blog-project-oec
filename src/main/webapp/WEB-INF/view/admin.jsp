@@ -2,6 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page pageEncoding="UTF-8" %>
 <jsp:include page="templates/headers/head.jsp"/>
+<style>
+    .menu-item:nth-child(1)
+    {
+        color: #ffff5d;
+    }
+</style>
 <!-- Navigation -->
     <jsp:include page="templates/navbars/navbar.jsp"/>
 
@@ -16,7 +22,7 @@
                     <!---------------list table -------------------------->
 
                     <c:if test="${postList.size()==0}">
-                        <h1 class="text-center">${messageSource.getMessage("notpost",null,locale)}</h1>
+                        <h1 class="text-center">${messageSource.getMessage("notpost.approve",null,locale)}</h1>
                     </c:if>
                     <c:if test="${postList.size()!=0}">
                         <h1 class="text-center">${messageSource.getMessage("table.Aprrove",null,locale)}</h1>
@@ -28,10 +34,14 @@
                             <jsp:param name="action" value="/admin-search-post-approve"/>
                         </jsp:include>
                     </div>
+                    <c:if  test="${requestScope.error != null}">
+                        <span class="error">${messageSource.getMessage(requestScope.error,null,locale)}</span>
+                    </c:if>
+                    <jsp:include page="templates/tables/table_approve.jsp"/>
                 </div>
-            <div class="col-xs-12">
-                <jsp:include page="templates/tables/table_approve.jsp"/>
-            </div>
+            <%--<div class="col-xs-12">--%>
+                <%--<jsp:include page="templates/tables/table_approve.jsp"/>--%>
+            <%--</div>--%>
         </div>
     <!-- /.row -->
      <hr>
