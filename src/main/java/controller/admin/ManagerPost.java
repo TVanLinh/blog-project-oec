@@ -76,8 +76,7 @@ public class ManagerPost {
         int page = NumberUtils.toInt(pageRequest,1);
 
         SortType sortType = this.portSort.getCurrentSortType(request,StringSessionUtil.CURRENT_ALL_POST);
-        List<Post> postList;
-        postList = this.postService.getAllByTitle(sortType,querySearch,(page-1)*NumberViewSort.getNumberView());
+        List<Post> postList = this.postService.getAllByTitle(sortType,querySearch,(page-1)*NumberViewSort.getNumberView());
         RequestService.setResponse(modelMap,NumberViewSort.getNumberView(),postList,this.postService.getCountAllByTitle(querySearch));
         return "manager-post";
     }

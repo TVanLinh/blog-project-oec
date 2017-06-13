@@ -202,8 +202,6 @@ public class ManagerUser {
         return  "redirect:manager-user";
     }
     //-----------------------end update
-
-
     @RequestMapping(value = "/manager-user-search", method = RequestMethod.GET)
     public String searchUser(HttpServletRequest request, ModelMap modelMap,
                              @RequestParam(value = "page", required = false) String pageReques,

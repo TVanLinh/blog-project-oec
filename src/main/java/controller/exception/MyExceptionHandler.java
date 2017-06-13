@@ -2,7 +2,6 @@ package controller.exception;
 
 import exceptions.AccessDenieException;
 import exceptions.NotFindException;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class MyExceptionHandler {
 
     @ExceptionHandler(NotFindException.class)
-    public ModelAndView handlerNotFindException(NotFindException ex, Model model) {
+    public ModelAndView handlerNotFindException(NotFindException ex) {
         System.out.println(ex.getMessage());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ProcessExceptions");

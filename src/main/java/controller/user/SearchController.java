@@ -48,7 +48,6 @@ public class SearchController {
     public  String  getPostByUser( ModelMap modelMap,
                                   @RequestParam(value = "username",required = false) String username,
                                   @RequestParam(value = "page",required = false) String pageRequest ) throws NotFindException {
-        List<Post> posts;
         User user;
         int limit = this.configurationService.getAllConfiguration().get(0).getNumberViewPost();
 
@@ -61,11 +60,10 @@ public class SearchController {
             throw new NotFindException(NotFindException.USER_NOT_FOUND);
         }
 
-        SortType sortType=new SortType();
-        sortType.orderBy="time_post";
-        posts=this.postService.getPost(user.getId(),1,1,sortType,(page-1)*limit,limit);
+        SortType sortType = new SortType();
+        sortType.orderBy = "time_post";
+        List<Post>  posts=this.postService.getPost(user.getId(),1,1,sortType,(page-1)*limit,limit);
         RequestService.setResponse(modelMap,limit,posts,this.postService.getPostByIdUser(user.getId()).size());
-//        modelMap.addAttribute("userName",username);
         return  "post-by-user";
     }
 }

@@ -2,6 +2,7 @@ package service;
 
 import entities.AbstractEntity;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,10 @@ public abstract class AbstractService<E extends AbstractEntity> {
     SessionFactory sessionFactory;
 
     public   E  find(Class<E> type ,String tableName,int id) {
-        return  sessionFactory.getCurrentSession().createNativeQuery("select * from "+tableName +" where id = "+id,type).getSingleResult();
+        Query<E> query = sessionFactory.getCurrentSession().createNativeQuery("select * from :tableName  where id = :id",type);
+        query.setParameter("id",id);
+        query.setParameter("tableName",tableName);
+        return query.getSingleResult();
     }
 
 

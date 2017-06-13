@@ -61,7 +61,7 @@ public class ConfigurationController {
         Configuration configuration = this.configurationService.getAllConfiguration().get(0);
 
         if (configuration == null){
-            throw  new NotFindException("Have not config");
+            throw  new NotFindException();
         }
 
         configuration.setNumberViewPost(conf.getNumberViewPost());

@@ -58,20 +58,20 @@ public class PostDAOIML implements PostDAO {
 
     public List<Post> getPost(int offset, int limit) {
         Session session = sessionFactory.getCurrentSession();
-        String str = "select * from post where approve=1 and status=1  order by time_post desc  limit "+offset+","+limit;
+        String str = "select * from post where approve=1 and status=1  order by time_post desc  limit :offset,:limit";
         Query<Post> query = session.createNativeQuery(str,Post.class);
-//        query.setParameter("offset",offset);
-//        query.setParameter("limit",limit);
+        query.setParameter("offset",offset);
+        query.setParameter("limit",limit);
         return  query.getResultList();
     }
 
     public List<Post> getPostByIdUser(int idUser, int offset, int limit) {
         Session session = sessionFactory.getCurrentSession();
-        String str = "select * from post where id_user = :idUser order by time_post desc limit "+offset+","+limit;
+        String str = "select * from post where id_user = :idUser order by time_post desc limit :offset,:limit";
         Query<Post> query = session.createNativeQuery(str,Post.class);
         query.setParameter("idUser",idUser);
-//        query.setParameter("offset",offset);
-//        query.setParameter("limit",limit);
+        query.setParameter("offset",offset);
+        query.setParameter("limit",limit);
         return  session.createNativeQuery(str, Post.class).getResultList();
     }
 

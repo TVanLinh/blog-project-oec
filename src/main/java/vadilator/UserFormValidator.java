@@ -53,24 +53,4 @@ public class UserFormValidator extends AbstractVadidator {
         return clazz.equals(UserForm.class);
     }
 
-
-    public  static  boolean checkOverlapPassWord(String pass1,String pass2) {
-        if(!pass1.equals(pass2)) {
-            return false;
-        }
-        return true;
-    }
-
-    public static  boolean checkPassWordBlank(String pass1,String pass2)
-    {
-        if (pass1 == null || pass2 == null) {
-            return false;
-        }
-
-        if (org.apache.commons.lang3.StringUtils.isBlank(pass1) && org.apache.commons.lang3.StringUtils.isBlank(pass2)) {
-            return false;
-        }
-        return true;
-    }
-
 }

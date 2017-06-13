@@ -3,7 +3,6 @@ package utils.sort;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -12,16 +11,6 @@ import java.util.Set;
 
 @Component
 public class PortSort  extends  Sort{
-
-    public   SortType getSortType(String name, List<SortType> list) {
-        for (SortType sort : list) {
-            if (sort.orderBy.trim().equals(name)) {
-                return sort;
-            }
-        }
-        return null;
-    }
-
     public   boolean checkOrderBy(String orderBy) {
         Set<String> set  = new HashSet<String>();
         set.add("title");
@@ -37,8 +26,5 @@ public class PortSort  extends  Sort{
         }
         return  false;
     }
-
-
-
 }
 

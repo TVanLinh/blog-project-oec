@@ -3,6 +3,7 @@ package dao;
 import entities.Image;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,21 +26,19 @@ public class ImageDAOIML implements ImageDAO {
         Session session = sessionFactory.getCurrentSession();
         Image image  = session.find(Image.class,idAuthor);
         session.remove(image);
-        System.out.println(" delete image success");
     }
 
     @Transactional
     public void deleteByIdPost(int id) {
         Session session = sessionFactory.getCurrentSession();
-        session.createNativeQuery("DELETE  from  postimage where id_post = "+id).executeUpdate();
-        System.out.println("delete image  deleteByIdPosts");
+        Query<Image> query = session.createNativeQuery("DELETE  from  postimage where id_post =:id",Image.class);
+        query.setParameter("id",id).executeUpdate();
     }
 
     @Transactional
     public void update(Image image) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(image);
-        System.out.println(" update image success");
     }
 
     public Image find(int id) {

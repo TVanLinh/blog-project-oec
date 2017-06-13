@@ -50,11 +50,10 @@ public class redirect {
         }
 
         int  page = NumberUtils.toInt(pageRequest,1);
-        List<Post> postList;
 
         int limit = this.configurationService.getAllConfiguration().get(0).getNumberViewPost();
         modelMap.addAttribute("userDAO",this.userService);
-        postList = this.postService.getPublic((page-1)*limit,limit);
+        List<Post> postList = this.postService.getPublic((page-1)*limit,limit);
         RequestService.setResponse(modelMap,limit,postList,this.postService.getCountPublic());
         return "home";
     }
