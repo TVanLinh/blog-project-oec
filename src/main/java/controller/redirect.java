@@ -89,4 +89,9 @@ public class redirect {
         return "404";
     }
 
+    @RequestMapping(value = "/test")
+    public void test() {
+
+    }
+
 }

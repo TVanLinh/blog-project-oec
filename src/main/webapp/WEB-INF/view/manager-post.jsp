@@ -37,7 +37,15 @@
                     ${messageSource.getMessage(requestScope.error,null,locale)}
                 </c:if>
             </p>
+
+
+            <jsp:include page="templates/forms/select.jsp">
+                <jsp:param name="target" value="/manager-post"/>
+            </jsp:include>
+
+
             <jsp:include page="templates/tables/table_post_all.jsp"/>
+
         </div>
         <div class="clearfix"></div>
 

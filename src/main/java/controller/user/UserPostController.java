@@ -52,18 +52,20 @@ public class UserPostController {
     }
 
     @RequestMapping(value = "/user")
-    public  String userPage(Principal principal,HttpServletRequest request,
-                             ModelMap modelMap,
-                             @RequestParam(value = "page",required = false) String pageRequest) {
+    public  String userPage(Principal principal, HttpServletRequest request,
+                            ModelMap modelMap,
+                            @RequestParam(value = "page", required = false) String pageRequest,
+                            @RequestParam(value = "number", required = false) String numberView) {
         setDefaultUser(principal, request);
+        int limit = this.postService.getLimit(numberView);
         modelMap.addAttribute("userDAO", this.userService);
         List<Post> postList;
         User user = userService.getUserByName(principal.getName());
         int page = NumberUtils.toInt(pageRequest,1);
 
         SortType sortType = this.portSort.getSortType(request,StringSessionUtil.CURRENT_POST_ALL_TYPE_SORT_BY_USER,"title");
-        postList = postSortSerVice.getAllPostByUser(sortType,user,(page-1)* NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
-        RequestService.setResponse(modelMap,NumberViewSort.getNumberView(),postList,this.postService.getPostByIdUser(user.getId()).size());
+        postList = postSortSerVice.getAllPostByUser(sortType, user, (page - 1) * limit, limit);
+        RequestService.setResponse(modelMap, limit, postList, this.postService.getPostByIdUser(user.getId()).size());
         return "author";
     }
 

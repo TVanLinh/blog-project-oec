@@ -13,7 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.PostService;
 import service.PostSortService;
 import service.RequestService;
-import utils.number.NumberViewSort;
 import utils.sort.PortSort;
 import utils.sort.SortType;
 import utils.string.StringSessionUtil;
@@ -40,13 +39,14 @@ public class ManagerPost {
 
     @RequestMapping("/manager-post")
     public  String managerPost(HttpServletRequest request, ModelMap modelMap,
-                               @RequestParam(value = "page",required = false) String pageRequest) {
+                               @RequestParam(value = "page", required = false) String pageRequest,
+                               @RequestParam(value = "number", required = false) String numberView) {
 
         int page = NumberUtils.toInt(pageRequest,1);
+        int limit = this.postService.getLimit(numberView);
+        List<Post> postList = this.postSortService.getAllPost(request, (page - 1) * limit, limit);
 
-        List<Post> postList = this.postSortService.getAllPost(request,(page-1)* NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
-
-        RequestService.setResponse(modelMap,NumberViewSort.getNumberView(),postList,this.postService.findAll(Post.class,"post").size());
+        RequestService.setResponse(modelMap, limit, postList, this.postService.findAll(Post.class, "post").size());
         return "manager-post";
     }
 
@@ -69,15 +69,16 @@ public class ManagerPost {
 
 
     @RequestMapping(value = "/manager-post-search",method = RequestMethod.GET)
-    public  String searchTableAllPost(HttpServletRequest request,ModelMap modelMap,
+    public  String searchTableAllPost(HttpServletRequest request, ModelMap modelMap,
                                       @RequestParam(value = "page",required = false)String pageRequest,
-                                      @RequestParam(value ="query_search",required = false) String querySearch) {
+                                      @RequestParam(value = "query_search", required = false) String querySearch,
+                                      @RequestParam(value = "number", required = false) String numberView) {
 
         int page = NumberUtils.toInt(pageRequest,1);
-
+        int limit = this.postService.getLimit(numberView);
         SortType sortType = this.portSort.getCurrentSortType(request,StringSessionUtil.CURRENT_ALL_POST);
-        List<Post> postList = this.postService.getAllByTitle(sortType,querySearch,(page-1)*NumberViewSort.getNumberView());
-        RequestService.setResponse(modelMap,NumberViewSort.getNumberView(),postList,this.postService.getCountAllByTitle(querySearch));
+        List<Post> postList = this.postService.getAllByTitle(sortType, querySearch, (page - 1) * limit);
+        RequestService.setResponse(modelMap, limit, postList, this.postService.getCountAllByTitle(querySearch));
         return "manager-post";
     }
 

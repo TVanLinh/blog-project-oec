@@ -15,7 +15,6 @@
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-xs-12">
-            ${postList.size()}
             <h3>
                 ${messageSource.getMessage("postOf",null,locale)} <span class="color-main2">${param.username}</span>
             </h3>

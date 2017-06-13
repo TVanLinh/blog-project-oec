@@ -163,3 +163,7 @@ img
 li a#seachHomePage:focus{
     color:#9d9d9d ;
 }
+
+#numberView {
+    width: 20%;
+}

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class NumberViewSort {
-    public  static  final int NUMBER_VIEW=3;
+    public static int NUMBER_VIEW = 10;
 
     public static int getNumberView() {
         return NUMBER_VIEW;

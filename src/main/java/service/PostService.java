@@ -5,6 +5,7 @@ import entities.Post;
 import exceptions.AccessDenieException;
 import exceptions.NotFindException;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -202,6 +203,8 @@ public class PostService extends AbstractService<Post> {
         return this.getPost(idUser, status, approve, new SortType()).size();
     }
 
-
+    public int getLimit(String numberView) {
+        return NumberUtils.toInt(numberView, NumberViewSort.NUMBER_VIEW);
+    }
 }
 

@@ -17,11 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import service.RequestService;
-import service.RoleService;
-import service.UserService;
-import service.UserSortService;
-import utils.number.NumberViewSort;
+import service.*;
 import utils.page.DefaultPages;
 import utils.sort.Sort;
 import utils.sort.SortType;
@@ -75,14 +71,19 @@ public class ManagerUser {
         return new UserForm();
     }
 
+    @Autowired
+    private PostService postService;
+
     @RequestMapping("/manager-user")
     public String managerUser(HttpServletRequest request,
                               ModelMap modelMap,
-                              @RequestParam(value = "page", required = false) String pageRequest) {
+                              @RequestParam(value = "page", required = false) String pageRequest,
+                              @RequestParam(value = "number", required = false) String numberView) {
         int page = NumberUtils.toInt(pageRequest, 1);
+        int limit = this.postService.getLimit(numberView);
         SortType sortType = this.userSort.getSortType(request, StringSessionUtil.CURRENT_USER_SORT,"user_name");
-        List<User> userList = this.userSortService.getUser(sortType, (page - 1) * NumberViewSort.NUMBER_VIEW, NumberViewSort.getNumberView());
-        RequestService.setResponse(modelMap,NumberViewSort.getNumberView(),userList, this.userService.findAll(User.class, "user").size());
+        List<User> userList = this.userSortService.getUser(sortType, (page - 1) * limit, limit);
+        RequestService.setResponse(modelMap, limit, userList, this.userService.findAll(User.class, "user").size());
         return "manager-user";
     }
 
@@ -205,11 +206,13 @@ public class ManagerUser {
     @RequestMapping(value = "/manager-user-search", method = RequestMethod.GET)
     public String searchUser(HttpServletRequest request, ModelMap modelMap,
                              @RequestParam(value = "page", required = false) String pageReques,
-                             @RequestParam(value = "query_search", required = false) String querySearch) {
+                             @RequestParam(value = "query_search", required = false) String querySearch,
+                             @RequestParam(value = "number", required = false) String numberView) {
         int page = NumberUtils.toInt(pageReques, 1);
+        int limit = this.postService.getLimit(numberView);
         SortType sortType = this.sort.getCurrentSortType(request, StringSessionUtil.CURRENT_USER_SORT);
-        List<User> userList = this.userService.getUserBeginByUserName(querySearch, sortType, (page - 1) * NumberViewSort.getNumberView());
-        RequestService.setResponse(modelMap,NumberViewSort.getNumberView(), userList, this.userService.getCountBeginUserName(querySearch));
+        List<User> userList = this.userService.getUserBeginByUserName(querySearch, sortType, (page - 1) * limit);
+        RequestService.setResponse(modelMap, limit, userList, this.userService.getCountBeginUserName(querySearch));
         return "manager-user";
     }
 

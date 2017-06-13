@@ -40,6 +40,13 @@
                     <span class="error">${messageSource.getMessage(requestScope.error,null,locale)}</span>
                 </c:if>
             </div>
+
+
+            <jsp:include page="templates/forms/select.jsp">
+                <jsp:param name="target" value="/manager-user"/>
+            </jsp:include>
+
+
             <jsp:include page="templates/tables/table_user.jsp"/>
          </div>
     <%--<div class="col-xs-12">--%>

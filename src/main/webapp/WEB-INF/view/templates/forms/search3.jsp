@@ -29,9 +29,9 @@
 
         <H3 class="pdt-10 pdb-10">
             <span class="pd-10">${messageSource.getMessage("recordFrom",null,locale)}</span>
-            <span>${(paramPage-1)*numberView.getNumberView()+1} </span>
+            <span>${(paramPage-1)*requestScope.limit+1} </span>
             <span class="pd-10">${messageSource.getMessage("to",null,locale)}</span>
-            <span>${(paramPage-1)*numberView.getNumberView()+requestScope.postList.size()}</span>
+            <span>${(paramPage-1)*requestScope.limit+requestScope.postList.size()}</span>
             <span class="pd-10">
                     ${messageSource.getMessage("in",null,locale)}
             </span>

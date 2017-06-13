@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.PostService;
 import service.PostSortService;
 import service.RequestService;
-import utils.number.NumberViewSort;
 import utils.sort.PortSort;
 import utils.sort.SortType;
 import utils.string.StringSessionUtil;
@@ -41,12 +40,14 @@ public class AdminController
 
     @RequestMapping(value = "/admin**", method = RequestMethod.GET)
     public String adminPage(HttpServletRequest request, ModelMap modelMap,
-                                  @RequestParam(value = "page",required = false) String pageRequest) {
+                            @RequestParam(value = "page", required = false) String pageRequest,
+                            @RequestParam(value = "number", required = false) String numberView) {
         List<Post> postList;
+        int limit = this.postService.getLimit(numberView);
         int  page= NumberUtils.toInt(pageRequest,1);
         SortType sortType = this.portSort.getSortType(request,StringSessionUtil.CURRENT_APPROVE_POST,"title");
-        postList  = this.postSortSerVice.getAllPostNotApprove(sortType, (page-1)*NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
-        RequestService.setResponse(modelMap,NumberViewSort.getNumberView(),postList,this.postService.getCountNotApprove());
+        postList = this.postSortSerVice.getAllPostNotApprove(sortType, (page - 1) * limit, limit);
+        RequestService.setResponse(modelMap, limit, postList, this.postService.getCountNotApprove());
         return "admin";
     }
 
@@ -83,12 +84,14 @@ public class AdminController
 
     @RequestMapping(value = "/admin-search-post-approve",method = RequestMethod.GET)
     public  String searchTableApprovePost(HttpServletRequest request, ModelMap modelMap, @RequestParam(value = "page",required = false) String pageRequest,
-                                          @RequestParam(value = "query_search",required = false)String querySearch) {
+                                          @RequestParam(value = "query_search", required = false) String querySearch,
+                                          @RequestParam(value = "number", required = false) String numberView) {
         SortType sortType=this.portSort.getCurrentSortType(request,StringSessionUtil.CURRENT_APPROVE_POST);
         List<Post> postList;
+        int limit = this.postService.getLimit(numberView);
         int page = NumberUtils.toInt(pageRequest,1);
-        postList=this.postService.getContainsTitle(sortType,querySearch,0,(page-1)*NumberViewSort.getNumberView());
-        RequestService.setResponse(modelMap,NumberViewSort.getNumberView(),postList,this.postService.getCountContainsTitle(querySearch,0));
+        postList = this.postService.getContainsTitle(sortType, querySearch, 0, (page - 1) * limit);
+        RequestService.setResponse(modelMap, limit, postList, this.postService.getCountContainsTitle(querySearch, 0));
         return "admin";
     }
 
