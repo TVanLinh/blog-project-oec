@@ -18,7 +18,7 @@ import java.util.List;
 public class UserDAOIML implements  UserDAO ,Serializable{
 
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
 
     public void delete(int idAuthor) {

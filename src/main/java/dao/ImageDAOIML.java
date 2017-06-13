@@ -19,7 +19,7 @@ import java.util.List;
 public class ImageDAOIML implements ImageDAO {
 
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     @Transactional
     public void delete(int idAuthor) {

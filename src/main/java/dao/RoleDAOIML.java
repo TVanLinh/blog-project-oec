@@ -17,7 +17,7 @@ import java.util.List;
 public class RoleDAOIML implements RoleDAO {
 
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
 
     public void delete(int idRole) {

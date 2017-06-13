@@ -17,7 +17,7 @@ import java.util.List;
 @Transactional
 public class ConfigurationDAOIML  implements ConfigurationDAO{
     @Autowired
-    SessionFactory sessionFactory;
+   private SessionFactory sessionFactory;
 
     @Transactional
     public void delete(int idAuthor) {
