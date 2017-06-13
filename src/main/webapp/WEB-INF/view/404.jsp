@@ -1,37 +1,36 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@page language="java" pageEncoding="UTF-8" %>
+<%@ page isELIgnored="false" %>
+
 
 <jsp:include page="templates/headers/head.jsp"/>
 
+<jsp:include page="templates/navbars/navbar.jsp"/>
 <!-- Navigation -->
-<jsp:include page="templates/navbars/navbar.jsp">
-    <jsp:param name="active" value="write"/>
-</jsp:include>
-
 <!-- Page Content -->
 <div class="container">
 
-    <div class="row">
+    <div class="row" >
+        <div class="col-xs-12 col-sm-12 ">
 
-        <!-- Blog Post Content Column -->
-        <div class="col-xs-12">
-            <jsp:include page="templates/forms/write-post.jsp">
-                <jsp:param name="action" value="/write-post"/>
+            <!--content--->
+                ${messageSource.getMessage("page.not.found",null,locale)}
+            <!--end content---->
+            <div id="comment">
+                <%--<jsp:include page="templates/components/comment.jsp"/>--%>
+            </div>
 
-            </jsp:include>
         </div>
 
     </div>
-    <!-- /.row -->
-
-    <hr>
 
 </div>
 <!-- /.container -->
+
 <script src="<s:url value="/public/asserts/js/main.js"/>"></script>
 <script src="<s:url value="/public/asserts/js/search.js"/>"></script>
-<script type="text/javascript" src="<s:url value="public/asserts/js/check_valid_form.js" />">
-</script>
+<script src="<s:url value="/public/asserts/js/main.js"/>"></script>
 
 <jsp:include page="templates/footers/footer.jsp"/>

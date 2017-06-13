@@ -1,7 +1,6 @@
-package controller;
+package controller.admin;
 
 import entities.Post;
-import exceptions.AccessDenieException;
 import exceptions.NotFindException;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +9,17 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.PostService;
 import service.PostSortService;
 import service.RequestService;
-import service.UserService;
 import utils.number.NumberViewSort;
 import utils.sort.PortSort;
 import utils.sort.SortType;
 import utils.string.StringSessionUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -38,38 +38,32 @@ public class ManagerPost {
     @Autowired
     private     PostSortService postSortService;
 
-    @Autowired
-    private     RequestService requestService;
-
-    @Autowired
-    private UserService userService;
-
     @RequestMapping("/manager-post")
     public  String managerPost(HttpServletRequest request, ModelMap modelMap,
                                @RequestParam(value = "page",required = false) String pageRequest) {
-        List<Post> postList;
 
         int page = NumberUtils.toInt(pageRequest,1);
 
-        postList = this.postSortService.getAllPost(request,(page-1)* NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
+        List<Post> postList = this.postSortService.getAllPost(request,(page-1)* NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
 
-        this.requestService.setResponse(modelMap,postList,this.postService.findAll(Post.class,"post").size(),page);
+        RequestService.setResponse(modelMap,NumberViewSort.getNumberView(),postList,this.postService.findAll(Post.class,"post").size());
         return "manager-post";
     }
 
 
     @RequestMapping("/manager-post-delete")
-    public  String managerPostDelete(HttpServletRequest request,@RequestParam(value = "page",required = false) String pageRequest,ModelMap modelMap,
-                                     @RequestParam(value = "id",required = false)String id) throws NotFindException, AccessDenieException {
+    public  String managerPostDelete(HttpServletRequest request, @RequestParam(value = "page",required = false) String pageRequest,
+                                     @RequestParam(value = "id",required = false)String id,
+                                     RedirectAttributes redirectAttributes) throws NotFindException {
 
-        this.userService.checkRole(id, (String) request.getSession().getAttribute("username"));
-
-        int page = NumberUtils.toInt(pageRequest,1);
-        this.postService.delete(Integer.valueOf(id));
-        List<Post> postList = this.postSortService.getAllPost(request,(page-1)* NumberViewSort.getNumberView(),NumberViewSort.getNumberView());
-        this.requestService.setResponse(modelMap,postList,this.postService.findAll(Post.class,"post").size(),page);
-        modelMap.addAttribute("error",RequestService.DELETE_SUCCESS);
-        return "manager-post";
+        HttpSession session = request.getSession();
+        try {
+            this.postService.delete(id, (String) session.getAttribute("username"));
+            RequestService.setResponse(redirectAttributes,pageRequest,RequestService.DELETE_SUCCESS);
+        }catch (Exception  ex) {
+            RequestService.setResponse(redirectAttributes,pageRequest,RequestService.POST_DELETE_NOT_SUCCESS);
+        }
+        return "redirect:/manager-post";
     }
 
 
@@ -81,12 +75,10 @@ public class ManagerPost {
 
         int page = NumberUtils.toInt(pageRequest,1);
 
-        SortType sortType=this.portSort.getCurrentSortType(request,StringSessionUtil.CURRENT_ALL_POST);
+        SortType sortType = this.portSort.getCurrentSortType(request,StringSessionUtil.CURRENT_ALL_POST);
         List<Post> postList;
-
-
-        postList=this.postService.getAllByTitle(sortType,querySearch,(page-1)*NumberViewSort.getNumberView());
-        this.requestService.setResponse(modelMap,postList,this.postService.getCountAllByTitle(querySearch),page,null,null,querySearch);
+        postList = this.postService.getAllByTitle(sortType,querySearch,(page-1)*NumberViewSort.getNumberView());
+        RequestService.setResponse(modelMap,NumberViewSort.getNumberView(),postList,this.postService.getCountAllByTitle(querySearch));
         return "manager-post";
     }
 

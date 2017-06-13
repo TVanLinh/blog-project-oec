@@ -1,4 +1,4 @@
-package controller;
+package controller.user;
 
 import entities.Post;
 import entities.User;
@@ -13,10 +13,8 @@ import service.ConfigurationService;
 import service.PostService;
 import service.RequestService;
 import service.UserService;
-import utils.page.DefaultPages;
 import utils.sort.SortType;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -30,30 +28,18 @@ public class SearchController {
     private     PostService postService;
 
     @Autowired
-    private     DefaultPages defaultPage;
-
-
-    @Autowired
     private     ConfigurationService configurationService;
 
     @Autowired
     private     UserService userService;
 
-    @Autowired
-    private     RequestService<Post> requestService;
-
     @RequestMapping(value = "/view-search")
-    public  String  processSearchAll(HttpServletRequest request, ModelMap modelMap,
+    public  String  processSearchAll(ModelMap modelMap,
                                      @RequestParam(value = "page",required = false) String pageRequest,
                                      @RequestParam(value = "title",required = false) String title){
         int limit = this.configurationService.getAllConfiguration().get(0).getNumberViewPost();
         int  page = NumberUtils.toInt(pageRequest,1);
-
-        modelMap.addAttribute("title",title);
-        requestService.setResponse(modelMap,
-                                    this.postService.getPostPublicByTitle(new SortType(),title,(page-1)*limit,limit),
-                                    this.postService.getPostPublicByTitle(new SortType(),title).size(),page,null,null);
-        modelMap.addAttribute("limit",limit);
+        RequestService.setResponse(modelMap,limit, this.postService.getPostPublicByTitle(new SortType(),title,(page-1)*limit,limit),  this.postService.getPostPublicByTitle(new SortType(),title).size());
         return "view-search";
     }
 
@@ -71,19 +57,15 @@ public class SearchController {
         int  page = NumberUtils.toInt(pageRequest,1);
 
         user = this.userService.getUserByName(username);
-        if(user == null)
-        {
+        if(user == null) {
             throw new NotFindException(NotFindException.USER_NOT_FOUND);
         }
 
         SortType sortType=new SortType();
         sortType.orderBy="time_post";
         posts=this.postService.getPost(user.getId(),1,1,sortType,(page-1)*limit,limit);
-        this.requestService.setResponse(modelMap,posts,
-                                        this.postService.getPostByIdUser(user.getId()).size(),page,
-                                        null,null);
-        modelMap.addAttribute("limit",limit);
-        modelMap.addAttribute("userName",username);
+        RequestService.setResponse(modelMap,limit,posts,this.postService.getPostByIdUser(user.getId()).size());
+//        modelMap.addAttribute("userName",username);
         return  "post-by-user";
     }
 }

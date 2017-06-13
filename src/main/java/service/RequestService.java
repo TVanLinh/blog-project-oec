@@ -2,6 +2,7 @@ package service;
 
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 
 @Component
-public class RequestService<E> {
+public class RequestService {
     public  static final String LIST = "postList";
     public  static final String PAGE = "page";
     public static final   String PAGE_ACTIVE = "active";
@@ -22,34 +23,32 @@ public class RequestService<E> {
     public  static  final String ERROR =  "error";
     public  static  final  String SUCCESS = "success";
     public  static  final  String UPDATE_SUCCESS = "request.update_success";
+    public  static  final  String UPDATE_NOT_SUCCESS = "update.not.success";
     public  static  final  String INSERT_SUCCESS = "request.insert.success";
     public  static  final  String DELETE_SUCCESS = "delete.success";
+    public  static  final  String DELETE_NOT_SUCCESS = "delete.not.success";
+    public  static  final  String INSERT_NOT_SUCCESS = "insert.not.success";
     public  static  final  String POST_APPROVE_SUCCESS = "post.approve.success";
+    public  static  final  String POST_DELETE_NOT_SUCCESS= "post.approve.success";
+    public  static  final  String POST_APPROVE_NOT_SUCCESS= "post.approve.not.success";
+    public  static  final  String POST_APPROVED= "post.approved";
+    public  static  final  String VALID_FIELD_POST_TITLE_NOT_BLANK = "validation.field.post_title_not_blank";
+    public  static  final  String LIMIT = "limit";
 
-    public void setResponse(ModelMap  modelMap, List<E> postList,int totalList,int page,String  pageActive,String error,String query)
+    public static void setResponse(ModelMap  modelMap, int  limit,List List,int totalList)
     {
-        modelMap.addAttribute(LIST,postList);
+        modelMap.addAttribute(LIST,List);
         modelMap.addAttribute(TOTAL_LIST,totalList);
-        modelMap.addAttribute(PAGE,page);
-        modelMap.addAttribute(PAGE_ACTIVE,pageActive);
-        modelMap.addAttribute(MESSAGE,error);
-        modelMap.addAttribute(QUERY_SEARCH,query);
+        modelMap.addAttribute(LIMIT,limit);
     }
 
-    public void setResponse(ModelMap  modelMap, List<E> postList,int totalList,int page,String  pageActive,String error)
-    {
-        modelMap.addAttribute(LIST,postList);
-        modelMap.addAttribute(TOTAL_LIST,totalList);
-        modelMap.addAttribute(PAGE,page);
-        modelMap.addAttribute(PAGE_ACTIVE,pageActive);
-        modelMap.addAttribute(MESSAGE,error);
+    public static void setResponse(RedirectAttributes redirectAttributes,String page,String message){
+        redirectAttributes.addFlashAttribute(RequestService.MESSAGE,message);
+        redirectAttributes.addFlashAttribute(RequestService.PAGE,page);
     }
 
-    public void setResponse(ModelMap  modelMap, List<E> postList,int totalList,int page)
-    {
-        modelMap.addAttribute(LIST,postList);
-        modelMap.addAttribute(TOTAL_LIST,totalList);
-        modelMap.addAttribute(PAGE,page);
+    public static void setResponse(RedirectAttributes redirectAttributes,String message){
+        redirectAttributes.addFlashAttribute(RequestService.MESSAGE,message);
     }
 
 }

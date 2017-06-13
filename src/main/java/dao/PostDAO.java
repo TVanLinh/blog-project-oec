@@ -2,7 +2,6 @@ package dao;
 
 import entities.Post;
 
-import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -24,5 +23,4 @@ public interface PostDAO {
 
 
      List<Post> getPostByIdUser(int idUser) ;
-      List<BigInteger> getStatisticByMonth();
 }

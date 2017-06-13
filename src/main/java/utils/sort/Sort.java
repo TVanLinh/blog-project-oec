@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,15 +14,6 @@ import java.util.Set;
 
 @Component
 public class   Sort {
-    public SortType getSortType(String name, List<SortType> list) {
-        for (SortType sort : list) {
-            if (sort.orderBy.trim().equals(name)) {
-                return sort;
-            }
-        }
-        return null;
-    }
-
     public SortType getCurrentSortType(HttpServletRequest request,String current) {
 
         HttpSession session = request.getSession();
@@ -48,8 +38,15 @@ public class   Sort {
             }
         }
     }
-
-
+    public  SortType getSortType(HttpServletRequest request,String nameCurrentSortType,String defaultSort){
+        HttpSession session = request.getSession();
+        String orderBy = request.getParameter("orderBy");
+        String page = request.getParameter("page");
+        SortType sortItem = this.getCurrentSortType(request, nameCurrentSortType);
+        this.checkValid(page,orderBy,sortItem,defaultSort);
+        session.setAttribute(nameCurrentSortType, sortItem);
+        return sortItem;
+    }
     public   boolean checkOrderBy(String orderBy) {
         Set<String> set  = new HashSet<String>();
         set.add("title");

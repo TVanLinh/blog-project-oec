@@ -2,6 +2,8 @@ package service;
 
 import dao.PostDAO;
 import entities.Post;
+import exceptions.AccessDenieException;
+import exceptions.NotFindException;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -29,7 +31,8 @@ public class PostService extends AbstractService<Post> {
     @Autowired
     PostDAO postDAO;
 
-
+    @Autowired
+    UserService userService;
     public PostService() {
     }
 
@@ -50,13 +53,6 @@ public class PostService extends AbstractService<Post> {
         return query.getResultList();
     }
 
-    public List<Post> getContainsTitle(SortType sortType, String querySearch, int approve, int offset, int limit) {
-        String string = "  select * from  post where approve = :approve and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
-        Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
-        query.setParameter("querySearch", "%" + querySearch + "%");
-        query.setParameter("approve", approve);
-        return query.getResultList();
-    }
 
     public int getCountContainsTitle(String querySearch, int approve) {
         String string = "  select * from  post where approve = :approve and title like :querySearch";
@@ -79,14 +75,6 @@ public class PostService extends AbstractService<Post> {
         Query query = sessionFactory.getCurrentSession().createNativeQuery(str, Post.class);
         query.setParameter("querySearch", "%" + querySearch + "%");
         return query.getResultList().size();
-    }
-
-    public List<Post> getByIdUserAndStatus(int status, int iduser, int offset, int limit) {
-        String str = "select * from post where status = :status and id_user = :id_user  order by time_post desc limit " + offset + "," + limit;
-        Query query = this.sessionFactory.getCurrentSession().createNativeQuery(str, Post.class);
-        query.setParameter("status", status);
-        query.setParameter("id_user", iduser);
-        return query.getResultList();
     }
 
     public List<Post> getPostByIdUser(int id) {
@@ -119,14 +107,6 @@ public class PostService extends AbstractService<Post> {
         return query.getResultList();
     }
 
-    public int getCountByUserContainsTitle(String querySearch, int idUser) {
-        String string = "  select * from  post where id_user = :id_user and title like :querySearch";
-        Query query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
-        query.setParameter("querySearch", "%" + querySearch + "%");
-        query.setParameter("id_user", idUser);
-        return query.getResultList().size();
-    }
-
     public List<Post> finAll(String query) {
         return this.postDAO.getAllPost(query);
     }
@@ -135,12 +115,28 @@ public class PostService extends AbstractService<Post> {
         return this.getCount(Post.class, "post");
     }
 
-    public void delete(int id) {
-        this.postDAO.delete(id);
+    public void delete(int id)  {
+        if(this.postDAO.find(id)!=null) {
+            this.postDAO.delete(id);
+        }
     }
 
-    public Post find(int id) {
-        return this.postDAO.find(id);
+    public void delete(String id,String userName) throws NotFindException, AccessDenieException {
+        Post post;
+        if(!StringUtils.isNumeric(id)  || (post = this.postDAO.find(Integer.valueOf(id))) == null){
+            throw  new NotFindException(NotFindException.POST_NOT_FOUND);
+        }
+        if(this.userService.isEditPostByUser(this.userService.getUserByName(userName),post)){
+            this.postDAO.delete(Integer.valueOf(id));
+        }
+    }
+
+    public Post find(int id) throws NotFindException {
+        Post post = this.postDAO.find(id);
+        if(post == null){
+            throw  new NotFindException(NotFindException.POST_NOT_FOUND);
+        }
+        return post;
     }
 
     public void save(Post post) {
@@ -155,31 +151,28 @@ public class PostService extends AbstractService<Post> {
         return this.postDAO.getAllPostPublic().size();
     }
 
-    public boolean deletePost(String action,String id) {
-        if (action != null && action.equals("delete")) {
-            if (id != null && StringUtils.isNumeric(id)) {
-                if (this.find(Integer.valueOf(id)) != null) {
-                    this.delete(Integer.valueOf(id));
-                    return true;
-                }
-            }
+    public   boolean approvePost(String   id,String userName) throws NotFindException, AccessDenieException {
+        Post post;
+        if(!StringUtils.isNumeric(id) ||(post = this.postDAO.find(Integer.valueOf(id))) == null){
+            throw new NotFindException(NotFindException.POST_NOT_FOUND);
         }
-        return false;
+
+        if(!this.userService.isRoleAdmin(this.userService.getUserByName(userName))){
+            throw  new AccessDenieException(AccessDenieException.ACCESS_NOT_ROLE_POST);
+        }
+
+        if(post.getApprove() == 1){
+            return false;
+        }
+        Date date;
+        Calendar calendar=Calendar.getInstance();
+        date = calendar.getTime();
+        post.setApprovedTime(date);
+        post.setApprove(1);
+        this.save(post);
+        return true;
     }
 
-    public   void approvePost(int  id)
-    {
-            Date date;
-            Calendar calendar=Calendar.getInstance();
-            Post post;
-            date = calendar.getTime();
-            post = this.find(Integer.valueOf(id));
-            if(post != null) {
-                post.setApprovedTime(date);
-                post.setApprove(1);
-                this.save(post);
-            }
-    }
     public List<Post> getPost(int idUser, int status, int approve, SortType sortType) {
         String str = "select * from post where id_user =:id_user and status =:status and approve =:approve order by :orderBy :typeOrder ";
         Query query = sessionFactory.getCurrentSession().createNativeQuery(str, Post.class);

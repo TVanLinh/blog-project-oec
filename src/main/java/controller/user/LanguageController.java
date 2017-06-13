@@ -1,4 +1,4 @@
-package controller;
+package controller.user;
 
 /**
  * Created by linhtran on 17/05/2017.

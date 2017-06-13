@@ -1,5 +1,13 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${param.page != null}">
+    <c:set var="paramPage" value="${param.page}" scope="page"/>
+</c:if>
+
+<c:if test="${param.page == null}">
+    <c:set var="paramPage" value="1" scope="request"/>
+</c:if>
+
 
 <c:if test="${postList.size()>0}">
     <table class="responstable" id="">
@@ -21,8 +29,8 @@
                 <td><a href="<s:url value="/post?id=${post.id}"/>">${post.title}</a></td>
                 <td> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</td>
                 <td>
-                    <a href="<s:url value="/admin-approve-post?page=${requestScope.page}&id=${post.id}"/>" title="${messageSource.getMessage("approve",null,locale)} ">  <span class="glyphicon glyphicon-ok mgr-10"></span></a>
-                    <a href="<s:url value="/admin-delete-post?page=${requestScope.page}&id=${post.id}"/>" title="${messageSource.getMessage("delete",null,locale)} " onclick="return window.confirm('${messageSource.getMessage("confirm.delete.post",null,locale)}')"><i class="fa fa-trash-o"></i></a>
+                    <a href="<s:url value="/admin-approve-post?page=${paramPage}&id=${post.id}"/>" title="${messageSource.getMessage("approve",null,locale)} ">  <span class="glyphicon glyphicon-ok mgr-10"></span></a>
+                    <a href="<s:url value="/admin-delete-post?page=${paramPage}&id=${post.id}"/>" title="${messageSource.getMessage("delete",null,locale)} " onclick="return window.confirm('${messageSource.getMessage("confirm.delete.post",null,locale)}')"><i class="fa fa-trash-o"></i></a>
                     <a href="<s:url value="/update?action=update&id=${post.id}"/>" title="${messageSource.getMessage("edit",null,locale)}"><i class="fa fa-pencil-square-o mgl-15" aria-hidden="true"></i></a>
 
                 </td>
@@ -33,13 +41,9 @@
     </table>
     <div>
         <jsp:include page="../paginations/pagi_3.jsp">
-            <jsp:param name="page" value="/admin"/>
+            <jsp:param name="pageTarget" value="/admin"/>
             <jsp:param name="pageSearch" value="/admin-search-post-approve"/>
         </jsp:include>
     </div>
 
 </c:if>
-<%--<li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>--%>
-<%--<script src="<s:url value="public/data-table-plugin/js/jquery.dataTables.min.js"/>" type="text/javascript"></script>--%>
-<%--<script src="<s:url value="public/Sortable-HTML-Tables-jQuery-sortable-js/sortable.js"/>" type="text/javascript"></script>--%>
-<%--<script src="<s:url value="public/asserts/js/sort.js"/>" type="text/javascript"></script>--%>

@@ -36,14 +36,9 @@ public class UserDAOIML implements  UserDAO ,Serializable{
 
     public User find(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Query query  =  session.createNativeQuery("select * from user where user.id  =  :id",User.class);
+        Query<User> query  =  session.createNativeQuery("select * from user where user.id  =  :id",User.class);
         query.setParameter("id", id);
-        List<User> users=query.getResultList();
-        if(users.size()==0)
-        {
-            return  null;
-        }
-        return users.get(0);
+        return query.getSingleResult();
     }
 
     public List<User> getAllUser() {
@@ -54,18 +49,13 @@ public class UserDAOIML implements  UserDAO ,Serializable{
 
     public  List<User> getAllUser(String query) {
         Session session = sessionFactory.getCurrentSession();
-        List<User> list = session.createNativeQuery(query,User.class).getResultList();
-        return list;
+        return session.createNativeQuery(query,User.class).getResultList();
     }
 
     public User getUserByName(String name) {
         Session session = sessionFactory.getCurrentSession();
-        Query<User> query = session.createNativeQuery("select * from user where user_name =:name limit 0,1",User.class);
+        Query<User> query = session.createNativeQuery("select * from user where user_name =:name",User.class);
         query.setParameter("name",name);
-        List<User> list = query.getResultList();
-       if(list.size() == 0) {
-            return null;
-        }
-        return  list.get(0);
+        return query.getSingleResult();
     }
 }

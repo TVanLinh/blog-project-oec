@@ -1,4 +1,4 @@
-package controller;
+package controller.user;
 
 import entities.Image;
 import entities.Post;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.*;
 import utils.string.StringUtils;
 
@@ -70,7 +71,6 @@ public class ProcessPost {
         post.setNumberLike(0);
         post.setTimePost(date);
         post.setUserUpdated(principal.getName());
-        post.setUpdateTime(date);
         post.setStatus(stt);
 
         if(org.apache.commons.lang3.StringUtils.isNotBlank(linkImage)) {
@@ -104,10 +104,6 @@ public class ProcessPost {
         HttpSession session = request.getSession();
         Integer postId = (Integer) session.getAttribute("post-id");
         Post post = this.postService.find(postId);
-        if(post == null){
-            throw  new NotFindException(NotFindException.POST_NOT_FOUND);
-        }
-
         modelMap.addAttribute("post", post);
         return "view";
     }
@@ -116,11 +112,10 @@ public class ProcessPost {
     public  String updatePost(HttpServletRequest request,
                                         @RequestParam(value = "id",required = false)String postId) throws NotFindException, AccessDenieException {
         HttpSession session = request.getSession();
-
-        if(!org.apache.commons.lang3.StringUtils.isNumeric(postId) || this.postService.find(Integer.valueOf(postId)) == null) {
+        Post post;
+        if(!org.apache.commons.lang3.StringUtils.isNumeric(postId) || (post =this.postService.find(Integer.valueOf(postId))) == null) {
             throw new NotFindException(NotFindException.POST_NOT_FOUND);
         }
-        Post post = this.postService.find(Integer.valueOf(postId));
 
         User user = this.userService.getUserByName((String) request.getSession().getAttribute("username"));
 
@@ -144,14 +139,12 @@ public class ProcessPost {
         Post postUpdate = (Post) session.getAttribute("postUpdate");
 
         if(org.apache.commons.lang3.StringUtils.isBlank(post.getTitle())|| !StringUtils.checkVid(post.getTitle())) {
-            request.setAttribute("error","validation.field.post_title_not_blank");
+            request.setAttribute(RequestService.MESSAGE,RequestService.VALID_FIELD_POST_TITLE_NOT_BLANK);
             request.getSession().setAttribute("postUpdate", post);
             return "update";
         }
 
-        Date date = Calendar.getInstance().getTime();
 
-        postUpdate.setUpdateTime(date);
         postUpdate.setUserUpdated((String)session.getAttribute("username"));
         postUpdate.setTitle(post.getTitle());
         postUpdate.setContent(post.getContent());
@@ -185,19 +178,14 @@ public class ProcessPost {
 
     @RequestMapping(value = "/delete-post")
     public String deletePost(@RequestParam(value = "id",required = false) String  id,
-                             HttpServletRequest request) throws NotFindException, AccessDenieException {
-        if(!org.apache.commons.lang3.StringUtils.isNumeric(id) || this.postService.find(Integer.valueOf(id))== null)
-        {
-            throw new NotFindException(NotFindException.POST_NOT_FOUND);
+                             HttpServletRequest request, RedirectAttributes redirectAttributes)  {
+        try {
+            this.postService.delete(id, (String) request.getSession().getAttribute("username"));
+            RequestService.setResponse(redirectAttributes,"1",RequestService.DELETE_SUCCESS);
+            return "redirect:/home";
+        }catch (Exception ex){
+            RequestService.setResponse(redirectAttributes,"1",RequestService.POST_DELETE_NOT_SUCCESS);
         }
-
-        User user = this.userService.getUserByName((String) request.getSession().getAttribute("username"));
-        Post post = this.postService.find(Integer.valueOf(id));
-        if(!this.userService.isEditPost(user,post)) {
-            throw new AccessDenieException(AccessDenieException.ACCESS_NOT_ROLE_POST);
-        }
-        this.postService.delete(post.getId());
-        request.getSession().setAttribute(RequestService.MESSAGE,"delete.success");
         return "redirect:/home";
     }
 

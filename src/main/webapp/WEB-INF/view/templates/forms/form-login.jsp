@@ -37,25 +37,8 @@
 
                 </div>
 
-                <%--<div class="container">--%>
-                <%--<div class="col-xs-12">--%>
-                <%--<button type="button" onclick="document.getElementById('form-login').style.display='none'" class="cancelbtn">Cancel</button>--%>
-                <%----%>
-                <%--</div>--%>
-                <%--</div>--%>
             </form>
         </div>
 
     </div>
 </div>
-<script>
-    // Get the modal
-    var modal = document.getElementById('form-login');
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-</script>

@@ -12,7 +12,6 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ModelMap;
 import utils.number.NumberViewSort;
 import utils.sort.SortType;
 
@@ -38,56 +37,6 @@ public class UserService  extends AbstractService<User> {
     public UserService() {
     }
 
-    public boolean checkUserValidUpdate(ModelMap modelMap,User userNew) {
-        if (userNew.getUserName() == null || userNew.getUserName().trim().equals("")) {
-            modelMap.addAttribute("error", " User name not null!");
-            return false;
-        }
-
-        if(userNew.getUserName().length()>50)
-        {
-            modelMap.addAttribute("error", " user name too length,max 30 !");
-            return  false;
-        }
-
-        if (userNew.getPassWord() == null || userNew.getPassWord().trim().equals("")) {
-            modelMap.addAttribute("error", " pass word not nulll!");
-            return false;
-        }
-        return true;
-    }
-
-
-    public boolean checkUserInsert(ModelMap modelMap, User user, String[] arr) {
-
-        if (!StringUtils.isNotEmpty(user.getUserName()) || !StringUtils.isNotBlank(user.getUserName())) {
-            modelMap.addAttribute("error", " user name not null!");
-            return false;
-        }
-        if(user.getUserName().length()>50)
-        {
-            modelMap.addAttribute("error", " user name too length,max 30 !");
-            return  false;
-        }
-        if (this.userDAO.getUserByName(user.getUserName().trim()) != null) {
-            modelMap.addAttribute("error", " user name exits available !");
-            return false;
-        }
-
-        if (!StringUtils.isNotEmpty(user.getPassWord()) || !StringUtils.isNotBlank(user.getPassWord())) {
-            modelMap.addAttribute("error", " pass word not null!");
-            return false;
-        }
-
-
-        if (arr == null) {
-            modelMap.addAttribute("error", "Not choice role!");
-            return false;
-        }
-
-        return true;
-    }
-
     public List<User> getUserBeginByUserName(String condition, SortType sortType, int offset)
     {
         String str = "select * from user where user_name like :condition  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit "+offset+","+NumberViewSort.NUMBER_VIEW;
@@ -111,6 +60,16 @@ public class UserService  extends AbstractService<User> {
     public  void delete(int id)
     {
         this.delete(User.class,"user",id);
+    }
+
+    public  void delete(String id,String userName) throws AccessDenieException, NotFindException {
+        if(!this.isRoleAdmin(this.getUserByName(userName))){
+            throw new AccessDenieException(AccessDenieException.ACESS_NOT_ROLE_PAGE);
+        }
+        if(!StringUtils.isNumeric(id) || this.find(Integer.valueOf(id)) == null) {
+            throw new NotFindException(NotFindException.USER_NOT_FOUND);
+        }
+        this.delete(Integer.valueOf(id));
     }
     public  User find(int id)
     {
@@ -143,16 +102,18 @@ public class UserService  extends AbstractService<User> {
         }
         return false;
     }
+
+
+
     public  boolean isRoleUser(User user)
     {
         if(user == null){
-             return false;
+            return false;
         }
         List<Role> role=user.getRoleList();
         if(role == null || role.size()  == 0) {
             return false;
         }
-
         for (Role role1:role)
         {
             if(role1.getRole().equals("ROLE_USER")) {
@@ -162,34 +123,25 @@ public class UserService  extends AbstractService<User> {
         return false;
     }
 
-   public boolean isEditPost(User user, Post post)
-    {
-        boolean a =  !this.isRoleAdmin(user);
-        boolean b = user.getId() != post.getUser().getId();
-        boolean c = user.getId() != post.getUser().getId();
+   public boolean isEditPost(User user, Post post) {
         if(user == null ||post == null || (!this.isRoleAdmin(user) && user.getId() != post.getUser().getId()) || user.getId() != post.getUser().getId())
         {
             return false;
         }
         return true;
     }
-
-    public boolean isEditPostAdmin(User user, Post post)
-    {
-        if(user == null ||post == null || !this.isRoleAdmin(user) )
-        {
-            return false;
+    public boolean isEditPostByUser(User user, Post post) throws AccessDenieException {
+        if( this.isRoleAdmin(user) || user.getId() == post.getId()){
+            return true;
         }
-        return true;
+        throw new AccessDenieException(AccessDenieException.ACCESS_NOT_ROLE_POST);
     }
 
-    public    void checkRole(String id,String username) throws NotFindException, AccessDenieException {
+
+    public boolean isExists(String id) throws NotFindException {
         if(!StringUtils.isNumeric(id) || StringUtils.isNumeric(id) && this.postService.find(Integer.valueOf(id)) == null) {
             throw new NotFindException(NotFindException.POST_NOT_FOUND);
         }
-        User user = this.getUserByName(username);
-        if(StringUtils.isNumeric(id) && !this.isEditPostAdmin(user,this.postService.find(Integer.valueOf(id)))) {
-            throw  new AccessDenieException(AccessDenieException.ACCESS_NOT_ROLE_POST);
-        }
+        return true;
     }
 }

@@ -21,11 +21,12 @@ public class ConfigFormValidator extends AbstractVadidator implements Validator 
         Configuration configuration = (Configuration)target;
         if(!utils.string.StringUtils.checkVid(configuration.getWebTitle()) || StringUtils.isEmpty(configuration.getWebTitle()) || StringUtils.isBlank(configuration.getWebTitle())) {
             errors.rejectValue("webTitle","validation.field.post_title_not_blank");
+            return;
         }
 
-        if(configuration.getWebTitle().length()>40)
-        {
+        if(configuration.getWebTitle().length()>40) {
             errors.rejectValue("webTitle","validation.field.conf_too_length");
+            return;
         }
 
 

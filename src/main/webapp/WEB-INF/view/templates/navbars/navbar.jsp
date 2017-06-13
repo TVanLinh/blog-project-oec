@@ -5,10 +5,10 @@
 <nav class="navbar navbar-inverse " style="border-radius: 0 !important;">
     <div class="container pdt-0 pdb-0">
         <div class="navbar-header">
-            <c:if test="${requestScope.active=='home'}">
+            <c:if test="${param.active=='home'}">
                 <a class="navbar-brand active" href="<s:url value="/"/>">${sessionScope.blogTitle}</a>
             </c:if>
-            <c:if test="${requestScope.active!='home'}">
+            <c:if test="${param.active!='home'}">
                 <a class="navbar-brand" href="<s:url value="/"/>" >${sessionScope.blogTitle}</a>
             </c:if>
 
@@ -19,10 +19,10 @@
             <c:if  test="${sessionScope.username !=null}">
 
 
-                <c:if test="${requestScope.active=='write'}">
+                <c:if test="${param.active=='write'}">
                     <li><a href="<s:url value="/write"/>" class="active">${messageSource.getMessage("newpost",null,locale)}</a></li>
                 </c:if>
-                <c:if test="${requestScope.active!='write'}">
+                <c:if test="${param.active!='write'}">
                     <li><a  href="<s:url value="/write"/>">${messageSource.getMessage("newpost",null,locale)}</a></li>
                 </c:if>
             </c:if>

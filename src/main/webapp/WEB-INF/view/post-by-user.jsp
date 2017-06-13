@@ -15,28 +15,20 @@
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-xs-12">
-
+            ${postList.size()}
             <h3>
-                ${messageSource.getMessage("postOf",null,locale)} <span class="color-main2">${requestScope.userName}</span>
+                ${messageSource.getMessage("postOf",null,locale)} <span class="color-main2">${param.username}</span>
             </h3>
 
             <jsp:include page="templates/components/content2.jsp"/>
 
             <!-- Pager -->
             <jsp:include page="templates/paginations/pagi_2.jsp">
-                <jsp:param name="page" value="/list-post-by-user"/>
+                <jsp:param name="paramTarget" value="/list-post-by-user"/>
                 <jsp:param name="query" value="username=${requestScope.userName}"/>
             </jsp:include>
 
         </div>
-        <!-- Blog Sidebar Widgets Column -->
-        <%--<div>--%>
-            <%--<jsp:include page="templates/slidebar/slidebar.jsp">--%>
-                <%--<jsp:param name="action" value="mySearch.formSearch('/view-search?title=','#search')"/>--%>
-                <%--<jsp:param name="urlTarget" value="/view-search"/>--%>
-            <%--</jsp:include>--%>
-        <%--</div>--%>
-
     </div>
     <!-- /.row -->
 
@@ -49,4 +41,4 @@
 
 </script>
 
-    <jsp:include page="templates/footers/footer.jsp"/>
+<jsp:include page="templates/footers/footer.jsp"/>

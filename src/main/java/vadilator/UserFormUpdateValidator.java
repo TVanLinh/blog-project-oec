@@ -22,11 +22,13 @@ public class UserFormUpdateValidator extends UserFormValidator implements Valida
         if(!StringUtils.checkVid(target.getUser().getUserName()))
         {
             errors.rejectValue("user.userName","validation.field.user_name_not_vid");
+            return;
         }
 
         User user = this.userService.getUserByName(target.getUser().getUserName());
         if (user != null && target.getUser().getId()!= user.getId()) {
             errors.rejectValue("user.userName", "validation.field.existed_username");
+            return;
         }
 
         if((org.apache.commons.lang3.StringUtils.isNotBlank(target.getRePassWord())
@@ -34,9 +36,9 @@ public class UserFormUpdateValidator extends UserFormValidator implements Valida
                 && !checkOverLapPassWord(target))
         {
             errors.rejectValue("user.passWord","validation.field.overlap_password");
+            return;
         }
 
-        int a = target.getUser().getRoleList().size();
         if(!this.checkValidRole(target.getUser().getRoleList()))
         {
             errors.rejectValue("user.roleList","validation.field.role_not_blank");

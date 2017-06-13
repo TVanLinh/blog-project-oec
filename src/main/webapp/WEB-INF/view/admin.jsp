@@ -7,6 +7,7 @@
     {
         color: #ffff5d;
     }
+
 </style>
 <!-- Navigation -->
     <jsp:include page="templates/navbars/navbar.jsp"/>
@@ -39,9 +40,6 @@
                     </c:if>
                     <jsp:include page="templates/tables/table_approve.jsp"/>
                 </div>
-            <%--<div class="col-xs-12">--%>
-                <%--<jsp:include page="templates/tables/table_approve.jsp"/>--%>
-            <%--</div>--%>
         </div>
     <!-- /.row -->
      <hr>

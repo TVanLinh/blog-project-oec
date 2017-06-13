@@ -1,7 +1,8 @@
-package controller;
+package controller.user;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import entities.Post;
+import exceptions.NotFindException;
 import jsonviews.Views;
 import model.UserRestBody;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class AjaxController {
 
     @RequestMapping(value = "/like")
     @JsonView(Views.Public.class)
-    public synchronized UserRestBody like(@RequestBody UserRestBody userRestBody, HttpServletRequest request, HttpServletResponse response) {
+    public synchronized UserRestBody like(@RequestBody UserRestBody userRestBody, HttpServletRequest request, HttpServletResponse response) throws NotFindException {
 
         Cookie cookies[] = request.getCookies();
         Cookie cookieLike = null;

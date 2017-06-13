@@ -1,4 +1,4 @@
-package controller;
+package controller.exception;
 
 import exceptions.AccessDenieException;
 import exceptions.NotFindException;

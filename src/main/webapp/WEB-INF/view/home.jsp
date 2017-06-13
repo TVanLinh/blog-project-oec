@@ -4,7 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="templates/headers/head.jsp"/>
     <!-- Navigation -->
-   <jsp:include page="templates/navbars/navbar.jsp"/>
+   <jsp:include page="templates/navbars/navbar.jsp">
+       <jsp:param name="active" value="home"/>
+   </jsp:include>
     <!-- Page Content -->
     <div class="container">
 
@@ -16,6 +18,9 @@
                       <c:if test="${requestScope.error != null}">
                           ${messageSource.getMessage(requestScope.error,null,locale)}
                       </c:if>
+                      <c:if test="${param.error != null}">
+                          ${messageSource.getMessage(param.error,null,locale)}
+                      </c:if>
                   </p>
                  <!--------------content-->
                  <jsp:include page="templates/components/content.jsp"/>
@@ -23,7 +28,7 @@
                  <!------end content------>
                     <!---pagination------->
                 <jsp:include page="templates/paginations/pagi_1.jsp">
-                    <jsp:param name="page" value="/home"/>
+                    <jsp:param name="pageTarget" value="/home"/>
                 </jsp:include>
 
                 </div>

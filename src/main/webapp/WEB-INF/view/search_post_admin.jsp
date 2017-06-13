@@ -16,7 +16,7 @@
             <jsp:include page="templates/menus/menu-admin.jsp"/>
 
             <ul class="list-group">
-                <li class="list-group-item">${messageSource.getMessage("totalAllPost",null,locale)}<span class="badge" id="num">${requestScope.totalPost}</span></li>
+                <li class="list-group-item">${messageSource.getMessage("totalAllPost",null,locale)}<span class="badge" id="num">${requestScope.totalList}</span></li>
             </ul>
             <!-------form search-------------->
             <jsp:include page="templates/forms/search.jsp">

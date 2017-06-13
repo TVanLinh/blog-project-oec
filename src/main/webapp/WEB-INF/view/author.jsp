@@ -28,16 +28,7 @@
             </c:if>
             <jsp:include page="templates/tables/table_post_by_user.jsp"/>
         </div>
-        <!-- Blog Sidebar Widgets Column -->
-        <%--<div>--%>
-            <%--<jsp:include page="templates/slidebar/slidebar.jsp">--%>
-                <%--<jsp:param name="action" value="mySearch.formSearch('/user-search?title=','#search')"/>--%>
-                <%--<jsp:param name="urlTarget" value="/user-search"/>--%>
-            <%--</jsp:include>--%>
-        <%--</div>--%>
-
     </div>
-    <!-- /.row -->
 
     <hr>
 
@@ -45,6 +36,4 @@
 
 
 </div>
-
-
 <script src="<s:url value="public/asserts/js/search.js"/>"></script>

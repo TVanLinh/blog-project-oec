@@ -7,6 +7,13 @@
 
 <!-- Navigation -->
 <jsp:include page="templates/navbars/navbar.jsp"/>
+<c:if test="${param.page != null}">
+    <c:set var="paramPage" value="${param.page}" scope="page"/>
+</c:if>
+
+<c:if test="${param.page == null}">
+    <c:set var="paramPage" value="1" scope="request"/>
+</c:if>
 
 <!-- Page Content -->
 <div class="container">
@@ -24,17 +31,16 @@
                         <span>${messageSource.getMessage("resultFind",null,locale)} </span>
                         <span>${requestScope.totalList}</span>
                         <span class="pd-10">${messageSource.getMessage("recordFrom",null,locale)}</span>
-                        <span>${(requestScope.page-1)*requestScope.limit+1} </span>
+                        <span>${(paramPage-1)*requestScope.limit+1} </span>
                         <span class="pd-10">${messageSource.getMessage("to",null,locale)}</span>
-                        <span>${(requestScope.page-1)*requestScope.limit+requestScope.postList.size()}</span>
+                        <span>${(paramPage-1)*requestScope.limit+requestScope.postList.size()}</span>
                     </p>
             </c:if>
 
             <jsp:include page="templates/components/content.jsp"/>
             <!-- Pager -->
             <jsp:include page="templates/paginations/pagi_1.jsp">
-                <jsp:param name="page" value="/view-search"/>
-                <jsp:param name="querySearch" value="title=${requestScope.title}"/>
+                <jsp:param name="pageTarget" value="/view-search"/>
             </jsp:include>
 
         </div>

@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import entities.Configuration;
 import exceptions.NotFindException;
@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.ConfigurationService;
 import service.RequestService;
 import utils.page.DefaultPages;
@@ -30,8 +31,6 @@ public class ConfigurationController {
     @Autowired
     private     ConfigFormValidator configFormValidator;
 
-    @Autowired
-    private     RequestService requestService;
 
     @ModelAttribute
     public Configuration initConfig()
@@ -41,11 +40,6 @@ public class ConfigurationController {
 
     @RequestMapping(value = "/configuration")
     public  String configuration(HttpServletRequest request,ModelMap modelMap) {
-        if(request.getSession().getAttribute(requestService.SUCCESS)!=null)
-        {
-            modelMap.addAttribute(requestService.SUCCESS,request.getSession().getAttribute(requestService.SUCCESS));
-            request.getSession().removeAttribute(requestService.SUCCESS);
-        }
         modelMap.addAttribute("conf",this.configurationService.getAllConfiguration().get(0));
         return "configuration";
     }
@@ -53,8 +47,9 @@ public class ConfigurationController {
     @RequestMapping("/processConfiguration")
     public  String processConfiguration(HttpServletRequest request,
                                         ModelMap modelMap,@ModelAttribute(value = "configuration")Configuration conf,
-                                        BindingResult bindingResult
-                                        ) throws NotFindException {
+                                        BindingResult bindingResult,
+                                        RedirectAttributes redirectAttributes
+    ) throws NotFindException {
         this.configFormValidator.validate(conf, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -73,8 +68,7 @@ public class ConfigurationController {
         configuration.setWebTitle(conf.getWebTitle());
         configuration.setDateFormat(conf.getDateFormat());
         this.configurationService.save(configuration);
-
-        request.getSession().setAttribute(requestService.SUCCESS,"request.update_success");
+        redirectAttributes.addFlashAttribute(RequestService.SUCCESS,RequestService.UPDATE_SUCCESS);
         this.defaultPage.setDaultPage(request);
         return "redirect:/configuration";
     }

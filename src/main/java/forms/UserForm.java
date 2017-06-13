@@ -9,7 +9,7 @@ public class UserForm {
     private User user;
     private String rePassWord;
     private  String newPassWord;
-
+    private  String oldPassWord;
     public UserForm() {
         this.user = new User();
     }
@@ -36,5 +36,13 @@ public class UserForm {
 
     public void setNewPassWord(String newPassWord) {
         this.newPassWord = newPassWord;
+    }
+
+    public String getOldPassWord() {
+        return oldPassWord;
+    }
+
+    public void setOldPassWord(String oldPassWord) {
+        this.oldPassWord = oldPassWord;
     }
 }

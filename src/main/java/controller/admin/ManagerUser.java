@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import entities.User;
 import exceptions.AccessDenieException;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.RequestService;
 import service.RoleService;
 import service.UserService;
@@ -24,6 +25,7 @@ import utils.number.NumberViewSort;
 import utils.page.DefaultPages;
 import utils.sort.Sort;
 import utils.sort.SortType;
+import utils.sort.UserSort;
 import utils.string.StringSessionUtil;
 import vadilator.UserFormInsertUserValidator;
 import vadilator.UserFormUpdateValidator;
@@ -56,7 +58,7 @@ public class ManagerUser {
     private Sort sort;
 
     @Autowired
-    private RequestService<User> requestService;
+    private UserSort userSort;
 
     @Autowired
     private UserSortService userSortService;
@@ -76,44 +78,27 @@ public class ManagerUser {
     @RequestMapping("/manager-user")
     public String managerUser(HttpServletRequest request,
                               ModelMap modelMap,
-                              Principal principal,
                               @RequestParam(value = "page", required = false) String pageRequest) {
-        List<User> userList;
-
         int page = NumberUtils.toInt(pageRequest, 1);
-
-        if (request.getSession().getAttribute(requestService.MESSAGE) != null) {
-            request.setAttribute(requestService.MESSAGE, request.getSession().getAttribute(requestService.MESSAGE));
-            request.getSession().removeAttribute(requestService.MESSAGE);
-        }
-
-//        deleteUser(request, principal);
-
-        userList = this.userSortService.getUser(request, (page - 1) * NumberViewSort.NUMBER_VIEW, NumberViewSort.getNumberView());
-        this.requestService.setResponse(modelMap, userList, this.userService.findAll(User.class, "user").size(), page);
+        SortType sortType = this.userSort.getSortType(request, StringSessionUtil.CURRENT_USER_SORT,"user_name");
+        List<User> userList = this.userSortService.getUser(sortType, (page - 1) * NumberViewSort.NUMBER_VIEW, NumberViewSort.getNumberView());
+        RequestService.setResponse(modelMap,NumberViewSort.getNumberView(),userList, this.userService.findAll(User.class, "user").size());
         return "manager-user";
     }
 
     @RequestMapping(value = "/delete-user")
-    public String deleteUser(HttpServletRequest request,ModelMap modelMap,@RequestParam(value = "id",required = false)String id,
-                             @RequestParam(value = "page", required = false) String pageRequest) throws AccessDenieException, NotFindException {
-        String userName= (String) request.getSession().getAttribute("username");
-        if(!userService.isRoleAdmin(this.userService.getUserByName(userName))){
-            throw new AccessDenieException(AccessDenieException.ACESS_NOT_ROLE_PAGE);
+    public String deleteUser(@RequestParam(value = "id",required = false)String id,
+                             @RequestParam(value = "page", required = false) String pageRequest,
+                             RedirectAttributes redirectAttributes) throws AccessDenieException, NotFindException {
+
+        try{
+            this.userService.delete(Integer.valueOf(id));
+            RequestService.setResponse(redirectAttributes,pageRequest,RequestService.DELETE_SUCCESS);
+        }catch (Exception ex){
+            RequestService.setResponse(redirectAttributes,pageRequest,RequestService.DELETE_NOT_SUCCESS);
+            return "redirect:/manager-user";
         }
-        if(!StringUtils.isNumeric(id) || this.userService.find(Integer.valueOf(id)) == null) {
-           throw new NotFindException(NotFindException.USER_NOT_FOUND);
-        }
-
-        this.userService.delete(Integer.valueOf(id));
-
-        int page = NumberUtils.toInt(pageRequest,1);
-        List<User> userList = this.userSortService.getUser(request, (page - 1) * NumberViewSort.NUMBER_VIEW, NumberViewSort.getNumberView());
-        this.requestService.setResponse(modelMap, userList, this.userService.findAll(User.class, "user").size(), page);
-
-        modelMap.addAttribute(requestService.MESSAGE,"delete.success");
-
-        return "manager-user";
+        return "redirect:/manager-user";
     }
 
 
@@ -130,7 +115,11 @@ public class ManagerUser {
     }
 
     @RequestMapping(value = "/action-insert-user", method = RequestMethod.POST)
-    public String actionInsertUser(HttpServletRequest request, @ModelAttribute UserForm userForm, ModelMap modelMap, BindingResult bindingResult) {
+    public String actionInsertUser(HttpServletRequest request,
+                                   @ModelAttribute UserForm userForm,
+                                   ModelMap modelMap,
+                                   BindingResult bindingResult,
+                                   RedirectAttributes redirectAttributes) {
         this.defaultPage.setDaultPage(request);
 
         this.insertUserValidator.validate(userForm,bindingResult);
@@ -139,24 +128,20 @@ public class ManagerUser {
             modelMap.addAttribute("errors",this.insertUserValidator.getCodeErrors(bindingResult));
             return  "insert-user";
         }
-
         userForm.getUser().setPassWord(passwordEncoder.encode(userForm.getUser().getPassWord()));
         this.userService.save(userForm.getUser());
-        request.getSession().setAttribute(requestService.MESSAGE, requestService.INSERT_SUCCESS);
+        RequestService.setResponse(redirectAttributes,RequestService.INSERT_SUCCESS);
         return "redirect:manager-user";
     }
 
     ///---------------update----------------------------------
     @RequestMapping(value = "/update-user")
-    public String pageUpdateUser(HttpServletRequest request,ModelMap modelMap) {
+    public String pageUpdateUser(HttpServletRequest request,ModelMap modelMap,RedirectAttributes redirectAttributes) {
         this.defaultPage.setDaultPage(request);
         String id = request.getParameter("id");
-        if (!StringUtils.isNumeric(id)) {
-            return "redirect:/manager-user";
-        }
-
-        User user = this.userService.find(Integer.valueOf(id));
-        if (user == null || user.getUserName() == null) {
+        User user ;
+        if (!StringUtils.isNumeric(id) || (user = this.userService.find(Integer.valueOf(id)) ) == null) {
+            RequestService.setResponse(redirectAttributes,"",NotFindException.USER_NOT_FOUND);
             return "redirect:/manager-user";
         }
         setDefaultUpdateUser(user,modelMap);
@@ -179,7 +164,9 @@ public class ManagerUser {
     public String actionUpdateUser(ModelMap modelMap,
                                    HttpServletRequest request,
                                    @ModelAttribute(value = "userForm") UserForm  userForm,
-                                   BindingResult bs,Principal principal) {
+                                   @RequestParam(value = "page", required = false) String pageRequest,
+                                   BindingResult bs,Principal principal,
+                                   RedirectAttributes redirectAttributes) {
         updateUserValidator.validate(userForm, bs);
 
         User userCurrent = this.userService.find(userForm.getUser().getId());
@@ -205,13 +192,15 @@ public class ManagerUser {
 
         userCurrent.setUserName(userForm.getUser().getUserName());
         userCurrent.setRoleList(userForm.getUser().getRoleList());
+        try {
+                this.userService.save(userCurrent);
+                RequestService.setResponse(redirectAttributes,pageRequest,RequestService.UPDATE_SUCCESS);
+        }catch (Exception ex){
+            RequestService.setResponse(redirectAttributes,pageRequest,RequestService.UPDATE_NOT_SUCCESS);
+        }
 
-        this.userService.save(userCurrent);
-        request.getSession().setAttribute(requestService.MESSAGE, "request.update_success");
         return  "redirect:manager-user";
     }
-
-
     //-----------------------end update
 
 
@@ -221,11 +210,8 @@ public class ManagerUser {
                              @RequestParam(value = "query_search", required = false) String querySearch) {
         int page = NumberUtils.toInt(pageReques, 1);
         SortType sortType = this.sort.getCurrentSortType(request, StringSessionUtil.CURRENT_USER_SORT);
-
-        List<User> userList;
-        userList = this.userService.getUserBeginByUserName(querySearch, sortType, (page - 1) * NumberViewSort.getNumberView());
-
-        this.requestService.setResponse(modelMap, userList, this.userService.getCountBeginUserName(querySearch), page, null, null, querySearch);
+        List<User> userList = this.userService.getUserBeginByUserName(querySearch, sortType, (page - 1) * NumberViewSort.getNumberView());
+        RequestService.setResponse(modelMap,NumberViewSort.getNumberView(), userList, this.userService.getCountBeginUserName(querySearch));
         return "manager-user";
     }
 

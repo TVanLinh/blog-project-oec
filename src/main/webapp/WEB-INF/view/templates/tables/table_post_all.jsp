@@ -1,6 +1,13 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:if test="${param.page != null}">
+    <c:set var="paramPage" value="${param.page}" scope="page"/>
+</c:if>
+
+<c:if test="${param.page == null}">
+    <c:set var="paramPage" value="1" scope="request"/>
+</c:if>
 <c:if test="${postList.size()>0}">
     <table class="responstable  " id="">
 
@@ -44,10 +51,8 @@
                 <td>${post.numberLike}</td>
                 <td>${post.numberView}</td>
                 <td>
-                    <%--<a href="javascript:void(0)" onclick="A.getPostImprove('<s:urlmanager-get-all-post-delete?id='+${post.id},null)"> <span class="glyphicon glyphicon-remove mgl-10"></span></a>--%>
-                    <%--<a href="/update?action=update&id=${post.id}"><img class="mgt--5 mgl-10" src="<s:url value="public/asserts/images/edit.gif"/>" alt=""></a> --%>
-                    <a href="<s:url value="/manager-post-delete?page=${requestScope.page}&id=${post.id}"/>" title="${messageSource.getMessage("delete",null,locale)}" onclick="return window.confirm('${messageSource.getMessage("confirm.delete.post",null,locale)}')"> <i class="fa fa-trash-o"></i></a>
-                        <a href="<s:url value="/update?action=update&id=${post.id}"/>" title="${messageSource.getMessage("edit",null,locale)}"><i class="fa fa-pencil-square-o mgl-15"></i></a>
+                     <a href="<s:url value="/manager-post-delete?page=${paramPage}&id=${post.id}"/>" title="${messageSource.getMessage("delete",null,locale)}" onclick="return window.confirm('${messageSource.getMessage("confirm.delete.post",null,locale)}')"> <i class="fa fa-trash-o"></i></a>
+                     <a href="<s:url value="/update?action=update&id=${post.id}"/>" title="${messageSource.getMessage("edit",null,locale)}"><i class="fa fa-pencil-square-o mgl-15"></i></a>
                 </td>
             </tr>
         </c:forEach>
@@ -57,13 +62,9 @@
 
     <div>
             <jsp:include page="../paginations/pagi_3.jsp">
-                <jsp:param name="page" value="/manager-post"/>
+                <jsp:param name="pageTarget" value="/manager-post"/>
                 <jsp:param name="pageSearch" value="/manager-post-search"/>
             </jsp:include>
     </div>
-
 </c:if>
-
-<script src="<s:url value="public/data-table-plugin/js/jquery.dataTables.min.js"/>" type="text/javascript"></script>
-<script src="<s:url value="public/asserts/js/sort.js"/>" type="text/javascript"></script>
 <script src="<s:url value="public/asserts/js/main.js"/>" type="text/javascript"></script>

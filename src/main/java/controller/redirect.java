@@ -4,7 +4,6 @@ import entities.Post;
 import exceptions.NotFindException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,9 +23,6 @@ import java.util.List;
  */
 @Controller
 public class redirect {
-    final static Logger logger = Logger.getLogger(ProcessPost.class);
-
-
     @Autowired
     private    UserService userService;
 
@@ -35,9 +31,6 @@ public class redirect {
 
     @Autowired
     private    ConfigurationService configurationService;
-
-    @Autowired
-    private RequestService<Post> requestService;
 
     @RequestMapping(value = "/write")
     public  String viewWriter(HttpServletRequest request) {
@@ -50,10 +43,10 @@ public class redirect {
     public String homePage(HttpServletRequest request, ModelMap modelMap,
                            @RequestParam(value = "page",
                            required = false)String pageRequest) {
-        String error = (String) request.getSession().getAttribute(requestService.MESSAGE);
+        String error = (String) request.getSession().getAttribute(RequestService.MESSAGE);
         if( error !=null) {
-            modelMap.addAttribute(requestService.MESSAGE,error);
-            request.getSession().removeAttribute(requestService.MESSAGE);
+            modelMap.addAttribute(RequestService.MESSAGE,error);
+            request.getSession().removeAttribute(RequestService.MESSAGE);
         }
 
         int  page = NumberUtils.toInt(pageRequest,1);
@@ -61,10 +54,8 @@ public class redirect {
 
         int limit = this.configurationService.getAllConfiguration().get(0).getNumberViewPost();
         modelMap.addAttribute("userDAO",this.userService);
-
         postList = this.postService.getPublic((page-1)*limit,limit);
-        this.requestService.setResponse(modelMap,postList, this.postService.getCountPublic(), page,"home",null);
-        modelMap.addAttribute("limit",limit);
+        RequestService.setResponse(modelMap,limit,postList,this.postService.getCountPublic());
         return "home";
     }
 
@@ -77,16 +68,14 @@ public class redirect {
         List<Post> postSlideBar = this.postService.getPublic(0, this.configurationService.getAllConfiguration().get(0).getNumberViewPost());
         modelMap.addAttribute("postSlideBar",postSlideBar);
 
-        if(!StringUtils.isNumeric(id) || this.postService.find(Integer.valueOf(id)) == null)
-        {
-            throw new NotFindException("Not find post " +id);
+        if(!StringUtils.isNumeric(id) || this.postService.find(Integer.valueOf(id)) == null) {
+            throw new NotFindException(NotFindException.POST_NOT_FOUND);
         }
 
         Post post = this.postService.find(Integer.valueOf(id));
         post.setNumberView(post.getNumberView()+1);
         this.postService.save(post);
         modelMap.addAttribute("post",post);
-        modelMap.addAttribute("active","post");
         return "post";
     }
 
@@ -96,5 +85,9 @@ public class redirect {
         return "ProcessExceptions";
     }
 
+    @RequestMapping(value = "/404")
+    public String page404(){
+        return "404";
+    }
 
 }
