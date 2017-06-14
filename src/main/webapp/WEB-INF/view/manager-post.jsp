@@ -19,10 +19,10 @@
             <jsp:include page="templates/menus/menu-admin.jsp"/>
         </div>
         <c:if test="${postList.size()!=0}">
-            <h1 class="text-center">${messageSource.getMessage("listpost",null,locale)}</h1>
+            <h1 class="text-center"><s:message code="listpost"/></h1>
         </c:if>
         <c:if test="${postList.size()==0}">
-            <h1 class="text-center">${messageSource.getMessage("notpost",null,locale)}</h1>
+            <h1 class="text-center"><s:message code="notpost.approve"/></h1>
         </c:if>
         <div class="col-md-10 col-xs-12 ">
             <div class="text-center">
@@ -34,7 +34,7 @@
 
             <p class="error">
                 <c:if test="${requestScope.error != null}">
-                    ${messageSource.getMessage(requestScope.error,null,locale)}
+                    <s:message code="${requestScope.error}"/>
                 </c:if>
             </p>
 

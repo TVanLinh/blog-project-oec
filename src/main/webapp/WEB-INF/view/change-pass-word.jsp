@@ -18,29 +18,29 @@
                 <form:input path="user.userName" type="hidden" value="${requestScope.user.userName}"/>
                 <form:input path="user.passWord" type="hidden" value="${requestScope.user.passWord}"/>
                 <div class="form-group">
-                    <label for="oldPassWord">${messageSource.getMessage("passWord",null,locale)} ${messageSource.getMessage("old",null,locale)}:</label>
+                    <label for="oldPassWord"><s:message code="passWord"/> <s:message code="old"/>:</label>
                     <form:input path="oldPassWord" type="password" class="form-control " name="oldPassWord" id="oldPassWord"/>
                 </div>
 
                 <div class="form-group">
-                    <label for="passWord">${messageSource.getMessage("passWord",null,locale)} ${messageSource.getMessage("new",null,locale)}:</label>
+                    <label for="passWord"><s:message code="passWord"/> <s:message code="new"/>:</label>
                     <input:input path="newPassWord" type="password" class="form-control " name="passWord" id="passWord"/>
                 </div>
 
                 <div class="form-group">
-                    <label for="passWord">${messageSource.getMessage("rePassWord",null,locale)}:</label>
+                    <label for="passWord"><s:message code="rePassWord"/>:</label>
                     <form:input path="rePassWord" type="password" class="form-control " name="rePassWord" id="rePassWord"/>
                 </div>
 
                 <input type="submit" class="btn btn-default" value="${messageSource.getMessage("save",null,locale)}" onsubmit="return checkFormValidPassWord()" onclick="return checkFormInsertUser()">
                 <p class="pd-10 error">
                     <c:if test="${requestScope.error != null}">
-                        ${messageSource.getMessage(requestScope.error,null,locale)}
+                        <s:message code="${requestScope.error}"/>
                     </c:if>
                 </p>
                 <c:if test="${requestScope.errors != null}">
                     <c:forEach var="item" items="${requestScope.errors}">
-                        ${messageSource.getMessage(item,null,locale)}
+                        <s:message code="${item}"/>
                     </c:forEach>
                 </c:if>
             </form:form>

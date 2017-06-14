@@ -9,17 +9,17 @@
 
 <a class="btn btn-danger menu-item  mgb-15 " href="<s:url value="/admin"/>">
     <i class="fa fa-book mgr-10 mgl--20" aria-hidden="true"></i>
-    ${messageSource.getMessage("post.not.approve",null,locale)}
+    <s:message code="post.not.approve"/>
 </a>
 <a class="btn btn-danger menu-item  mgb-15" href="<s:url value="/manager-post"/>">
     <i class="fa fa-book mgr-10 mgl--20" aria-hidden="true"></i>
-    ${messageSource.getMessage("managerPost",null,locale)}
+    <s:message code="managerPost"/>
 </a>
 <a class="btn btn-success menu-item  mgb-15" href="<s:url value="/configuration"/>">
     <span class="glyphicon glyphicon-cog mgr-10"></span>
-    ${messageSource.getMessage("configSystem",null,locale)}
+    <s:message code="configSystem"/>
 </a>
 
 <a class=" btn btn-warning menu-item  mgb-15" href="<s:url value="/manager-user"/>">
-    <i class="glyphicon glyphicon-user mgr-10"></i>${messageSource.getMessage("managerUser",null,locale)}
+    <i class="glyphicon glyphicon-user mgr-10"></i><s:message code="managerUser"/>
 </a>

@@ -14,14 +14,27 @@
       <thead>
           <tr>
               <th data-th="Driver details"><span>STT</span></th>
-              <th data-th="Driver details"><a href="<s:url value="/manager-post?orderBy=id_user"/>"><img src="<s:url value="public/asserts/images/sort.png" />"><span class="dp-inline">${messageSource.getMessage("td.author",null,locale)}</span></a></th>
-              <th class="text-center"><a href="<s:url value="/manager-post?orderBy=title"/>"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("td.title",null,locale)}</a></th>
-              <th><a href="<s:url value="/manager-post?orderBy=time_post"/>"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("td.timePost",null,locale)}</a></th>
-              <th><a href="<s:url value="/manager-post?orderBy=status"/>"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("td.status",null,locale)}</a></th>
-              <th><a href="<s:url value="/manager-post?orderBy=approve"/>"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("td.approve",null,locale)}</a></th>
-              <th><a href="<s:url value="/manager-post?orderBy=number_like"/>"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("nLike",null,locale)}</a></th>
-              <th><a href="<s:url value="/manager-post?orderBy=number_view"/>"><img src="<s:url value="public/asserts/images/sort.png" />">${messageSource.getMessage("nView",null,locale)}</a></th>
-              <th>${messageSource.getMessage("td.action",null,locale)}</th>
+              <th data-th="Driver details"><a href="<s:url value="/manager-post?orderBy=id_user"/>"><img
+                      src="<s:url value="public/asserts/images/sort.png" />"><span class="dp-inline"><s:message
+                      code="td.author"/></span></a></th>
+              <th class="text-center"><a href="<s:url value="/manager-post?orderBy=title"/>"><img
+                      src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message code="td.title"/></a>
+              </th>
+              <th><a href="<s:url value="/manager-post?orderBy=time_post"/>"><img
+                      src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message
+                      code="td.timePost"/></a></th>
+              <th><a href="<s:url value="/manager-post?orderBy=status"/>"><img
+                      src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message code="td.status"/></a>
+              </th>
+              <th><a href="<s:url value="/manager-post?orderBy=approve"/>"><img
+                      src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message
+                      code="td.approve"/></a></th>
+              <th><a href="<s:url value="/manager-post?orderBy=number_like"/>"><img
+                      src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message code="nLike"/></a>
+              </th>
+              <th><a href="<s:url value="/manager-post?orderBy=number_view"/>"><img
+                      src="<s:url value="public/asserts/images/sort.png" />"><s:message code="nView"/></a></th>
+              <th><s:message code="td.action"/></th>
           </tr>
       </thead>
         <tbody id="table-all-post">
@@ -51,8 +64,12 @@
                 <td>${post.numberLike}</td>
                 <td>${post.numberView}</td>
                 <td>
-                     <a href="<s:url value="/manager-post-delete?page=${paramPage}&id=${post.id}"/>" title="${messageSource.getMessage("delete",null,locale)}" onclick="return window.confirm('${messageSource.getMessage("confirm.delete.post",null,locale)}')"> <i class="fa fa-trash-o"></i></a>
-                     <a href="<s:url value="/update?action=update&id=${post.id}"/>" title="${messageSource.getMessage("edit",null,locale)}"><i class="fa fa-pencil-square-o mgl-15"></i></a>
+                    <a href="<s:url value="/manager-post-delete?page=${paramPage}&id=${post.id}"/>"
+                       title="<s:message code="delete" />"
+                       onclick="return window.confirm('<s:message code="confirm.delete.post"/>')"> <i
+                            class="fa fa-trash-o"></i></a>
+                    <a href="<s:url value="/update?action=update&id=${post.id}"/>" title="<s:message code="edit" />"><i
+                            class="fa fa-pencil-square-o mgl-15"></i></a>
                 </td>
             </tr>
         </c:forEach>

@@ -9,20 +9,20 @@
 <div class="login">
     <div class="login-triangle"></div>
 
-    <h2 class="login-header">${messageSource.getMessage("login",null,locale)}</h2>
+    <h2 class="login-header"><s:message code="login"/></h2>
 
     <form name="loginForm" class="login-container" action="<c:url value="/login"/> " method="post">
-        <p><input id="username"  name="username" type="text" placeholder="${messageSource.getMessage("name",null,locale)}"></p>
-        <p><input id="password"    name="password" type="password" placeholder="${messageSource.getMessage("passWord",null,locale)}"></p>
-        <p><input type="submit" value="${messageSource.getMessage("login",null,locale)}" onclick="return checkForm.checkLogin()"></p>
+        <p><input id="username" name="username" type="text" placeholder="<s:message code="name" />"></p>
+        <p><input id="password" name="password" type="password" placeholder="<s:message code="passWord" />"></p>
+        <p><input type="submit" value="<s:message code="by" />" onclick="return checkForm.checkLogin()"></p>
         <center><span class="login-error">
             <c:if test="${not empty error}">
-                <div class="error">${messageSource.getMessage(requestScope.error,null,locale)}</div>
+                <div class="error"><s:message code="${requestScope.error}"/></div>
             </c:if>
         </span></center>
         <span class="login-success">
             <c:if test="${not empty msg}">
-                <div class="msg"> ${messageSource.getMessage(requestScope.msg,null,locale)}</div>
+                <div class="msg"> <s:message code="${requestScope.msg}"/></div>
             </c:if>
         </span>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

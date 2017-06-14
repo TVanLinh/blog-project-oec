@@ -21,10 +21,10 @@
 
         <div class="col-md-10 col-xs-12 ">
             <c:if test="${userList.size()!=0}">
-                <h1 class="text-center">${messageSource.getMessage("listuser",null,locale)}</h1>
+                <h1 class="text-center"><s:message code="listuser"/></h1>
             </c:if>
             <c:if test="${userList.size()==0}">
-                <h1 class="text-center">${messageSource.getMessage("notuser",null,locale)}</h1>
+                <h1 class="text-center"><s:message code="notuser"/></h1>
             </c:if>
             <!----------------end list-table ------------------------->
             <div class="text-center">
@@ -34,9 +34,11 @@
                 </jsp:include>
             </div>
             <div>
-                <a class="btn btn-default mgb-15 mgt-20" href="<s:url value="/insert-user"/>"><img src="<s:url value="public/asserts/images/add_user.png"/> " class="mgr-10">${messageSource.getMessage("insertUser",null,locale)}</a>
+                <a class="btn btn-default mgb-15 mgt-20" href="<s:url value="/insert-user"/>"><img
+                        src="<s:url value="public/asserts/images/add_user.png"/> " class="mgr-10"><s:message
+                        code="insertUser"/></a>
                 <c:if  test="${requestScope.error != null}">
-                    <span class="error">${messageSource.getMessage(requestScope.error,null,locale)}</span>
+                    <span class="error"><s:message code="${requestScope.error}"/></span>
                 </c:if>
             </div>
 

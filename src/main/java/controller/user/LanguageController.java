@@ -19,13 +19,13 @@ public class LanguageController {
     @RequestMapping("/language")
     public String changeLanguage(HttpServletRequest request, @RequestParam String language) {
 
-        if(language == null) {
-            setResource(request,"i18n/blog_vn_VN",new Locale("vn","VN"));
-        }else if(language.trim().equalsIgnoreCase("en")) {
-            setResource(request,"i18n/blog_en_US",new Locale("en","US"));
-        }else {
-            setResource(request,"i18n/blog_vn_VN",new Locale("vn","VN"));
-        }
+//        if(language == null) {
+//            setResource(request,"i18n/blog_vn_VN",new Locale("vn","VN"));
+//        }else if(language.trim().equalsIgnoreCase("en")) {
+//            setResource(request,"i18n/blog_en_US",new Locale("en","US"));
+//        }else {
+//            setResource(request,"i18n/blog_vn_VN",new Locale("vn","VN"));
+//        }
 
         return "redirect:/";
     }

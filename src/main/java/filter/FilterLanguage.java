@@ -1,11 +1,8 @@
 package filter;
 
-import org.springframework.context.support.ResourceBundleMessageSource;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Locale;
 
 /**
  * Created by linhtran on 17/05/2017.
@@ -29,10 +26,10 @@ public class FilterLanguage implements Filter{
 
     public  void setReSource(HttpServletRequest request)
     {
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("i18n/blog_vn_VN");
-        messageSource.setDefaultEncoding("UTF-8");
-        request.getSession().setAttribute("messageSource",messageSource);
-        request.getSession().setAttribute("locale",new Locale("vn","VN"));
+//        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+//        messageSource.setBasename("i18n/blog_vn_VN");
+//        messageSource.setDefaultEncoding("UTF-8");
+//        request.getSession().setAttribute("messageSource",messageSource);
+//        request.getSession().setAttribute("locale",new Locale("vn","VN"));
     }
 }

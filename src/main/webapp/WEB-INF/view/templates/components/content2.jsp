@@ -4,13 +4,13 @@
     <!-- First Blog Post -->
     <h2><a href="<s:url value="/post?id=${post.id}"/>" target="_self">${post.title} </a></h2> <!--button>${post.id}</button-->
     <span class="lead">
-        <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span>
+        <span class="fs-15"><s:message code="by"/></span>
         <a href="/list-post-by-user?username=${post.user.userName}" class="fs-15">${post.user.userName}</a>
     </span>
 
     <jsp:useBean id="dateUtil" class="utils.date.DateFormatUtil" scope="session"/>
     <p>
-        <span>${messageSource.getMessage("postTime",null,locale)}</span>
+        <span><s:message code="postTime"/></span>
         <span> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</span>
 
         <c:if test="${post.user.userName==sessionScope.username}">
@@ -43,7 +43,7 @@
     </c:if>
 
     <a class="btn btn-primary" href="<s:url value="/post?id=${post.id}"/>" target="_self">
-        <span>${messageSource.getMessage("read",null,locale)}</span>
+        <span><s:message code="read"/></span>
         <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
 
@@ -51,7 +51,8 @@
         <a id="action-update" href="<s:url value="/update?action=update&id=${post.id}"/>" title=" ${messageSource.getMessage("edit",null,locale)}">
             <i class="fa fa-pencil-square-o mgl-15" aria-hidden="true"></i>
         </a>
-        <a id="action-" onclick="return window.confirm('${messageSource.getMessage("confirm.delete.post",null,locale)}')" title=" ${messageSource.getMessage("delete",null,locale)}" href="<s:url value="/delete-post?id=${post.id}"/>">
+        <a id="action-" onclick="return window.confirm('<s:message code="confirm.delete.post"/>')"
+           title="<s:message code="delete" />" href="<s:url value="/delete-post?id=${post.id}"/>">
             <i class="fa fa-trash-o mgl-15"></i>
         </a>
     </c:if>

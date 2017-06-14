@@ -23,16 +23,16 @@
         <div class="col-xs-12">
         <c:if test="${requestScope.totalList<=0}">
             <H3>
-                    ${messageSource.getMessage("noRecord",null,locale)}
+                <s:message code="recordFrom"/>
             </H3>
         </c:if>
             <c:if test="${requestScope.totalList>0}">
                     <p class="fs-20">
-                        <span>${messageSource.getMessage("resultFind",null,locale)} </span>
+                        <span><s:message code="resultFind"/> </span>
                         <span>${requestScope.totalList}</span>
-                        <span class="pd-10">${messageSource.getMessage("recordFrom",null,locale)}</span>
+                        <span class="pd-10"><s:message code="recordFrom"/></span>
                         <span>${(paramPage-1)*requestScope.limit+1} </span>
-                        <span class="pd-10">${messageSource.getMessage("to",null,locale)}</span>
+                        <span class="pd-10"><s:message code="to"/></span>
                         <span>${(paramPage-1)*requestScope.limit+requestScope.postList.size()}</span>
                     </p>
             </c:if>

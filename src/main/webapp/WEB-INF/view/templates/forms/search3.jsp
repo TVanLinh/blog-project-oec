@@ -1,5 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../components/import_libary.jsp" %>
 <div >
         <form method="get" action="<s:url value="${param.action}"/> " onsubmit="return mySearch.checkFormSearchValid('#search')">
             <div class="input-group search">
@@ -26,12 +25,12 @@
     <c:if test="${requestScope.postList.size()>0}">
 
         <H3 class="pdt-10 pdb-10">
-            <span class="pd-10">${messageSource.getMessage("recordFrom",null,locale)}</span>
+            <span class="pd-10"><s:message code="recordFrom"/></span>
             <span>${(paramPage-1)*requestScope.limit+1} </span>
-            <span class="pd-10">${messageSource.getMessage("to",null,locale)}</span>
+            <span class="pd-10"><s:message code="to"/></span>
             <span>${(paramPage-1)*requestScope.limit+requestScope.postList.size()}</span>
             <span class="pd-10">
-                    ${messageSource.getMessage("in",null,locale)}
+                    <s:message code="in"/>
             </span>
             <span>${requestScope.totalList}</span>
         </H3>

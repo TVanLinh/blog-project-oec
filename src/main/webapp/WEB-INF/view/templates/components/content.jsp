@@ -6,7 +6,7 @@
     <h2><a href="<s:url value="/post?id=${post.id}"/>" target="_self">${post.title} </a></h2>
 
     <span class="lead">
-        <span class="fs-15">${messageSource.getMessage("by",null,locale)}</span>
+        <span class="fs-15"><s:message code="by"/></span>
         <a href="/list-post-by-user?username=${post.user.userName}" class="fs-15">${post.user.userName}</a>
     </span>
 
@@ -35,15 +35,17 @@
     </c:if>
 
     <a class="btn btn-primary" href="<s:url value="/post?id=${post.id}"/>" target="_self">
-        <span>${messageSource.getMessage("read",null,locale)} </span>
+        <span><s:message code="read"/></span>
         <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
 
     <c:if test="${sessionScope.username!=null && post.user.userName==sessionScope.username}">
-        <a id="action-update" href="<s:url value="/update?action=update&id=${post.id}"/>" title=" ${messageSource.getMessage("edit",null,locale)}">
+        <a id="action-update" href="<s:url value="/update?action=update&id=${post.id}"/>"
+           title="<s:message code="edit" />">
             <i class="fa fa-pencil-square-o mgl-15" aria-hidden="true"></i>
         </a>
-        <a id="action-" onclick="return window.confirm('${messageSource.getMessage("confirm.delete.post",null,locale)}')" title=" ${messageSource.getMessage("delete",null,locale)}" href="<s:url value="/delete-post?id=${post.id}"/>">
+        <a id="action-" onclick="return window.confirm('<s:message code="confirm.delete.post"/>')"
+           title=" <s:message code="delete" />" href="<s:url value="/delete-post?id=${post.id}"/>">
             <i class="fa fa-trash-o mgl-15"></i>
         </a>
     </c:if>

@@ -17,7 +17,7 @@
 
             <!--content--->
             <c:if test="${requestScope.error != null}">
-                ${messageSource.getMessage(requestScope.error,null,locale)}
+                <s:message code="${requestScope.error}"/>
             </c:if>
             <!--end content---->
             <div id="comment">

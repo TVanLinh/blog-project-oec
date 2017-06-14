@@ -29,11 +29,11 @@
 
             <form:form ACTION="${action}" METHOD="post" commandName="configuration" >
                 <div class="form-group">
-                    <label for="titleBlog">${messageSource.getMessage("titleBlog",null,locale)}:</label>
+                    <label for="titleBlog"><s:message code="titleBlog"/>:</label>
                     <input:input path="webTitle" type="text" class="form-control " name="titleBlog" id="titleBlog" value="${requestScope.conf.webTitle}"/>
                 </div>
                 <div class="form-group">
-                    <label for="formatTime" id="formatTime" >${messageSource.getMessage("fomatDate",null,locale)}:</label>
+                    <label for="formatTime" id="formatTime"><s:message code="fomatDate"/>:</label>
 
                     <form:select path="dateFormat" class="form-control"  name="formatTime" >
                         <c:if test="${confService.isHaveFormatTime(requestScope.conf,'HH:mm:ss dd/MM/yyyy')}">
@@ -69,19 +69,19 @@
                     <%--<input type="text" class="form-control pd-0" name="formatTime" id="formatTime">--%>
                 </div>
                 <div class="form-group">
-                    <label for="numberPost">${messageSource.getMessage("numberView",null,locale)}:</label>
+                    <label for="numberPost"><s:message code="numberView"/>:</label>
                     <form:input path="numberViewPost" type="number" min="1"  value="${requestScope.conf.numberViewPost}" class="form-control pd-0" name="numberPost" id="numberPost"/>
                 </div>
-                <input type="submit" class="btn btn-default" value="${messageSource.getMessage("save",null,locale)}">
+                <input type="submit" class="btn btn-default" value="<s:message code="save" />">
                 <p class="pd-10 error">
                     <c:if test="${requestScope.errors != null}">
                         <c:forEach var="item" items="${requestScope.errors}">
-                            ${messageSource.getMessage(item,null,locale)}
+                            <s:message code="${item}"/>
                         </c:forEach>
                     </c:if>
 
                     <c:if test="${requestScope.success != null}">
-                        ${messageSource.getMessage(requestScope.success,null,locale)}
+                        <s:message code="${requestScope.success}"/>
                     </c:if>
                 </p>
             </form:form>

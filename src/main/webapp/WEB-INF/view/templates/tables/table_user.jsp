@@ -6,9 +6,11 @@
         <thead>
             <tr>
                 <th data-th="Driver details"><span>STT</span></th>
-                <th data-th="Driver details"><a href="<s:url value="/manager-user?orderBy=user_name"/>"><img src="<s:url value="public/asserts/images/sort.png" />"> <span class="dp-inline">${messageSource.getMessage("name",null,locale)}</span></a></th>
-                <th><a href="<s:url value="/manager-user"/>">${messageSource.getMessage("role",null,locale)}</a></th>
-                <th>${messageSource.getMessage("td.action",null,locale)}</th>
+                <th data-th="Driver details"><a href="<s:url value="/manager-user?orderBy=user_name"/>"><img
+                        src="<s:url value="public/asserts/images/sort.png" />"> <span class="dp-inline"><s:message
+                        code="name"/></span></a></th>
+                <th><a href="<s:url value="/manager-user"/>"><s:message code="role"/></a></th>
+                <th><s:message code="td.action"/></th>
             </tr>
         </thead>
         <tbody id="table-all-user">
@@ -19,8 +21,12 @@
                 <td>${user.userName}</td>
                 <td>${roleService.getStringFromListRole(user.roleList)}</td>
                 <td>
-                    <a href="<s:url value="/delete-user?page=${requestScope.page}&id=${user.id}"/>" title="${messageSource.getMessage("delete",null,locale)}" onclick="return window.confirm('${messageSource.getMessage("confirm.delete.user",null,locale)}')"> <i class="fa fa-trash-o"></i></a>
-                    <a href="<s:url value="/update-user?id=${user.id}"/>" title="${messageSource.getMessage("edit",null,locale)}"><i class="fa fa-pencil-square-o mgl-15" aria-hidden="true"></i></a>
+                    <a href="<s:url value="/delete-user?page=${requestScope.page}&id=${user.id}"/>"
+                       title="<s:message code="delete" />"
+                       onclick="return window.confirm('<s:message code="confirm.delete.post"/>')"> <i
+                            class="fa fa-trash-o"></i></a>
+                    <a href="<s:url value="/update-user?id=${user.id}"/>" title="<s:message code="edit" />"><i
+                            class="fa fa-pencil-square-o mgl-15" aria-hidden="true"></i></a>
                 </td>
             </tr>
         </c:forEach>

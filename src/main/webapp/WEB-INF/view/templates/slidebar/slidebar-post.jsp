@@ -1,6 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../components/import_libary.jsp" %>
 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-       <H3 class="color-red bgc-color-gray fs-25  pd-15 mgb-25" >${messageSource.getMessage("postnew",null,locale)}</H3>
+    <H3 class="color-red bgc-color-gray fs-25  pd-15 mgb-25"><s:message code="postnew"/></H3>
     <ul class="media-list main-list" id="content-slidebar">
         <c:forEach var="post" items="${postSlideBar}">
             <li class="media" >
@@ -14,7 +14,7 @@
                     <h4 class="media-heading">${post.title}</h4>
                     <p class="by-user color-main2">By ${post.user.userName}</p>
                     <!-- Pager -->
-                    <a href="/post?id=${post.id}">${messageSource.getMessage("read",null,locale)}</a>
+                    <a href="/post?id=${post.id}"><s:message code="read"/></a>
                 </div>
             </li>
         </c:forEach>

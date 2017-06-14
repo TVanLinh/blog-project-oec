@@ -1,3 +1,4 @@
+<%@include file="../components/import_libary.jsp" %>
 <div class="container">
     <div class="col-sm-6 col-xs-12">
         <c:if test="${not empty error}">
@@ -9,10 +10,10 @@
 
         <div id="form-login" class="modal">
 
-            <form name='loginForm' class="modal-content animate" action="<c:url value='/j_spring_security_check' />" method="post">
+            <form name='loginForm' class="modal-content animate" action="<s:url value='/j_spring_security_check' />"
+                  method="post">
                 <div class="imgcontainer">
                     <span onclick="document.getElementById('form-login').style.display='none'" class="close" title="Close Modal">&times;</span>
-                    <%--<img src="img_avatar2.png" alt="Avatar" class="avatar">--%>
                 </div>
 
                 <div class="container">

@@ -13,4 +13,28 @@
     <mvc:resources mapping="/public/**" location="/public/"/>
     <context:component-scan base-package="controller, filter, utils"/>
     <context:annotation-config/>
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:i18n/blog"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="fileEncodings" value="UTF-8"/>
+    </bean>
+
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="vn_VN"/>
+    </bean>
+
+    <!--<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">-->
+    <!--<property name="defaultLocale" value="vn" />-->
+    <!--<property name="cookieName" value="myAppLocaleCookie"/>-->
+    <!--<property name="cookieMaxAge" value="3600"/>-->
+    <!--</bean>-->
+
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="language"/>
+        </bean>
+    </mvc:interceptors>
 </beans>

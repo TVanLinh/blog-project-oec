@@ -19,19 +19,20 @@
    </div>
     <select name="status" class="form-control" id="status" >
         <c:if test="${param.status == 1 }">
-            <option value="1" selected>${messageSource.getMessage("public",null,locale)}</option>
-            <option value="0" >${messageSource.getMessage("private",null,locale)}</option>
+            <option value="1" selected><s:message code="public"/></option>
+            <option value="0"><s:message code="private"/></option>
         </c:if>
         <c:if test="${param.status == 0 }">
-            <option value="1" >${messageSource.getMessage("public",null,locale)}</option>
-            <option value="0" selected>${messageSource.getMessage("private",null,locale)}</option>
+            <option value="1"><s:message code="public"/></option>
+            <option value="0" selected><s:message code="private"/></option>
         </c:if>
         <c:if test="${param.status !=1 && param.status != 0 }">
-            <option value="1" >${messageSource.getMessage("public",null,locale)}</option>
-            <option value="0" >${messageSource.getMessage("private",null,locale)}</option>
+            <option value="1"><s:message code="public"/></option>
+            <option value="0"><s:message code="private"/></option>
         </c:if>
     </select>
     <input class="hide" name="link-image" id="link-image" type="text" >
     <input class="hide" name="alt-image" id="alt-image" type="text" >
-    <input type="submit"  value="${messageSource.getMessage("save",null,locale)}" class="mgt-25 btn btn-default" onclick="return checkForm.getImages()" onsubmit="return checkForm.getImages()">
+    <input type="submit" value="<s:message code="save" />" class="mgt-25 btn btn-default"
+           onclick="return checkForm.getImages()" onsubmit="return checkForm.getImages()">
 </form:form>

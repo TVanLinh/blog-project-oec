@@ -16,7 +16,7 @@
         <div class="col-xs-12 col-sm-12 ">
 
             <!--content--->
-                ${messageSource.getMessage("page.not.found",null,locale)}
+            <s:message code="page.not.found"/>
             <!--end content---->
             <div id="comment">
                 <%--<jsp:include page="templates/components/comment.jsp"/>--%>

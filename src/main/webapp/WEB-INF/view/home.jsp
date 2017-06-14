@@ -16,16 +16,16 @@
                     <jsp:useBean id="dateUtil" class="utils.date.DateFormatUtil" scope="session"/>
                   <p class="error">
                       <c:if test="${requestScope.error != null}">
-                          ${messageSource.getMessage(requestScope.error,null,locale)}
+                          <s:message code="${requestScope.error}"/>
                       </c:if>
                       <c:if test="${param.error != null}">
-                          ${messageSource.getMessage(param.error,null,locale)}
+                          <s:message code="${requestScope.error}"/>
                       </c:if>
                   </p>
                  <!--------------content-->
                  <jsp:include page="templates/components/content.jsp"/>
-
                  <!------end content------>
+
                     <!---pagination------->
                 <jsp:include page="templates/paginations/pagi_1.jsp">
                     <jsp:param name="pageTarget" value="/home"/>

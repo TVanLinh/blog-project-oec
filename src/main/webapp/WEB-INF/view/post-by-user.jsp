@@ -16,7 +16,7 @@
         <!-- Blog Entries Column -->
         <div class="col-xs-12">
             <h3>
-                ${messageSource.getMessage("postOf",null,locale)} <span class="color-main2">${param.username}</span>
+                <s:message code="postOf"/> <span class="color-main2">${param.username}</span>
             </h3>
 
             <jsp:include page="templates/components/content2.jsp"/>

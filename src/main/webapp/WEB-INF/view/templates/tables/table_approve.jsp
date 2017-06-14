@@ -14,10 +14,16 @@
         <thead>
             <tr>
                 <th data-th="Driver details"><span>STT</span></th>
-                <th data-th="Driver details"><a href="<s:url value="/admin?orderBy=id_user"/>"><img src="<s:url value="public/asserts/images/sort.png" />"> <span class="dp-inline">${messageSource.getMessage("td.author",null,locale)}</span></a></th>
-                <th class="text-center"><a href="<s:url value="/admin?orderBy=title"/>"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("td.title",null,locale)}</a></th>
-                <th><a href="<s:url value="/admin?orderBy=time_post"/>"><img src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5">${messageSource.getMessage("td.timePost",null,locale)}</a></th>
-                <th>${messageSource.getMessage("td.action",null,locale)}</th>
+                <th data-th="Driver details"><a href="<s:url value="/admin?orderBy=id_user"/>"><img
+                        src="<s:url value="public/asserts/images/sort.png" />"> <span class="dp-inline"><s:message
+                        code="td.author"/></span></a></th>
+                <th class="text-center"><a href="<s:url value="/admin?orderBy=title"/>"><img
+                        src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message
+                        code="td.title"/></a></th>
+                <th><a href="<s:url value="/admin?orderBy=time_post"/>"><img
+                        src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message
+                        code="td.timePost"/></a></th>
+                <th><s:message code="td.action"/></th>
             </tr>
         </thead>
         <tbody id="table-post-approve">
@@ -29,9 +35,14 @@
                 <td><a href="<s:url value="/post?id=${post.id}"/>">${post.title}</a></td>
                 <td> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</td>
                 <td>
-                    <a href="<s:url value="/admin-approve-post?page=${paramPage}&id=${post.id}"/>" title="${messageSource.getMessage("approve",null,locale)} ">  <span class="glyphicon glyphicon-ok mgr-10"></span></a>
-                    <a href="<s:url value="/admin-delete-post?page=${paramPage}&id=${post.id}"/>" title="${messageSource.getMessage("delete",null,locale)} " onclick="return window.confirm('${messageSource.getMessage("confirm.delete.post",null,locale)}')"><i class="fa fa-trash-o"></i></a>
-                    <a href="<s:url value="/update?action=update&id=${post.id}"/>" title="${messageSource.getMessage("edit",null,locale)}"><i class="fa fa-pencil-square-o mgl-15" aria-hidden="true"></i></a>
+                    <a href="<s:url value="/admin-approve-post?page=${paramPage}&id=${post.id}"/>"
+                       title="<s:message code="approve" />"> <span class="glyphicon glyphicon-ok mgr-10"></span></a>
+                    <a href="<s:url value="/admin-delete-post?page=${paramPage}&id=${post.id}"/>"
+                       title="<s:message code="delete" /> "
+                       onclick="return window.confirm('<s:message code="confirm.delete.post"/>')"><i
+                            class="fa fa-trash-o"></i></a>
+                    <a href="<s:url value="/update?action=update&id=${post.id}"/>" title="<s:message code="edit" />"><i
+                            class="fa fa-pencil-square-o mgl-15" aria-hidden="true"></i></a>
 
                 </td>
             </tr>

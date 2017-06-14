@@ -23,10 +23,10 @@
                     <!---------------list table -------------------------->
 
                     <c:if test="${postList.size()==0}">
-                        <h1 class="text-center">${messageSource.getMessage("notpost.approve",null,locale)}</h1>
+                        <h1 class="text-center"><s:message code="notpost.approve"/></h1>
                     </c:if>
                     <c:if test="${postList.size()!=0}">
-                        <h1 class="text-center">${messageSource.getMessage("table.Aprrove",null,locale)}</h1>
+                        <h1 class="text-center"><s:message code="table.Aprrove"/></h1>
                     </c:if>
 
                     <div class="text-center">
@@ -37,7 +37,7 @@
                     </div>
 
                     <c:if  test="${requestScope.error != null}">
-                        <span class="error">${messageSource.getMessage(requestScope.error,null,locale)}</span>
+                        <span class="error"><s:message code="${requestScope.error}"/></span>
                     </c:if>
 
                     <c:if test="${param.query_search == null}">

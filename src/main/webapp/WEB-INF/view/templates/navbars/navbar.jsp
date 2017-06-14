@@ -20,23 +20,14 @@
 
 
                 <c:if test="${param.active=='write'}">
-                    <li><a href="<s:url value="/write"/>" class="active">${messageSource.getMessage("newpost",null,locale)}</a></li>
+                    <li><a href="<s:url value="/write"/>" class="active">
+                    <s:message code="newpost"/>
                 </c:if>
                 <c:if test="${param.active!='write'}">
-                    <li><a  href="<s:url value="/write"/>">${messageSource.getMessage("newpost",null,locale)}</a></li>
+                    <li><a href="<s:url value="/write"/>"> <s:message code="newpost"/></a></li>
                 </c:if>
             </c:if>
 
-
-            <%--<c:if  test="${sessionScope.username !=null}">--%>
-                <%--<c:if test="${requestScope.active=='admin'}">--%>
-                    <%--<li><a href="<s:url value="/admin"/>" class="active">Admin</a></li>--%>
-                <%--</c:if>--%>
-                <%--<c:if test="${requestScope.active!='admin'}">--%>
-                    <%--<li><a href="<s:url value="/admin"/>">Admin</a></li>--%>
-                <%--</c:if>--%>
-
-            <%--</c:if>--%>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
@@ -49,25 +40,29 @@
                         <img src="<s:url value="public/asserts/images/user_blue.png"/>">${sessionScope.username}
                     </a>
                     <ul class="dropdown-menu">
-                        <li>    <a href="<s:url value="/user"/>">${messageSource.getMessage("mypost",null,locale)}</a></li>
+                        <li><a href="<s:url value="/user"/>"><s:message code="mypost"/> </a></li>
                         <c:if test="${sessionScope.userService !=null && sessionScope.username != null}">
                             <c:if test="${sessionScope.userService.isRoleAdmin(sessionScope.userService.getUserByName(sessionScope.username)) == true}">
                                 <c:if test="${requestScope.active!='admin'}">
-                                    <li><a href="<s:url value="/admin"/>">${messageSource.getMessage("admin",null,locale)}</a></li>
+                                    <li><a href="<s:url value="/admin"/>"><s:message code="admin"/></a></li>
                                 </c:if>
                             </c:if>
                         </c:if>
-                        <li>    <a href="/change-pass-word">${messageSource.getMessage("changepass",null,locale)}</a></li>
-                        <li><a href="<s:url value="/logout"/>" >${messageSource.getMessage("logout",null,locale)}</a></li>
+                        <li><a href="/change-pass-word"> <s:message code="changepass"/></a>
+
+                        </li>
+                        <li><a href="<s:url value="/logout"/>"><s:message code="logout"/></a></li>
                     </ul>
                 </li>
 
             </c:if>
             <c:if  test="${sessionScope.username == null}">
-                <li><a href="<s:url value="/login"/>" ><span class="glyphicon glyphicon-log-in" ></span> ${messageSource.getMessage("login",null,locale)}</a></li>
+                <li><a href="<s:url value="/login"/>"><span class="glyphicon glyphicon-log-in"></span> <s:message
+                        code="login"/></a></li>
             </c:if>
             <li><a href="<s:url value="/language?language=en"/>"><img src="<s:url value="public/asserts/images/US.gif"/>" alt="USA"></a></li>
-            <li><a href="<s:url  value="/language?language=vi"/>"><img src="<s:url value="public/asserts/images/VI.gif"/>"></a></li>
+            <li><a href="<s:url  value="/language?language=vn"/>"><img
+                    src="<s:url value="public/asserts/images/VI.gif"/>"></a></li>
         </ul>
     </div>
 </nav>

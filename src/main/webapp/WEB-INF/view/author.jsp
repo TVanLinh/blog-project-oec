@@ -24,7 +24,7 @@
 
         <div class="col-xs-12">
             <c:if  test="${requestScope.error != null}">
-                <span class="error">${messageSource.getMessage(requestScope.error,null,locale)}</span>
+                <span class="error"><s:message code="${requestScope.error}"/></span>
             </c:if>
 
             <c:if test="${param.query_search == null}">
