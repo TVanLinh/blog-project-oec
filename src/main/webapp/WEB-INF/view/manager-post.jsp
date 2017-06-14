@@ -39,20 +39,24 @@
             </p>
 
 
-            <jsp:include page="templates/forms/select.jsp">
-                <jsp:param name="target" value="/manager-post"/>
-            </jsp:include>
+            <c:if test="${param.query_search == null}">
+                <jsp:include page="templates/forms/select.jsp">
+                    <jsp:param name="target" value="/manager-post"/>
+                    <jsp:param name="search" value="''"/>
+                </jsp:include>
+            </c:if>
 
+            <c:if test="${param.query_search != null}">
+                <jsp:include page="templates/forms/select.jsp">
+                    <jsp:param name="target" value="/manager-post-search"/>
+                    <jsp:param name="search" value="'${param.query_search}'"/>
+                </jsp:include>
+            </c:if>
 
             <jsp:include page="templates/tables/table_post_all.jsp"/>
 
         </div>
         <div class="clearfix"></div>
-
-        <%--<div class="col-xs-12">--%>
-            <%--<jsp:include page="templates/tables/table_post_all.jsp"/>--%>
-        <%--</div>--%>
-
 
 
     </div>

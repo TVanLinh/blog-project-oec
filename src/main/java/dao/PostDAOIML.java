@@ -72,7 +72,7 @@ public class PostDAOIML implements PostDAO {
         query.setParameter("idUser",idUser);
         query.setParameter("offset",offset);
         query.setParameter("limit",limit);
-        return  session.createNativeQuery(str, Post.class).getResultList();
+        return query.getResultList();
     }
 
     public List<Post> getPostByIdUser(int idUser) {

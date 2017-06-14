@@ -23,10 +23,6 @@
             </div>
 
         </div>
-
-        <%--<!-- Blog Sidebar Widgets Column -->--%>
-            <%--<jsp:include page="templates/slidebar/slidebar-post.jsp"/>--%>
-
     </div>
     <!-- /.row -->
 

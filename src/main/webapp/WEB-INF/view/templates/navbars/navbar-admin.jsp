@@ -46,9 +46,10 @@
                         <img src="<s:url value="public/asserts/images/user_blue.png"/>">${sessionScope.username}
                     </a>
                     <ul class="dropdown-menu">
-                        <li>    <a href="<s:url value="/user"/>">${messageSource.getMessage("mypost",null,locale)}</a></li>
-                        <li>    <a href="/change-pass-word">${messageSource.getMessage("changepass",null,locale)}</a></li>
-                        <li><a href="<s:url value="/logout"/>" >${messageSource.getMessage("logout",null,locale)}</a></li>
+                        <li><a href="<s:url value="/user"/>">${messageSource.getMessage("mypost",null,locale)}</a></li>
+                        <li><a href="/change-pass-word">${messageSource.getMessage("changepass",null,locale)}</a></li>
+                        <li><a href="<s:url value="/logout"/>">${messageSource.getMessage("logout",null,locale)}</a>
+                        </li>
                     </ul>
                 </li>
 

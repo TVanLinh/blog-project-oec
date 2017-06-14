@@ -16,7 +16,6 @@ import service.PostService;
 import service.PostSortService;
 import service.RequestService;
 import service.UserService;
-import utils.number.NumberViewSort;
 import utils.sort.PortSort;
 import utils.sort.SortType;
 import utils.string.StringSessionUtil;
@@ -93,11 +92,17 @@ public class UserPostController {
 
 
     @RequestMapping(value = "/user-post-search",method = RequestMethod.GET)
-    public  String searchTableAllPost(HttpServletRequest request,ModelMap modelMap,@RequestParam(value = "page",required = false)String pageRequest,@RequestParam(value = "query_search",required = false)String querySearch, Principal principal) {
+    public String searchTableAllPost(HttpServletRequest request, ModelMap modelMap, @RequestParam(value = "page", required = false) String pageRequest,
+                                     @RequestParam(value = "query_search", required = false) String querySearch,
+                                     @RequestParam(value = "number", required = false) String numberView) {
+
+        int limit = this.postService.getLimit(numberView);
         SortType sortType=this.portSort.getCurrentSortType(request,StringSessionUtil.CURRENT_POST_ALL_TYPE_SORT_BY_USER);
-        User user=this.userService.getUserByName(principal.getName());
+        User user = this.userService.getUserByName((String) request.getSession().getAttribute("username"));
         int page = NumberUtils.toInt(pageRequest,1);
-        RequestService.setResponse(modelMap,NumberViewSort.getNumberView(),this.postService.getPostByIdUser(sortType,querySearch,user.getId(),(page-1)*NumberViewSort.getNumberView()),this.postService.getPostByIdUser(user.getId()).size());
+        List<Post> postLists = this.postService.getPostByIdUser(sortType, querySearch, user.getId(), (page - 1) * limit, limit);
+        RequestService.setResponse(modelMap, limit, postLists, this.postService.getPostByIdUser(user.getId(), querySearch).size());
+        System.out.println(" ---------------------" + limit + "           " + postLists.size());
         return "author";
     }
 

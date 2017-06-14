@@ -15,8 +15,4 @@ public interface ImageDAO {
      Image find(int id);
 
      List<Image> getAllImage() ;
-
-
-     Image getImageByName(String name);
-
 }

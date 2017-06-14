@@ -12,7 +12,6 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import utils.number.NumberViewSort;
 import utils.sort.SortType;
 
 import java.util.List;
@@ -37,9 +36,9 @@ public class UserService  extends AbstractService<User> {
     public UserService() {
     }
 
-    public List<User> getUserBeginByUserName(String condition, SortType sortType, int offset)
+    public List<User> getUserBeginByUserName(String condition, SortType sortType, int offset, int limit)
     {
-        String str = "select * from user where user_name like :condition  order by "+sortType.orderBy +" "+sortType.typeOrder+" limit "+offset+","+NumberViewSort.NUMBER_VIEW;
+        String str = "select * from user where user_name like :condition  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
         Query query = sessionFactory.getCurrentSession().createNativeQuery(str,User.class);
         query.setParameter("condition","%"+condition+"%");
         return ( List<User>)query.getResultList();

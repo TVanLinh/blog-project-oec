@@ -13,11 +13,11 @@
 <div class="container-fluid">
     <!-- Blog Entries Column -->
     <div class="row">
-        <div class="col-md-3 col-xs-12">
+        <div class="col-lg-2 col-md-3 col-xs-12">
             <jsp:include page="templates/menus/menu-admin.jsp"/>
         </div>
         <s:url value="/action-insert-user" var="action"/>
-        <div class=" col-md-8 col-xs-12">
+        <div class="col-lg-8 col-md-8 col-xs-12">
             <form:form method="post" action="${action}" modelAttribute="userForm" onsubmit="return checkFormInsertUser()">
                 <div class="form-group">
                     <label for="userName">${messageSource.getMessage("name",null,locale)}:</label>

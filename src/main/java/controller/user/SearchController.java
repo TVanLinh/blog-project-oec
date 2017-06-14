@@ -15,6 +15,7 @@ import service.RequestService;
 import service.UserService;
 import utils.sort.SortType;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -36,34 +37,44 @@ public class SearchController {
     @RequestMapping(value = "/view-search")
     public  String  processSearchAll(ModelMap modelMap,
                                      @RequestParam(value = "page",required = false) String pageRequest,
-                                     @RequestParam(value = "title",required = false) String title){
+                                     @RequestParam(value = "query_search", required = false) String query_search) {
         int limit = this.configurationService.getAllConfiguration().get(0).getNumberViewPost();
         int  page = NumberUtils.toInt(pageRequest,1);
-        RequestService.setResponse(modelMap,limit, this.postService.getPostPublicByTitle(new SortType(),title,(page-1)*limit,limit),  this.postService.getPostPublicByTitle(new SortType(),title).size());
+        RequestService.setResponse(modelMap, limit, this.postService.getPostPublicByTitle(new SortType(), query_search, (page - 1) * limit, limit), this.postService.getPostPublicByTitle(new SortType(), query_search).size());
         return "view-search";
     }
 
 
     @RequestMapping(value = "/list-post-by-user")
-    public  String  getPostByUser( ModelMap modelMap,
-                                  @RequestParam(value = "username",required = false) String username,
-                                  @RequestParam(value = "page",required = false) String pageRequest ) throws NotFindException {
-        User user;
+    public String getPostByUser(HttpServletRequest request,
+                                ModelMap modelMap,
+                                @RequestParam(value = "username",required = false) String username,
+                                @RequestParam(value = "page",required = false) String pageRequest ) throws NotFindException {
         int limit = this.configurationService.getAllConfiguration().get(0).getNumberViewPost();
 
         modelMap.addAttribute("userDAO",this.userService);
 
         int  page = NumberUtils.toInt(pageRequest,1);
 
-        user = this.userService.getUserByName(username);
+        User user = this.userService.getUserByName(username);
         if(user == null) {
             throw new NotFindException(NotFindException.USER_NOT_FOUND);
         }
 
+        List<Post> posts;
+        int totalList;
         SortType sortType = new SortType();
         sortType.orderBy = "time_post";
-        List<Post>  posts=this.postService.getPost(user.getId(),1,1,sortType,(page-1)*limit,limit);
-        RequestService.setResponse(modelMap,limit,posts,this.postService.getPostByIdUser(user.getId()).size());
+        User userCurrent = this.userService.getUserByName((String) request.getSession().getAttribute("username"));
+
+        if (userCurrent != null && userCurrent.getId() == user.getId()) {
+            posts = this.postService.getPostByIdUser(user.getId(), (page - 1) * limit, limit);
+            totalList = this.postService.getPostByIdUser(user.getId()).size();
+        } else {
+            posts = this.postService.getPost(user.getId(), 1, 1, sortType, (page - 1) * limit, limit);
+            totalList = this.postService.getCount(user.getId(), 1, 1);
+        }
+        RequestService.setResponse(modelMap, limit, posts, totalList);
         return  "post-by-user";
     }
 }

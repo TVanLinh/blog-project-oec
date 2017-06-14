@@ -27,9 +27,19 @@
                 <span class="error">${messageSource.getMessage(requestScope.error,null,locale)}</span>
             </c:if>
 
-            <jsp:include page="templates/forms/select.jsp">
-                <jsp:param name="target" value="/user"/>
-            </jsp:include>
+            <c:if test="${param.query_search == null}">
+                <jsp:include page="templates/forms/select.jsp">
+                    <jsp:param name="target" value="/user"/>
+                    <jsp:param name="search" value="''"/>
+                </jsp:include>
+            </c:if>
+
+            <c:if test="${param.query_search != null}">
+                <jsp:include page="templates/forms/select.jsp">
+                    <jsp:param name="target" value="/user-post-search"/>
+                    <jsp:param name="search" value="'${param.query_search}'"/>
+                </jsp:include>
+            </c:if>
 
             <jsp:include page="templates/tables/table_post_by_user.jsp"/>
         </div>

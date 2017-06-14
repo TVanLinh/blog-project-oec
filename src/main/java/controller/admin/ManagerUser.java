@@ -211,7 +211,7 @@ public class ManagerUser {
         int page = NumberUtils.toInt(pageReques, 1);
         int limit = this.postService.getLimit(numberView);
         SortType sortType = this.sort.getCurrentSortType(request, StringSessionUtil.CURRENT_USER_SORT);
-        List<User> userList = this.userService.getUserBeginByUserName(querySearch, sortType, (page - 1) * limit);
+        List<User> userList = this.userService.getUserBeginByUserName(querySearch, sortType, (page - 1) * limit, limit);
         RequestService.setResponse(modelMap, limit, userList, this.userService.getCountBeginUserName(querySearch));
         return "manager-user";
     }

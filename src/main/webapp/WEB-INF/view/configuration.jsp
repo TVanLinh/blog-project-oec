@@ -18,10 +18,10 @@
 <div class="container-fluid">
     <!-- Blog Entries Column -->
     <div class="row">
-        <div class="col-md-3 col-xs-12">
+        <div class="col-lg-2 col-md-3 col-xs-12">
             <jsp:include page="templates/menus/menu-admin.jsp"/>
         </div>
-        <div class="col-md-8 col-xs-12">
+        <div class="col-lg-8 col-md-8 col-xs-12">
 
             <%--<jsp:include page="templates/menus/menu-admin.jsp"/>--%>
             <spring:url var="action" value="/processConfiguration"/>

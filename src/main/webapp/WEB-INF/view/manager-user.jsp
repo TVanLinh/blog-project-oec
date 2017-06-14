@@ -26,7 +26,6 @@
             <c:if test="${userList.size()==0}">
                 <h1 class="text-center">${messageSource.getMessage("notuser",null,locale)}</h1>
             </c:if>
-            <%--<jsp:include page="templates/table-list-user.jsp"/> --%>
             <!----------------end list-table ------------------------->
             <div class="text-center">
                 <jsp:include page="templates/forms/search3.jsp">
@@ -41,19 +40,23 @@
                 </c:if>
             </div>
 
+            <c:if test="${param.query_search == null}">
+                <jsp:include page="templates/forms/select.jsp">
+                    <jsp:param name="target" value="/manager-user"/>
+                    <jsp:param name="search" value="''"/>
+                </jsp:include>
+            </c:if>
 
-            <jsp:include page="templates/forms/select.jsp">
-                <jsp:param name="target" value="/manager-user"/>
-            </jsp:include>
+            <c:if test="${param.query_search != null}">
+                <jsp:include page="templates/forms/select.jsp">
+                    <jsp:param name="target" value="/manager-user-search"/>
+                    <jsp:param name="search" value="'${param.query_search}'"/>
+                </jsp:include>
+            </c:if>
 
 
             <jsp:include page="templates/tables/table_user.jsp"/>
          </div>
-    <%--<div class="col-xs-12">--%>
-
-        <%--<jsp:include page="templates/tables/table_user.jsp"/>--%>
-
-    <%--</div>--%>
     <hr>
 </div>
 <script src="<s:url value="/public/asserts/js/main.js"/>"></script>

@@ -35,15 +35,24 @@
                             <jsp:param name="action" value="/admin-search-post-approve"/>
                         </jsp:include>
                     </div>
+
                     <c:if  test="${requestScope.error != null}">
                         <span class="error">${messageSource.getMessage(requestScope.error,null,locale)}</span>
                     </c:if>
 
+                    <c:if test="${param.query_search == null}">
+                        <jsp:include page="templates/forms/select.jsp">
+                            <jsp:param name="target" value="/admin"/>
+                            <jsp:param name="search" value="''"/>
+                        </jsp:include>
+                    </c:if>
 
-                    <jsp:include page="templates/forms/select.jsp">
-                        <jsp:param name="target" value="/admin"/>
-                    </jsp:include>
-
+                    <c:if test="${param.query_search != null}">
+                        <jsp:include page="templates/forms/select.jsp">
+                            <jsp:param name="target" value="/admin-search-post-approve"/>
+                            <jsp:param name="search" value="'${param.query_search}'"/>
+                        </jsp:include>
+                    </c:if>
 
                     <jsp:include page="templates/tables/table_approve.jsp"/>
 

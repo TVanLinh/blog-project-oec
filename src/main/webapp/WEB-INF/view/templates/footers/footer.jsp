@@ -14,9 +14,6 @@
     </div>
 </footer>
 
-<%--<script src="<s:url value="/public/vendors/bootstrap/js/jquery.js"/>"></script>--%>
-<%--<script src="<s:url value="public/asserts/js/top.js"/>"></script>--%>
-<%--<script src="<s:url value="/public/vendors/bootstrap/js/bootstrap.min.js"/>"></script>--%>
 <script src="<s:url value="public/asserts/js/top.js"/>"></script>
 </body>
 </html>

@@ -23,13 +23,8 @@
             <div id="comment">
                 <%--<jsp:include page="templates/components/comment.jsp"/>--%>
             </div>
-
         </div>
-
     </div>
-    <!-- /.row -->
-
-    <!-- Footer -->
 
 </div>
 <!-- /.container -->

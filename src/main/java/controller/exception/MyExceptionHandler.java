@@ -14,7 +14,6 @@ public class MyExceptionHandler {
 
     @ExceptionHandler(NotFindException.class)
     public ModelAndView handlerNotFindException(NotFindException ex) {
-        System.out.println(ex.getMessage());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ProcessExceptions");
         modelAndView.addObject("error", ex.getMessage());
@@ -23,7 +22,6 @@ public class MyExceptionHandler {
 
     @ExceptionHandler(AccessDenieException.class)
     public ModelAndView handlerAccessDeniesException(AccessDenieException ex) {
-        System.out.println(ex.getMessage());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("error", ex.getMessage());
         modelAndView.setViewName("ProcessExceptions");

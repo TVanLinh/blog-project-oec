@@ -13,10 +13,10 @@
 <div class="container-fluid">
     <!-- Blog Entries Column -->
     <div class="row">
-        <div class="col-md-3 col-xs-12">
+        <div class="col-lg-2 col-md-3 col-xs-12">
             <jsp:include page="templates/menus/menu-admin.jsp"/>
         </div>
-        <div class="col-md-8 col-xs-12">
+        <div class="col-lg-8 col-md-8 col-xs-12">
             <s:url value="/action-update-user" var="formAction"/>
             <form:form ACTION="${formAction}" METHOD="post" onsubmit="return checkFormInsertUser()" commandName="userForm">
                 <form:input type="hidden" path="user.id" value="${param.id}"/>
@@ -67,10 +67,6 @@
             </form:form>
         </div>
         <div class="clearfix"></div>
-        <!-- Blog Sidebar Widgets Column -->
-        <%--<div>--%>
-            <%--<jsp:include page="templates/slidebar/slidebar.jsp"/>--%>
-        <%--</div>--%>
     </div>
     <!-- /.row -->
     <hr>

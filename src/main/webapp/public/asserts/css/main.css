@@ -165,5 +165,6 @@ li a#seachHomePage:focus{
 }
 
 #numberView {
-    width: 20%;
+    width: 100px;
+    margin-left: 60px;
 }

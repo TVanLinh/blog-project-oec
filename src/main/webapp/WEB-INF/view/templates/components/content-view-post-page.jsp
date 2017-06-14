@@ -8,12 +8,13 @@
 </span>
 
 <jsp:useBean id="dateUtil" class="utils.date.DateFormatUtil" scope="session"/>
-<p><span>${messageSource.getMessage("postTime",null,locale)}</span>
-    ${dateUtil.format(post.timePost,sessionScope.dateFormat)}
+<p>
+    <span>${messageSource.getMessage("postTime",null,locale)}</span>
+    <span>${dateUtil.format(post.timePost,sessionScope.dateFormat)}</span>
 </p>
 <hr>
 
-<!-- Post Content -->
+
 ${post.content}
 
 <jsp:useBean id="cookieUtils" type="utils.cookie.CookieUtils" scope="session" class="utils.cookie.CookieUtils"/>

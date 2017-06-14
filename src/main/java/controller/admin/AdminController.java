@@ -87,10 +87,9 @@ public class AdminController
                                           @RequestParam(value = "query_search", required = false) String querySearch,
                                           @RequestParam(value = "number", required = false) String numberView) {
         SortType sortType=this.portSort.getCurrentSortType(request,StringSessionUtil.CURRENT_APPROVE_POST);
-        List<Post> postList;
         int limit = this.postService.getLimit(numberView);
         int page = NumberUtils.toInt(pageRequest,1);
-        postList = this.postService.getContainsTitle(sortType, querySearch, 0, (page - 1) * limit);
+        List<Post> postList = this.postService.getContainsTitle(sortType, querySearch, 0, (page - 1) * limit, limit);
         RequestService.setResponse(modelMap, limit, postList, this.postService.getCountContainsTitle(querySearch, 0));
         return "admin";
     }

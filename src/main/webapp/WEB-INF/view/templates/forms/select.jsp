@@ -9,7 +9,7 @@
 
 <s:url value="${param.target}" var="action"/>
 
-<select name="number" class="form-control" id="numberView" onclick="myFunction('${action}',${paramPage})">
+<select name="number" class="form-control" id="numberView" onclick="myFunction('${action}',${param.search})">
 
     <c:if test="${param.number != 10 && param.number != 15 && param.number != 30 && param.number != 50 && param.number != 100}">
         <option value="10" selected>10</option>
@@ -56,9 +56,13 @@
 </select>
 
 <script>
-    function myFunction(pageTarget, numberPage) {
+    function myFunction(pageTarget, query) {
         var x = document.getElementById("numberView").value;
-//        window.location.href = pageTarget+"?page="+numberPage+"&number="+x;
-        window.location.href = pageTarget + "?number=" + x;
+        if (query === null || query === '') {
+            window.location.href = pageTarget + "?number=" + x;
+        } else {
+            window.location.href = pageTarget + "?number=" + x + "&query_search=" + query;
+        }
+
     }
 </script>

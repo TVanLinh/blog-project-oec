@@ -52,16 +52,4 @@ public class ImageDAOIML implements ImageDAO {
         List<Image> list = session.createNativeQuery("select * from postimage",Image.class).getResultList();
         return list;
     }
-
-
-    public Image getImageByName(String name) {
-        Session session = sessionFactory.getCurrentSession();
-        List<Image> list =  session.createNativeQuery("select * from user where user_name = '"+name+"'",Image.class).getResultList();
-        if(list == null)
-        {
-            return  null;
-        }
-        return list.get(0);
-    }
-
 }
