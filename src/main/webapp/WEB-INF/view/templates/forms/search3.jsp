@@ -2,7 +2,10 @@
 <div >
         <form method="get" action="<s:url value="${param.action}"/> " onsubmit="return mySearch.checkFormSearchValid('#search')">
             <div class="input-group search">
-                <input type="text" class="form-control " placeholder="${param.searchBy}" id="search" name="query_search" onsubmit="return mySearch.checkFormSearchValid('#search')" value="${param.query_search}">
+                <input type="text" class="form-control "
+                       placeholder="<s:message code="searchBy"/> <s:message code="title"/> " id="search"
+                       name="query_search" onsubmit="return mySearch.checkFormSearchValid('#search')"
+                       value="${param.query_search}">
                 <span class="input-group-btn">
                 <button class="btn btn-default" type="submit"  onclick="return mySearch.checkFormSearchValid('#search')" onsubmit="return mySearch.checkFormSearchValid('#search')" >
                     <span class="glyphicon glyphicon-search"></span>

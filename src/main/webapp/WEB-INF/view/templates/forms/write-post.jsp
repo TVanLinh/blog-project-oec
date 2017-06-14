@@ -4,10 +4,10 @@
 
 <s:url value="${param.action}" var="action"/>
 <form:form action="${action}" >
-    <label class="fs-20 capitalize" >${messageSource.getMessage("title",null,locale)}:</label>
+    <label class="fs-20 capitalize"><s:message code="title"/> :</label>
     <span class="error">
         <c:if test="${requestScope.error != null}">
-            ${messageSource.getMessage(requestScope.error,null,locale)}
+            <s:message code="${requestScope.error}"/>
         </c:if>
     </span>
     <%--<form:errors path="title"/>--%>

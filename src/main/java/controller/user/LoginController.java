@@ -67,13 +67,13 @@ public class LoginController {
                                        @ModelAttribute(value = "userForm") UserForm userForm, ModelMap modelMap,
                                        BindingResult bindingResult){;
         changePasswordValidator.validate(userForm,bindingResult);
+        User user = (User) request.getSession().getAttribute("userLogin");
         if(bindingResult.hasErrors()){
             modelMap.addAttribute("errors",changePasswordValidator.getCodeErrors(bindingResult));
-            request.setAttribute("user",this.userService.getUserByName((String) request.getSession().getAttribute("username")));
+            request.setAttribute("user", user);
             return "change-pass-word";
         }
 
-        User user = this.userService.getUserByName((String) request.getSession().getAttribute("username"));
         user.setPassWord(passwordEncoder.encode(userForm.getNewPassWord()));
         userService.save(user);
         redirectAttributes.addFlashAttribute(RequestService.MESSAGE,RequestService.UPDATE_SUCCESS);

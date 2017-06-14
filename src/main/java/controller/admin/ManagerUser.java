@@ -182,7 +182,7 @@ public class ManagerUser {
 
         //th doi chinh nguoi dang dang nhap
         if(principal.getName().equals(userCurrent.getUserName())) {
-            request.getSession().setAttribute("username",userForm.getUser().getUserName());
+            request.getSession().setAttribute("userLogin", userForm.getUser());
         }
 
         this.roleService.deleteByUserId(userForm.getUser().getId());

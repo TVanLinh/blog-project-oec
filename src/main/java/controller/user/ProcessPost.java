@@ -61,7 +61,7 @@ public class ProcessPost {
         }
 
         HttpSession session = request.getSession();
-        User user = this.userService.getUserByName((String) request.getSession().getAttribute("username"));
+        User user = (User) request.getSession().getAttribute("userLogin");
         post.setUser(user);
         int stt = NumberUtils.toInt(status,1);
         Calendar calendar = Calendar.getInstance();
@@ -117,7 +117,7 @@ public class ProcessPost {
             throw new NotFindException(NotFindException.POST_NOT_FOUND);
         }
 
-        User user = this.userService.getUserByName((String) request.getSession().getAttribute("username"));
+        User user = (User) request.getSession().getAttribute("userLogin");
 
         if(!this.userService.isEditPost(user,post)) {
             throw new AccessDenieException(AccessDenieException.ACCESS_NOT_ROLE_POST);
@@ -135,7 +135,6 @@ public class ProcessPost {
                                   @RequestParam(value = "alt-image",required = false)String altImage ,
                                   @RequestParam(value = "status",required = false)String status ) {
         HttpSession session = request.getSession();
-
         Post postUpdate = (Post) session.getAttribute("postUpdate");
 
         if(org.apache.commons.lang3.StringUtils.isBlank(post.getTitle())|| !StringUtils.checkVid(post.getTitle())) {
@@ -144,8 +143,8 @@ public class ProcessPost {
             return "update";
         }
 
-
-        postUpdate.setUserUpdated((String)session.getAttribute("username"));
+        User user = (User) session.getAttribute("userLogin");
+        postUpdate.setUserUpdated(user.getUserName());
         postUpdate.setTitle(post.getTitle());
         postUpdate.setContent(post.getContent());
         postUpdate.setStatus(post.getStatus());
@@ -179,8 +178,9 @@ public class ProcessPost {
     @RequestMapping(value = "/delete-post")
     public String deletePost(@RequestParam(value = "id",required = false) String  id,
                              HttpServletRequest request, RedirectAttributes redirectAttributes)  {
+        User user = (User) request.getSession().getAttribute("userLogin");
         try {
-            this.postService.delete(id, (String) request.getSession().getAttribute("username"));
+            this.postService.delete(id, user.getUserName());
             RequestService.setResponse(redirectAttributes,"1",RequestService.DELETE_SUCCESS);
             return "redirect:/home";
         }catch (Exception ex){

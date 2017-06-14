@@ -44,7 +44,6 @@ public class SearchController {
         return "view-search";
     }
 
-
     @RequestMapping(value = "/list-post-by-user")
     public String getPostByUser(HttpServletRequest request,
                                 ModelMap modelMap,
@@ -65,7 +64,7 @@ public class SearchController {
         int totalList;
         SortType sortType = new SortType();
         sortType.orderBy = "time_post";
-        User userCurrent = this.userService.getUserByName((String) request.getSession().getAttribute("username"));
+        User userCurrent = (User) request.getSession().getAttribute("userLogin");
 
         if (userCurrent != null && userCurrent.getId() == user.getId()) {
             posts = this.postService.getPostByIdUser(user.getId(), (page - 1) * limit, limit);

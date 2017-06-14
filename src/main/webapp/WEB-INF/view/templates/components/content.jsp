@@ -7,13 +7,14 @@
 
     <span class="lead">
         <span class="fs-15"><s:message code="by"/></span>
-        <a href="/list-post-by-user?username=${post.user.userName}" class="fs-15">${post.user.userName}</a>
+        <a href="<s:url value="/list-post-by-user?username=${post.user.userName}"/>"
+           class="fs-15">${post.user.userName}</a>
     </span>
 
     <jsp:useBean id="dateUtil" class="utils.date.DateFormatUtil" scope="session"/>
 
     <p>
-        <span>${messageSource.getMessage("postTime",null,locale)}</span>
+        <span><s:message code="postTime"/> </span>
         <span> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</span>
     </p>
     <hr>

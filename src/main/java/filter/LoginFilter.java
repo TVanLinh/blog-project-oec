@@ -19,7 +19,7 @@ public class LoginFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse)servletResponse;
         HttpSession session = request.getSession(false);
 
-        if(session.getAttribute("username") != null) {
+        if (session.getAttribute("userLogin") != null) {
             response.sendRedirect("/home");
             return;
         }

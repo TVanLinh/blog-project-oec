@@ -1,6 +1,7 @@
 package controller.admin;
 
 import entities.Post;
+import entities.User;
 import exceptions.NotFindException;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +58,9 @@ public class ManagerPost {
                                      RedirectAttributes redirectAttributes) throws NotFindException {
 
         HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("userLogin");
         try {
-            this.postService.delete(id, (String) session.getAttribute("username"));
+            this.postService.delete(id, user.getUserName());
             RequestService.setResponse(redirectAttributes,pageRequest,RequestService.DELETE_SUCCESS);
         }catch (Exception  ex) {
             RequestService.setResponse(redirectAttributes,pageRequest,RequestService.POST_DELETE_NOT_SUCCESS);
@@ -80,8 +82,6 @@ public class ManagerPost {
         SortType sortType = this.portSort.getCurrentSortType(request,StringSessionUtil.CURRENT_ALL_POST);
         List<Post> postList = this.postService.getAllByTitle(sortType, querySearch, (page - 1) * limit, limit);
         RequestService.setResponse(modelMap, limit, postList, this.postService.getCountAllByTitle(querySearch));
-
-        System.out.println("--------------------" + limit + "---------------------" + postList.size());
         return "manager-post";
     }
 

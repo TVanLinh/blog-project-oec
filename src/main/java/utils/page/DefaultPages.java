@@ -17,9 +17,7 @@ public class DefaultPages {
     ConfigurationService configurationService;
     public void setDaultPage(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
-
         Configuration configuration = configurationService.getAllConfiguration().get(0);
-        System.out.println("okkkkk --------------------------- --------------------- --");
         if(configuration != null) {
             session.setAttribute("dateFormat",configuration.getDateFormat());
             session.setAttribute("blogTitle",configuration.getWebTitle());

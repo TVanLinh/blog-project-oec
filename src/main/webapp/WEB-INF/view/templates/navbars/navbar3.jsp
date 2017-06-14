@@ -16,7 +16,7 @@
         <ul class="nav navbar-nav">
 
 
-            <c:if  test="${sessionScope.username !=null}">
+            <c:if test="${sessionScope.userLogin !=null}">
 
 
                 <c:if test="${requestScope.active=='write'}">
@@ -28,7 +28,7 @@
             </c:if>
 
 
-            <c:if  test="${sessionScope.username !=null}">
+            <c:if test="${sessionScope.userLogin !=null}">
                 <c:if test="${requestScope.active=='admin'}">
                     <li><a href="<s:url value="/admin"/>" class="active">Admin</a></li>
                 </c:if>
@@ -43,10 +43,10 @@
             <li>
                 <a href="javascript:void(0)" id="seachHomePage"><span class="glyphicon glyphicon-search"></span></a>
             </li>
-            <c:if  test="${sessionScope.username !=null}">
+            <c:if test="${sessionScope.userLogin !=null}">
                 <li class="dropdown">
                     <a href="<s:url value="/user"/>" style="color: #00aaaa" class="dropdown-toggle" data-toggle="dropdown" >
-                        <img src="<s:url value="public/asserts/images/user_blue.png"/>">${sessionScope.username}
+                        <img src="<s:url value="public/asserts/images/user_blue.png"/>">${sessionScope.userLogin.userName}
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="<s:url value="/user"/>"><s:message code="mypost"/></a></li>
@@ -56,7 +56,7 @@
                 </li>
 
             </c:if>
-            <c:if  test="${sessionScope.username ==null}">
+            <c:if test="${sessionScope.userLogin ==null}">
                 <li><a href="<s:url value="/login"/>"><span class="glyphicon glyphicon-log-in"></span><s:message
                         code="login"/></a></li>
             </c:if>

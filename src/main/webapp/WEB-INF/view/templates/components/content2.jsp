@@ -13,7 +13,7 @@
         <span><s:message code="postTime"/></span>
         <span> ${dateUtil.format(post.timePost,sessionScope.dateFormat)}</span>
 
-        <c:if test="${post.user.userName==sessionScope.username}">
+        <c:if test="${post.user.userName == sessionScope.userLogin.userName}">
             <span class="mgl-20 fs-15 color-red">
                 <c:if test="${post.status==0}">
                     private
@@ -47,7 +47,7 @@
         <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
 
-    <c:if test="${sessionScope.username!=null && post.user.userName==sessionScope.username}">
+    <c:if test="${sessionScope.userLogin != null && post.user.userName == sessionScope.userLogin.userName}">
         <a id="action-update" href="<s:url value="/update?action=update&id=${post.id}"/>" title=" ${messageSource.getMessage("edit",null,locale)}">
             <i class="fa fa-pencil-square-o mgl-15" aria-hidden="true"></i>
         </a>

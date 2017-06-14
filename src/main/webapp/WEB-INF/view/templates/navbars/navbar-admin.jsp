@@ -16,19 +16,19 @@
         <ul class="nav navbar-nav">
 
 
-            <c:if  test="${sessionScope.username !=null}">
+            <c:if test="${sessionScope.userLogin !=null}">
 
 
                 <c:if test="${requestScope.active=='write'}">
                     <li><a href="<s:url value="/write"/>" class="active"><s:message code="newpost"/></a></li>
                 </c:if>
                 <c:if test="${requestScope.active!='write'}">
-                    <li><a href="<s:url value="/write"/>"><s:message code="by"/></a></li>
+                    <li><a href="<s:url value="/write"/>"><s:message code="newpost"/></a></li>
                 </c:if>
             </c:if>
 
 
-            <c:if  test="${sessionScope.username !=null}">
+            <c:if test="${sessionScope.userLogin !=null}">
                 <c:if test="${requestScope.active=='admin'}">
                     <li><a href="<s:url value="/admin"/>" class="active">Admin</a></li>
                 </c:if>
@@ -40,10 +40,10 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-            <c:if  test="${sessionScope.username !=null}">
+            <c:if test="${sessionScope.userLogin !=null}">
                 <li class="dropdown">
                     <a href="<s:url value="/user"/>" style="color: #00aaaa" class="dropdown-toggle" data-toggle="dropdown" >
-                        <img src="<s:url value="public/asserts/images/user_blue.png"/>">${sessionScope.username}
+                        <img src="<s:url value="public/asserts/images/user_blue.png"/>">${sessionScope.userLogin.userName}
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="<s:url value="/user"/>"><s:message code="mypost"/></a></li>
@@ -54,7 +54,7 @@
                 </li>
 
             </c:if>
-            <c:if  test="${sessionScope.username ==null}">
+            <c:if test="${sessionScope.userLogin ==null}">
                 <li><a href="<s:url value="/login"/>"><span class="glyphicon glyphicon-log-in"></span> <s:message
                         code="login"/></a></li>
             </c:if>

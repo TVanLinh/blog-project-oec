@@ -85,8 +85,11 @@ public class UserPostController {
     private  void setDefaultUser(Principal principal,HttpServletRequest request)
     {
         HttpSession session=request.getSession();
-        if(session.getAttribute("username") == null) {
-            session.setAttribute("username",principal.getName());
+//        if(session.getAttribute("username") == null) {
+//            session.setAttribute("username",principal.getName());
+//        }
+        if (session.getAttribute("userLogin") == null) {
+            session.setAttribute("userLogin", this.userService.getUserByName(principal.getName()));
         }
     }
 
@@ -102,14 +105,13 @@ public class UserPostController {
         int page = NumberUtils.toInt(pageRequest,1);
         List<Post> postLists = this.postService.getPostByIdUser(sortType, querySearch, user.getId(), (page - 1) * limit, limit);
         RequestService.setResponse(modelMap, limit, postLists, this.postService.getPostByIdUser(user.getId(), querySearch).size());
-        System.out.println(" ---------------------" + limit + "           " + postLists.size());
         return "author";
     }
 
     @RequestMapping(value = "/change-pass-word",method = RequestMethod.GET)
     public String pageChangePassWord(HttpServletRequest request )
     {
-        request.setAttribute("user",this.userService.getUserByName((String) request.getSession().getAttribute("username")));
+        request.setAttribute("user", request.getSession().getAttribute("userLogin"));
         return "change-pass-word";
     }
 

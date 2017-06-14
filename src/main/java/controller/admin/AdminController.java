@@ -1,6 +1,7 @@
 package controller.admin;
 
 import entities.Post;
+import entities.User;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,8 +58,9 @@ public class AdminController
                               @RequestParam(value = "id",required = false)String id,
                               RedirectAttributes redirectAttributes) {
         HttpSession session =request.getSession();
+        User user = (User) session.getAttribute("userLogin");
         try {
-            this.postService.delete(id, (String) session.getAttribute("username"));
+            this.postService.delete(id, user.getUserName());
             RequestService.setResponse(redirectAttributes,pageRequest,RequestService.DELETE_SUCCESS);
         }catch (Exception  ex) {
             RequestService.setResponse(redirectAttributes,pageRequest,RequestService.POST_DELETE_NOT_SUCCESS);
