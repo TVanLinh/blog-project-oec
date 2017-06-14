@@ -89,4 +89,9 @@ public class redirect {
         return "404";
     }
 
+    @RequestMapping(value = "/language")
+    public String language() {
+        return "redirect:/";
+    }
+
 }

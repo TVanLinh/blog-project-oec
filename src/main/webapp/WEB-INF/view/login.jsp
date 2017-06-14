@@ -14,7 +14,7 @@
     <form name="loginForm" class="login-container" action="<c:url value="/login"/> " method="post">
         <p><input id="username" name="username" type="text" placeholder="<s:message code="name" />"></p>
         <p><input id="password" name="password" type="password" placeholder="<s:message code="passWord" />"></p>
-        <p><input type="submit" value="<s:message code="by" />" onclick="return checkForm.checkLogin()"></p>
+        <p><input type="submit" value="<s:message code="login" />" onclick="return checkForm.checkLogin()"></p>
         <center><span class="login-error">
             <c:if test="${not empty error}">
                 <div class="error"><s:message code="${requestScope.error}"/></div>

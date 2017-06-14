@@ -12,23 +12,42 @@
         <thead>
         <tr>
             <th data-th="Driver details"><span>STT</span></th>
-            <th class="text-center"><a href="<s:url value="/user?orderBy=title"/>"><img
-                    src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message
-                    code="td.title"/></a></th>
-            <th><a href="<s:url value="/user?orderBy=time_post"/>"><img
-                    src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message code="td.timePost"/></a>
+            <th class="text-center">
+                <a href="<s:url value="/user?orderBy=title"/>">
+                    <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                    <s:message code="td.title"/>
+                </a>
             </th>
-            <th><a href="<s:url value="/user?orderBy=status"/>"><img
-                    src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message
-                    code="td.status"/></a></th>
-            <th><a href="<s:url value="/user?orderBy=approve"/>"><img
-                    src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message code="td.approve"/></a>
+            <th>
+                <a href="<s:url value="/user?orderBy=time_post"/>">
+                    <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                    <s:message code="td.timePost"/>
+                </a>
             </th>
-            <th><a href="<s:url value="/user?orderBy=number_like"/>"><img
-                    src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message code="nLike"/></a>
+            <th>
+                <a href="<s:url value="/user?orderBy=status"/>">
+                    <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                    <s:message code="td.status"/>
+                </a>
             </th>
-            <th><a href="<s:url value="/user?orderBy=number_view"/>"><img
-                    src="<s:url value="public/asserts/images/sort.png" />"><s:message code="nView"/></a></th>
+            <th>
+                <a href="<s:url value="/user?orderBy=approve"/>">
+                    <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                    <s:message code="td.approve"/>
+                </a>
+            </th>
+            <th>
+                <a href="<s:url value="/user?orderBy=number_like"/>">
+                    <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                    <s:message code="nLike"/>
+                </a>
+            </th>
+            <th>
+                <a href="<s:url value="/user?orderBy=number_view"/>">
+                    <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                    <s:message code="nView"/>
+                </a>
+            </th>
             <th><s:message code="td.action"/></th>
         </tr>
         </thead>

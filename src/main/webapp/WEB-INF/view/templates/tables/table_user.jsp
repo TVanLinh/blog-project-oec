@@ -6,9 +6,13 @@
         <thead>
             <tr>
                 <th data-th="Driver details"><span>STT</span></th>
-                <th data-th="Driver details"><a href="<s:url value="/manager-user?orderBy=user_name"/>"><img
-                        src="<s:url value="public/asserts/images/sort.png" />"> <span class="dp-inline"><s:message
-                        code="name"/></span></a></th>
+                <th data-th="Driver details">
+                    <a href="<s:url value="/manager-user?orderBy=user_name"/>">
+                            <%--<img src="<s:url value="public/asserts/images/sort.png" />">--%>
+                        <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                        <span class="dp-inline"><s:message code="name"/></span>
+                    </a>
+                </th>
                 <th><a href="<s:url value="/manager-user"/>"><s:message code="role"/></a></th>
                 <th><s:message code="td.action"/></th>
             </tr>

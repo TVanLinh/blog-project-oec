@@ -14,26 +14,43 @@
       <thead>
           <tr>
               <th data-th="Driver details"><span>STT</span></th>
-              <th data-th="Driver details"><a href="<s:url value="/manager-post?orderBy=id_user"/>"><img
-                      src="<s:url value="public/asserts/images/sort.png" />"><span class="dp-inline"><s:message
-                      code="td.author"/></span></a></th>
-              <th class="text-center"><a href="<s:url value="/manager-post?orderBy=title"/>"><img
-                      src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message code="td.title"/></a>
+              <th data-th="Driver details">
+                  <a href="<s:url value="/manager-post?orderBy=id_user"/>">
+                      <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i><span class="dp-inline">
+                        <s:message code="td.author"/></span>
+                  </a>
               </th>
-              <th><a href="<s:url value="/manager-post?orderBy=time_post"/>"><img
-                      src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message
+              <th class="text-center">
+                  <a href="<s:url value="/manager-post?orderBy=title"/>">
+                      <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i><s:message code="td.title"/>
+                  </a>
+              </th>
+              <th><a href="<s:url value="/manager-post?orderBy=time_post"/>">
+                  <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i><s:message
                       code="td.timePost"/></a></th>
-              <th><a href="<s:url value="/manager-post?orderBy=status"/>"><img
-                      src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message code="td.status"/></a>
+              <th>
+                  <a href="<s:url value="/manager-post?orderBy=status"/>">
+                      <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                      <s:message code="td.status"/>
+                  </a>
               </th>
-              <th><a href="<s:url value="/manager-post?orderBy=approve"/>"><img
-                      src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message
-                      code="td.approve"/></a></th>
-              <th><a href="<s:url value="/manager-post?orderBy=number_like"/>"><img
-                      src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message code="nLike"/></a>
+              <th>
+                  <a href="<s:url value="/manager-post?orderBy=approve"/>">
+                      <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                      <s:message code="td.approve"/>
+                  </a>
               </th>
-              <th><a href="<s:url value="/manager-post?orderBy=number_view"/>"><img
-                      src="<s:url value="public/asserts/images/sort.png" />"><s:message code="nView"/></a></th>
+              <th>
+                  <a href="<s:url value="/manager-post?orderBy=number_like"/>">
+                      <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                      <s:message code="nLike"/>
+                  </a>
+              </th>
+              <th>
+                  <a href="<s:url value="/manager-post?orderBy=number_view"/>">
+                      <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i><s:message code="nView"/>
+                  </a>
+              </th>
               <th><s:message code="td.action"/></th>
           </tr>
       </thead>

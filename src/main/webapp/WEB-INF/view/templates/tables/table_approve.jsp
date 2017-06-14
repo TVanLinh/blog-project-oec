@@ -14,15 +14,23 @@
         <thead>
             <tr>
                 <th data-th="Driver details"><span>STT</span></th>
-                <th data-th="Driver details"><a href="<s:url value="/admin?orderBy=id_user"/>"><img
-                        src="<s:url value="public/asserts/images/sort.png" />"> <span class="dp-inline"><s:message
-                        code="td.author"/></span></a></th>
-                <th class="text-center"><a href="<s:url value="/admin?orderBy=title"/>"><img
-                        src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message
-                        code="td.title"/></a></th>
-                <th><a href="<s:url value="/admin?orderBy=time_post"/>"><img
-                        src="<s:url value="public/asserts/images/sort.png" />" class="mgr-5"><s:message
-                        code="td.timePost"/></a></th>
+                <th data-th="Driver details">
+                    <a href="<s:url value="/admin?orderBy=id_user"/>">
+                        <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                        <span class="dp-inline"><s:message code="td.author"/></span>
+                    </a>
+                </th>
+                <th class="text-center">
+                    <a href="<s:url value="/admin?orderBy=title"/>">
+                        <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                        <s:message code="td.title"/>
+                    </a>
+                </th>
+                <th>
+                    <a href="<s:url value="/admin?orderBy=time_post"/>">
+                        <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                        <s:message code="td.timePost"/>
+                    </a></th>
                 <th><s:message code="td.action"/></th>
             </tr>
         </thead>
