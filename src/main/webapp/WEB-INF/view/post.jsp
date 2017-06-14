@@ -2,9 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="templates/headers/head.jsp"/>
-
-
-    <script src="<s:url value="public/jquery/jquery-3.2.1.min.js"/>" type="text/javascript"></script>
     <!-- Navigation -->
    <jsp:include page="templates/navbars/navbar.jsp"/>
 
@@ -14,7 +11,7 @@
         <div class="row">
 
             <!-- Blog Post Content Column -->
-            <div class="col-lg-8">
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 
                <jsp:include page="templates/components/content-view-post-page.jsp"/>
 
