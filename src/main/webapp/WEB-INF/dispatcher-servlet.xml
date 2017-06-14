@@ -11,7 +11,9 @@
     </mvc:view-resolvers>
     <mvc:view-controller path="/" view-name="home"/>
     <mvc:resources mapping="/public/**" location="/public/"/>
+
     <context:component-scan base-package="controller, filter, utils"/>
+
     <context:annotation-config/>
 
     <bean id="messageSource"
@@ -23,7 +25,7 @@
 
     <bean id="localeResolver"
           class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-        <property name="defaultLocale" value="vn_VN"/>
+        <property name="defaultLocale" value="vn"/>
     </bean>
 
     <!--<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">-->

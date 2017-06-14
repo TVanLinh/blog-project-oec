@@ -2,8 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -60,27 +59,27 @@
     <context:component-scan base-package="vadilator"/>
     <context:component-scan base-package="config"/>
 
-    <bean id="messageSource"
-          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basename" value="classpath:i18n/blog"/>
-        <property name="defaultEncoding" value="UTF-8"/>
-        <property name="fileEncodings" value="UTF-8"/>
-    </bean>
-
-    <bean id="localeResolver"
-          class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-        <property name="defaultLocale" value="vn"/>
-    </bean>
-
-    <!--<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">-->
-    <!--<property name="defaultLocale" value="vn" />-->
-    <!--<property name="cookieName" value="myAppLocaleCookie"/>-->
-    <!--<property name="cookieMaxAge" value="3600"/>-->
+    <!--<bean id="messageSource"-->
+    <!--class="org.springframework.context.support.ReloadableResourceBundleMessageSource">-->
+    <!--<property name="basename" value="classpath:i18n/blog"/>-->
+    <!--<property name="defaultEncoding" value="UTF-8"/>-->
+    <!--<property name="fileEncodings" value="UTF-8"/>-->
     <!--</bean>-->
 
-    <mvc:interceptors>
-        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-            <property name="paramName" value="language"/>
-        </bean>
-    </mvc:interceptors>
+    <!--<bean id="localeResolver"-->
+    <!--class="org.springframework.web.servlet.i18n.SessionLocaleResolver">-->
+    <!--<property name="defaultLocale" value="vn"/>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="defaultLocale" value="vn" />&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="cookieName" value="myAppLocaleCookie"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="cookieMaxAge" value="3600"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</bean>&ndash;&gt;-->
+
+    <!--<mvc:interceptors>-->
+    <!--<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">-->
+    <!--<property name="paramName" value="language"/>-->
+    <!--</bean>-->
+    <!--</mvc:interceptors>-->
 </beans>
