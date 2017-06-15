@@ -58,4 +58,10 @@ public class PostSortService {
         return query.getResultList();
     }
 
+    public List<Post> getAllPost(SortType sortItem, int offset, int limit) {
+
+        String str = "select * from post order by   " + sortItem.orderBy + " " + sortItem.typeOrder + " limit " + offset + "," + limit;
+        Query<Post> query = this.sessionFactory.getCurrentSession().createNativeQuery(str, Post.class);
+        return query.getResultList();
+    }
 }

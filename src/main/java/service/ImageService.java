@@ -25,6 +25,10 @@ public class ImageService extends AbstractService<Image> {
         this.imageDAO.delete(id);
     }
 
+    public Class<Image> getClassTable() {
+        return Image.class;
+    }
+
     public  Image find(int id)
     {
         return  this.imageDAO.find(id);

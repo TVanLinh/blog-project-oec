@@ -46,7 +46,8 @@ public class ManagerPost {
 
         int page = NumberUtils.toInt(pageRequest,1);
         int limit = this.postService.getLimit(numberView);
-        List<Post> postList = this.postSortService.getAllPost(request, (page - 1) * limit, limit);
+        SortType sortType = this.portSort.getSortType(request, StringSessionUtil.CURRENT_ALL_POST, "title");
+        List<Post> postList = this.postSortService.getAllPost(sortType, (page - 1) * limit, limit);
 
         RequestService.setResponse(modelMap, limit, postList, this.postService.getCount());
         return "manager-post";

@@ -30,13 +30,18 @@ public class ConfigurationService extends AbstractService<Configuration>{
     {
         this.configurationDAO.delete(idConf);
     }
+
+    public Class<Configuration> getClassTable() {
+        return Configuration.class;
+    }
+
     public Configuration find(int id)
     {
-        return  this.find(Configuration.class,"configuration",id);
+        return this.find(id);
     }
     public List<Configuration> getAllConfiguration()
     {
-        return this.findAll(Configuration.class,"configuration");
+        return this.findAll();
     }
 
     public  boolean isHaveFormatTime(Configuration config,String str)

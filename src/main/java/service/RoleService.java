@@ -47,6 +47,10 @@ public class RoleService  extends AbstractService<Role>{
         this.roleDAO.update(role);
     }
 
+    public Class<Role> getClassTable() {
+        return Role.class;
+    }
+
     public  void delete(int id)
     {
         this.roleDAO.delete(id);

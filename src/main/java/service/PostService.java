@@ -39,11 +39,6 @@ public class PostService extends AbstractService<Post> {
     public PostService() {
     }
 
-    public List<Post> getAllPNotApprove() {
-        String str = "select * from post where approve = 0";
-        return sessionFactory.getCurrentSession().createNativeQuery(str, Post.class).getResultList();
-    }
-
     public BigInteger getCountNotApprove() {
         return (BigInteger) sessionFactory.getCurrentSession().createNativeQuery("select count(*) from post where approve = 0 ").getSingleResult();
     }
@@ -91,17 +86,11 @@ public class PostService extends AbstractService<Post> {
     }
 
 
-    public List<Post> getPostByIdUser(int id, String querySearch) {
-        String str = "select * from  post where title like :querySearch";
-        Query<Post> query = sessionFactory.getCurrentSession().createNativeQuery(str, Post.class);
-        query.setParameter("querySearch", "%" + querySearch + "%");
-        return query.getResultList();
-    }
-
     public BigInteger getCountByIdUser(int id, String querySearch) {
-        String str = "select count(*) from  post where title like :querySearch";
+        String str = "select count(*) from  post where post.id_user = :idUser title like :querySearch";
         Query<BigInteger> query = sessionFactory.getCurrentSession().createNativeQuery(str);
         query.setParameter("querySearch", "%" + querySearch + "%");
+        query.setParameter("idUser", id);
         return query.getSingleResult();
     }
 
@@ -160,6 +149,11 @@ public class PostService extends AbstractService<Post> {
         }
     }
 
+    public Class<Post> getClassTable() {
+        return Post.class;
+    }
+
+    @Override
     public Post find(int id) throws NotFindException {
         Post post = this.postDAO.find(id);
         if(post == null){
@@ -246,6 +240,7 @@ public class PostService extends AbstractService<Post> {
         query.setParameter("approve", approve);
         return query.getSingleResult();
     }
+
 
     public BigInteger getCount() {
         return (BigInteger) this.sessionFactory.getCurrentSession().createNativeQuery("select count(*) from post ").getSingleResult();

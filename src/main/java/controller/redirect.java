@@ -81,12 +81,17 @@ public class redirect {
     @RequestMapping(value = "/error",method = RequestMethod.GET)
     public  String pageProcessException()
     {
-        return "ProcessExceptions";
+        return "process-exception";
     }
 
     @RequestMapping(value = "/404")
     public String page404(){
         return "404";
+    }
+
+    @RequestMapping(value = "/500")
+    public String page500() {
+        return "500";
     }
 
     @RequestMapping(value = "/language")

@@ -1,6 +1,7 @@
 package service;
 
 import entities.AbstractEntity;
+import exceptions.NotFindException;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,36 +20,28 @@ public abstract class AbstractService<E extends AbstractEntity> {
     @Autowired
     SessionFactory sessionFactory;
 
-    public   E  find(Class<E> type ,String tableName,int id) {
-        Query<E> query = sessionFactory.getCurrentSession().createNativeQuery("select * from :tableName  where id = :id",type);
+    public abstract Class<E> getClassTable();
+
+    public E find(int id) throws NotFindException {
+        Query<E> query = sessionFactory.getCurrentSession().createQuery("from p " + this.getClassTable().getClass().getName() + "  where p.id = :id", this.getClassTable());
         query.setParameter("id",id);
-        query.setParameter("tableName",tableName);
         return query.getSingleResult();
     }
 
 
-    public  void delete(Class<E> type,String tableName,int id) {
-        E entity = this.find(type,tableName,id);
-        if(entity != null)
-        {
+    public void delete(int id) throws NotFindException {
+        E entity = this.find(id);
+        if (entity != null) {
             sessionFactory.getCurrentSession().delete(entity);
         }
     }
 
-    public   void save(E e)
-    {
+    public void save(E e) {
         sessionFactory.getCurrentSession().saveOrUpdate(e);
     }
 
-    public  List<E> findAll(Class<E> type,String tableName)
-    {
-        return sessionFactory.getCurrentSession().createNativeQuery("select * from "+tableName,type).getResultList();
-    }
-
-
-    public int getCount(Class<E> type, String tableName)
-    {
-        return this.findAll(type,tableName).size();
+    public List<E> findAll() {
+        return sessionFactory.getCurrentSession().createQuery("from " + this.getClassTable().getName(), this.getClassTable()).getResultList();
     }
 
     public void flushSession() {

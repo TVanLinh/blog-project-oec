@@ -63,7 +63,7 @@ public class UserService  extends AbstractService<User> {
 
     public  void delete(int id)
     {
-        this.delete(User.class,"user",id);
+        this.delete(id);
     }
 
     public  void delete(String id,String userName) throws AccessDenieException, NotFindException {
@@ -75,6 +75,11 @@ public class UserService  extends AbstractService<User> {
         }
         this.delete(Integer.valueOf(id));
     }
+
+    public Class<User> getClassTable() {
+        return User.class;
+    }
+
     public  User find(int id)
     {
         return  this.userDAO.find(id);
