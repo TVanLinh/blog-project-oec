@@ -72,8 +72,9 @@ public class AdminController
     public  String approvePost(HttpServletRequest request, @RequestParam(value = "page",required = false) String pageRequest, ModelMap modelMap,
                                @RequestParam(value = "id",required = false)String id,
                                RedirectAttributes redirectAttributes){
+        User user = (User) request.getSession().getAttribute("userLogin");
         try{
-             if(!this.postService.approvePost(id, (String) request.getSession().getAttribute("username"))){
+            if (!this.postService.approvePost(id, user.getUserName())) {
                  RequestService.setResponse(redirectAttributes,pageRequest,RequestService.POST_APPROVED);
              }else {
                 RequestService.setResponse(redirectAttributes,pageRequest,RequestService.POST_APPROVE_SUCCESS);

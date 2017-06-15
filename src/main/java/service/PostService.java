@@ -47,7 +47,7 @@ public class PostService extends AbstractService<Post> {
     }
 
     public List<Post> getContainsTitle(SortType sortType, String querySearch, int approve, int offset, int limit) {
-        String string = "  select * from  post where approve = :approve and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
+        String string = " SELECT DISTINCT * from user inner join post on user.id = post.id_user where   approve = :approve and  ((title like :querySearch)  or  (user.user_name like :querySearch)) order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
         Query<Post> query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
         query.setParameter("querySearch", "%" + querySearch + "%");
         query.setParameter("approve", approve);
@@ -56,7 +56,7 @@ public class PostService extends AbstractService<Post> {
 
 
     public int getCountContainsTitle(String querySearch, int approve) {
-        String string = "  select * from  post where approve = :approve and title like :querySearch";
+        String string = "  SELECT DISTINCT  * from user inner join post on user.id = post.id_user where  approve = :approve and  (title like :querySearch  or user.user_name like :querySearch)  ";
         Query<Post> query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
         query.setParameter("querySearch", "%" + querySearch + "%");
         query.setParameter("approve", approve);
@@ -64,7 +64,7 @@ public class PostService extends AbstractService<Post> {
     }
 
     public List<Post> getAllByTitle(SortType sortType, String querySearch, int offset, int limit) {
-        String string = "  select * from  post where  title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
+        String string = "  select * from  post inner join user on post.id_user = user.id where title like :querySearch or user.user_name like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
         Query<Post> query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
         query.setParameter("querySearch", "%" + querySearch + "%");
         return query.getResultList();
@@ -72,7 +72,8 @@ public class PostService extends AbstractService<Post> {
 
 
     public int getCountAllByTitle(String querySearch) {
-        String str = "select * from  post where title like :querySearch";
+        String str = " select * from\n" +
+                " post inner join user on post.id_user = user.id where title like :querySearch or user.user_name like :querySearch ";
         Query<Post> query = sessionFactory.getCurrentSession().createNativeQuery(str, Post.class);
         query.setParameter("querySearch", "%" + querySearch + "%");
         return query.getResultList().size();
@@ -103,17 +104,21 @@ public class PostService extends AbstractService<Post> {
     }
 
     public List<Post> getPostPublicByTitle(SortType sortType, String querySearch, int offset, int limit) {
-        String string = "  select * from  post where approve = 1 and status = 1 and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
+        String string = "select * from   user inner join post on user.id = post.id_user  where approve = 1 and status = 1 and (title like :querySearch or user.user_name like :querySearch)  order by post." + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
         Query<Post> query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
         query.setParameter("querySearch", "%" + querySearch + "%");
         return query.getResultList();
     }
 
     public List<Post> getPostPublicByTitle(SortType sortType, String querySearch) {
-        String string = "  select * from  post where approve = 1 and status = 1 and title like :querySearch  order by " + sortType.orderBy + " " + sortType.typeOrder;
+        String string = "select * from  user inner join post on user.id = post.id_user   where approve = 1  and status = 1 and (title like :querySearch or user.user_name like :querySearch)   order by post." + sortType.orderBy + " " + sortType.typeOrder;
         Query<Post> query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
         query.setParameter("querySearch", "%" + querySearch + "%");
         return query.getResultList();
+    }
+
+    public int getCountPublicByTitle(String query) {
+        return this.getPostPublicByTitle(new SortType(), query).size();
     }
 
     public List<Post> finAll(String query) {

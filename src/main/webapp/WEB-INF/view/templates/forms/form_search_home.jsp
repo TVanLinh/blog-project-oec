@@ -4,7 +4,7 @@
         <div class="input-group">
             <input type="text" name="query_search" id="search1" class="form-control"
                    onsubmit="return mySearch.checkFormSearchValid('#search1')"
-                   placeholder="<s:message code="searchBy" /> <s:message code="title" />">
+                   placeholder="<s:message code="search.by.title.author" /> <s:message code="title" />">
             <div class="input-group-btn">
                 <button class="btn btn-default" type="submit" onclick="return mySearch.checkFormSearchValid('#search1')" onsubmit="return mySearch.checkFormSearchValid('#search1')">
                     <i class="glyphicon glyphicon-search"></i>

@@ -29,7 +29,7 @@
             <!----------------end list-table ------------------------->
             <div class="text-center">
                 <jsp:include page="templates/forms/search3.jsp">
-                    <jsp:param name="searchBy" value="${messageSource.getMessage('searchBy',null,locale)} ${messageSource.getMessage('username',null,locale)}"/>
+                    <jsp:param name="searchBy" value="search.by.author"/>
                     <jsp:param name="action" value="/manager-user-search"/>
                 </jsp:include>
             </div>

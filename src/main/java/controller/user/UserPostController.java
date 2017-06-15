@@ -101,7 +101,7 @@ public class UserPostController {
 
         int limit = this.postService.getLimit(numberView);
         SortType sortType=this.portSort.getCurrentSortType(request,StringSessionUtil.CURRENT_POST_ALL_TYPE_SORT_BY_USER);
-        User user = this.userService.getUserByName((String) request.getSession().getAttribute("username"));
+        User user = (User) request.getSession().getAttribute("userLogin");
         int page = NumberUtils.toInt(pageRequest,1);
         List<Post> postLists = this.postService.getPostByIdUser(sortType, querySearch, user.getId(), (page - 1) * limit, limit);
         RequestService.setResponse(modelMap, limit, postLists, this.postService.getPostByIdUser(user.getId(), querySearch).size());

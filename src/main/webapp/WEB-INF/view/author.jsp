@@ -15,7 +15,7 @@
             </c:if>
            <div class="text-center">
                <jsp:include page="templates/forms/search3.jsp">
-                   <jsp:param name="searchBy" value="${messageSource.getMessage('searchBy',null,locale)} ${messageSource.getMessage('title',null,locale)}"/>
+                   <jsp:param name="searchBy" value="search.by.title"/>
                    <jsp:param name="action" value="/user-post-search"/>
                </jsp:include>
            </div>

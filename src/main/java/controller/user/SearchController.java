@@ -40,7 +40,9 @@ public class SearchController {
                                      @RequestParam(value = "query_search", required = false) String query_search) {
         int limit = this.configurationService.getAllConfiguration().get(0).getNumberViewPost();
         int  page = NumberUtils.toInt(pageRequest,1);
-        RequestService.setResponse(modelMap, limit, this.postService.getPostPublicByTitle(new SortType(), query_search, (page - 1) * limit, limit), this.postService.getPostPublicByTitle(new SortType(), query_search).size());
+        RequestService.setResponse(modelMap, limit, this.postService.getPostPublicByTitle(new SortType(),
+                query_search, (page - 1) * limit, limit),
+                this.postService.getCountPublicByTitle(query_search));
         return "view-search";
     }
 

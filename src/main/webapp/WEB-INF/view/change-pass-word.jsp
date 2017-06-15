@@ -38,12 +38,13 @@
                     <c:if test="${requestScope.error != null}">
                         <s:message code="${requestScope.error}"/>
                     </c:if>
+                    <c:if test="${requestScope.errors != null}">
+                        <c:forEach var="item" items="${requestScope.errors}">
+                            <s:message code="${item}"/>
+                        </c:forEach>
+                    </c:if>
                 </p>
-                <c:if test="${requestScope.errors != null}">
-                    <c:forEach var="item" items="${requestScope.errors}">
-                        <s:message code="${item}"/>
-                    </c:forEach>
-                </c:if>
+
             </form:form>
         </div>
     </div>
