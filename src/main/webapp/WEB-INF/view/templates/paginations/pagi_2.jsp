@@ -16,7 +16,7 @@
         </c:if>
 
     <c:if test="${(requestScope.totalList/requestScope.limit>=paramPage) && (requestScope.totalList % requestScope.limit)!=0}">
-            <c:if test="${requestScope.postList.size()!=0}">
+        <c:if test="${requestScope.list.size()!=0}">
                <li class="next">
                    <a href="<s:url value="${paramTarget}?username=${param.username}&page=${paramPage+1}"/>"><s:message
                            code="next"/> &rarr;</a>
@@ -26,7 +26,7 @@
 
     <c:if test="${(requestScope.totalList/requestScope.limit>paramPage) && (requestScope.totalList % requestScope.limit)==0}">
         <li class="next">
-            <c:if test="${requestScope.postList.size()!=0}">
+            <c:if test="${requestScope.list.size()!=0}">
                 <a href="<s:url value="${paramTarget}?username=${param.username}&page=${paramPage+1}"/>"><s:message
                         code="by"/> &rarr;</a>
             </c:if>

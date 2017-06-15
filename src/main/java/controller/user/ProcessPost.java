@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.*;
+import utils.session.SessionUtils;
 import utils.string.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,7 +62,7 @@ public class ProcessPost {
         }
 
         HttpSession session = request.getSession();
-        User user = (User) request.getSession().getAttribute("userLogin");
+        User user = (User) request.getSession().getAttribute(SessionUtils.USER_LOGIN);
         post.setUser(user);
         int stt = NumberUtils.toInt(status,1);
         Calendar calendar = Calendar.getInstance();
@@ -117,7 +118,7 @@ public class ProcessPost {
             throw new NotFindException(NotFindException.POST_NOT_FOUND);
         }
 
-        User user = (User) request.getSession().getAttribute("userLogin");
+        User user = (User) request.getSession().getAttribute(SessionUtils.USER_LOGIN);
 
         if(!this.userService.isEditPost(user,post)) {
             throw new AccessDenieException(AccessDenieException.ACCESS_NOT_ROLE_POST);
@@ -143,7 +144,7 @@ public class ProcessPost {
             return "update";
         }
 
-        User user = (User) session.getAttribute("userLogin");
+        User user = (User) session.getAttribute(SessionUtils.USER_LOGIN);
         postUpdate.setUserUpdated(user.getUserName());
         postUpdate.setTitle(post.getTitle());
         postUpdate.setContent(post.getContent());
@@ -178,7 +179,7 @@ public class ProcessPost {
     @RequestMapping(value = "/delete-post")
     public String deletePost(@RequestParam(value = "id",required = false) String  id,
                              HttpServletRequest request, RedirectAttributes redirectAttributes)  {
-        User user = (User) request.getSession().getAttribute("userLogin");
+        User user = (User) request.getSession().getAttribute(SessionUtils.USER_LOGIN);
         try {
             this.postService.delete(id, user.getUserName());
             RequestService.setResponse(redirectAttributes,"1",RequestService.DELETE_SUCCESS);

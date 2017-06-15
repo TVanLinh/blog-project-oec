@@ -13,7 +13,7 @@
     <div class="row">
         <s:url var="action" value="/change-pass-word"/>
         <div class="col-xs-12">
-            <form:form method="post" action="${action}"  onsubmit="return checkFormValidPassWord()" commandName="userForm">
+            <form:form method="post" action="${action}" commandName="userForm">
                 <form:input path="user.id" type="hidden" value="${requestScope.user.id}"/>
                 <form:input path="user.userName" type="hidden" value="${requestScope.user.userName}"/>
                 <form:input path="user.passWord" type="hidden" value="${requestScope.user.passWord}"/>
@@ -33,7 +33,10 @@
                 </div>
 
                 <input type="submit" class="btn btn-default" value="<s:message code="save"/>"
-                       onsubmit="return checkFormValidPassWord()" onclick="return checkFormInsertUser()">
+                       onclick="return checkFormValidPassWord('<s:message code="validation.field.password_not_right"/>',
+                               '<s:message code="validation.field.password_not_blank"/>',
+                               '
+                           <s:message code="validation.field.overlap_password"/> ')">
                 <p class="pd-10 error">
                     <c:if test="${requestScope.error != null}">
                         <s:message code="${requestScope.error}"/>
@@ -50,6 +53,7 @@
     </div>
     <hr>
 </div>
+
 <script src="<s:url value="/public/asserts/js/main.js"/>"></script>
 <script src="<s:url value="public/asserts/js/check_valid_form.js"/>"></script>
 <jsp:include page="templates/footers/footer.jsp"/>

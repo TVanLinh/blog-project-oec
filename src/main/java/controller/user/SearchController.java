@@ -13,9 +13,11 @@ import service.ConfigurationService;
 import service.PostService;
 import service.RequestService;
 import service.UserService;
+import utils.session.SessionUtils;
 import utils.sort.SortType;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -40,8 +42,10 @@ public class SearchController {
                                      @RequestParam(value = "query_search", required = false) String query_search) {
         int limit = this.configurationService.getAllConfiguration().get(0).getNumberViewPost();
         int  page = NumberUtils.toInt(pageRequest,1);
-        RequestService.setResponse(modelMap, limit, this.postService.getPostPublicByTitle(new SortType(),
-                query_search, (page - 1) * limit, limit),
+        RequestService.setResponse(modelMap,
+                limit,
+                this.postService.getPostPublicByTitle(new SortType(),
+                        query_search, (page - 1) * limit, limit),
                 this.postService.getCountPublicByTitle(query_search));
         return "view-search";
     }
@@ -63,14 +67,14 @@ public class SearchController {
         }
 
         List<Post> posts;
-        int totalList;
+        BigInteger totalList;
         SortType sortType = new SortType();
         sortType.orderBy = "time_post";
-        User userCurrent = (User) request.getSession().getAttribute("userLogin");
+        User userCurrent = (User) request.getSession().getAttribute(SessionUtils.USER_LOGIN);
 
         if (userCurrent != null && userCurrent.getId() == user.getId()) {
             posts = this.postService.getPostByIdUser(user.getId(), (page - 1) * limit, limit);
-            totalList = this.postService.getPostByIdUser(user.getId()).size();
+            totalList = this.postService.getCountById(user.getId());
         } else {
             posts = this.postService.getPost(user.getId(), 1, 1, sortType, (page - 1) * limit, limit);
             totalList = this.postService.getCount(user.getId(), 1, 1);

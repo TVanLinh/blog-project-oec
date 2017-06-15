@@ -16,6 +16,7 @@ import service.PostService;
 import service.PostSortService;
 import service.RequestService;
 import service.UserService;
+import utils.session.SessionUtils;
 import utils.sort.PortSort;
 import utils.sort.SortType;
 import utils.string.StringSessionUtil;
@@ -55,7 +56,7 @@ public class UserPostController {
                             ModelMap modelMap,
                             @RequestParam(value = "page", required = false) String pageRequest,
                             @RequestParam(value = "number", required = false) String numberView) {
-        setDefaultUser(principal, request);
+
         int limit = this.postService.getLimit(numberView);
         modelMap.addAttribute("userDAO", this.userService);
         List<Post> postList;
@@ -64,7 +65,7 @@ public class UserPostController {
 
         SortType sortType = this.portSort.getSortType(request,StringSessionUtil.CURRENT_POST_ALL_TYPE_SORT_BY_USER,"title");
         postList = postSortSerVice.getAllPostByUser(sortType, user, (page - 1) * limit, limit);
-        RequestService.setResponse(modelMap, limit, postList, this.postService.getPostByIdUser(user.getId()).size());
+        RequestService.setResponse(modelMap, limit, postList, this.postService.getCountById(user.getId()));
         return "author";
     }
 
@@ -73,26 +74,15 @@ public class UserPostController {
                               @RequestParam(value = "id",required = false)String id,
                                 RedirectAttributes redirectAttributes) {
         HttpSession session =request.getSession();
+        User user = (User) session.getAttribute(SessionUtils.USER_LOGIN);
         try {
-            this.postService.delete(id, (String) session.getAttribute("username"));
+            this.postService.delete(id, user.getUserName());
             RequestService.setResponse(redirectAttributes,pageRequest,RequestService.DELETE_SUCCESS);
         }catch (Exception  ex) {
             RequestService.setResponse(redirectAttributes,pageRequest,RequestService.POST_DELETE_NOT_SUCCESS);
         }
         return "redirect:/user";
     }
-
-    private  void setDefaultUser(Principal principal,HttpServletRequest request)
-    {
-        HttpSession session=request.getSession();
-//        if(session.getAttribute("username") == null) {
-//            session.setAttribute("username",principal.getName());
-//        }
-        if (session.getAttribute("userLogin") == null) {
-            session.setAttribute("userLogin", this.userService.getUserByName(principal.getName()));
-        }
-    }
-
 
     @RequestMapping(value = "/user-post-search",method = RequestMethod.GET)
     public String searchTableAllPost(HttpServletRequest request, ModelMap modelMap, @RequestParam(value = "page", required = false) String pageRequest,
@@ -101,17 +91,18 @@ public class UserPostController {
 
         int limit = this.postService.getLimit(numberView);
         SortType sortType=this.portSort.getCurrentSortType(request,StringSessionUtil.CURRENT_POST_ALL_TYPE_SORT_BY_USER);
-        User user = (User) request.getSession().getAttribute("userLogin");
+        User user = (User) request.getSession().getAttribute(SessionUtils.USER_LOGIN);
         int page = NumberUtils.toInt(pageRequest,1);
         List<Post> postLists = this.postService.getPostByIdUser(sortType, querySearch, user.getId(), (page - 1) * limit, limit);
-        RequestService.setResponse(modelMap, limit, postLists, this.postService.getPostByIdUser(user.getId(), querySearch).size());
+        RequestService.setResponse(modelMap, limit, postLists, this.postService.getCountByIdUser(user.getId(), querySearch));
         return "author";
     }
+
 
     @RequestMapping(value = "/change-pass-word",method = RequestMethod.GET)
     public String pageChangePassWord(HttpServletRequest request )
     {
-        request.setAttribute("user", request.getSession().getAttribute("userLogin"));
+        request.setAttribute("user", request.getSession().getAttribute(SessionUtils.USER_LOGIN));
         return "change-pass-word";
     }
 

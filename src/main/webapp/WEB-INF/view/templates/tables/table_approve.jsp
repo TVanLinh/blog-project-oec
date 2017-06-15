@@ -9,7 +9,7 @@
 </c:if>
 
 
-<c:if test="${postList.size()>0}">
+<c:if test="${list.size()>0}">
     <table class="responstable" id="">
         <thead>
             <tr>
@@ -36,7 +36,7 @@
         </thead>
         <tbody id="table-post-approve">
         <jsp:useBean id="dateUtil" class="utils.date.DateFormatUtil" scope="session"/>
-        <c:forEach var="post"   items="${postList}"  varStatus="loop">
+        <c:forEach var="post" items="${list}" varStatus="loop">
             <tr >
                 <td>${loop.index+1}</td>
                 <td>${post.user.userName}</td>

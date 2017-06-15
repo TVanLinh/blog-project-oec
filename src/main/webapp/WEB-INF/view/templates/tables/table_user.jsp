@@ -1,7 +1,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${postList.size()>0}">
+<c:if test="${list.size()>0}">
     <table class="responstable"  id="">
         <thead>
             <tr>
@@ -13,13 +13,17 @@
                         <span class="dp-inline"><s:message code="name"/></span>
                     </a>
                 </th>
-                <th><a href="<s:url value="/manager-user"/>"><s:message code="role"/></a></th>
+                <th>
+                    <a href="<s:url value="/manager-user?orderBy=role"/>">
+                        <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                        <span class="dp-inline">  <s:message code="role"/></span>
+                    </a></th>
                 <th><s:message code="td.action"/></th>
             </tr>
         </thead>
         <tbody id="table-all-user">
         <jsp:useBean id="roleService" scope="page" class="service.RoleService"/>
-        <c:forEach var="user"   items="${postList}"  varStatus="loop">
+        <c:forEach var="user" items="${list}" varStatus="loop">
             <tr >
                 <td>${loop.index+1}</td>
                 <td>${user.userName}</td>

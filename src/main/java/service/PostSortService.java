@@ -7,7 +7,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import utils.sort.PortSort;
+import utils.sort.Sort;
 import utils.sort.SortType;
 import utils.string.StringSessionUtil;
 
@@ -24,10 +24,10 @@ import java.util.List;
 public class PostSortService {
 
     @Autowired
-    PortSort portSort;
+    private Sort portSort;
 
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     public List<Post> getAllPostByUser( SortType sortItem, User user, int offset, int limit) {
         String str= "select * from post where id_user = "+user.getId() +" order by  " + sortItem.orderBy + " " + sortItem.typeOrder + " limit "+offset+","+limit;

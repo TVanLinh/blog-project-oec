@@ -20,11 +20,16 @@
         </div>
 
         <div class="col-md-10 col-xs-12 ">
-            <c:if test="${userList.size()!=0}">
+            <c:if test="${list.size() != 0}">
                 <h1 class="text-center"><s:message code="listuser"/></h1>
             </c:if>
-            <c:if test="${userList.size()==0}">
+
+            <c:if test="${list.size() == 0 && param.query_search == null }">
                 <h1 class="text-center"><s:message code="notuser"/></h1>
+            </c:if>
+
+            <c:if test="${list.size() == 0 && param.query_search != null}">
+                <h1 class="text-center"><s:message code="not.user.find"/></h1>
             </c:if>
             <!----------------end list-table ------------------------->
             <div class="text-center">
@@ -41,19 +46,20 @@
                     <span class="error"><s:message code="${requestScope.error}"/></span>
                 </c:if>
             </div>
+            <c:if test="${list.size() > 0}">
+                <c:if test="${param.query_search == null}">
+                    <jsp:include page="templates/forms/select.jsp">
+                        <jsp:param name="target" value="/manager-user"/>
+                        <jsp:param name="search" value="''"/>
+                    </jsp:include>
+                </c:if>
 
-            <c:if test="${param.query_search == null}">
-                <jsp:include page="templates/forms/select.jsp">
-                    <jsp:param name="target" value="/manager-user"/>
-                    <jsp:param name="search" value="''"/>
-                </jsp:include>
-            </c:if>
-
-            <c:if test="${param.query_search != null}">
-                <jsp:include page="templates/forms/select.jsp">
-                    <jsp:param name="target" value="/manager-user-search"/>
-                    <jsp:param name="search" value="'${param.query_search}'"/>
-                </jsp:include>
+                <c:if test="${param.query_search != null}">
+                    <jsp:include page="templates/forms/select.jsp">
+                        <jsp:param name="target" value="/manager-user-search"/>
+                        <jsp:param name="search" value="'${param.query_search}'"/>
+                    </jsp:include>
+                </c:if>
             </c:if>
 
 

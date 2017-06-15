@@ -39,7 +39,7 @@ public class ConfigurationController {
     }
 
     @RequestMapping(value = "/configuration")
-    public  String configuration(HttpServletRequest request,ModelMap modelMap) {
+    public String configuration(ModelMap modelMap) {
         modelMap.addAttribute("conf",this.configurationService.getAllConfiguration().get(0));
         return "configuration";
     }

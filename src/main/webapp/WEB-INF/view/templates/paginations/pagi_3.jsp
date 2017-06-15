@@ -24,7 +24,7 @@
         </c:if>
 
         <c:if test="${(requestScope.totalList/requestScope.limit>=(paramPage)) && (requestScope.totalList % requestScope.limit)!=0}">
-            <c:if test="${requestScope.postList.size()!=0}">
+            <c:if test="${requestScope.list.size()!=0}">
                 <li class="next">
                     <a href="<s:url value="${param.pageTarget}?page=${paramPage+1}&number=${numberViewPost}"/>"><s:message
                             code="next"/>
@@ -35,7 +35,7 @@
 
         <c:if test="${(requestScope.totalList/requestScope.limit>(paramPage)) && (requestScope.totalList % requestScope.limit)==0}">
             <li class="next">
-                <c:if test="${requestScope.postList.size()!=0}">
+                <c:if test="${requestScope.list.size()!=0}">
                     <a href="<s:url value="${param.pageTarget}?page=${paramPage+1}&number=${numberViewPost}"/>"><s:message
                             code="next"/>
                         &rarr;</a>
@@ -56,7 +56,7 @@
         </c:if>
 
         <c:if test="${(requestScope.totalList/requestScope.limit>=(paramPage)) && (requestScope.totalList % requestScope.limit)!=0}">
-            <c:if test="${requestScope.postList.size()!=0}">
+            <c:if test="${requestScope.list.size()!=0}">
                 <li class="next">
                     <a href="<s:url value="${param.pageSearch}?page=${paramPage+1}&query_search=${param.query_search}&number=${numberViewPost}"/>"><s:message
                             code="next"/>
@@ -67,7 +67,7 @@
 
         <c:if test="${(requestScope.totalList/requestScope.limit>(paramPage)) && (requestScope.totalList % requestScope.limit)==0}">
             <li class="next">
-                <c:if test="${requestScope.postList.size()!=0}">
+                <c:if test="${requestScope.list.size()!=0}">
                     <a href="<s:url value="${param.pageSearch}?page=${paramPage+1}&query_search=${param.query_search}&number=${numberViewPost}"/>"><s:message
                             code="next"/>
                         &rarr;</a>

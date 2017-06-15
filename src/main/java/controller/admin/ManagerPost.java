@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.PostService;
 import service.PostSortService;
 import service.RequestService;
+import utils.session.SessionUtils;
 import utils.sort.PortSort;
 import utils.sort.SortType;
 import utils.string.StringSessionUtil;
@@ -47,7 +48,7 @@ public class ManagerPost {
         int limit = this.postService.getLimit(numberView);
         List<Post> postList = this.postSortService.getAllPost(request, (page - 1) * limit, limit);
 
-        RequestService.setResponse(modelMap, limit, postList, this.postService.findAll(Post.class, "post").size());
+        RequestService.setResponse(modelMap, limit, postList, this.postService.getCount());
         return "manager-post";
     }
 
@@ -58,7 +59,7 @@ public class ManagerPost {
                                      RedirectAttributes redirectAttributes) throws NotFindException {
 
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("userLogin");
+        User user = (User) session.getAttribute(SessionUtils.USER_LOGIN);
         try {
             this.postService.delete(id, user.getUserName());
             RequestService.setResponse(redirectAttributes,pageRequest,RequestService.DELETE_SUCCESS);

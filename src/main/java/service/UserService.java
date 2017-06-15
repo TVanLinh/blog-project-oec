@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import utils.sort.SortType;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -44,11 +45,15 @@ public class UserService  extends AbstractService<User> {
         return ( List<User>)query.getResultList();
     }
 
-    public  int getCountBeginUserName(String searchQuery)
+    public BigInteger getCount() {
+        return (BigInteger) this.sessionFactory.getCurrentSession().createNativeQuery("select count(*) from user").getSingleResult();
+    }
+
+    public BigInteger getCountBeginUserName(String searchQuery)
     {
-        String str= "select * from user where user_name like :condition";
-        Query query = sessionFactory.getCurrentSession().createNativeQuery(str,User.class);
-       return query.setParameter("condition","%"+searchQuery+"%").getResultList().size();
+        String str = "select count(*) from user where user_name like :condition";
+        Query query = sessionFactory.getCurrentSession().createNativeQuery(str);
+        return (BigInteger) query.setParameter("condition", "%" + searchQuery + "%").getSingleResult();
     }
 
     public  void save(User user)

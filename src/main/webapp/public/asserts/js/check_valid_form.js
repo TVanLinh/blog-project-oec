@@ -71,71 +71,84 @@ function getImages2() {
 }
 
 
+//
+// function  checkFormInsertUser() {
+//     var userName=document.getElementById("userName").value;
+//     var passWord=document.getElementById("passWord").value;
+//     var rePassWord=document.getElementById("rePassWord").value;
+//     var listRole=document.getElementById("listRole").value;
+//     if(userName.trim()=="")
+//     {
+//         window.alert("Enter user name !");
+//         return false;
+//     }
+//     if(passWord.trim()=="")
+//     {
+//         window.alert("Enter pass word !");
+//         return false;
+//     }
+//     if(passWord.trim()!==""&&passWord.trim()!=rePassWord.trim())
+//     {
+//         window.alert("The two passwords do not overlap !");
+//         return false;
+//     }
+//     if(listRole==="")
+//     {
+//         window.alert("Not select role !");
+//         return false ;
+//     }
+//     return true;
+// }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function  checkFormInsertUser() {
+function checkFormInsertUser(msgUser, msgPass1, msgPass2, msgSelect, action) {
     var userName=document.getElementById("userName").value;
     var passWord=document.getElementById("passWord").value;
     var rePassWord=document.getElementById("rePassWord").value;
     var listRole=document.getElementById("listRole").value;
+
     if(userName.trim()=="")
     {
-        window.alert("Enter user name !");
+        window.alert(msgUser);
         return false;
     }
-    if(passWord.trim()=="")
+    if (action != 'update') {
+        if (passWord.trim() === "") {
+            window.alert(msgPass1);
+            return false;
+        }
+    }
+    if (passWord.trim() != "" && passWord.trim() != rePassWord.trim())
     {
-        window.alert("Enter pass word !");
+        window.alert(msgPass2);
         return false;
     }
-    if(passWord.trim()!==""&&passWord.trim()!=rePassWord.trim())
+    if (listRole === "")
     {
-        window.alert("The two passwords do not overlap !");
-        return false;
-    }
-    if(listRole==="")
-    {
-        window.alert("Not select role !");
+        window.alert(msgSelect);
         return false ;
     }
     return true;
 }
 
-function  checkFormValidPassWord() {
+
+function checkFormValidPassWord(msgOldPass, msgPass, msg) {
     var passWord=document.getElementById("passWord").value;
     var rePassWord=document.getElementById("rePassWord").value;
     var oldPassWord=document.getElementById("oldPassWord").value;
     if(oldPassWord.trim()==="")
     {
-        window.alert("Enter old word !");
+        window.alert(msgOldPass);
         return false;
     }
     if(passWord.trim()==="")
     {
-        window.alert("Enter pass word !");
+        window.alert(msgPass);
         return false;
     }
     if(passWord.trim()!==""&&passWord.trim()!=rePassWord.trim())
     {
-        window.alert("The two passwords do not overlap !");
+        window.alert(msg);
         return false;
     }
     return true;

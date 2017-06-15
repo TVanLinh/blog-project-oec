@@ -22,11 +22,15 @@
 
                     <!---------------list table -------------------------->
 
-                    <c:if test="${postList.size()==0}">
+                    <c:if test="${list.size()==0 && param.query_search == null}">
                         <h1 class="text-center"><s:message code="notpost.approve"/></h1>
                     </c:if>
-                    <c:if test="${postList.size()!=0}">
+                    <c:if test="${list.size()!=0 }">
                         <h1 class="text-center"><s:message code="table.Aprrove"/></h1>
+                    </c:if>
+
+                    <c:if test="${list.size()==0 && param.query_search != null}">
+                        <h1 class="text-center"><s:message code="not.post.find"/></h1>
                     </c:if>
 
                     <div class="text-center">
@@ -40,18 +44,20 @@
                         <span class="error"><s:message code="${requestScope.error}"/></span>
                     </c:if>
 
-                    <c:if test="${param.query_search == null}">
-                        <jsp:include page="templates/forms/select.jsp">
-                            <jsp:param name="target" value="/admin"/>
-                            <jsp:param name="search" value="''"/>
-                        </jsp:include>
-                    </c:if>
+                    <c:if test="${list.size() > 0}">
+                        <c:if test="${param.query_search == null}">
+                            <jsp:include page="templates/forms/select.jsp">
+                                <jsp:param name="target" value="/admin"/>
+                                <jsp:param name="search" value="''"/>
+                            </jsp:include>
+                        </c:if>
 
-                    <c:if test="${param.query_search != null}">
-                        <jsp:include page="templates/forms/select.jsp">
-                            <jsp:param name="target" value="/admin-search-post-approve"/>
-                            <jsp:param name="search" value="'${param.query_search}'"/>
-                        </jsp:include>
+                        <c:if test="${param.query_search != null}">
+                            <jsp:include page="templates/forms/select.jsp">
+                                <jsp:param name="target" value="/admin-search-post-approve"/>
+                                <jsp:param name="search" value="'${param.query_search}'"/>
+                            </jsp:include>
+                        </c:if>
                     </c:if>
 
                     <jsp:include page="templates/tables/table_approve.jsp"/>

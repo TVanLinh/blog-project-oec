@@ -19,12 +19,10 @@ public class UserFormChangePasswordValidator extends UserFormValidator implement
         UserForm userForm = (UserForm)target;
         if(userForm.getUser() != null && !passwordEncoder.matches(userForm.getOldPassWord(),userForm.getUser().getPassWord())){
             errors.rejectValue("user.passWord",UserFormValidator.VALIDATION_FIELD_PASS_NOT_RIGHT);
-            return;
         }
 
         if(org.apache.commons.lang3.StringUtils.isBlank(userForm.getNewPassWord())){
             errors.rejectValue("newPassWord", UserFormValidator.VALIDATION_PASS_BLANK);
-            return;
         }
 
         if(!userForm.getNewPassWord().equalsIgnoreCase(userForm.getRePassWord())){

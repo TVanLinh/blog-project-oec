@@ -25,13 +25,13 @@
 
 <div>
     <jsp:useBean id="numberView" class="utils.number.NumberViewSort"/>
-    <c:if test="${requestScope.postList.size()>0}">
+    <c:if test="${requestScope.list.size()>0}">
 
         <H3 class="pdt-10 pdb-10">
             <span class="pd-10"><s:message code="recordFrom"/></span>
             <span>${(paramPage-1)*requestScope.limit+1} </span>
             <span class="pd-10"><s:message code="to"/></span>
-            <span>${(paramPage-1)*requestScope.limit+requestScope.postList.size()}</span>
+            <span>${(paramPage-1)*requestScope.limit+requestScope.list.size()}</span>
             <span class="pd-10">
                     <s:message code="in"/>
             </span>

@@ -41,7 +41,15 @@
                     <%--<input type="text" class="form-control pd-0" name="formatTime" id="formatTime">--%>
                 </div>
                 <input type="submit" class="btn btn-default" value="<s:message code="save" />"
-                       onsubmit="return checkFormInsertUser()" onclick="return checkFormInsertUser()">
+                       onclick="return checkFormInsertUser('<s:message code="validation.field.username_not_blank"/>','
+                           <s:message code="validation.field.password_not_blank"/>','<s:message
+                               code="validation.field.overlap_password"/>','<s:message
+                               code="validation.field.role_not_blank"/>','')"
+                       onsubmit="return checkFormInsertUser('<s:message code="validation.field.username_not_blank"/>','
+                           <s:message code="validation.field.password_not_blank"/>','<s:message
+                               code="validation.field.overlap_password"/>','<s:message
+                               code="validation.field.role_not_blank"/>','')">
+
                 <p class="pd-10 error">
                     <c:if test="${requestScope.errors != null}">
                         <c:forEach var="item" items="${requestScope.errors}">

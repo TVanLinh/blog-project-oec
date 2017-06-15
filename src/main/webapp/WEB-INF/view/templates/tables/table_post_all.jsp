@@ -8,7 +8,7 @@
 <c:if test="${param.page == null}">
     <c:set var="paramPage" value="1" scope="request"/>
 </c:if>
-<c:if test="${postList.size()>0}">
+<c:if test="${list.size()>0}">
     <table class="responstable  " id="">
 
       <thead>
@@ -56,7 +56,7 @@
       </thead>
         <tbody id="table-all-post">
         <jsp:useBean id="dateUtil" class="utils.date.DateFormatUtil" scope="session"/>
-        <c:forEach var="post"   items="${postList}"  varStatus="loop">
+        <c:forEach var="post" items="${list}" varStatus="loop">
             <tr >
                 <td>${loop.index+1}</td>
                 <td>${post.user.userName}</td>

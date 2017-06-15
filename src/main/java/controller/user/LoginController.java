@@ -16,10 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.RequestService;
 import service.UserService;
+import utils.session.SessionUtils;
 import vadilator.UserFormChangePasswordValidator;
 import vadilator.UserFormValidator;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 /**
  * Created by linhtran on 13/06/2017.
@@ -46,18 +49,21 @@ public class LoginController {
         return model;
 
     }
+
+    @RequestMapping(value = "/login-success")
+    public String loginSuccess(Principal principal, HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+
+        if (session.getAttribute(SessionUtils.USER_LOGIN) == null) {
+            session.setAttribute(SessionUtils.USER_LOGIN, this.userService.getUserByName(principal.getName()));
+        }
+        return "redirect:/user";
+    }
+
     //for 403 access denied page
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String  accessDenied() throws AccessDenieException {
-
-//        ModelAndView model = new ModelAndView();
-
-//        //check if user is login
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        if (!(auth instanceof AnonymousAuthenticationToken)) {
-//            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-//            model.addObject("username", userDetail.getUsername());
-//        }
         throw new AccessDenieException(AccessDenieException.ACESS_NOT_ROLE_PAGE);
     }
 
@@ -67,7 +73,7 @@ public class LoginController {
                                        @ModelAttribute(value = "userForm") UserForm userForm, ModelMap modelMap,
                                        BindingResult bindingResult){;
         changePasswordValidator.validate(userForm,bindingResult);
-        User user = (User) request.getSession().getAttribute("userLogin");
+        User user = (User) request.getSession().getAttribute(SessionUtils.USER_LOGIN);
         if(bindingResult.hasErrors()){
             modelMap.addAttribute("errors",changePasswordValidator.getCodeErrors(bindingResult));
             request.setAttribute("user", user);

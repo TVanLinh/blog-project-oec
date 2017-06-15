@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.*;
 import utils.page.DefaultPages;
+import utils.session.SessionUtils;
 import utils.sort.Sort;
 import utils.sort.SortType;
 import utils.sort.UserSort;
@@ -27,7 +28,6 @@ import vadilator.UserFormInsertUserValidator;
 import vadilator.UserFormUpdateValidator;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -82,8 +82,8 @@ public class ManagerUser {
         int page = NumberUtils.toInt(pageRequest, 1);
         int limit = this.postService.getLimit(numberView);
         SortType sortType = this.userSort.getSortType(request, StringSessionUtil.CURRENT_USER_SORT,"user_name");
-        List<User> userList = this.userSortService.getUser(sortType, (page - 1) * limit, limit);
-        RequestService.setResponse(modelMap, limit, userList, this.userService.findAll(User.class, "user").size());
+        List<User> userList = this.userSortService.getUsers(sortType, (page - 1) * limit, limit);
+        RequestService.setResponse(modelMap, limit, userList, this.userService.getCount());
         return "manager-user";
     }
 
@@ -166,7 +166,7 @@ public class ManagerUser {
                                    HttpServletRequest request,
                                    @ModelAttribute(value = "userForm") UserForm  userForm,
                                    @RequestParam(value = "page", required = false) String pageRequest,
-                                   BindingResult bs,Principal principal,
+                                   BindingResult bs,
                                    RedirectAttributes redirectAttributes) {
         updateUserValidator.validate(userForm, bs);
 
@@ -181,8 +181,9 @@ public class ManagerUser {
 
 
         //th doi chinh nguoi dang dang nhap
-        if(principal.getName().equals(userCurrent.getUserName())) {
-            request.getSession().setAttribute("userLogin", userForm.getUser());
+        User user = (User) request.getSession().getAttribute(SessionUtils.USER_LOGIN);
+        if (user.getUserName().equals(userCurrent.getUserName())) {
+            request.getSession().setAttribute(SessionUtils.USER_LOGIN, userForm.getUser());
         }
 
         this.roleService.deleteByUserId(userForm.getUser().getId());

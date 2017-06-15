@@ -24,9 +24,6 @@
 
         </div>
     </div>
-    <!-- /.row -->
-
-    <!-- Footer -->
 
 </div>
 <!-- /.container -->

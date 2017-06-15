@@ -20,27 +20,21 @@ public class UserFormInsertUserValidator extends UserFormValidator implements Va
 
         if(!StringUtils.checkVid(target.getUser().getUserName())) {
             errors.rejectValue("user.userName","validation.field.user_name_not_vid");
-            return;
         }
 
         if(this.checkOverLapUserName(target)){
             errors.rejectValue("user.userName", "validation.field.existed_username");
-            return;
         }
         if(org.apache.commons.lang3.StringUtils.isBlank(target.getUser().getPassWord())) {
             errors.rejectValue("user.passWord","validation.field.password_not_blank");
-            return;
         }
 
         if(!this.checkOverLapPassWord(target)) {
             errors.rejectValue("user.passWord","validation.field.overlap_password");
-            return;
         }
-
 
         if(!this.checkValidRole(target.getUser().getRoleList())) {
             errors.rejectValue("user.roleList","validation.field.role_not_blank");
-            return;
         }
 
     }

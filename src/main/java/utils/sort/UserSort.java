@@ -13,6 +13,7 @@ public class UserSort extends Sort {
     public   boolean checkOrderBy(String orderBy) {
         Set<String> set  = new HashSet<String>();
         set.add("id");
+        set.add("role");
         set.add("user_name");
         if(set.contains(orderBy)) {
             return true;

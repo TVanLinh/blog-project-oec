@@ -6,6 +6,7 @@ import exceptions.AccessDenieException;
 import exceptions.NotFindException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import utils.number.NumberViewSort;
 import utils.sort.SortType;
 
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -42,8 +44,8 @@ public class PostService extends AbstractService<Post> {
         return sessionFactory.getCurrentSession().createNativeQuery(str, Post.class).getResultList();
     }
 
-    public int getCountNotApprove() {
-        return this.getAllPNotApprove().size();
+    public BigInteger getCountNotApprove() {
+        return (BigInteger) sessionFactory.getCurrentSession().createNativeQuery("select count(*) from post where approve = 0 ").getSingleResult();
     }
 
     public List<Post> getContainsTitle(SortType sortType, String querySearch, int approve, int offset, int limit) {
@@ -55,12 +57,12 @@ public class PostService extends AbstractService<Post> {
     }
 
 
-    public int getCountContainsTitle(String querySearch, int approve) {
-        String string = "  SELECT DISTINCT  * from user inner join post on user.id = post.id_user where  approve = :approve and  (title like :querySearch  or user.user_name like :querySearch)  ";
-        Query<Post> query = sessionFactory.getCurrentSession().createNativeQuery(string, Post.class);
+    public BigInteger getCountContainsTitle(String querySearch, int approve) {
+        String string = "  SELECT DISTINCT count(*) from user inner join post on user.id = post.id_user where  approve = :approve and  (title like :querySearch  or user.user_name like :querySearch)  ";
+        Query<BigInteger> query = sessionFactory.getCurrentSession().createNativeQuery(string);
         query.setParameter("querySearch", "%" + querySearch + "%");
         query.setParameter("approve", approve);
-        return query.getResultList().size();
+        return query.getSingleResult();
     }
 
     public List<Post> getAllByTitle(SortType sortType, String querySearch, int offset, int limit) {
@@ -71,17 +73,23 @@ public class PostService extends AbstractService<Post> {
     }
 
 
-    public int getCountAllByTitle(String querySearch) {
-        String str = " select * from\n" +
-                " post inner join user on post.id_user = user.id where title like :querySearch or user.user_name like :querySearch ";
-        Query<Post> query = sessionFactory.getCurrentSession().createNativeQuery(str, Post.class);
+    public BigInteger getCountAllByTitle(String querySearch) {
+        String str = " select count(*) from post inner join user on post.id_user = user.id where title like :querySearch or user.user_name like :querySearch ";
+        Query<BigInteger> query = sessionFactory.getCurrentSession().createNativeQuery(str);
         query.setParameter("querySearch", "%" + querySearch + "%");
-        return query.getResultList().size();
+        return query.getSingleResult();
     }
 
     public List<Post> getPostByIdUser(int id) {
         return this.postDAO.getPostByIdUser(id);
     }
+
+    public BigInteger getCountById(int idUser) {
+        Session session = sessionFactory.getCurrentSession();
+        String str = "select count(*) from post where  id_user = :idUser  order by time_post desc";
+        return (BigInteger) session.createNativeQuery(str).setParameter("idUser", idUser).getSingleResult();
+    }
+
 
     public List<Post> getPostByIdUser(int id, String querySearch) {
         String str = "select * from  post where title like :querySearch";
@@ -90,6 +98,12 @@ public class PostService extends AbstractService<Post> {
         return query.getResultList();
     }
 
+    public BigInteger getCountByIdUser(int id, String querySearch) {
+        String str = "select count(*) from  post where title like :querySearch";
+        Query<BigInteger> query = sessionFactory.getCurrentSession().createNativeQuery(str);
+        query.setParameter("querySearch", "%" + querySearch + "%");
+        return query.getSingleResult();
+    }
 
     public List<Post> getPostByIdUser(int id, int offset, int limit) {
         return this.postDAO.getPostByIdUser(id, offset, limit);
@@ -117,17 +131,18 @@ public class PostService extends AbstractService<Post> {
         return query.getResultList();
     }
 
-    public int getCountPublicByTitle(String query) {
-        return this.getPostPublicByTitle(new SortType(), query).size();
+    public BigInteger getCountPublicByTitle(String querySearch) {
+        String string = "select count(*) from  user inner join post on user.id = post.id_user   where approve = 1  and status = 1 and (title like :querySearch or user.user_name like :querySearch) ";
+        Query query = sessionFactory.getCurrentSession().createNativeQuery(string);
+        query.setParameter("querySearch", "%" + querySearch + "%");
+        return (BigInteger) query.getSingleResult();
     }
 
     public List<Post> finAll(String query) {
         return this.postDAO.getAllPost(query);
     }
 
-    public int getCount() {
-        return this.getCount(Post.class, "post");
-    }
+
 
     public void delete(int id)  {
         if(this.postDAO.find(id)!=null) {
@@ -161,8 +176,8 @@ public class PostService extends AbstractService<Post> {
         return this.postDAO.getPost(offset, limit);
     }
 
-    public int getCountPublic() {
-        return this.postDAO.getAllPostPublic().size();
+    public BigInteger getCountPublic() {
+        return (BigInteger) this.sessionFactory.getCurrentSession().createNativeQuery("select count(*) from post where approve = 1 and status =1 ").getSingleResult();
     }
 
     public   boolean approvePost(String   id,String userName) throws NotFindException, AccessDenieException {
@@ -223,8 +238,17 @@ public class PostService extends AbstractService<Post> {
         return query.getResultList();
     }
 
-    public int getCount(int idUser, int status, int approve) {
-        return this.getPost(idUser, status, approve, new SortType()).size();
+    public BigInteger getCount(int idUser, int status, int approve) {
+        String str = "select count(*) from post where id_user =:id_user and status =:status and approve =:approve  ";
+        Query<BigInteger> query = sessionFactory.getCurrentSession().createNativeQuery(str);
+        query.setParameter("id_user", idUser);
+        query.setParameter("status", status);
+        query.setParameter("approve", approve);
+        return query.getSingleResult();
+    }
+
+    public BigInteger getCount() {
+        return (BigInteger) this.sessionFactory.getCurrentSession().createNativeQuery("select count(*) from post ").getSingleResult();
     }
 
     public int getLimit(String numberView) {

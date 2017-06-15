@@ -17,7 +17,7 @@
 
             <ul class="list-group">
                 <li class="list-group-item"><s:message code="totalAllPost"/><span class="badge"
-                                                                                  id="num">${requestScope.totalList}</span>
+                                                                                  id="num">${requestScope.list}</span>
                 </li>
             </ul>
             <!-------form search-------------->

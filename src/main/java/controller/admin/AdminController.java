@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.PostService;
 import service.PostSortService;
 import service.RequestService;
+import utils.session.SessionUtils;
 import utils.sort.PortSort;
 import utils.sort.SortType;
 import utils.string.StringSessionUtil;
@@ -58,7 +59,7 @@ public class AdminController
                               @RequestParam(value = "id",required = false)String id,
                               RedirectAttributes redirectAttributes) {
         HttpSession session =request.getSession();
-        User user = (User) session.getAttribute("userLogin");
+        User user = (User) session.getAttribute(SessionUtils.USER_LOGIN);
         try {
             this.postService.delete(id, user.getUserName());
             RequestService.setResponse(redirectAttributes,pageRequest,RequestService.DELETE_SUCCESS);
@@ -72,7 +73,7 @@ public class AdminController
     public  String approvePost(HttpServletRequest request, @RequestParam(value = "page",required = false) String pageRequest, ModelMap modelMap,
                                @RequestParam(value = "id",required = false)String id,
                                RedirectAttributes redirectAttributes){
-        User user = (User) request.getSession().getAttribute("userLogin");
+        User user = (User) request.getSession().getAttribute(SessionUtils.USER_LOGIN);
         try{
             if (!this.postService.approvePost(id, user.getUserName())) {
                  RequestService.setResponse(redirectAttributes,pageRequest,RequestService.POST_APPROVED);

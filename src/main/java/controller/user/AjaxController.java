@@ -1,13 +1,12 @@
 package controller.user;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import entities.Post;
 import exceptions.NotFindException;
-import jsonviews.Views;
 import model.UserRestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import service.PostService;
 import utils.cookie.CookieUtils;
@@ -30,7 +29,8 @@ public class AjaxController {
     public static final String IMAGE_DISLIKE = "public/asserts/images/notlike.png";
 
     @RequestMapping(value = "/like")
-    @JsonView(Views.Public.class)
+//    @JsonView(Views.Public.class)
+    @ResponseBody
     public synchronized UserRestBody like(@RequestBody UserRestBody userRestBody, HttpServletRequest request, HttpServletResponse response) throws NotFindException {
 
         Cookie cookies[] = request.getCookies();

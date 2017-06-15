@@ -92,7 +92,7 @@ public class Post extends AbstractEntity implements Serializable{
   }
 
   public void setContent(String content) {
-    this.content = content;
+    this.content = content.replaceAll("<script></script<iframe></iframe", "");
   }
 
   public int getNumberView() {

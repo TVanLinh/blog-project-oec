@@ -18,10 +18,10 @@
         </div>
         <div class="col-lg-8 col-md-8 col-xs-12">
             <s:url value="/action-update-user" var="formAction"/>
-            <form:form ACTION="${formAction}" METHOD="post" onsubmit="return checkFormInsertUser()" commandName="userForm">
+            <form:form ACTION="${formAction}" METHOD="post" commandName="userForm">
                 <form:input type="hidden" path="user.id" value="${param.id}"/>
                 <div class="form-group">
-                    <label for="userName">$<s:message code="name"/>:</label>
+                    <label for="userName"><s:message code="name"/>:</label>
                     <form:input path="user.userName" type="text" class="form-control userName " name="userName" id="userName" value="${requestScope.user.userName}"/>
                 </div>
                 <div class="form-group">
@@ -34,7 +34,8 @@
                 </div>
                 <div class="form-group">
                     <label for="formatTime" id="formatTime"><s:message code="role"/>:</label>
-                    <form:select path="user.roleList" class="form-control"  name="listRole" multiple="multiple" >
+                    <form:select path="user.roleList" class="form-control" name="listRole" multiple="multiple"
+                                 id="listRole">
                         <c:if test="${requestScope.userService.isRoleUser(requestScope.user) && requestScope.userService.isRoleAdmin(requestScope.user)}">
                             <option value="ROLE_USER"  selected>ROLE_USER</option>
                             <option value="ROLE_ADMIN"  selected >ROLE_ADMIN</option>
@@ -59,7 +60,14 @@
                         <%--<form:input type="text" class="form-control pd-0" name="formatTime" id="formatTime">--%>
                 </div>
                 <input type="submit" class="btn btn-default" value="<s:message code="save" />"
-                       onclick="return checkFormInsertUser()" onsubmit="return checkFormInsertUser()">
+                       onclick="return checkFormInsertUser('<s:message code="validation.field.username_not_blank"/>','
+                           <s:message code="validation.field.password_not_blank"/>','<s:message
+                               code="validation.field.overlap_password"/>','<s:message
+                               code="validation.field.role_not_blank"/>','update')"
+                       onsubmit="return checkFormInsertUser('<s:message code="validation.field.username_not_blank"/>','
+                           <s:message code="validation.field.password_not_blank"/>','<s:message
+                               code="validation.field.overlap_password"/>','<s:message
+                               code="validation.field.role_not_blank"/>','update')">
                 <p class="pd-10 error">
                     <c:forEach var="item" items="${requestScope.errors}">
                         <s:message code="${item}"/>

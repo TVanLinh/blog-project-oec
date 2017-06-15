@@ -21,21 +21,23 @@
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-xs-12">
-        <c:if test="${requestScope.totalList<=0}">
-            <H3>
-                <s:message code="recordFrom"/>
-            </H3>
-        </c:if>
+            <p class="fs-20"><s:message code="result.find.word"/> : <span
+                    class="error fs-20">${param.query_search}</span></p>
+            <c:if test="${requestScope.totalList<=0}">
+                <H3>
+                    <s:message code="not.post.find"/>
+                </H3>
+            </c:if>
             <c:if test="${requestScope.totalList>0}">
                     <p class="fs-20">
-                        <span><s:message code="post.find.all"/> </span>
-                        <span>${requestScope.totalList}</span>
+                            <%--<span><s:message code="post.find.all"/> </span>--%>
+                            <%--<span>${requestScope.totalList}</span>--%>
                         <span class="pd-10"><s:message code="post.from"/></span>
                         <span>${(paramPage-1)*requestScope.limit+1} </span>
                         <span class="pd-10"><s:message code="to"/></span>
-                        <span>${(paramPage-1)*requestScope.limit+requestScope.postList.size()}</span>
+                        <span>${(paramPage-1)*requestScope.limit+requestScope.list.size()}</span>
                         <span class="pd-10"><s:message code="in"/></span>
-                        <span>${(paramPage-1)*requestScope.limit+requestScope.postList.size()}</span>
+                        <span>${(paramPage-1)*requestScope.limit+requestScope.list.size()}</span>
                         <span class="pd-10"><s:message code="post"/></span>
                     </p>
             </c:if>

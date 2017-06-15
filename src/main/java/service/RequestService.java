@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -12,15 +13,12 @@ import java.util.List;
 
 @Component
 public class RequestService {
-    public  static final String LIST = "postList";
+    public static final String LIST = "list";
     public  static final String PAGE = "page";
-    public static final   String PAGE_ACTIVE = "active";
+
     public  static  final String MESSAGE = "error";
     public  static  final String TOTAL_LIST = "totalList";
-    public  static  final String QUERY_SEARCH = "querySearch";
-    public static  final String  CONF = "conf";
 
-    public  static  final String ERROR =  "error";
     public  static  final  String SUCCESS = "success";
     public  static  final  String UPDATE_SUCCESS = "request.update_success";
     public  static  final  String UPDATE_NOT_SUCCESS = "update.not.success";
@@ -35,10 +33,10 @@ public class RequestService {
     public  static  final  String VALID_FIELD_POST_TITLE_NOT_BLANK = "validation.field.post_title_not_blank";
     public  static  final  String LIMIT = "limit";
 
-    public static void setResponse(ModelMap  modelMap, int  limit,List List,int totalList)
+    public static void setResponse(ModelMap modelMap, int limit, List List, BigInteger totalList)
     {
         modelMap.addAttribute(LIST,List);
-        modelMap.addAttribute(TOTAL_LIST,totalList);
+        modelMap.addAttribute(TOTAL_LIST, totalList.intValue());
         modelMap.addAttribute(LIMIT,limit);
     }
 
