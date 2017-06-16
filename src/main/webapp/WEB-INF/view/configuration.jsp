@@ -39,8 +39,6 @@
                 </div>
             </c:if>
 
-
-            <%--<jsp:include page="templates/menus/menu-admin.jsp"/>--%>
             <spring:url var="action" value="/process-configuration"/>
 
             <jsp:useBean id="confService" scope="page" class="service.ConfigurationService"/>

@@ -8,8 +8,7 @@
 
 <!-- Navigation -->
 <jsp:include page="templates/navbars/navbar.jsp"/>
-<%--<%@page session="true"%>--%>
-<!-- Page Content -->
+
 <div class="container-fluid">
     <!-- Blog Entries Column -->
     <div class="row">

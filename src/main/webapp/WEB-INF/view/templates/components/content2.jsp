@@ -48,7 +48,7 @@
     </a>
 
     <c:if test="${sessionScope.userLogin != null && post.user.userName == sessionScope.userLogin.userName}">
-        <a id="action-update" href="<s:url value="/update?action=update&id=${post.id}"/>" title=" ${messageSource.getMessage("edit",null,locale)}">
+        <a id="action-update" href="<s:url value="/update?update&id=${post.id}"/>" title="<s:message code="edit"/> ">
             <i class="fa fa-pencil-square-o mgl-15" aria-hidden="true"></i>
         </a>
         <a id="action-" onclick="return window.confirm('<s:message code="confirm.delete.post"/>')"

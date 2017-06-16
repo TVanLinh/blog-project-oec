@@ -30,8 +30,6 @@
             </c:if>
             <c:if test="${requestScope.totalList>0}">
                     <p class="fs-20">
-                            <%--<span><s:message code="post.find.all"/> </span>--%>
-                            <%--<span>${requestScope.totalList}</span>--%>
                         <span class="pd-10"><s:message code="post.from"/></span>
                         <span>${(paramPage-1)*requestScope.limit+1} </span>
                         <span class="pd-10"><s:message code="to"/></span>

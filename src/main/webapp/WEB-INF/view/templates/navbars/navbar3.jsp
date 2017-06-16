@@ -77,9 +77,7 @@
             if(temp===0)
             {
                 seach.on('click',function () {
-//                    target.removeClass("search-hide");
                     target.toggleClass("search-show",1000);
-//                    $("#place-holder").toggleClass('mgb-30');
                 });
                 temp=1;
             }
