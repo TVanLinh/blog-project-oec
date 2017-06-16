@@ -60,12 +60,36 @@
                 <li><a href="<s:url value="/login"/>"><span class="glyphicon glyphicon-log-in"></span> <s:message
                         code="login"/></a></li>
             </c:if>
-            <li><a href="<s:url value="/language?language=en"/>"><img src="<s:url value="public/asserts/images/US.gif"/>" alt="USA"></a></li>
-            <li><a href="<s:url  value="/language?language=vn"/>"><img
-                    src="<s:url value="public/asserts/images/VI.gif"/>"></a></li>
+
+            <c:if test="${sessionScope.locale.equals('vn') }">
+                <li><a href="<s:url value="/language?language=en"/>"><img
+                        src="<s:url value="public/asserts/images/US.gif"/>" alt="USA"></a></li>
+                <li>
+                    <a href="<s:url  value="/language?language=vn"/>">
+                        <div class="locale">
+                            <img src="<s:url value="public/asserts/images/VI.gif"/>">
+                        </div>
+                    </a></li>
+            </c:if>
+
+            <c:if test="${sessionScope.locale.equals('en') }">
+                <li>
+                    <a href="<s:url value="/language?language=en"/>">
+                        <div class="locale">
+                            <img src="<s:url value="public/asserts/images/US.gif"/>" alt="USA">
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="<s:url  value="/language?language=vn"/>">
+                        <img src="<s:url value="public/asserts/images/VI.gif"/>">
+                    </a></li>
+            </c:if>
+
         </ul>
     </div>
 </nav>
+
 <jsp:include page="../forms/form_search_home.jsp"/>
 
 <script>

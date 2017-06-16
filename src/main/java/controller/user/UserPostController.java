@@ -66,6 +66,7 @@ public class UserPostController {
         SortType sortType = this.portSort.getSortType(request,StringSessionUtil.CURRENT_POST_ALL_TYPE_SORT_BY_USER,"title");
         postList = postSortSerVice.getAllPostByUser(sortType, user, (page - 1) * limit, limit);
         RequestService.setResponse(modelMap, limit, postList, this.postService.getCountById(user.getId()));
+        modelMap.addAttribute("typeOrder", sortType.typeOrder);
         return "author";
     }
 
@@ -95,6 +96,7 @@ public class UserPostController {
         int page = NumberUtils.toInt(pageRequest,1);
         List<Post> postLists = this.postService.getPostByIdUser(sortType, querySearch, user.getId(), (page - 1) * limit, limit);
         RequestService.setResponse(modelMap, limit, postLists, this.postService.getCountByIdUser(user.getId(), querySearch));
+        modelMap.addAttribute("typeOrder", sortType.typeOrder);
         return "author";
     }
 

@@ -8,6 +8,13 @@
     <c:set var="paramPage" value="1" scope="request"/>
 </c:if>
 
+<c:if test="${ param.orderBy != null}">
+    <c:set var="vOrderBy" value="${param.orderBy}"/>
+</c:if>
+
+<c:if test="${ param.orderBy == null}">
+    <c:set var="vOrderBy" value="user_name"/>
+</c:if>
 
 <c:if test="${list.size()>0}">
     <table class="responstable" id="">
@@ -15,20 +22,51 @@
             <tr>
                 <th data-th="Driver details"><span>STT</span></th>
                 <th data-th="Driver details">
-                    <a href="<s:url value="/admin?orderBy=id_user"/>">
-                        <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                    <a href="<s:url value="/admin?orderBy=user_name"/>">
+
+                        <c:if test="${!vOrderBy.equals('user_name')}">
+                            <i class="fa fa-sort fs-20 pd-5 mgr-10 opacity-3" aria-hidden="true"></i>
+                        </c:if>
+
+                        <c:if test="${vOrderBy.equals('user_name') && requestScope.typeOrder.equals('desc')}">
+                            <i class="fa fa-sort-desc   fs-20 mgr-10" aria-hidden="true"></i>
+                        </c:if>
+
+                        <c:if test="${vOrderBy.equals('user_name') && requestScope.typeOrder.equals('asc')}">
+                            <i class="fa fa-sort-asc mgr-10 fs-20" aria-hidden="true"></i>
+                        </c:if>
                         <span class="dp-inline"><s:message code="td.author"/></span>
                     </a>
                 </th>
                 <th class="text-center">
                     <a href="<s:url value="/admin?orderBy=title"/>">
-                        <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                        <c:if test="${!vOrderBy.equals('title')}">
+                            <i class="fa fa-sort fs-20 pd-5 mgr-10 opacity-3" aria-hidden="true"></i>
+                        </c:if>
+
+                        <c:if test="${vOrderBy.equals('title') && requestScope.typeOrder.equals('desc')}">
+                            <i class="fa fa-sort-desc   fs-20 mgr-10" aria-hidden="true"></i>
+                        </c:if>
+
+                        <c:if test="${vOrderBy.equals('title') && requestScope.typeOrder.equals('asc')}">
+                            <i class="fa fa-sort-asc mgr-10 fs-20" aria-hidden="true"></i>
+                        </c:if>
                         <s:message code="td.title"/>
                     </a>
                 </th>
                 <th>
                     <a href="<s:url value="/admin?orderBy=time_post"/>">
-                        <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                        <c:if test="${!vOrderBy.equals('time_post')}">
+                            <i class="fa fa-sort fs-20 pd-5 mgr-10 opacity-3" aria-hidden="true"></i>
+                        </c:if>
+
+                        <c:if test="${vOrderBy.equals('time_post') && requestScope.typeOrder.equals('desc')}">
+                            <i class="fa fa-sort-desc   fs-20 mgr-10" aria-hidden="true"></i>
+                        </c:if>
+
+                        <c:if test="${vOrderBy.equals('time_post') && requestScope.typeOrder.equals('asc')}">
+                            <i class="fa fa-sort-asc mgr-10 fs-20" aria-hidden="true"></i>
+                        </c:if>
                         <s:message code="td.timePost"/>
                     </a></th>
                 <th><s:message code="td.action"/></th>

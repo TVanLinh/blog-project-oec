@@ -36,7 +36,7 @@ public class PostSortService {
     }
 
     public List<Post> getAllPostNotApprove(SortType sortItem, int offset, int limit) {
-        String str= "select * from post where approve = 0 order by  " + sortItem.orderBy + " " + sortItem.typeOrder + " limit "+offset+","+limit;
+        String str = "select * from post inner join user on post.id_user = user.id  where  approve = 0 order by  " + sortItem.orderBy + " " + sortItem.typeOrder + " limit " + offset + "," + limit;
         Query<Post> query = this.sessionFactory.getCurrentSession().createNativeQuery(str, Post.class);
         return query.getResultList();
     }
@@ -60,7 +60,7 @@ public class PostSortService {
 
     public List<Post> getAllPost(SortType sortItem, int offset, int limit) {
 
-        String str = "select * from post order by   " + sortItem.orderBy + " " + sortItem.typeOrder + " limit " + offset + "," + limit;
+        String str = "select * from post inner join user on post.id_user = user.id order by   " + sortItem.orderBy + " " + sortItem.typeOrder + " limit " + offset + "," + limit;
         Query<Post> query = this.sessionFactory.getCurrentSession().createNativeQuery(str, Post.class);
         return query.getResultList();
     }

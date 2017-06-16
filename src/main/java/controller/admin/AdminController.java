@@ -47,9 +47,10 @@ public class AdminController
         List<Post> postList;
         int limit = this.postService.getLimit(numberView);
         int  page= NumberUtils.toInt(pageRequest,1);
-        SortType sortType = this.portSort.getSortType(request,StringSessionUtil.CURRENT_APPROVE_POST,"title");
+        SortType sortType = this.portSort.getSortType(request, StringSessionUtil.CURRENT_APPROVE_POST, "user_name");
         postList = this.postSortSerVice.getAllPostNotApprove(sortType, (page - 1) * limit, limit);
         RequestService.setResponse(modelMap, limit, postList, this.postService.getCountNotApprove());
+        modelMap.addAttribute("typeOrder", sortType.typeOrder);
         return "admin";
     }
 
@@ -95,6 +96,7 @@ public class AdminController
         int page = NumberUtils.toInt(pageRequest,1);
         List<Post> postList = this.postService.getContainsTitle(sortType, querySearch, 0, (page - 1) * limit, limit);
         RequestService.setResponse(modelMap, limit, postList, this.postService.getCountContainsTitle(querySearch, 0));
+        modelMap.addAttribute("typeOrder", sortType.typeOrder);
         return "admin";
     }
 

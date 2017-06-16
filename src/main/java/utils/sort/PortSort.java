@@ -20,6 +20,7 @@ public class PortSort  extends  Sort{
         set.add("number_like");
         set.add("status");
         set.add("approve");
+        set.add("user_name");
         set.add("id_user");
         if(set.contains(orderBy)) {
             return true;

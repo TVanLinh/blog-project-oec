@@ -168,3 +168,17 @@ li a#seachHomePage:focus{
     width: 100px;
     margin-left: 60px;
 }
+
+.locale {
+    background-color: #7cb5ec;
+    padding: 3px 10px;
+    max-width: 30px;
+}
+
+.locale image {
+    z-index: 444444;
+}
+
+.opacity-3 {
+    opacity: 0.3;
+}

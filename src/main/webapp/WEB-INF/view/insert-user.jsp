@@ -18,7 +18,7 @@
         </div>
         <s:url value="/action-insert-user" var="action"/>
         <div class="col-lg-8 col-md-8 col-xs-12">
-            <form:form method="post" action="${action}" modelAttribute="userForm" onsubmit="return checkFormInsertUser()">
+            <form:form method="post" action="${action}" modelAttribute="userForm">
                 <div class="form-group">
                     <label for="userName"><s:message code="name"/>:</label>
                     <form:input type="text" class="form-control" id="userName" path="user.userName"/>
@@ -41,14 +41,16 @@
                     <%--<input type="text" class="form-control pd-0" name="formatTime" id="formatTime">--%>
                 </div>
                 <input type="submit" class="btn btn-default" value="<s:message code="save" />"
-                       onclick="return checkFormInsertUser('<s:message code="validation.field.username_not_blank"/>','
-                           <s:message code="validation.field.password_not_blank"/>','<s:message
-                               code="validation.field.overlap_password"/>','<s:message
+                       onclick="return checkFormInsertUser('<s:message code="validation.field.username_not_blank"/>',
+                               '<s:message code="validation.field.password_not_blank"/>',
+                               '<s:message code="validation.field.overlap_password"/>','<s:message
                                code="validation.field.role_not_blank"/>','')"
-                       onsubmit="return checkFormInsertUser('<s:message code="validation.field.username_not_blank"/>','
-                           <s:message code="validation.field.password_not_blank"/>','<s:message
-                               code="validation.field.overlap_password"/>','<s:message
-                               code="validation.field.role_not_blank"/>','')">
+
+
+                       onsubmit="return checkFormInsertUser('<s:message code="validation.field.username_not_blank"/>',
+                               '<s:message code="validation.field.password_not_blank"/>',
+                               '<s:message code="validation.field.overlap_password"/>',
+                               '<s:message code="validation.field.role_not_blank"/>','')">
 
                 <p class="pd-10 error">
                     <c:if test="${requestScope.errors != null}">

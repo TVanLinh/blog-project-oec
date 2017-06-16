@@ -84,6 +84,7 @@ public class ManagerUser {
         SortType sortType = this.userSort.getSortType(request, StringSessionUtil.CURRENT_USER_SORT,"user_name");
         List<User> userList = this.userSortService.getUsers(sortType, (page - 1) * limit, limit);
         RequestService.setResponse(modelMap, limit, userList, this.userService.getCount());
+        modelMap.addAttribute("typeOrder", sortType.typeOrder);
         return "manager-user";
     }
 
@@ -214,6 +215,7 @@ public class ManagerUser {
         SortType sortType = this.sort.getCurrentSortType(request, StringSessionUtil.CURRENT_USER_SORT);
         List<User> userList = this.userService.getUserBeginByUserName(querySearch, sortType, (page - 1) * limit, limit);
         RequestService.setResponse(modelMap, limit, userList, this.userService.getCountBeginUserName(querySearch));
+        modelMap.addAttribute("typeOrder", sortType.typeOrder);
         return "manager-user";
     }
 

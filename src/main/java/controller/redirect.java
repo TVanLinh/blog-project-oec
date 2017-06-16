@@ -95,7 +95,11 @@ public class redirect {
     }
 
     @RequestMapping(value = "/language")
-    public String language() {
+    public String language(HttpServletRequest request, @RequestParam(value = "language", required = false) String language) {
+        String str = language;
+        if (language.equalsIgnoreCase("en") || language.equalsIgnoreCase("vn")) {
+            request.getSession().setAttribute("locale", language);
+        }
         return "redirect:/";
     }
 

@@ -1,5 +1,8 @@
 package filter;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -8,28 +11,21 @@ import java.io.IOException;
  * Created by linhtran on 17/05/2017.
  */
 public class FilterLanguage implements Filter{
-    public void init(FilterConfig filterConfig) throws ServletException {
+    ApplicationContext context;
 
+    public void init(FilterConfig filterConfig) throws ServletException {
+        this.context = WebApplicationContextUtils.getWebApplicationContext(filterConfig.getServletContext());
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request=(HttpServletRequest)servletRequest;
-        if(request.getSession().getAttribute("messageSource") == null) {
-            setReSource(request);
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        if (request.getSession().getAttribute("locale") == null) {
+            request.getSession().setAttribute("locale", "vn");
         }
         filterChain.doFilter(servletRequest,servletResponse);
     }
 
     public void destroy() {
 
-    }
-
-    public  void setReSource(HttpServletRequest request)
-    {
-//        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-//        messageSource.setBasename("i18n/blog_vn_VN");
-//        messageSource.setDefaultEncoding("UTF-8");
-//        request.getSession().setAttribute("messageSource",messageSource);
-//        request.getSession().setAttribute("locale",new Locale("vn","VN"));
     }
 }

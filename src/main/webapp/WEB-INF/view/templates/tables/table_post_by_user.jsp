@@ -1,5 +1,6 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <c:if test="${param.page != null}">
     <c:set var="paramPage" value="${param.page}" scope="page"/>
 </c:if>
@@ -7,44 +8,109 @@
 <c:if test="${param.page == null}">
     <c:set var="paramPage" value="1" scope="request"/>
 </c:if>
+
+<c:if test="${ param.orderBy != null}">
+    <c:set var="vOrderBy" value="${param.orderBy}"/>
+</c:if>
+
+<c:if test="${ param.orderBy == null}">
+    <c:set var="vOrderBy" value="title"/>
+</c:if>
+
 <c:if test="${list.size()>0}">
     <table class="responstable  " id="">
         <thead>
         <tr>
             <th data-th="Driver details"><span>STT</span></th>
+
             <th class="text-center">
                 <a href="<s:url value="/user?orderBy=title"/>">
-                    <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+
+                    <c:if test="${!vOrderBy.equals('title')}">
+                        <i class="fa fa-sort fs-20 pd-5 mgr-10 opacity-3" aria-hidden="true"></i>
+                    </c:if>
+
+                    <c:if test="${vOrderBy.equals('title') && requestScope.typeOrder.equals('desc')}">
+                        <i class="fa fa-sort-desc   fs-20 mgr-10" aria-hidden="true"></i>
+                    </c:if>
+
+                    <c:if test="${vOrderBy.equals('title') && requestScope.typeOrder.equals('asc')}">
+                        <i class="fa fa-sort-asc mgr-10 fs-20" aria-hidden="true"></i>
+                    </c:if>
                     <s:message code="td.title"/>
                 </a>
             </th>
+
             <th>
                 <a href="<s:url value="/user?orderBy=time_post"/>">
-                    <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+
+                    <c:if test="${ !vOrderBy.equals('time_post')}">
+                        <i class="fa fa-sort fs-20 pd-5 mgr-10 opacity-3" aria-hidden="true"></i>
+                    </c:if>
+
+                    <c:if test="${vOrderBy.equals('time_post') && requestScope.typeOrder.equals('desc')}">
+                        <i class="fa fa-sort-desc mgr-10  fs-20" aria-hidden="true"></i>
+                    </c:if>
+                    <c:if test="${vOrderBy.equals('time_post') && requestScope.typeOrder.equals('asc')}">
+                        <i class="fa fa-sort-asc mgr-10 fs-20" aria-hidden="true"></i>
+                    </c:if>
+
                     <s:message code="td.timePost"/>
                 </a>
             </th>
             <th>
                 <a href="<s:url value="/user?orderBy=status"/>">
-                    <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                    <c:if test="${ !vOrderBy.equals('status')}">
+                        <i class="fa fa-sort fs-20 pd-5 mgr-10 opacity-3" aria-hidden="true"></i>
+                    </c:if>
+                    <c:if test="${vOrderBy.equals('status') && requestScope.typeOrder.equals('desc')}">
+                        <i class="fa fa-sort-desc mgr-10  fs-20" aria-hidden="true"></i>
+                    </c:if>
+                    <c:if test="${vOrderBy.equals('status') && requestScope.typeOrder.equals('asc')}">
+                        <i class="fa fa-sort-asc mgr-10 fs-20" aria-hidden="true"></i>
+                    </c:if>
                     <s:message code="td.status"/>
                 </a>
             </th>
             <th>
                 <a href="<s:url value="/user?orderBy=approve"/>">
-                    <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                    <c:if test="${ !vOrderBy.equals('approve')}">
+                        <i class="fa fa-sort fs-20 pd-5 mgr-10 opacity-3" aria-hidden="true"></i>
+                    </c:if>
+                    <c:if test="${vOrderBy.equals('approve') && requestScope.typeOrder.equals('desc')}">
+                        <i class="fa fa-sort-desc mgr-10  fs-20" aria-hidden="true"></i>
+                    </c:if>
+                    <c:if test="${vOrderBy.equals('approve') && requestScope.typeOrder.equals('asc')}">
+                        <i class="fa fa-sort-asc mgr-10 fs-20" aria-hidden="true"></i>
+                    </c:if>
                     <s:message code="td.approve"/>
                 </a>
             </th>
             <th>
                 <a href="<s:url value="/user?orderBy=number_like"/>">
-                    <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                    <c:if test="${ !vOrderBy.equals('number_like')}">
+                        <i class="fa fa-sort fs-20 pd-5 mgr-10 opacity-3" aria-hidden="true"></i>
+                    </c:if>
+                    <c:if test="${vOrderBy.equals('number_like') && requestScope.typeOrder.equals('desc')}">
+                        <i class="fa fa-sort-desc mgr-10  fs-20" aria-hidden="true"></i>
+                    </c:if>
+                    <c:if test="${vOrderBy.equals('number_like') && requestScope.typeOrder.equals('asc')}">
+                        <i class="fa fa-sort-asc mgr-10 fs-20" aria-hidden="true"></i>
+                    </c:if>
                     <s:message code="nLike"/>
                 </a>
             </th>
             <th>
                 <a href="<s:url value="/user?orderBy=number_view"/>">
-                    <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                    <c:if test="${ !vOrderBy.equals('number_view')}">
+                        <i class="fa fa-sort fs-20 pd-5 mgr-10 opacity-3" aria-hidden="true"></i>
+                    </c:if>
+                    <c:if test="${vOrderBy.equals('number_view') && requestScope.typeOrder.equals('desc')}">
+                        <i class="fa fa-sort-desc mgr-10  fs-20" aria-hidden="true"></i>
+                    </c:if>
+                    <c:if test="${vOrderBy.equals('number_view') && requestScope.typeOrder.equals('asc')}">
+                        <i class="fa fa-sort-asc mgr-10 fs-20" aria-hidden="true"></i>
+                    </c:if>
                     <s:message code="nView"/>
                 </a>
             </th>

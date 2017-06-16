@@ -1,6 +1,23 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:if test="${param.page != null}">
+    <c:set var="paramPage" value="${param.page}" scope="page"/>
+</c:if>
+
+<c:if test="${param.page == null}">
+    <c:set var="paramPage" value="1" scope="request"/>
+</c:if>
+
+
+<c:if test="${ param.orderBy != null}">
+    <c:set var="vOrderBy" value="${param.orderBy}"/>
+</c:if>
+
+<c:if test="${ param.orderBy == null}">
+    <c:set var="vOrderBy" value="user_name"/>
+</c:if>
+
 <c:if test="${list.size()>0}">
     <table class="responstable"  id="">
         <thead>
@@ -8,14 +25,33 @@
                 <th data-th="Driver details"><span>STT</span></th>
                 <th data-th="Driver details">
                     <a href="<s:url value="/manager-user?orderBy=user_name"/>">
-                            <%--<img src="<s:url value="public/asserts/images/sort.png" />">--%>
-                        <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                        <c:if test="${!vOrderBy.equals('user_name')}">
+                            <i class="fa fa-sort fs-20 pd-5 mgr-10 opacity-3" aria-hidden="true"></i>
+                        </c:if>
+
+                        <c:if test="${vOrderBy.equals('user_name') && requestScope.typeOrder.equals('desc')}">
+                            <i class="fa fa-sort-desc   fs-20 mgr-10" aria-hidden="true"></i>
+                        </c:if>
+
+                        <c:if test="${vOrderBy.equals('user_name') && requestScope.typeOrder.equals('asc')}">
+                            <i class="fa fa-sort-asc mgr-10 fs-20" aria-hidden="true"></i>
+                        </c:if>
                         <span class="dp-inline"><s:message code="name"/></span>
                     </a>
                 </th>
                 <th>
                     <a href="<s:url value="/manager-user?orderBy=role"/>">
-                        <i class="fa fa-sort fs-20 pd-5" aria-hidden="true"></i>
+                        <c:if test="${!vOrderBy.equals('role')}">
+                            <i class="fa fa-sort fs-20 pd-5 mgr-10 opacity-3" aria-hidden="true"></i>
+                        </c:if>
+
+                        <c:if test="${vOrderBy.equals('role') && requestScope.typeOrder.equals('asc')}">
+                            <i class="fa fa-sort-desc   fs-20 mgr-10" aria-hidden="true"></i>
+                        </c:if>
+
+                        <c:if test="${vOrderBy.equals('role') && requestScope.typeOrder.equals('desc')}">
+                            <i class="fa fa-sort-asc mgr-10 fs-20" aria-hidden="true"></i>
+                        </c:if>
                         <span class="dp-inline">  <s:message code="role"/></span>
                     </a></th>
                 <th><s:message code="td.action"/></th>
@@ -29,7 +65,7 @@
                 <td>${user.userName}</td>
                 <td>${roleService.getStringFromListRole(user.roleList)}</td>
                 <td>
-                    <a href="<s:url value="/delete-user?page=${requestScope.page}&id=${user.id}"/>"
+                    <a href="<s:url value="/delete-user?page=${paramPage}&id=${user.id}"/>"
                        title="<s:message code="delete" />"
                        onclick="return window.confirm('<s:message code="confirm.delete.post"/>')"> <i
                             class="fa fa-trash-o"></i></a>

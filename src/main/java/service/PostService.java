@@ -87,7 +87,7 @@ public class PostService extends AbstractService<Post> {
 
 
     public BigInteger getCountByIdUser(int id, String querySearch) {
-        String str = "select count(*) from  post where post.id_user = :idUser title like :querySearch";
+        String str = "select count(*) from  post where post.id_user = :idUser and title like :querySearch";
         Query<BigInteger> query = sessionFactory.getCurrentSession().createNativeQuery(str);
         query.setParameter("querySearch", "%" + querySearch + "%");
         query.setParameter("idUser", id);

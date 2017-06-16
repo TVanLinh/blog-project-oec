@@ -35,7 +35,7 @@
     <!--</bean>-->
 
     <mvc:interceptors>
-        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" id="changeInterceptor">
             <property name="paramName" value="language"/>
         </bean>
     </mvc:interceptors>

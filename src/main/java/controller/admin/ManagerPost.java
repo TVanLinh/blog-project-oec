@@ -46,10 +46,11 @@ public class ManagerPost {
 
         int page = NumberUtils.toInt(pageRequest,1);
         int limit = this.postService.getLimit(numberView);
-        SortType sortType = this.portSort.getSortType(request, StringSessionUtil.CURRENT_ALL_POST, "title");
+        SortType sortType = this.portSort.getSortType(request, StringSessionUtil.CURRENT_ALL_POST, "user_name");
         List<Post> postList = this.postSortService.getAllPost(sortType, (page - 1) * limit, limit);
 
         RequestService.setResponse(modelMap, limit, postList, this.postService.getCount());
+        modelMap.addAttribute("typeOrder", sortType.typeOrder);
         return "manager-post";
     }
 
@@ -84,6 +85,7 @@ public class ManagerPost {
         SortType sortType = this.portSort.getCurrentSortType(request,StringSessionUtil.CURRENT_ALL_POST);
         List<Post> postList = this.postService.getAllByTitle(sortType, querySearch, (page - 1) * limit, limit);
         RequestService.setResponse(modelMap, limit, postList, this.postService.getCountAllByTitle(querySearch));
+        modelMap.addAttribute("typeOrder", sortType.typeOrder);
         return "manager-post";
     }
 

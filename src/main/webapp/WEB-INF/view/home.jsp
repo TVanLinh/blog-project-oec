@@ -9,7 +9,6 @@
    </jsp:include>
     <!-- Page Content -->
     <div class="container">
-
         <div class="row">
             <!-- Blog Entries Column -->
                 <div class="col-xs-12 ">
