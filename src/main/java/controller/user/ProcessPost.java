@@ -45,19 +45,30 @@ public class ProcessPost {
     @Autowired
     private ConfigurationService configurationService;
 
+
+    @RequestMapping(value = "/write")
+    public String viewWriter(HttpServletRequest request) {
+        if (request.getAttribute("error") != null) {
+            request.setAttribute("error", request.getAttribute("error"));
+        }
+        return "write";
+    }
+
+
     @RequestMapping(value = "/write-post", method = RequestMethod.POST)
     public ModelAndView processWritePost(@ModelAttribute(value = "post") Post post,
                                          HttpServletRequest request,
                                          Principal principal, ModelMap modelMap,
+                                         RedirectAttributes redirectAttributes,
                                          @RequestParam(value = "link-image", required = false) String linkImage,
                                          @RequestParam(value = "alt-image", required = false) String altImage,
                                          @RequestParam(value = "status", required = false) String status) {
         this.setPostSliderbar(modelMap);
 
         if (org.apache.commons.lang3.StringUtils.isBlank(post.getTitle()) || !StringUtils.checkVid(post.getTitle())) {
-            modelMap.addAttribute("error", "validation.field.post_title_not_blank");
+            redirectAttributes.addFlashAttribute("error", "validation.field.post_title_not_blank");
             request.getSession().setAttribute("postUpdate", post);
-            return new ModelAndView("write");
+            return new ModelAndView("redirect:/write");
         }
 
         HttpSession session = request.getSession();
@@ -115,12 +126,13 @@ public class ProcessPost {
                              @RequestParam(value = "id", required = false) String postId) throws NotFindException, AccessDenieException {
         HttpSession session = request.getSession();
         Post post;
+        if (request.getAttribute(RequestService.MESSAGE) != null) {
+            request.setAttribute("error", request.getAttribute(RequestService.MESSAGE));
+        }
         if (!org.apache.commons.lang3.StringUtils.isNumeric(postId) || (post = this.postService.find(Integer.valueOf(postId))) == null) {
             throw new NotFindException(NotFindException.POST_NOT_FOUND);
         }
-
         User user = SessionUtils.getCurrentUser();
-
         if (!this.userService.isEditPost(user, post)) {
             throw new AccessDenieException(AccessDenieException.ACCESS_NOT_ROLE_POST);
         }
@@ -135,14 +147,16 @@ public class ProcessPost {
                                  HttpServletRequest request,
                                  @RequestParam(value = "link-image", required = false) String linkImage,
                                  @RequestParam(value = "alt-image", required = false) String altImage,
-                                 @RequestParam(value = "status", required = false) String status) {
+                                 @RequestParam(value = "status", required = false) String status,
+                                 RedirectAttributes redirectAttributes) {
         HttpSession session = request.getSession();
         Post postUpdate = (Post) session.getAttribute("postUpdate");
 
         if (org.apache.commons.lang3.StringUtils.isBlank(post.getTitle()) || !StringUtils.checkVid(post.getTitle())) {
-            request.setAttribute(RequestService.MESSAGE, RequestService.VALID_FIELD_POST_TITLE_NOT_BLANK);
+            redirectAttributes.addFlashAttribute(RequestService.MESSAGE, RequestService.VALID_FIELD_POST_TITLE_NOT_BLANK);
             request.getSession().setAttribute("postUpdate", post);
-            return "update";
+            redirectAttributes.addAttribute("id", post.getId());
+            return "redirect:/update";
         }
 
         User user = SessionUtils.getCurrentUser();

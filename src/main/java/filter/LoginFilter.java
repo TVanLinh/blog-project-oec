@@ -10,6 +10,7 @@ import java.io.IOException;
  * Created by linhtran on 07/05/2017.
  */
 public class LoginFilter implements Filter {
+
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }

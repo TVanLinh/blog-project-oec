@@ -16,6 +16,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class ConfigurationDAOIML implements ConfigurationDAO {
+
     @Autowired
     private SessionFactory sessionFactory;
 

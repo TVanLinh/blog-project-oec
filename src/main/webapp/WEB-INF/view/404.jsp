@@ -20,10 +20,6 @@
                 <s:message code="page.not.found"/>
             </div>
             <!--end content---->
-            <div id="comment">
-                <%--<jsp:include page="templates/components/comment.jsp"/>--%>
-            </div>
-
         </div>
 
     </div>

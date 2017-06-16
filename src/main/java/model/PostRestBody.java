@@ -11,6 +11,7 @@ import java.util.List;
  */
 
 public class PostRestBody {
+
     @JsonView(Views.Public.class)
     private  String msg;
 

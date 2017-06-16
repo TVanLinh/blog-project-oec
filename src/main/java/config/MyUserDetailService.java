@@ -15,6 +15,7 @@ import java.util.List;
  * Created by linhtran on 09/06/2017.
  */
 public class MyUserDetailService implements UserDetailsService {
+
     @Autowired
     private UserService service;
 

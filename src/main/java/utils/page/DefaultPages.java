@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Component
 public class DefaultPages {
+
     @Autowired
     ConfigurationService configurationService;
     public void setDaultPage(HttpServletRequest request) {

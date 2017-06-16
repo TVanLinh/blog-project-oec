@@ -24,6 +24,22 @@
 
         <div class="col-lg-8 col-md-8 col-xs-12">
 
+            <c:if test="${requestScope.errors != null}">
+                <div class="alert alert-danger">
+                    <c:forEach var="item" items="${requestScope.errors}">
+                        <s:message code="${item}"/>
+                    </c:forEach>
+                </div>
+            </c:if>
+
+
+            <c:if test="${requestScope.success != null}">
+                <div class="alert alert-success">
+                    <s:message code="${requestScope.success}"/>
+                </div>
+            </c:if>
+
+
             <%--<jsp:include page="templates/menus/menu-admin.jsp"/>--%>
             <spring:url var="action" value="/process-configuration"/>
 
@@ -81,17 +97,6 @@
 
                 <input type="submit" class="btn btn-default" value="<s:message code="save" />">
 
-                <p class="pd-10 error">
-                    <c:if test="${requestScope.errors != null}">
-                        <c:forEach var="item" items="${requestScope.errors}">
-                            <s:message code="${item}"/>
-                        </c:forEach>
-                    </c:if>
-
-                    <c:if test="${requestScope.success != null}">
-                        <s:message code="${requestScope.success}"/>
-                    </c:if>
-                </p>
             </form:form>
         </div>
         <div class="clearfix"></div>

@@ -4,14 +4,16 @@
 
 <s:url value="${param.action}" var="action"/>
 <form:form action="${action}" >
-    <label class="fs-20 capitalize"><s:message code="title"/> :</label>
-    <span class="error">
+    <label class="fs-20 capitalize"><s:message code="title"/> : <span class="color-red fs-35 mgl-10">*</span></label>
         <c:if test="${requestScope.error != null}">
-            <s:message code="${requestScope.error}"/>
+            <div class="alert alert-danger">
+                <s:message code="${requestScope.error}"/>
+            </div>
         </c:if>
-    </span>
+    <input type="hidden" value="${param.id}" name="id"/>
     <%--<form:errors path="title"/>--%>
-    <input name="title" id="idTitle" type="text" class="input-xs mgb-40 title" style=";margin-bottom: 30px" value="${param.title}"><br>
+    <input name="title" id="idTitle" type="text" class="input-xs mgb-40 title" style=";margin-bottom: 30px"
+           value="${param.title}" required><br>
    <div>
         <textarea class="ckeditor" cols="80" id="content" name="content" rows="50">
                 ${param.content}

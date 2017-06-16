@@ -174,7 +174,7 @@
                        title="<s:message code="delete" />"
                        onclick="return window.confirm('<s:message code="confirm.delete.post"/>')"> <i
                             class="fa fa-trash-o"></i></a>
-                    <a href="<s:url value="/update?action=update&id=${post.id}"/>" title="<s:message code="edit" />"><i
+                    <a href="<s:url value="/update?id=${post.id}"/>" title="<s:message code="edit" />"><i
                             class="fa fa-pencil-square-o mgl-15"></i></a>
                 </td>
             </tr>

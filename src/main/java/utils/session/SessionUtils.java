@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
  */
 public abstract class SessionUtils {
     public static HttpSession getCurrentSession() {
-        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession(true);
     }
 
     public static User getCurrentUser() {

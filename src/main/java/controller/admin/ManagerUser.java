@@ -28,6 +28,7 @@ import vadilator.UserFormInsertUserValidator;
 import vadilator.UserFormUpdateValidator;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -213,8 +214,9 @@ public class ManagerUser {
         int page = NumberUtils.toInt(pageReques, 1);
         int limit = this.postService.getLimit(numberView);
         SortType sortType = this.sort.getCurrentSortType(request, StringSessionUtil.CURRENT_USER_SORT);
-        List<User> userList = this.userService.getUserBeginByUserName(querySearch, sortType, (page - 1) * limit, limit);
-        RequestService.setResponse(modelMap, limit, userList, this.userService.getCountBeginUserName(querySearch));
+        List<User> userList = this.userService.getUserByUserNameAndRole(querySearch, sortType, (page - 1) * limit, limit);
+        BigInteger a = this.userService.getCountUserNameAndRole(querySearch);
+        RequestService.setResponse(modelMap, limit, userList, this.userService.getCountUserNameAndRole(querySearch));
         modelMap.addAttribute("typeOrder", sortType.typeOrder);
         return "manager-user";
     }

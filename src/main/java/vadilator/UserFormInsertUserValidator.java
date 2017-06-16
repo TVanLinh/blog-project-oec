@@ -12,6 +12,7 @@ import utils.string.StringUtils;
 
 @Component
 public class UserFormInsertUserValidator extends UserFormValidator implements Validator {
+
     public void validate(Object target, Errors errors) {
         validate((UserForm) target, errors);
     }

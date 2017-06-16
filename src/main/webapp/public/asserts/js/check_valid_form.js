@@ -49,19 +49,19 @@ function getImages2() {
         $('#alt-image').val(altInput.val());
     }
 
-    var title=$('#idTitle');
-    var cont=$("#content");
-
-    if(title.val().trim()==="")
-    {
-        alert("Title not null..!");
-        return false;
-    }
-    if(title.val().length>200)
-    {
-        alert("Max length 200..!");
-        return false;
-    }
+    // var title=$('#idTitle');
+    // var cont=$("#content");
+    //
+    // if(title.val().trim()==="")
+    // {
+    //     alert("Title not null..!");
+    //     return false;
+    // }
+    // if(title.val().length>200)
+    // {
+    //     alert("Max length 200..!");
+    //     return false;
+    // }
     // if(cont.val().trim()==="")
     // {
     //     alert("Content not null..!");

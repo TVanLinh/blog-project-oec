@@ -12,6 +12,7 @@ import org.springframework.validation.Validator;
  */
 @Component
 public class UserFormChangePasswordValidator extends UserFormValidator implements Validator {
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 

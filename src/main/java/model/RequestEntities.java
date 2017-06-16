@@ -4,6 +4,7 @@ package model;
  * Created by linhtran on 12/06/2017.
  */
 public class RequestEntities {
+
     private String msg;
     private int page;
 

@@ -13,6 +13,7 @@ import org.springframework.validation.Validator;
 
 @Component
 public class ConfigFormValidator extends AbstractVadidator implements Validator {
+
     public boolean supports(Class<?> clazz) {
         return clazz.equals(ConfigForm.class);
     }

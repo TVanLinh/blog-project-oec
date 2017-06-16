@@ -147,7 +147,7 @@ img
     height: 45px;
 }
 .menu-item:nth-child(1){
-    padding-left:45px !important;
+    padding-left: 35px !important;
 }
 /**/
 .search {
@@ -169,6 +169,10 @@ li a#seachHomePage:focus{
     margin-left: 60px;
 }
 
+a.btn {
+    /*padding: 6px 28px !important;*/
+    padding-right: 28px !important;
+}
 .locale {
     background-color: #7cb5ec;
     padding: 3px 10px;
@@ -181,4 +185,8 @@ li a#seachHomePage:focus{
 
 .opacity-3 {
     opacity: 0.3;
+}
+
+.alert {
+    padding: 10px;
 }

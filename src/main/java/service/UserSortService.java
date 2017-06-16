@@ -28,12 +28,7 @@ public class UserSortService {
     }
 
     public List<User> getUsers(SortType sortItem, int offset, int limit) {
-        String str;
-        if (sortItem.orderBy.equalsIgnoreCase("role")) {
-            str = "select * from user inner join user_roles on user.id = user_roles.id_user group by user.user_name  order by  user_roles.role " + sortItem.typeOrder + " limit " + offset + "," + limit;
-        } else {
-            str = "select * from user order by  " + sortItem.orderBy + " " + sortItem.typeOrder + " limit " + offset + "," + limit;
-        }
+        String str = "select * from user   order by  " + sortItem.orderBy + " " + sortItem.typeOrder + " limit " + offset + "," + limit;
 
         Query<User> query = this.sessionFactory.getCurrentSession().createNativeQuery(str, User.class);
         return query.getResultList();

@@ -13,6 +13,7 @@ import java.util.List;
 
 @Component
 public class RequestService {
+
     public static final String LIST = "list";
     public static final String PAGE = "page";
 

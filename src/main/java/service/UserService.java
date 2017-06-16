@@ -37,8 +37,8 @@ public class UserService extends AbstractService<User> {
     public UserService() {
     }
 
-    public List<User> getUserBeginByUserName(String condition, SortType sortType, int offset, int limit) {
-        String str = "select * from user where user_name like :condition  order by " + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
+    public List<User> getUserByUserNameAndRole(String condition, SortType sortType, int offset, int limit) {
+        String str = "select * from user inner join user_roles on user.id = user_roles.id_user  where user.user_name  like :condition or role like :condition  GROUP BY  user_name order by user." + sortType.orderBy + " " + sortType.typeOrder + " limit " + offset + "," + limit;
         Query<User> query = sessionFactory.getCurrentSession().createNativeQuery(str, User.class);
         query.setParameter("condition", "%" + condition + "%");
         return query.getResultList();
@@ -48,8 +48,8 @@ public class UserService extends AbstractService<User> {
         return (BigInteger) this.sessionFactory.getCurrentSession().createNativeQuery("select count(*) from user").getSingleResult();
     }
 
-    public BigInteger getCountBeginUserName(String searchQuery) {
-        String str = "select count(*) from user where user_name like :condition";
+    public BigInteger getCountUserNameAndRole(String searchQuery) {
+        String str = "select count(*) from user inner join user_roles on user.id = user_roles.id_user  where user.user_name  like :condition or role like :condition ";
         Query query = sessionFactory.getCurrentSession().createNativeQuery(str);
         return (BigInteger) query.setParameter("condition", "%" + searchQuery + "%").getSingleResult();
     }
@@ -122,7 +122,7 @@ public class UserService extends AbstractService<User> {
     }
 
     public boolean isEditPost(User user, Post post) {
-        if (user == null || post == null || (!this.isRoleAdmin(user) && user.getId() != post.getUser().getId()) || user.getId() != post.getUser().getId()) {
+        if (user == null || post == null || (!this.isRoleAdmin(user) && user.getId() != post.getUser().getId()) && user.getId() != post.getUser().getId()) {
             return false;
         }
         return true;

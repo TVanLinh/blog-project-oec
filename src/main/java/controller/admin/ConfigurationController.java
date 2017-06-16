@@ -40,14 +40,21 @@ public class ConfigurationController {
     }
 
     @RequestMapping(value = "/configuration")
-    public String configuration(ModelMap modelMap) {
+    public String configuration(ModelMap modelMap, HttpServletRequest request) {
+
         modelMap.addAttribute("conf", this.configurationService.getConfig());
+        if (request.getAttribute("errors") != null) {
+            modelMap.addAttribute("error", this.configurationService.getConfig());
+        }
+        if (request.getAttribute("conf") != null) {
+            modelMap.addAttribute("conf", this.configurationService.getConfig());
+        }
         return "configuration";
     }
 
     @RequestMapping("/process-configuration")
     public String processConfiguration(HttpServletRequest request,
-                                       ModelMap modelMap, @ModelAttribute(value = "configForm") ConfigForm conf,
+                                       @ModelAttribute(value = "configForm") ConfigForm conf,
                                        BindingResult bindingResult,
                                        RedirectAttributes redirectAttributes) throws NotFindException {
 
@@ -56,9 +63,9 @@ public class ConfigurationController {
         HashMap<String, Configuration> hashMap = (HashMap<String, Configuration>) this.configurationService.getConfig();
 
         if (bindingResult.hasErrors()) {
-            modelMap.addAttribute("errors", this.configFormValidator.getCodeErrors(bindingResult));
-            modelMap.addAttribute("conf", hashMap);
-            return "configuration";
+            redirectAttributes.addFlashAttribute("errors", this.configFormValidator.getCodeErrors(bindingResult));
+            redirectAttributes.addFlashAttribute("conf", hashMap);
+            return "redirect:/configuration";
         }
 
         if (hashMap.isEmpty()) {

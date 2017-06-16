@@ -5,7 +5,7 @@
                 <input type="text" class="form-control "
                        placeholder="<s:message code="${param.searchBy}" />" id="search"
                        name="query_search" onsubmit="return mySearch.checkFormSearchValid('#search')"
-                       value="${param.query_search}">
+                       value="${param.query_search}" required>
                 <span class="input-group-btn">
                 <button class="btn btn-default" type="submit"  onclick="return mySearch.checkFormSearchValid('#search')" onsubmit="return mySearch.checkFormSearchValid('#search')" >
                     <span class="glyphicon glyphicon-search"></span>

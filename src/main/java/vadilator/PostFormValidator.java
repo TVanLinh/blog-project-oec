@@ -10,6 +10,7 @@ import utils.string.StringUtils;
  * Created by linhtran on 10/06/2017.
  */
 public class PostFormValidator implements Validator {
+
     public boolean supports(Class<?> clazz) {
         return clazz.equals(Post.class);
     }

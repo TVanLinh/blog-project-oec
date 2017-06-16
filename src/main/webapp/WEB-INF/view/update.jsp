@@ -17,6 +17,7 @@
         <div class="col-lg-12">
            <jsp:include page="templates/forms/write-post.jsp">
                <jsp:param name="action" value="/write-update"/>
+               <jsp:param name="id" value="${sessionScope.postUpdate.id}"/>
                <jsp:param name="title" value="${sessionScope.postUpdate.title}"/>
                <jsp:param name="content" value="${sessionScope.postUpdate.content}"/>
                <jsp:param name="status" value="${sessionScope.postUpdate.status}"/>

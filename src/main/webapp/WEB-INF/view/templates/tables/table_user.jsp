@@ -40,20 +40,8 @@
                     </a>
                 </th>
                 <th>
-                    <a href="<s:url value="/manager-user?orderBy=role"/>">
-                        <c:if test="${!vOrderBy.equals('role')}">
-                            <i class="fa fa-sort fs-20 pd-5 mgr-10 opacity-3" aria-hidden="true"></i>
-                        </c:if>
-
-                        <c:if test="${vOrderBy.equals('role') && requestScope.typeOrder.equals('asc')}">
-                            <i class="fa fa-sort-desc   fs-20 mgr-10" aria-hidden="true"></i>
-                        </c:if>
-
-                        <c:if test="${vOrderBy.equals('role') && requestScope.typeOrder.equals('desc')}">
-                            <i class="fa fa-sort-asc mgr-10 fs-20" aria-hidden="true"></i>
-                        </c:if>
-                        <span class="dp-inline">  <s:message code="role"/></span>
-                    </a></th>
+                    <span class="dp-inline">  <s:message code="role"/></span>
+                </th>
                 <th><s:message code="td.action"/></th>
             </tr>
         </thead>

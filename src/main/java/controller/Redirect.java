@@ -22,7 +22,8 @@ import java.util.List;
  * Created by linhtran on 06/05/2017.
  */
 @Controller
-public class redirect {
+public class Redirect {
+
     @Autowired
     private UserService userService;
 
@@ -32,12 +33,6 @@ public class redirect {
     @Autowired
     private ConfigurationService configurationService;
 
-    @RequestMapping(value = "/write")
-    public String viewWriter(HttpServletRequest request) {
-
-        request.setAttribute("active", "write");
-        return "write";
-    }
 
     @RequestMapping(value = {"/", "/home"})
     public String homePage(HttpServletRequest request, ModelMap modelMap,

@@ -11,7 +11,8 @@ import java.io.IOException;
  * Created by linhtran on 17/05/2017.
  */
 public class FilterLanguage implements Filter {
-    ApplicationContext context;
+
+    private ApplicationContext context;
 
     public void init(FilterConfig filterConfig) throws ServletException {
         this.context = WebApplicationContextUtils.getWebApplicationContext(filterConfig.getServletContext());

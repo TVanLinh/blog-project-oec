@@ -10,6 +10,7 @@ import java.util.Set;
  */
 @Component
 public class UserSort extends Sort {
+
     public boolean checkOrderBy(String orderBy) {
         Set<String> set = new HashSet<String>();
         set.add("id");

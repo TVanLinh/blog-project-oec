@@ -34,7 +34,7 @@
             <!----------------end list-table ------------------------->
             <div class="text-center">
                 <jsp:include page="templates/forms/search3.jsp">
-                    <jsp:param name="searchBy" value="search.by.author"/>
+                    <jsp:param name="searchBy" value="search.by.user.role"/>
                     <jsp:param name="action" value="/manager-user-search"/>
                 </jsp:include>
             </div>

@@ -10,6 +10,7 @@ import java.util.List;
  * Created by linhtran on 10/06/2017.
  */
 public abstract class AbstractVadidator {
+
     public List<String> getCodeErrors(BindingResult br) {
         List<String> list = new ArrayList<String>();
         if (br.hasErrors()) {

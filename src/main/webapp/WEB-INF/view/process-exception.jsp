@@ -16,9 +16,11 @@
         <div class="col-xs-12 col-sm-12 ">
 
             <!--content--->
-            <c:if test="${requestScope.error != null}">
-                <s:message code="${requestScope.error}"/>
-            </c:if>
+            <div class="alert alert-danger">
+                <c:if test="${requestScope.error != null}">
+                    <s:message code="${requestScope.error}"/>
+                </c:if>
+            </div>
             <!--end content---->
             <div id="comment">
                 <%--<jsp:include page="templates/components/comment.jsp"/>--%>
