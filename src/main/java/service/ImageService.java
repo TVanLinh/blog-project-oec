@@ -20,8 +20,7 @@ public class ImageService extends AbstractService<Image> {
     public ImageService() {
     }
 
-    public void delete(int id)
-    {
+    public void delete(int id) {
         this.imageDAO.delete(id);
     }
 
@@ -29,18 +28,15 @@ public class ImageService extends AbstractService<Image> {
         return Image.class;
     }
 
-    public  Image find(int id)
-    {
-        return  this.imageDAO.find(id);
+    public Image find(int id) {
+        return this.imageDAO.find(id);
     }
 
-    public  void save(Image image)
-    {
+    public void save(Image image) {
         this.imageDAO.update(image);
     }
 
-    public  void deleteByIdPost(int id)
-    {
+    public void deleteByIdPost(int id) {
         this.imageDAO.deleteByIdPost(id);
     }
 }

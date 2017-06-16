@@ -13,19 +13,18 @@ import java.util.Set;
  */
 
 @Component
-public class   Sort {
-    public SortType getCurrentSortType(HttpServletRequest request,String current) {
+public class Sort {
+    public SortType getCurrentSortType(HttpServletRequest request, String current) {
 
         HttpSession session = request.getSession();
         SortType sortType = (SortType) session.getAttribute(current);
-        if(sortType != null) {
+        if (sortType != null) {
             return sortType;
         }
-        return  new SortType();
+        return new SortType();
     }
 
-    public void checkValid(String page,String orderBy,SortType sortType,String orderDefault)
-    {
+    public void checkValid(String page, String orderBy, SortType sortType, String orderDefault) {
         if ((StringUtils.isBlank(orderBy) || StringUtils.isEmpty(orderBy)) && page == null || (orderBy != null && !this.checkOrderBy(orderBy))) {
             orderBy = orderDefault;
             sortType.orderBy = orderBy;
@@ -38,17 +37,19 @@ public class   Sort {
             }
         }
     }
-    public  SortType getSortType(HttpServletRequest request,String nameCurrentSortType,String defaultSort){
+
+    public SortType getSortType(HttpServletRequest request, String nameCurrentSortType, String defaultSort) {
         HttpSession session = request.getSession();
         String orderBy = request.getParameter("orderBy");
         String page = request.getParameter("page");
         SortType sortItem = this.getCurrentSortType(request, nameCurrentSortType);
-        this.checkValid(page,orderBy,sortItem,defaultSort);
+        this.checkValid(page, orderBy, sortItem, defaultSort);
         session.setAttribute(nameCurrentSortType, sortItem);
         return sortItem;
     }
-    public   boolean checkOrderBy(String orderBy) {
-        Set<String> set  = new HashSet<String>();
+
+    public boolean checkOrderBy(String orderBy) {
+        Set<String> set = new HashSet<String>();
         set.add("title");
         set.add("id");
         set.add("time_post");
@@ -60,10 +61,10 @@ public class   Sort {
         set.add("user_name");
         set.add("role");
 
-        if(set.contains(orderBy)) {
+        if (set.contains(orderBy)) {
             return true;
         }
-        return  false;
+        return false;
     }
 
 }

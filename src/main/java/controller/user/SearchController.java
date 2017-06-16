@@ -28,20 +28,20 @@ import java.util.List;
 public class SearchController {
 
     @Autowired
-    private     PostService postService;
+    private PostService postService;
 
     @Autowired
-    private     ConfigurationService configurationService;
+    private ConfigurationService configurationService;
 
     @Autowired
-    private     UserService userService;
+    private UserService userService;
 
     @RequestMapping(value = "/view-search")
-    public  String  processSearchAll(ModelMap modelMap,
-                                     @RequestParam(value = "page",required = false) String pageRequest,
-                                     @RequestParam(value = "query_search", required = false) String query_search) {
+    public String processSearchAll(ModelMap modelMap,
+                                   @RequestParam(value = "page", required = false) String pageRequest,
+                                   @RequestParam(value = "query_search", required = false) String query_search) {
         int limit = NumberUtils.toInt(this.configurationService.findByName(ConfigurationService.NUMBER_POST_VIEW).getValue(), 4);
-        int  page = NumberUtils.toInt(pageRequest,1);
+        int page = NumberUtils.toInt(pageRequest, 1);
         RequestService.setResponse(modelMap,
                 limit,
                 this.postService.getPostPublicByTitle(new SortType(),
@@ -53,16 +53,16 @@ public class SearchController {
     @RequestMapping(value = "/list-post-by-user")
     public String getPostByUser(HttpServletRequest request,
                                 ModelMap modelMap,
-                                @RequestParam(value = "username",required = false) String username,
-                                @RequestParam(value = "page",required = false) String pageRequest ) throws NotFindException {
+                                @RequestParam(value = "username", required = false) String username,
+                                @RequestParam(value = "page", required = false) String pageRequest) throws NotFindException {
         int limit = NumberUtils.toInt(this.configurationService.getConfigNumberView().getValue(), 4);
 
-        modelMap.addAttribute("userDAO",this.userService);
+        modelMap.addAttribute("userDAO", this.userService);
 
-        int  page = NumberUtils.toInt(pageRequest,1);
+        int page = NumberUtils.toInt(pageRequest, 1);
 
         User user = this.userService.getUserByName(username);
-        if(user == null) {
+        if (user == null) {
             throw new NotFindException(NotFindException.USER_NOT_FOUND);
         }
 
@@ -70,7 +70,7 @@ public class SearchController {
         BigInteger totalList;
         SortType sortType = new SortType();
         sortType.orderBy = "time_post";
-        User userCurrent = (User) request.getSession().getAttribute(SessionUtils.USER_LOGIN);
+        User userCurrent = SessionUtils.getCurrentUser();
 
         if (userCurrent != null && userCurrent.getId() == user.getId()) {
             posts = this.postService.getPostByIdUser(user.getId(), (page - 1) * limit, limit);
@@ -80,6 +80,6 @@ public class SearchController {
             totalList = this.postService.getCount(user.getId(), 1, 1);
         }
         RequestService.setResponse(modelMap, limit, posts, totalList);
-        return  "post-by-user";
+        return "post-by-user";
     }
 }

@@ -25,7 +25,7 @@ public class PostDAOIML implements PostDAO {
 
     public void delete(int idPost) {
         Session session = sessionFactory.getCurrentSession();
-        Post post = session.find(Post.class,idPost);
+        Post post = session.find(Post.class, idPost);
         session.remove(post);
     }
 
@@ -35,6 +35,7 @@ public class PostDAOIML implements PostDAO {
         post.setUpdateTime(date);
         session.saveOrUpdate(post);
     }
+
     public Post find(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Post.class, id);
@@ -47,39 +48,39 @@ public class PostDAOIML implements PostDAO {
 
     public List<Post> getAllPost(String query) {
         Session session = sessionFactory.getCurrentSession();
-        return  session.createNativeQuery(query, Post.class).getResultList();
+        return session.createNativeQuery(query, Post.class).getResultList();
     }
 
     public List<Post> getAllPostPublic() {
         Session session = sessionFactory.getCurrentSession();
         String query = "select * from post where approve = 1 and status = 1  order by time_post";
-        return  session.createNativeQuery(query, Post.class).getResultList();
+        return session.createNativeQuery(query, Post.class).getResultList();
     }
 
     public List<Post> getPost(int offset, int limit) {
         Session session = sessionFactory.getCurrentSession();
         String str = "select * from post where approve=1 and status=1  order by time_post desc  limit :offset,:limit";
-        Query<Post> query = session.createNativeQuery(str,Post.class);
-        query.setParameter("offset",offset);
-        query.setParameter("limit",limit);
-        return  query.getResultList();
+        Query<Post> query = session.createNativeQuery(str, Post.class);
+        query.setParameter("offset", offset);
+        query.setParameter("limit", limit);
+        return query.getResultList();
     }
 
     public List<Post> getPostByIdUser(int idUser, int offset, int limit) {
         Session session = sessionFactory.getCurrentSession();
         String str = "select * from post where id_user = :idUser order by time_post desc limit :offset,:limit";
-        Query<Post> query = session.createNativeQuery(str,Post.class);
-        query.setParameter("idUser",idUser);
-        query.setParameter("offset",offset);
-        query.setParameter("limit",limit);
+        Query<Post> query = session.createNativeQuery(str, Post.class);
+        query.setParameter("idUser", idUser);
+        query.setParameter("offset", offset);
+        query.setParameter("limit", limit);
         return query.getResultList();
     }
 
     public List<Post> getPostByIdUser(int idUser) {
         Session session = sessionFactory.getCurrentSession();
         String str = "select * from post where  id_user = :idUser  order by time_post desc";
-        Query<Post> query = session.createNativeQuery(str,Post.class);
-        query.setParameter("idUser",idUser);
+        Query<Post> query = session.createNativeQuery(str, Post.class);
+        query.setParameter("idUser", idUser);
         return query.getResultList();
     }
 }

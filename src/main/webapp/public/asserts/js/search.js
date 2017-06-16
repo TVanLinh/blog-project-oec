@@ -147,11 +147,11 @@ function  checkFormValid() {
 }
 
 function  checkFormSearchValid(taget) {
-    var value=$(taget).val();
-    if(value.trim()===""||$(taget).length<0)
-    {
-        window.alert("Enter key word to search. .!")
-        return false;
-    }
-    return true;
+    // var value=$(taget).val();
+    // if(value.trim()===""||$(taget).length<0)
+    // {
+    //     // window.alert("Enter key word to search. .!")
+    //     return false;
+    // }
+    // return true;
 }

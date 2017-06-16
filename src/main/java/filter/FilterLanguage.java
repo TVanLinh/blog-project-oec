@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Created by linhtran on 17/05/2017.
  */
-public class FilterLanguage implements Filter{
+public class FilterLanguage implements Filter {
     ApplicationContext context;
 
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -22,7 +22,7 @@ public class FilterLanguage implements Filter{
         if (request.getSession().getAttribute("locale") == null) {
             request.getSession().setAttribute("locale", "vn");
         }
-        filterChain.doFilter(servletRequest,servletResponse);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     public void destroy() {

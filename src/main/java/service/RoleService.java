@@ -16,15 +16,15 @@ import java.util.List;
 
 @Service
 @Transactional
-public class RoleService  extends AbstractService<Role>{
+public class RoleService extends AbstractService<Role> {
 
     @Autowired
     private SessionFactory sessionFactory;
 
     @Autowired
-    private  RoleDAO roleDAO;
+    private RoleDAO roleDAO;
 
-    public  String getStringFromListRole(List<Role> list) {
+    public String getStringFromListRole(List<Role> list) {
         StringBuilder builder = new StringBuilder("");
         for (Role role : list) {
             builder.append(role.getRole());
@@ -35,15 +35,13 @@ public class RoleService  extends AbstractService<Role>{
 
     public List<Role> getListRole(String[] listRole) {
         List<Role> list = new ArrayList<Role>();
-        for (int i = 0 ; i < listRole.length ; i++)
-        {
+        for (int i = 0; i < listRole.length; i++) {
             list.add(new Role(listRole[i]));
         }
         return list;
     }
 
-    public  void save(Role role)
-    {
+    public void save(Role role) {
         this.roleDAO.update(role);
     }
 
@@ -51,26 +49,25 @@ public class RoleService  extends AbstractService<Role>{
         return Role.class;
     }
 
-    public  void delete(int id)
-    {
+    public void delete(int id) {
         this.roleDAO.delete(id);
     }
 
-    public   void delete(String userName)
-    {
+    public void delete(String userName) {
         this.roleDAO.delete(userName);
         this.flushSession();
     }
 
-    public  void deleteByUserId(int id)
-    {
+    public void deleteByUserId(int id) {
         this.roleDAO.deleteByUserId(id);
     }
+
     public List<Role> getRoleByUsername(String username) {
         return this.roleDAO.getRoleByUsername(username);
     }
+
     public List<Role> getRoleByUserId(int idUser) {
-        return  this.roleDAO.getRoleByUserId(idUser);
+        return this.roleDAO.getRoleByUserId(idUser);
     }
 
 }

@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 @Repository
-public class UserDAOIML implements  UserDAO ,Serializable{
+public class UserDAOIML implements UserDAO, Serializable {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -23,7 +23,7 @@ public class UserDAOIML implements  UserDAO ,Serializable{
 
     public void delete(int idAuthor) {
         Session session = sessionFactory.getCurrentSession();
-        User user  = this.find(idAuthor);
+        User user = this.find(idAuthor);
         session.remove(user);
     }
 
@@ -36,26 +36,26 @@ public class UserDAOIML implements  UserDAO ,Serializable{
 
     public User find(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Query<User> query  =  session.createNativeQuery("select * from user where user.id  =  :id",User.class);
+        Query<User> query = session.createNativeQuery("select * from user where user.id  =  :id", User.class);
         query.setParameter("id", id);
         return query.getSingleResult();
     }
 
     public List<User> getAllUser() {
         Session session = sessionFactory.getCurrentSession();
-        List<User> list = session.createNativeQuery("select * from user",User.class).getResultList();
+        List<User> list = session.createNativeQuery("select * from user", User.class).getResultList();
         return list;
     }
 
-    public  List<User> getAllUser(String query) {
+    public List<User> getAllUser(String query) {
         Session session = sessionFactory.getCurrentSession();
-        return session.createNativeQuery(query,User.class).getResultList();
+        return session.createNativeQuery(query, User.class).getResultList();
     }
 
     public User getUserByName(String name) {
         Session session = sessionFactory.getCurrentSession();
-        Query<User> query = session.createNativeQuery("select * from user where user_name =:name",User.class);
-        query.setParameter("name",name);
+        Query<User> query = session.createNativeQuery("select * from user where user_name =:name", User.class);
+        query.setParameter("name", name);
         List<User> users = query.getResultList();
         if (users.size() == 0) {
             return null;

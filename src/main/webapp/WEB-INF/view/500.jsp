@@ -14,10 +14,10 @@
 
     <div class="row">
         <div class="col-xs-12 col-sm-12 ">
-
             <!--content--->
-            <s:message code="system.error"/>
-            <!--end content---->
+            <div class="alert alert-danger fs-25">
+                <s:message code="system.error"/>
+            </div>
         </div>
 
     </div>

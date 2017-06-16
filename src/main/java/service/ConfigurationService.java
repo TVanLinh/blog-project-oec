@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Service
 @Transactional
-public class ConfigurationService extends AbstractService<Configuration>{
+public class ConfigurationService extends AbstractService<Configuration> {
 
     @Autowired
     ConfigurationDAO configurationDAO;
@@ -29,12 +29,11 @@ public class ConfigurationService extends AbstractService<Configuration>{
     public ConfigurationService() {
     }
 
-    public void save(Configuration configuration)
-    {
+    public void save(Configuration configuration) {
         this.configurationDAO.update(configuration);
     }
-    public void delete(int idConf)
-    {
+
+    public void delete(int idConf) {
         this.configurationDAO.delete(idConf);
     }
 
@@ -42,13 +41,11 @@ public class ConfigurationService extends AbstractService<Configuration>{
         return Configuration.class;
     }
 
-    public Configuration find(int id)
-    {
+    public Configuration find(int id) {
         return this.find(id);
     }
 
-    public List<Configuration> findAll()
-    {
+    public List<Configuration> findAll() {
         return this.findAll();
     }
 

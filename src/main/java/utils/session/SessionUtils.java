@@ -1,8 +1,21 @@
 package utils.session;
 
+import entities.User;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import utils.string.StringSessionUtil;
+
+import javax.servlet.http.HttpSession;
+
 /**
- * Created by linhtran on 15/06/2017.
+ * Created by linhtran on 16/06/2017.
  */
-public class SessionUtils {
-    public static final String USER_LOGIN = "userLogin";
+public abstract class SessionUtils {
+    public static HttpSession getCurrentSession() {
+        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+    }
+
+    public static User getCurrentUser() {
+        return (User) SessionUtils.getCurrentSession().getAttribute(StringSessionUtil.USER_LOGIN);
+    }
 }

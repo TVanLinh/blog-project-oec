@@ -25,8 +25,8 @@ public class DefaultPage implements Filter {
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        this.setDefaultPage((HttpServletRequest)servletRequest);
-        filterChain.doFilter(servletRequest,servletResponse);
+        this.setDefaultPage((HttpServletRequest) servletRequest);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     private void setDefaultPage(HttpServletRequest request) {
@@ -36,8 +36,8 @@ public class DefaultPage implements Filter {
 
         session.setAttribute("blogTitle", this.configurationService.findByName(ConfigurationService.TITLE).getValue());
         session.setAttribute("dateFormat", this.configurationService.findByName(ConfigurationService.DATE_FORMAT).getValue());
-        if (session.getAttribute("userService") == null){
-            session.setAttribute("userService",this.userService);
+        if (session.getAttribute("userService") == null) {
+            session.setAttribute("userService", this.userService);
         }
     }
 

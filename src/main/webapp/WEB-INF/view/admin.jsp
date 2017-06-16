@@ -40,8 +40,9 @@
                         </jsp:include>
                     </div>
 
+
                     <c:if  test="${requestScope.error != null}">
-                        <span class="error"><s:message code="${requestScope.error}"/></span>
+                        <div class="alert alert-success"><s:message code="${requestScope.error}"/></div>
                     </c:if>
 
                     <c:if test="${list.size() > 0}">

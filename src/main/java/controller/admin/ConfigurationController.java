@@ -25,18 +25,17 @@ import java.util.HashMap;
 public class ConfigurationController {
 
     @Autowired
-    private     DefaultPages defaultPage;
+    private DefaultPages defaultPage;
 
     @Autowired
-    private     ConfigurationService configurationService;
+    private ConfigurationService configurationService;
 
     @Autowired
-    private     ConfigFormValidator configFormValidator;
+    private ConfigFormValidator configFormValidator;
 
 
     @ModelAttribute
-    public ConfigForm initConfig()
-    {
+    public ConfigForm initConfig() {
         return new ConfigForm();
     }
 
@@ -47,10 +46,10 @@ public class ConfigurationController {
     }
 
     @RequestMapping("/process-configuration")
-    public  String processConfiguration(HttpServletRequest request,
-                                        ModelMap modelMap, @ModelAttribute(value = "configForm") ConfigForm conf,
-                                        BindingResult bindingResult,
-                                        RedirectAttributes redirectAttributes) throws NotFindException {
+    public String processConfiguration(HttpServletRequest request,
+                                       ModelMap modelMap, @ModelAttribute(value = "configForm") ConfigForm conf,
+                                       BindingResult bindingResult,
+                                       RedirectAttributes redirectAttributes) throws NotFindException {
 
         this.configFormValidator.validate(conf, bindingResult);
 
@@ -63,12 +62,12 @@ public class ConfigurationController {
         }
 
         if (hashMap.isEmpty()) {
-            throw  new NotFindException();
+            throw new NotFindException();
         }
 
         this.configurationService.save(this.configurationService.getConfig(hashMap, conf));
 
-        redirectAttributes.addFlashAttribute(RequestService.SUCCESS,RequestService.UPDATE_SUCCESS);
+        redirectAttributes.addFlashAttribute(RequestService.SUCCESS, RequestService.UPDATE_SUCCESS);
         this.defaultPage.setDaultPage(request);
         return "redirect:/configuration";
     }

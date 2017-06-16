@@ -10,15 +10,15 @@ import java.util.Set;
  */
 @Component
 public class UserSort extends Sort {
-    public   boolean checkOrderBy(String orderBy) {
-        Set<String> set  = new HashSet<String>();
+    public boolean checkOrderBy(String orderBy) {
+        Set<String> set = new HashSet<String>();
         set.add("id");
         set.add("role");
         set.add("user_name");
-        if(set.contains(orderBy)) {
+        if (set.contains(orderBy)) {
             return true;
         }
-        return  false;
+        return false;
     }
 
 }

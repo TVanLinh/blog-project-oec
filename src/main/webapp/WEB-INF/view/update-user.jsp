@@ -17,6 +17,16 @@
             <jsp:include page="templates/menus/menu-admin.jsp"/>
         </div>
         <div class="col-lg-8 col-md-8 col-xs-12">
+
+            <c:if test="${requestScope.errors != null}">
+                <div class="alert alert-danger mgt-20">
+                    <c:forEach var="item" items="${requestScope.errors}">
+                        <s:message code="${item}"/>
+                    </c:forEach>
+                </div>
+            </c:if>
+            <div class="mgt-20" id="error"></div>
+
             <s:url value="/action-update-user" var="formAction"/>
             <form:form ACTION="${formAction}" METHOD="post" commandName="userForm">
                 <form:input type="hidden" path="user.id" value="${param.id}"/>
@@ -56,23 +66,9 @@
                             <option value="ROLE_ADMIN"   >ROLE_ADMIN</option>
                         </c:if>
                     </form:select>
-
-                        <%--<form:input type="text" class="form-control pd-0" name="formatTime" id="formatTime">--%>
                 </div>
-                <input type="submit" class="btn btn-default" value="<s:message code="save" />"
-                       onclick="return checkFormInsertUser('<s:message code="validation.field.username_not_blank"/>','
-                           <s:message code="validation.field.password_not_blank"/>','<s:message
-                               code="validation.field.overlap_password"/>','<s:message
-                               code="validation.field.role_not_blank"/>','update')"
-                       onsubmit="return checkFormInsertUser('<s:message code="validation.field.username_not_blank"/>','
-                           <s:message code="validation.field.password_not_blank"/>','<s:message
-                               code="validation.field.overlap_password"/>','<s:message
-                               code="validation.field.role_not_blank"/>','update')">
-                <p class="pd-10 error">
-                    <c:forEach var="item" items="${requestScope.errors}">
-                        <s:message code="${item}"/>
-                    </c:forEach>
-                </p>
+                <input type="submit" class="btn btn-default" value="<s:message code="save" />" id="abc">
+
             </form:form>
         </div>
         <div class="clearfix"></div>
@@ -86,3 +82,40 @@
     <script src="<s:url value="/public/asserts/js/main.js"/>"></script>
     <script src="<s:url value="public/asserts/js/check_valid_form.js"/>"></script>
 <jsp:include page="templates/footers/footer.jsp"/>
+
+    <script>
+        jQuery(document).ready(function ($) {
+
+            function checkValidFormInsertUser() {
+
+                var error = $("#error");
+                var userName = $("#userName").val();
+                var passWord = $("#passWord").val();
+                var rePassWord = $("#rePassWord").val();
+                var oldPassWord = $("#oldPassWord").val();
+                var listRole = $("#listRole").val();
+
+                if (userName.trim() === "") {
+                    error.addClass("alert alert-danger");
+                    error.text('<s:message code="validation.field.username_not_blank"/>');
+                    return false;
+                }
+
+                if ((passWord.trim() !== "" || rePassWord.trim() !== "" ) && passWord.trim() !== rePassWord.trim()) {
+                    error.addClass("alert alert-danger");
+                    error.text('<s:message code="validation.field.overlap_password"/>');
+                    return false;
+                }
+                if (listRole === "") {
+                    error.addClass("alert alert-danger");
+                    error.text('<s:message code="validation.field.role_not_blank"/>');
+                    return false;
+                }
+                return true;
+            }
+
+            $("#abc").on('click', function () {
+                return checkValidFormInsertUser();
+            });
+        });
+    </script>

@@ -29,8 +29,8 @@ public class PostSortService {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public List<Post> getAllPostByUser( SortType sortItem, User user, int offset, int limit) {
-        String str= "select * from post where id_user = "+user.getId() +" order by  " + sortItem.orderBy + " " + sortItem.typeOrder + " limit "+offset+","+limit;
+    public List<Post> getAllPostByUser(SortType sortItem, User user, int offset, int limit) {
+        String str = "select * from post where id_user = " + user.getId() + " order by  " + sortItem.orderBy + " " + sortItem.typeOrder + " limit " + offset + "," + limit;
         Query<Post> query = this.sessionFactory.getCurrentSession().createNativeQuery(str, Post.class);
         return query.getResultList();
     }
@@ -49,11 +49,11 @@ public class PostSortService {
 
         SortType sortItem = this.portSort.getCurrentSortType(request, StringSessionUtil.CURRENT_ALL_POST);
 
-        this.portSort.checkValid(page,orderBy,sortItem,"title");
+        this.portSort.checkValid(page, orderBy, sortItem, "title");
 
         session.setAttribute(StringSessionUtil.CURRENT_ALL_POST, sortItem);
 
-        String str =  "select * from post order by   " + sortItem.orderBy + " " + sortItem.typeOrder + " limit " + offset+","+limit;
+        String str = "select * from post order by   " + sortItem.orderBy + " " + sortItem.typeOrder + " limit " + offset + "," + limit;
         Query<Post> query = this.sessionFactory.getCurrentSession().createNativeQuery(str, Post.class);
         return query.getResultList();
     }

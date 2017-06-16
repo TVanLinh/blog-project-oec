@@ -16,18 +16,19 @@
             <c:if test="${list.size()==0 && param.query_search != null}">
                 <h1 class="text-center"><s:message code="not.post.find"/></h1>
             </c:if>
-           <div class="text-center">
-               <jsp:include page="templates/forms/search3.jsp">
-                   <jsp:param name="searchBy" value="search.by.title"/>
-                   <jsp:param name="action" value="/user-post-search"/>
-               </jsp:include>
-           </div>
+            <div class="text-center">
+                <jsp:include page="templates/forms/search3.jsp">
+                    <jsp:param name="searchBy" value="search.by.title"/>
+                    <jsp:param name="action" value="/user-post-search"/>
+                </jsp:include>
+            </div>
         </div>
         <div class="clearfix"></div>
 
         <div class="col-xs-12">
+
             <c:if  test="${requestScope.error != null}">
-                <span class="error"><s:message code="${requestScope.error}"/></span>
+                <div class="alert alert-success"><s:message code="${requestScope.error}"/></div>
             </c:if>
 
             <c:if test="${list.size() > 0}">

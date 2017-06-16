@@ -37,7 +37,7 @@ public class ConfigFormValidator extends AbstractVadidator implements Validator 
 
 
         if (StringUtils.isEmpty(configForm.getDateFormat()) || StringUtils.isBlank(configForm.getDateFormat())) {
-            errors.rejectValue("dateFormat","validation.field.conf_not_dateformat");
+            errors.rejectValue("dateFormat", "validation.field.conf_not_dateformat");
         }
 
         int number = NumberUtils.toInt(configForm.getNumberView() + "", -1);

@@ -36,6 +36,7 @@ public class PostService extends AbstractService<Post> {
 
     @Autowired
     UserService userService;
+
     public PostService() {
     }
 
@@ -132,19 +133,18 @@ public class PostService extends AbstractService<Post> {
     }
 
 
-
-    public void delete(int id)  {
-        if(this.postDAO.find(id)!=null) {
+    public void delete(int id) {
+        if (this.postDAO.find(id) != null) {
             this.postDAO.delete(id);
         }
     }
 
-    public void delete(String id,String userName) throws NotFindException, AccessDenieException {
+    public void delete(String id, String userName) throws NotFindException, AccessDenieException {
         Post post;
-        if(!StringUtils.isNumeric(id)  || (post = this.postDAO.find(Integer.valueOf(id))) == null){
-            throw  new NotFindException(NotFindException.POST_NOT_FOUND);
+        if (!StringUtils.isNumeric(id) || (post = this.postDAO.find(Integer.valueOf(id))) == null) {
+            throw new NotFindException(NotFindException.POST_NOT_FOUND);
         }
-        if(this.userService.isEditPostByUser(this.userService.getUserByName(userName),post)){
+        if (this.userService.isEditPostByUser(this.userService.getUserByName(userName), post)) {
             this.postDAO.delete(Integer.valueOf(id));
         }
     }
@@ -156,8 +156,8 @@ public class PostService extends AbstractService<Post> {
     @Override
     public Post find(int id) throws NotFindException {
         Post post = this.postDAO.find(id);
-        if(post == null){
-            throw  new NotFindException(NotFindException.POST_NOT_FOUND);
+        if (post == null) {
+            throw new NotFindException(NotFindException.POST_NOT_FOUND);
         }
         return post;
     }
@@ -174,21 +174,21 @@ public class PostService extends AbstractService<Post> {
         return (BigInteger) this.sessionFactory.getCurrentSession().createNativeQuery("select count(*) from post where approve = 1 and status =1 ").getSingleResult();
     }
 
-    public   boolean approvePost(String   id,String userName) throws NotFindException, AccessDenieException {
+    public boolean approvePost(String id, String userName) throws NotFindException, AccessDenieException {
         Post post;
-        if(!StringUtils.isNumeric(id) ||(post = this.postDAO.find(Integer.valueOf(id))) == null){
+        if (!StringUtils.isNumeric(id) || (post = this.postDAO.find(Integer.valueOf(id))) == null) {
             throw new NotFindException(NotFindException.POST_NOT_FOUND);
         }
 
-        if(!this.userService.isRoleAdmin(this.userService.getUserByName(userName))){
-            throw  new AccessDenieException(AccessDenieException.ACCESS_NOT_ROLE_POST);
+        if (!this.userService.isRoleAdmin(this.userService.getUserByName(userName))) {
+            throw new AccessDenieException(AccessDenieException.ACCESS_NOT_ROLE_POST);
         }
 
-        if(post.getApprove() == 1){
+        if (post.getApprove() == 1) {
             return false;
         }
         Date date;
-        Calendar calendar=Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         date = calendar.getTime();
         post.setApprovedTime(date);
         post.setApprove(1);

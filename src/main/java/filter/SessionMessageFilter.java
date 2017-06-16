@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * Created by linhtran on 12/06/2017.
  */
-public class SessionMessageFilter  implements Filter {
+public class SessionMessageFilter implements Filter {
 
     public void init(FilterConfig filterConfig) throws ServletException {
 

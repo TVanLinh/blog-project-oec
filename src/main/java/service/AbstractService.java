@@ -24,7 +24,7 @@ public abstract class AbstractService<E extends AbstractEntity> {
 
     public E find(int id) throws NotFindException {
         Query<E> query = sessionFactory.getCurrentSession().createQuery("from p " + this.getClassTable().getClass().getName() + "  where p.id = :id", this.getClassTable());
-        query.setParameter("id",id);
+        query.setParameter("id", id);
         return query.getSingleResult();
     }
 

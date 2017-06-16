@@ -22,7 +22,7 @@ public class RoleDAOIML implements RoleDAO {
 
     public void delete(int idRole) {
         Session session = sessionFactory.getCurrentSession();
-        Role role  = session.find(Role.class,idRole);
+        Role role = session.find(Role.class, idRole);
         session.remove(role);
     }
 
@@ -35,30 +35,30 @@ public class RoleDAOIML implements RoleDAO {
 
     public void delete(String userName) {
         Session session = sessionFactory.getCurrentSession();
-       Query query= session.createNativeQuery("DELETE  from user_roles WHERE user_name  = :userName");
-       query.setParameter("userName",userName);
-       query.executeUpdate();
+        Query query = session.createNativeQuery("DELETE  from user_roles WHERE user_name  = :userName");
+        query.setParameter("userName", userName);
+        query.executeUpdate();
     }
 
     public List<Role> getRoleByUsername(String username) {
         Session session = sessionFactory.getCurrentSession();
-        Query<Role> query= session.createNativeQuery("SELECT * FROM user_roles WHERE user_name = :userName", Role.class)
-                .setParameter("userName",username);
+        Query<Role> query = session.createNativeQuery("SELECT * FROM user_roles WHERE user_name = :userName", Role.class)
+                .setParameter("userName", username);
 
         return query.getResultList();
     }
 
     public List<Role> getRoleByUserId(int idUser) {
         Session session = sessionFactory.getCurrentSession();
-        Query<Role> query= session.createNativeQuery("SELECT * FROM user_roles WHERE id_user = :id_user", Role.class)
-                .setParameter("id_user",idUser);
+        Query<Role> query = session.createNativeQuery("SELECT * FROM user_roles WHERE id_user = :id_user", Role.class)
+                .setParameter("id_user", idUser);
         return query.getResultList();
     }
 
     public void deleteByUserId(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Query query= session.createNativeQuery("DELETE  from user_roles WHERE id_user  = :id_user");
-        query.setParameter("id_user",id);
+        Query query = session.createNativeQuery("DELETE  from user_roles WHERE id_user  = :id_user");
+        query.setParameter("id_user", id);
         query.executeUpdate();
     }
 

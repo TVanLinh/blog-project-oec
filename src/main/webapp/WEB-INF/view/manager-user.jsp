@@ -42,10 +42,12 @@
                 <a class="btn btn-default mgb-15 mgt-20" href="<s:url value="/insert-user"/>"><img
                         src="<s:url value="public/asserts/images/add_user.png"/> " class="mgr-10"><s:message
                         code="insertUser"/></a>
+
                 <c:if  test="${requestScope.error != null}">
-                    <span class="error"><s:message code="${requestScope.error}"/></span>
+                    <div class="alert alert-success"><s:message code="${requestScope.error}"/></div>
                 </c:if>
             </div>
+
             <c:if test="${list.size() > 0}">
                 <c:if test="${param.query_search == null}">
                     <jsp:include page="templates/forms/select.jsp">

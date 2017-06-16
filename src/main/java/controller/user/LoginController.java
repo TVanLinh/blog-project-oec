@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.RequestService;
 import service.UserService;
 import utils.session.SessionUtils;
+import utils.string.StringSessionUtil;
 import vadilator.UserFormChangePasswordValidator;
 import vadilator.UserFormValidator;
 
@@ -37,7 +38,14 @@ public class LoginController {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    UserFormChangePasswordValidator changePasswordValidator;
+    private UserFormChangePasswordValidator changePasswordValidator;
+
+    @ModelAttribute
+    public UserForm initUserForm() {
+        UserForm userForm = new UserForm();
+        return userForm;
+    }
+
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(@RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout) {
@@ -55,34 +63,43 @@ public class LoginController {
 
         HttpSession session = request.getSession();
 
-        if (session.getAttribute(SessionUtils.USER_LOGIN) == null) {
-            session.setAttribute(SessionUtils.USER_LOGIN, this.userService.getUserByName(principal.getName()));
+        if (session.getAttribute(StringSessionUtil.USER_LOGIN) == null) {
+            session.setAttribute(StringSessionUtil.USER_LOGIN, this.userService.getUserByName(principal.getName()));
         }
         return "redirect:/user";
     }
 
     //for 403 access denied page
     @RequestMapping(value = "/403", method = RequestMethod.GET)
-    public String  accessDenied() throws AccessDenieException {
+    public String accessDenied() throws AccessDenieException {
         throw new AccessDenieException(AccessDenieException.ACESS_NOT_ROLE_PAGE);
     }
 
+    @RequestMapping(value = "/change-pass-word", method = RequestMethod.GET)
+    public String pageChangePassWord(ModelMap modelMap, HttpServletRequest request) throws AccessDenieException {
+        User user = SessionUtils.getCurrentUser();
+        if (user == null) {
+            throw new AccessDenieException(AccessDenieException.ACESS_NOT_ROLE_PAGE);
+        }
+        modelMap.addAttribute("user", user);
+        return "change-pass-word";
+    }
 
-    @RequestMapping(value = "/change-pass-word",method = RequestMethod.POST)
+    @RequestMapping(value = "/change-pass-word", method = RequestMethod.POST)
     public String actionChangePassWord(HttpServletRequest request, RedirectAttributes redirectAttributes,
                                        @ModelAttribute(value = "userForm") UserForm userForm, ModelMap modelMap,
-                                       BindingResult bindingResult){;
-        changePasswordValidator.validate(userForm,bindingResult);
-        User user = (User) request.getSession().getAttribute(SessionUtils.USER_LOGIN);
-        if(bindingResult.hasErrors()){
-            modelMap.addAttribute("errors",changePasswordValidator.getCodeErrors(bindingResult));
-            request.setAttribute("user", user);
+                                       BindingResult bindingResult) {
+        changePasswordValidator.validate(userForm, bindingResult);
+        User user = SessionUtils.getCurrentUser();
+        if (bindingResult.hasErrors()) {
+            modelMap.addAttribute("errors", changePasswordValidator.getCodeErrors(bindingResult));
+            redirectAttributes.addFlashAttribute("user", user);
             return "change-pass-word";
         }
 
         user.setPassWord(passwordEncoder.encode(userForm.getNewPassWord()));
         userService.save(user);
-        redirectAttributes.addFlashAttribute(RequestService.MESSAGE,RequestService.UPDATE_SUCCESS);
+        redirectAttributes.addFlashAttribute(RequestService.MESSAGE, RequestService.UPDATE_SUCCESS);
         return "redirect:/change-pass-word";
     }
 }

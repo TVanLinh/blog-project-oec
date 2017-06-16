@@ -10,9 +10,9 @@ import java.util.Set;
  */
 
 @Component
-public class PortSort  extends  Sort{
-    public   boolean checkOrderBy(String orderBy) {
-        Set<String> set  = new HashSet<String>();
+public class PortSort extends Sort {
+    public boolean checkOrderBy(String orderBy) {
+        Set<String> set = new HashSet<String>();
         set.add("title");
         set.add("id");
         set.add("time_post");
@@ -22,10 +22,10 @@ public class PortSort  extends  Sort{
         set.add("approve");
         set.add("user_name");
         set.add("id_user");
-        if(set.contains(orderBy)) {
+        if (set.contains(orderBy)) {
             return true;
         }
-        return  false;
+        return false;
     }
 }
 

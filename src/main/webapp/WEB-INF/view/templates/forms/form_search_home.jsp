@@ -2,7 +2,7 @@
 <div id="search-home" class="search-hide">
     <form action="<s:url value="/view-search"/>" onsubmit="return mySearch.checkFormSearchValid('#search1')">
         <div class="input-group">
-            <input type="text" name="query_search" id="search1" class="form-control"
+            <input type="text" name="query_search" id="search1" class="form-control" required
                    onsubmit="return mySearch.checkFormSearchValid('#search1')"
                    placeholder="<s:message code="search.by.title.author" /> <s:message code="title" />">
             <div class="input-group-btn">

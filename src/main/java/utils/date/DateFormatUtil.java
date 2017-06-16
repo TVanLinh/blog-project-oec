@@ -9,11 +9,11 @@ import java.util.Date;
  */
 
 public class DateFormatUtil {
-    public  static String format(Date date,String format) {
-        if(date == null) {
+    public static String format(Date date, String format) {
+        if (date == null) {
             return "";
         }
-        DateFormat dateFormat  = new SimpleDateFormat(format);
+        DateFormat dateFormat = new SimpleDateFormat(format);
         return dateFormat.format(date);
     }
 }

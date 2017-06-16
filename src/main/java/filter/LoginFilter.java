@@ -15,15 +15,15 @@ public class LoginFilter implements Filter {
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest)servletRequest;
-        HttpServletResponse response = (HttpServletResponse)servletResponse;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
 
         if (session.getAttribute("userLogin") != null) {
             response.sendRedirect("/home");
             return;
         }
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 
     public void destroy() {

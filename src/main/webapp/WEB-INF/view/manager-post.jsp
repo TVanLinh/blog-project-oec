@@ -37,11 +37,10 @@
                 </jsp:include>
             </div>
 
-            <p class="error">
-                <c:if test="${requestScope.error != null}">
-                    <s:message code="${requestScope.error}"/>
-                </c:if>
-            </p>
+
+            <c:if test="${requestScope.error != null}">
+                <div class="alert alert-success"><s:message code="${requestScope.error}"/></div>
+            </c:if>
 
             <c:if test="${list.size() > 0}">
                 <c:if test="${param.query_search == null}">

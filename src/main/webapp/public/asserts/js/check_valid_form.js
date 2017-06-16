@@ -153,3 +153,22 @@ function checkFormValidPassWord(msgOldPass, msgPass, msg) {
     }
     return true;
 }
+
+function checkFormValidPassWordUser(msgOldPass, msgPass, msg) {
+    var passWord = $("#passWord").val();
+    var rePassWord = $("#rePassWord").val();
+    var oldPassWord = $("#oldPassWord").val();
+
+    if (oldPassWord.trim() === "") {
+        return false;
+    }
+    if (passWord.trim() === "") {
+        window.alert(msgPass);
+        return false;
+    }
+    if (passWord.trim() !== "" && passWord.trim() != rePassWord.trim()) {
+        window.alert(msg);
+        return false;
+    }
+    return true;
+}

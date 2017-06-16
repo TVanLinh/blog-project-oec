@@ -15,14 +15,14 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class ConfigurationDAOIML  implements ConfigurationDAO{
+public class ConfigurationDAOIML implements ConfigurationDAO {
     @Autowired
-   private SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     @Transactional
     public void delete(int idAuthor) {
         Session session = sessionFactory.getCurrentSession();
-        Configuration conf  = session.find(Configuration.class,idAuthor);
+        Configuration conf = session.find(Configuration.class, idAuthor);
         session.remove(conf);
     }
 
@@ -34,11 +34,11 @@ public class ConfigurationDAOIML  implements ConfigurationDAO{
 
     public Configuration find(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Configuration conf = session.find(Configuration.class,id);
-        if(conf == null) {
+        Configuration conf = session.find(Configuration.class, id);
+        if (conf == null) {
             return getAllConfiguration().get(0);
         }
-        return  conf;
+        return conf;
     }
 
     public List<Configuration> getAllConfiguration() {

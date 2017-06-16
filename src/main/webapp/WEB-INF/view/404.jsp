@@ -16,7 +16,9 @@
         <div class="col-xs-12 col-sm-12 ">
 
             <!--content--->
-            <s:message code="page.not.found"/>
+            <div class="alert alert-danger">
+                <s:message code="page.not.found"/>
+            </div>
             <!--end content---->
             <div id="comment">
                 <%--<jsp:include page="templates/components/comment.jsp"/>--%>

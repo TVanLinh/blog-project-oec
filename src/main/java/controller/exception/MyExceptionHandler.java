@@ -15,7 +15,7 @@ public class MyExceptionHandler {
     @ExceptionHandler(NotFindException.class)
     public ModelAndView handlerNotFindException(NotFindException ex) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("ProcessExceptions");
+        modelAndView.setViewName("process-exception");
         modelAndView.addObject("error", ex.getMessage());
         return modelAndView;
     }
@@ -24,7 +24,7 @@ public class MyExceptionHandler {
     public ModelAndView handlerAccessDeniesException(AccessDenieException ex) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("error", ex.getMessage());
-        modelAndView.setViewName("ProcessExceptions");
+        modelAndView.setViewName("process-exception");
         return modelAndView;
     }
 

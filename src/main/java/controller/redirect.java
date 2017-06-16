@@ -24,68 +24,67 @@ import java.util.List;
 @Controller
 public class redirect {
     @Autowired
-    private    UserService userService;
+    private UserService userService;
 
     @Autowired
-    private    PostService postService;
+    private PostService postService;
 
     @Autowired
-    private    ConfigurationService configurationService;
+    private ConfigurationService configurationService;
 
     @RequestMapping(value = "/write")
-    public  String viewWriter(HttpServletRequest request) {
+    public String viewWriter(HttpServletRequest request) {
 
-        request.setAttribute("active","write");
+        request.setAttribute("active", "write");
         return "write";
     }
 
-    @RequestMapping(value={"/","/home"})
+    @RequestMapping(value = {"/", "/home"})
     public String homePage(HttpServletRequest request, ModelMap modelMap,
                            @RequestParam(value = "page",
-                           required = false)String pageRequest) {
+                                   required = false) String pageRequest) {
         String error = (String) request.getSession().getAttribute(RequestService.MESSAGE);
-        if( error !=null) {
-            modelMap.addAttribute(RequestService.MESSAGE,error);
+        if (error != null) {
+            modelMap.addAttribute(RequestService.MESSAGE, error);
             request.getSession().removeAttribute(RequestService.MESSAGE);
         }
 
-        int  page = NumberUtils.toInt(pageRequest,1);
+        int page = NumberUtils.toInt(pageRequest, 1);
 
         int limit = Integer.valueOf(this.configurationService.getConfigNumberView().getValue());
-        modelMap.addAttribute("userDAO",this.userService);
-        List<Post> postList = this.postService.getPublic((page-1)*limit,limit);
-        RequestService.setResponse(modelMap,limit,postList,this.postService.getCountPublic());
+        modelMap.addAttribute("userDAO", this.userService);
+        List<Post> postList = this.postService.getPublic((page - 1) * limit, limit);
+        RequestService.setResponse(modelMap, limit, postList, this.postService.getCountPublic());
         return "home";
     }
 
 
     @RequestMapping(value = "/post")
-    public  String viewPost(ModelMap modelMap,@RequestParam(value = "id",required = false) String id) throws NotFindException {
+    public String viewPost(ModelMap modelMap, @RequestParam(value = "id", required = false) String id) throws NotFindException {
 
         int limit = NumberUtils.toInt(this.configurationService.getConfigNumberView().getValue(), 4);
 
         List<Post> postSlideBar = this.postService.getPublic(0, limit);
-        modelMap.addAttribute("postSlideBar",postSlideBar);
+        modelMap.addAttribute("postSlideBar", postSlideBar);
 
-        if(!StringUtils.isNumeric(id) || this.postService.find(Integer.valueOf(id)) == null) {
+        if (!StringUtils.isNumeric(id) || this.postService.find(Integer.valueOf(id)) == null) {
             throw new NotFindException(NotFindException.POST_NOT_FOUND);
         }
 
         Post post = this.postService.find(Integer.valueOf(id));
-        post.setNumberView(post.getNumberView()+1);
+        post.setNumberView(post.getNumberView() + 1);
         this.postService.save(post);
-        modelMap.addAttribute("post",post);
+        modelMap.addAttribute("post", post);
         return "post";
     }
 
-    @RequestMapping(value = "/error",method = RequestMethod.GET)
-    public  String pageProcessException()
-    {
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    public String pageProcessException() {
         return "process-exception";
     }
 
     @RequestMapping(value = "/404")
-    public String page404(){
+    public String page404() {
         return "404";
     }
 

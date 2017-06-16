@@ -22,7 +22,7 @@ public class UserSortService {
     SessionFactory sessionFactory;
 
     public List<User> getUser(SortType sortItem, int offset, int limit) {
-        String str =  "select * from user order by  " + sortItem.orderBy + " " + sortItem.typeOrder + " limit " +offset+ "," + limit;
+        String str = "select * from user order by  " + sortItem.orderBy + " " + sortItem.typeOrder + " limit " + offset + "," + limit;
         Query<User> query = this.sessionFactory.getCurrentSession().createNativeQuery(str, User.class);
         return query.getResultList();
     }
@@ -36,6 +36,6 @@ public class UserSortService {
         }
 
         Query<User> query = this.sessionFactory.getCurrentSession().createNativeQuery(str, User.class);
-        return  query.getResultList();
+        return query.getResultList();
     }
 }

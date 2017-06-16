@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SortType {
-    public  String orderBy = "id";
-    public  String  typeOrder = "desc"; //0 asc,1 desc
+    public String orderBy = "id";
+    public String typeOrder = "desc"; //0 asc,1 desc
 
-    public  void toggleTypeOrder() {
-        if(this.typeOrder.equals("desc")) {
+    public void toggleTypeOrder() {
+        if (this.typeOrder.equals("desc")) {
             this.typeOrder = "asc";
         } else {
             this.typeOrder = "desc";
