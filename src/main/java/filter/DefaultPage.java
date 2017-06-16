@@ -15,6 +15,7 @@ import java.io.IOException;
  */
 
 public class DefaultPage implements Filter {
+
     private ConfigurationService configurationService;
     private ApplicationContext context;
     private UserService userService;

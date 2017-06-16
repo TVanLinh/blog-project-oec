@@ -11,7 +11,10 @@ import java.util.List;
 public interface ConfigurationDAO {
 
     void update(Configuration configuration);
+
     void delete(int idConf);
-     Configuration find(int id);
-     List<Configuration> getAllConfiguration() ;
+
+    Configuration find(int id);
+
+    List<Configuration> getAllConfiguration();
 }

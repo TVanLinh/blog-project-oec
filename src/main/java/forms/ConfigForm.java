@@ -6,6 +6,7 @@ package forms;
 
 
 public class ConfigForm {
+
     private String title;
     private String name;
     private String numberView;

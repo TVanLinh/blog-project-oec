@@ -9,6 +9,7 @@ import java.io.IOException;
  */
 
 public class UserFilter implements Filter {
+
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
