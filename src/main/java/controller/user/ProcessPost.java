@@ -91,7 +91,9 @@ public class ProcessPost {
 
     private  void setPostSliderbar(ModelMap modelMap)
     {
-        List<Post> postSlideBar = this.postService.getPublic(0, this.configurationService.getAllConfiguration().get(0).getNumberViewPost());
+        int limit = NumberUtils.toInt(this.configurationService.findByName(ConfigurationService.NUMBER_POST_VIEW).getValue(), 4);
+
+        List<Post> postSlideBar = this.postService.getPublic(0, limit);
         modelMap.addAttribute("postSlideBar",postSlideBar);
     }
     @RequestMapping(value = "/write-post", method = RequestMethod.GET)

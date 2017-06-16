@@ -33,11 +33,9 @@ public class DefaultPage implements Filter {
         this.configurationService = this.context.getBean("configurationService", ConfigurationService.class);
         this.userService = this.context.getBean("userService", UserService.class);
         HttpSession session = request.getSession();
-        entities.Configuration configuration = configurationService.getAllConfiguration().get(0);
-        if (configuration != null) {
-            session.setAttribute("dateFormat", configuration.getDateFormat());
-            session.setAttribute("blogTitle", configuration.getWebTitle());
-        }
+
+        session.setAttribute("blogTitle", this.configurationService.findByName(ConfigurationService.TITLE).getValue());
+        session.setAttribute("dateFormat", this.configurationService.findByName(ConfigurationService.DATE_FORMAT).getValue());
         if (session.getAttribute("userService") == null){
             session.setAttribute("userService",this.userService);
         }

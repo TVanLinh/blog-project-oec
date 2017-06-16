@@ -21,43 +21,47 @@
         <div class="col-lg-2 col-md-3 col-xs-12">
             <jsp:include page="templates/menus/menu-admin.jsp"/>
         </div>
+
         <div class="col-lg-8 col-md-8 col-xs-12">
 
             <%--<jsp:include page="templates/menus/menu-admin.jsp"/>--%>
-            <spring:url var="action" value="/processConfiguration"/>
-            <jsp:useBean id="confService" class="service.ConfigurationService" />
+            <spring:url var="action" value="/process-configuration"/>
 
-            <form:form ACTION="${action}" METHOD="post" commandName="configuration" >
+            <jsp:useBean id="confService" scope="page" class="service.ConfigurationService"/>
+
+            <form:form ACTION="${action}" METHOD="post" commandName="configForm">
+
                 <div class="form-group">
                     <label for="titleBlog"><s:message code="titleBlog"/>:</label>
-                    <input:input path="webTitle" type="text" class="form-control " name="titleBlog" id="titleBlog" value="${requestScope.conf.webTitle}"/>
+                    <input:input path="title" type="text" class="form-control " name="titleBlog" id="titleBlog"
+                                 value="${requestScope.conf['title'].getValue()}"/>
                 </div>
+
                 <div class="form-group">
                     <label for="formatTime" id="formatTime"><s:message code="fomatDate"/>:</label>
-
                     <form:select path="dateFormat" class="form-control"  name="formatTime" >
-                        <c:if test="${confService.isHaveFormatTime(requestScope.conf,'HH:mm:ss dd/MM/yyyy')}">
+                        <c:if test="${confService.isHaveFormatTime(requestScope.conf['date_format'],'HH:mm:ss dd/MM/yyyy')}">
                             <option value="HH:mm:ss dd/MM/yyyy" selected>HH:mm:ss dd/MM/yyyy</option>
                             <option value="HH:mm:ss dd-MM-yyyy">HH:mm:ss dd-MM-yyyy</option>
                             <option value="dd/MM/yyyy">dd/MM/yyyy</option>
                             <option value="dd-MM-yyyy">dd-MM-yyyy</option>
                         </c:if>
 
-                        <c:if test="${confService.isHaveFormatTime(requestScope.conf,'HH:mm:ss dd-MM-yyyy')}">
+                        <c:if test="${confService.isHaveFormatTime(requestScope.conf['date_format'],'HH:mm:ss dd-MM-yyyy')}">
                             <option value="HH:mm:ss dd/MM/yyyy" >HH:mm:ss dd/MM/yyyy</option>
                             <option value="HH:mm:ss dd-MM-yyyy" selected>HH:mm:ss dd-MM-yyyy</option>
                             <option value="dd/MM/yyyy">dd/MM/yyyy</option>
                             <option value="dd-MM-yyyy">dd-MM-yyyy</option>
                         </c:if>
 
-                        <c:if test="${confService.isHaveFormatTime(requestScope.conf,'dd/MM/yyyy')}">
+                        <c:if test="${confService.isHaveFormatTime(requestScope.conf['date_format'],'dd/MM/yyyy')}">
                             <option value="HH:mm:ss dd/MM/yyyy" >HH:mm:ss dd/MM/yyyy</option>
                             <option value="HH:mm:ss dd-MM-yyyy" >HH:mm:ss dd-MM-yyyy</option>
                             <option value="dd/MM/yyyy" selected>dd/MM/yyyy</option>
                             <option value="dd-MM-yyyy">dd-MM-yyyy</option>
                         </c:if>
 
-                        <c:if test="${confService.isHaveFormatTime(requestScope.conf,'dd-MM-yyyy')}">
+                        <c:if test="${confService.isHaveFormatTime(requestScope.conf['date_format'],'dd-MM-yyyy')}">
                             <option value="HH:mm:ss dd/MM/yyyy" >HH:mm:ss dd/MM/yyyy</option>
                             <option value="HH:mm:ss dd-MM-yyyy" >HH:mm:ss dd-MM-yyyy</option>
                             <option value="dd/MM/yyyy" >dd/MM/yyyy</option>
@@ -66,13 +70,17 @@
 
                     </form:select>
 
-                    <%--<input type="text" class="form-control pd-0" name="formatTime" id="formatTime">--%>
                 </div>
+
                 <div class="form-group">
                     <label for="numberPost"><s:message code="numberView"/>:</label>
-                    <form:input path="numberViewPost" type="number" min="1"  value="${requestScope.conf.numberViewPost}" class="form-control pd-0" name="numberPost" id="numberPost"/>
+                    <form:input path="numberView" type="number" min="1"
+                                value="${requestScope.conf['number_post_view'].getValue()}" class="form-control pd-0"
+                                name="numberPost" id="numberPost"/>
                 </div>
+
                 <input type="submit" class="btn btn-default" value="<s:message code="save" />">
+
                 <p class="pd-10 error">
                     <c:if test="${requestScope.errors != null}">
                         <c:forEach var="item" items="${requestScope.errors}">

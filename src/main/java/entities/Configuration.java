@@ -1,63 +1,43 @@
 package entities;
 
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+/**
+ * Created by linhtran on 15/06/2017.
+ */
+
 @Entity
 @Table(name = "configuration")
-public class Configuration extends AbstractEntity{
+public class Configuration extends AbstractEntity {
 
-  @Basic
-  @Column(name = "web_title")
-  private String webTitle;
+    @Column(name = "name")
+    @Basic
+    private String name;
 
-  @Column(name = "date_format")
-  private String dateFormat;
+    @Column(name = "value")
+    @Basic
+    private String value;
 
-  @Column(name = "number_view_post")
-  private int numberViewPost;
+    public Configuration() {
+    }
 
-  public int getId() {
-    return id;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setId(int id) {
-    this.id = id;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public String getWebTitle() {
-    return webTitle;
-  }
+    public String getValue() {
+        return value;
+    }
 
-  public void setWebTitle(String webTitle) {
-    this.webTitle = webTitle;
-  }
-
-  public String getDateFormat() {
-    return dateFormat;
-  }
-
-  public void setDateFormat(String dateFormat) {
-    this.dateFormat = dateFormat;
-  }
-
-  public int getNumberViewPost() {
-    return numberViewPost;
-  }
-
-  public void setNumberViewPost(int numberViewPost) {
-    this.numberViewPost = numberViewPost;
-  }
-
-  @Override
-  public String toString() {
-    return "Configuration{" +
-            "id=" + id +
-            ", webTitle='" + webTitle + '\'' +
-            ", dateFormat='" + dateFormat + '\'' +
-            ", numberViewPost=" + numberViewPost +
-            '}';
-  }
+    public void setValue(String value) {
+        this.value = value;
+    }
 }

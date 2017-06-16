@@ -23,10 +23,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `configuration`
+-- Table structure for table `configurations`
 --
 
-CREATE TABLE `configuration` (
+CREATE TABLE `configurations` (
   `id` int(11) NOT NULL,
   `web_title` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT 'Linh Tran Blog',
   `date_format` char(250) COLLATE utf8mb4_unicode_ci DEFAULT 'HH:mm:ss dd/MM/yyyy',
@@ -34,10 +34,10 @@ CREATE TABLE `configuration` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `configuration`
+-- Dumping data for table `configurations`
 --
 
-INSERT INTO `configuration` (`id`, `web_title`, `date_format`, `number_view_post`) VALUES
+INSERT INTO configurations (`id`, `web_title`, `date_format`, `number_view_post`) VALUES
 (1, 'Tran Van Linh', 'dd/MM/yyyy', 5);
 
 -- --------------------------------------------------------
@@ -947,9 +947,9 @@ INSERT INTO `user_roles` (id, `user_name`, `role`) VALUES
 --
 
 --
--- Indexes for table `configuration`
+-- Indexes for table `configurations`
 --
-ALTER TABLE `configuration`
+ALTER TABLE configurations
   ADD PRIMARY KEY (`id`);
 
 --
@@ -991,9 +991,9 @@ ALTER TABLE `user_roles`
 --
 
 --
--- AUTO_INCREMENT for table `configuration`
+-- AUTO_INCREMENT for table `configurations`
 --
-ALTER TABLE `configuration`
+ALTER TABLE configurations
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `post`

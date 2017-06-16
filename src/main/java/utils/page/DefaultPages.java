@@ -1,12 +1,10 @@
 package utils.page;
 
-import entities.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import service.ConfigurationService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by linhtran on 15/05/2017.
@@ -16,11 +14,11 @@ public class DefaultPages {
     @Autowired
     ConfigurationService configurationService;
     public void setDaultPage(HttpServletRequest request) {
-        HttpSession session = request.getSession(true);
-        Configuration configuration = configurationService.getAllConfiguration().get(0);
-        if(configuration != null) {
-            session.setAttribute("dateFormat",configuration.getDateFormat());
-            session.setAttribute("blogTitle",configuration.getWebTitle());
-        }
+//        HttpSession session = request.getSession(true);
+//        Configurations configurations = configurationService.getAllConfiguration().get(0);
+//        if(configurations != null) {
+//            session.setAttribute("dateFormat", configurations.getDateFormat());
+//            session.setAttribute("blogTitle", configurations.getWebTitle());
+//        }
     }
 }

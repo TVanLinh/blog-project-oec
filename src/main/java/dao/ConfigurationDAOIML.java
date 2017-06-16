@@ -44,7 +44,7 @@ public class ConfigurationDAOIML  implements ConfigurationDAO{
     public List<Configuration> getAllConfiguration() {
         Session session = sessionFactory.getCurrentSession();
 
-        List<Configuration> list = session.createNativeQuery("select * from configuration",Configuration.class).getResultList();
+        List<Configuration> list = session.createNativeQuery("select * from configuration", Configuration.class).getResultList();
         return list;
     }
 }

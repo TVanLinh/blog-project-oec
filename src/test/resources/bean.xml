@@ -19,7 +19,7 @@
         <property name="annotatedClasses">
             <list>
                 <value>entities.User</value>
-                <value>entities.Configuration</value>
+                <value>entities.Configurations</value>
                 <value>entities.Post</value>
                 <value>entities.Role</value>
                 <value>entities.Image</value>

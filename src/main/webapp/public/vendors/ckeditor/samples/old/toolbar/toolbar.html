@@ -23,7 +23,8 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 	<div class="description">
 		<p>
 			This sample page demonstrates editor with loaded <a href="#fullToolbar">full toolbar</a> (all registered buttons) and, if
-			current editor's configuration modifies default settings, also editor with <a href="#currentToolbar">modified toolbar</a>.
+            current editor's configurations modifies default settings, also editor with <a href="#currentToolbar">modified
+            toolbar</a>.
 		</p>
 
 		<p>Since CKEditor 4 there are two ways to configure toolbar buttons.</p>
@@ -54,7 +55,7 @@ CKEDITOR.replace( <em>'textarea_id'</em>, {
 			You can define which groups of buttons (like e.g. <code>basicstyles</code>, <code>clipboard</code>
 			and <code>forms</code>) are displayed and in which order. Registered buttons are associated
 			with toolbar groups by <code>toolbar</code> property in their definition.
-			This setting's advantage is that you don't have to modify toolbar configuration
+            This setting's advantage is that you don't have to modify toolbar configurations
 			when adding/removing plugins which register their own buttons.
 		</p>
 
@@ -75,14 +76,14 @@ CKEDITOR.replace( <em>'textarea_id'</em>, {
 	</div>
 
 	<div id="currentToolbar" style="display: none">
-		<h2 class="samples">Current toolbar configuration</h2>
+        <h2 class="samples">Current toolbar configurations</h2>
 		<p>Below you can see editor with current toolbar definition.</p>
 		<textarea cols="80" id="editorCurrent" name="editorCurrent" rows="10">&lt;p&gt;This is some &lt;strong&gt;sample text&lt;/strong&gt;. You are using &lt;a href="http://ckeditor.com/"&gt;CKEditor&lt;/a&gt;.&lt;/p&gt;</textarea>
 		<pre id="editorCurrentCfg" class="samples"></pre>
 	</div>
 
 	<div id="fullToolbar">
-		<h2 class="samples">Full toolbar configuration</h2>
+        <h2 class="samples">Full toolbar configurations</h2>
 		<p>Below you can see editor with full toolbar, generated automatically by the editor.</p>
 		<p>
 			<strong>Note</strong>: To create editor instance with full toolbar you don't have to set anything.
@@ -109,7 +110,7 @@ CKEDITOR.replace( <em>'textarea_id'</em>, {
 			output = '';
 
 		if ( editorCurrent ) {
-			// If default toolbar configuration has been modified, show "current toolbar" section.
+            // If default toolbar configurations has been modified, show "current toolbar" section.
 			if ( !defaultToolbar )
 				CKEDITOR.document.getById( 'currentToolbar' ).show();
 			else
@@ -122,15 +123,15 @@ CKEDITOR.replace( <em>'textarea_id'</em>, {
 		// Toolbar isn't set explicitly, so it was created automatically from toolbarGroups.
 		if ( !editor.config.toolbar ) {
 			output +=
-				'// Toolbar configuration generated automatically by the editor based on config.toolbarGroups.\n' +
+                '// Toolbar configurations generated automatically by the editor based on config.toolbarGroups.\n' +
 				dumpToolbarConfiguration( editor ) +
 				'\n\n' +
-				'// Toolbar groups configuration.\n' +
+                '// Toolbar groups configurations.\n' +
 				dumpToolbarConfiguration( editor, true )
 		}
 		// Toolbar groups doesn't count in this case - print only toolbar.
 		else {
-			output += '// Toolbar configuration.\n' +
+            output += '// Toolbar configurations.\n' +
 				dumpToolbarConfiguration( editor );
 		}
 
@@ -168,7 +169,7 @@ CKEDITOR.replace( <em>'textarea_id'</em>, {
 			return '\'' + group + '\'';
 		if ( CKEDITOR.tools.isArray( group ) )
 			return dumpToolbarItems( group );
-		// Skip group when printing entire toolbar configuration and there are no items in this group.
+        // Skip group when printing entire toolbar configurations and there are no items in this group.
 		if ( !printGroups && !group.items )
 			return;
 

@@ -6,7 +6,7 @@
 
 
     <security:http>
-        <security:intercept-url pattern="/configuration" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/configurations" access="hasRole('ROLE_ADMIN')"/>
         <security:intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
         <security:intercept-url pattern="/manager-post" access="hasRole('ROLE_ADMIN')" />
         <security:intercept-url pattern="/" access="permitAll()" />

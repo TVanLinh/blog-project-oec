@@ -84,9 +84,8 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="web_title" type="varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" defaultValue="Linh Tran Blog" />
-            <column name="date_format" type="char(250)" defaultValue="HH:mm:ss dd/MM/yyyy"/>
-            <column name="number_view_post" type="int" defaultValue="3"/>
+            <column name="name" type="char(100)"/>
+            <column name="value" type="varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci "/>
         </createTable>
     </changeSet>
 
@@ -134,10 +133,20 @@
         </insert>
     </changeSet>
 
-    <changeSet id="insert_configuration" author="Tran Van Linh">
+    <changeSet id="insert_configurationnew" author="Tran Van Linh">
         <insert tableName="configuration">
-            <column name="web_title">Linh Tran Blog</column>
-            <column name="number_view_post">4</column>
+            <column name="name">title</column>
+            <column name="value">Linh Tran Blog</column>
+        </insert>
+        <insert tableName="configuration">
+            <column name="name">date_format</column>
+            <column name="value">hh:MM:ss dd/MM/yyyy</column>
+        </insert>
+        <insert tableName="configuration">
+            <column name="name">number_post_view</column>
+            <column name="value">4</column>
         </insert>
     </changeSet>
+
+
 </databaseChangeLog>

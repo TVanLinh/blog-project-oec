@@ -1,7 +1,8 @@
 package vadilator;
 
-import entities.Configuration;
+import forms.ConfigForm;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -13,26 +14,36 @@ import org.springframework.validation.Validator;
 @Component
 public class ConfigFormValidator extends AbstractVadidator implements Validator {
     public boolean supports(Class<?> clazz) {
-        return clazz.equals(Configuration.class);
+        return clazz.equals(ConfigForm.class);
     }
 
     public void validate(Object target, Errors errors) {
 
-        Configuration configuration = (Configuration)target;
-        if(!utils.string.StringUtils.checkVid(configuration.getWebTitle()) || StringUtils.isEmpty(configuration.getWebTitle()) || StringUtils.isBlank(configuration.getWebTitle())) {
-            errors.rejectValue("webTitle","validation.field.post_title_not_blank");
-            return;
+        ConfigForm configForm = (ConfigForm) target;
+        if (StringUtils.isEmpty(configForm.getTitle()) || StringUtils.isBlank(configForm.getTitle())) {
+            errors.rejectValue("title", "validation.field.title_not_blank");
+
         }
 
-        if(configuration.getWebTitle().length()>40) {
-            errors.rejectValue("webTitle","validation.field.conf_too_length");
-            return;
+        if (!utils.string.StringUtils.checkVid(configForm.getTitle())) {
+            errors.rejectValue("title", "validation.field.title_not_valid");
+
+        }
+
+        if (configForm.getTitle().length() > 40) {
+            errors.rejectValue("title", "validation.field.conf_too_length");
+
         }
 
 
-        if(StringUtils.isEmpty(configuration.getDateFormat()) ||StringUtils.isBlank(configuration.getDateFormat() )){
+        if (StringUtils.isEmpty(configForm.getDateFormat()) || StringUtils.isBlank(configForm.getDateFormat())) {
             errors.rejectValue("dateFormat","validation.field.conf_not_dateformat");
         }
 
+        int number = NumberUtils.toInt(configForm.getNumberView() + "", -1);
+
+        if (number < 0) {
+            errors.rejectValue("numberView", "number.view.more.zero");
+        }
     }
 }

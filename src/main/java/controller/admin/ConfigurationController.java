@@ -2,6 +2,7 @@ package controller.admin;
 
 import entities.Configuration;
 import exceptions.NotFindException;
+import forms.ConfigForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,6 +16,7 @@ import utils.page.DefaultPages;
 import vadilator.ConfigFormValidator;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 /**
  * Created by linhtran on 06/06/2017.
@@ -33,41 +35,39 @@ public class ConfigurationController {
 
 
     @ModelAttribute
-    public Configuration initConfig()
+    public ConfigForm initConfig()
     {
-        return new Configuration();
+        return new ConfigForm();
     }
 
     @RequestMapping(value = "/configuration")
     public String configuration(ModelMap modelMap) {
-        modelMap.addAttribute("conf",this.configurationService.getAllConfiguration().get(0));
+        modelMap.addAttribute("conf", this.configurationService.getConfig());
         return "configuration";
     }
 
-    @RequestMapping("/processConfiguration")
+    @RequestMapping("/process-configuration")
     public  String processConfiguration(HttpServletRequest request,
-                                        ModelMap modelMap,@ModelAttribute(value = "configuration")Configuration conf,
+                                        ModelMap modelMap, @ModelAttribute(value = "configForm") ConfigForm conf,
                                         BindingResult bindingResult,
-                                        RedirectAttributes redirectAttributes
-    ) throws NotFindException {
+                                        RedirectAttributes redirectAttributes) throws NotFindException {
+
         this.configFormValidator.validate(conf, bindingResult);
+
+        HashMap<String, Configuration> hashMap = (HashMap<String, Configuration>) this.configurationService.getConfig();
 
         if (bindingResult.hasErrors()) {
             modelMap.addAttribute("errors", this.configFormValidator.getCodeErrors(bindingResult));
-            modelMap.addAttribute("conf",conf);
+            modelMap.addAttribute("conf", hashMap);
             return "configuration";
         }
 
-        Configuration configuration = this.configurationService.getAllConfiguration().get(0);
-
-        if (configuration == null){
+        if (hashMap.isEmpty()) {
             throw  new NotFindException();
         }
 
-        configuration.setNumberViewPost(conf.getNumberViewPost());
-        configuration.setWebTitle(conf.getWebTitle());
-        configuration.setDateFormat(conf.getDateFormat());
-        this.configurationService.save(configuration);
+        this.configurationService.save(this.configurationService.getConfig(hashMap, conf));
+
         redirectAttributes.addFlashAttribute(RequestService.SUCCESS,RequestService.UPDATE_SUCCESS);
         this.defaultPage.setDaultPage(request);
         return "redirect:/configuration";

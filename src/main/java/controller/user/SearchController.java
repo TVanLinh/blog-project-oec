@@ -40,7 +40,7 @@ public class SearchController {
     public  String  processSearchAll(ModelMap modelMap,
                                      @RequestParam(value = "page",required = false) String pageRequest,
                                      @RequestParam(value = "query_search", required = false) String query_search) {
-        int limit = this.configurationService.getAllConfiguration().get(0).getNumberViewPost();
+        int limit = NumberUtils.toInt(this.configurationService.findByName(ConfigurationService.NUMBER_POST_VIEW).getValue(), 4);
         int  page = NumberUtils.toInt(pageRequest,1);
         RequestService.setResponse(modelMap,
                 limit,
@@ -55,7 +55,7 @@ public class SearchController {
                                 ModelMap modelMap,
                                 @RequestParam(value = "username",required = false) String username,
                                 @RequestParam(value = "page",required = false) String pageRequest ) throws NotFindException {
-        int limit = this.configurationService.getAllConfiguration().get(0).getNumberViewPost();
+        int limit = NumberUtils.toInt(this.configurationService.getConfigNumberView().getValue(), 4);
 
         modelMap.addAttribute("userDAO",this.userService);
 

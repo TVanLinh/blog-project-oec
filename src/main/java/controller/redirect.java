@@ -51,7 +51,7 @@ public class redirect {
 
         int  page = NumberUtils.toInt(pageRequest,1);
 
-        int limit = this.configurationService.getAllConfiguration().get(0).getNumberViewPost();
+        int limit = Integer.valueOf(this.configurationService.getConfigNumberView().getValue());
         modelMap.addAttribute("userDAO",this.userService);
         List<Post> postList = this.postService.getPublic((page-1)*limit,limit);
         RequestService.setResponse(modelMap,limit,postList,this.postService.getCountPublic());
@@ -62,9 +62,9 @@ public class redirect {
     @RequestMapping(value = "/post")
     public  String viewPost(ModelMap modelMap,@RequestParam(value = "id",required = false) String id) throws NotFindException {
 
+        int limit = NumberUtils.toInt(this.configurationService.getConfigNumberView().getValue(), 4);
 
-
-        List<Post> postSlideBar = this.postService.getPublic(0, this.configurationService.getAllConfiguration().get(0).getNumberViewPost());
+        List<Post> postSlideBar = this.postService.getPublic(0, limit);
         modelMap.addAttribute("postSlideBar",postSlideBar);
 
         if(!StringUtils.isNumeric(id) || this.postService.find(Integer.valueOf(id)) == null) {
